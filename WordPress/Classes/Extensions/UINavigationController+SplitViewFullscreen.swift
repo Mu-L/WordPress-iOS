@@ -34,12 +34,12 @@ extension UINavigationController {
             self.pushViewController(viewController, animated: animated)
         }
 
-        if UIAccessibility.isReduceMotionEnabled && !self.splitViewControllerIsHorizontallyCompact {
-            splitViewController.view.hideWithBlankingSnapshot(afterScreenUpdates: true)
-            performTransition(false)
-        } else {
+//        if UIAccessibility.isReduceMotionEnabled && !self.splitViewControllerIsHorizontallyCompact {
+//            splitViewController.view.hideWithBlankingSnapshot(afterScreenUpdates: true)
+//            performTransition(false)
+//        } else {
             performTransition(animated)
-        }
+//        }
     }
 }
 
