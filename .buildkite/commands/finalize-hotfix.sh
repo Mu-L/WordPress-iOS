@@ -8,6 +8,9 @@ if [[ -z "${RELEASE_NUMBER}" ]]; then
 fi
 
 echo '--- :robot_face: Use bot for Git operations'
+# We need to unset any positional parameters so that use-bot-for-git doesn't unintentionally take in
+# the release number as a parameter.
+set --
 source use-bot-for-git
 
 echo '--- :git: Checkout release branch'
