@@ -185,6 +185,10 @@
 		223EA61E212A7C26A456C32C /* Pods_JetpackDraftActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430F7B409FE22699ADB1A724 /* Pods_JetpackDraftActionExtension.framework */; };
 		24351254264DCA08009BB2B6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24351253264DCA08009BB2B6 /* Secrets.swift */; };
 		24351255264DCA08009BB2B6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24351253264DCA08009BB2B6 /* Secrets.swift */; };
+		24F6903D2CD4039A00AAB1A3 /* AppStoreStrings.po in Resources */ = {isa = PBXBuildFile; fileRef = 24F6903C2CD4039A00AAB1A3 /* AppStoreStrings.po */; };
+		24F6903E2CD4039A00AAB1A3 /* AppStoreStrings.po in Resources */ = {isa = PBXBuildFile; fileRef = 24F6903C2CD4039A00AAB1A3 /* AppStoreStrings.po */; };
+		24F690402CD4039F00AAB1A3 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 24F6903F2CD4039F00AAB1A3 /* release_notes.txt */; };
+		24F690412CD4039F00AAB1A3 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 24F6903F2CD4039F00AAB1A3 /* release_notes.txt */; };
 		296890780FE971DC00770264 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 296890770FE971DC00770264 /* Security.framework */; };
 		2FAE97090E33B21600CA8540 /* defaultPostTemplate_old.html in Resources */ = {isa = PBXBuildFile; fileRef = 2FAE97040E33B21600CA8540 /* defaultPostTemplate_old.html */; };
 		2FAE970C0E33B21600CA8540 /* xhtml1-transitional.dtd in Resources */ = {isa = PBXBuildFile; fileRef = 2FAE97070E33B21600CA8540 /* xhtml1-transitional.dtd */; };
@@ -1029,6 +1033,8 @@
 		24B54FAE2624F8430041B18E /* JetpackRelease-Alpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "JetpackRelease-Alpha.entitlements"; sourceTree = "<group>"; };
 		24B54FAF2624F84C0041B18E /* JetpackRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JetpackRelease.entitlements; sourceTree = "<group>"; };
 		24B54FB02624F8690041B18E /* JetpackDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JetpackDebug.entitlements; sourceTree = "<group>"; };
+		24F6903C2CD4039A00AAB1A3 /* AppStoreStrings.po */ = {isa = PBXFileReference; lastKnownFileType = text; path = AppStoreStrings.po; sourceTree = "<group>"; };
+		24F6903F2CD4039F00AAB1A3 /* release_notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
 		28A0AAE50D9B0CCF005BE974 /* WordPress_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordPress_Prefix.pch; sourceTree = "<group>"; };
 		293E283D7339E7B6D13F6E09 /* Pods-JetpackShareExtension.release-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JetpackShareExtension.release-internal.xcconfig"; path = "../Pods/Target Support Files/Pods-JetpackShareExtension/Pods-JetpackShareExtension.release-internal.xcconfig"; sourceTree = "<group>"; };
 		296890770FE971DC00770264 /* Security.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -2082,6 +2088,13 @@
 			);
 			target = 0107E13828FE9DB200DE87DB /* JetpackIntents */;
 		};
+		24F6903B2CD401FF00AAB1A3 /* Exceptions for "JetpackIntents" folder in "JetpackStatsWidgets" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SitesIntent.intentdefinition,
+			);
+			target = 0107E0B128F97D5000DE87DB /* JetpackStatsWidgets */;
+		};
 		24F6E6242CD3F3E700AAB1A3 /* Exceptions for "WordPressTest" folder in "WordPress" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -2231,6 +2244,7 @@
 		24F66CBA2CD3FEC700AAB1A3 /* JetpackIntents */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				24F6903B2CD401FF00AAB1A3 /* Exceptions for "JetpackIntents" folder in "JetpackStatsWidgets" target */,
 				24F690322CD3FF8A00AAB1A3 /* Exceptions for "JetpackIntents" folder in "JetpackIntents" target */,
 			);
 			path = JetpackIntents;
@@ -3747,17 +3761,13 @@
 				01CE5010290A890300A9C2E0 /* TracksConfiguration.swift */,
 				800035C229230A0B007D2D26 /* ExtensionConfiguration.swift */,
 			);
-			name = "App Configuration";
+			path = "App Configuration";
 			sourceTree = "<group>";
 		};
 		FABB1F8E2602FC0100C8785C /* Jetpack */ = {
 			isa = PBXGroup;
 			children = (
 				C7F7AC71261CF1BD00CE547F /* Classes */,
-				24B54FB02624F8690041B18E /* JetpackDebug.entitlements */,
-				24B54FAF2624F84C0041B18E /* JetpackRelease.entitlements */,
-				24B54FAE2624F8430041B18E /* JetpackRelease-Alpha.entitlements */,
-				24B54FAD2624F8350041B18E /* JetpackRelease-Internal.entitlements */,
 				FABB28482603068B00C8785C /* Resources */,
 				FABB268A2602FCD400C8785C /* Supporting Files */,
 				FA25FB8C2609B9CB0005E08F /* App Configuration */,
@@ -3769,8 +3779,12 @@
 			isa = PBXGroup;
 			children = (
 				FABB26872602FCCA00C8785C /* Info.plist */,
+				24B54FB02624F8690041B18E /* JetpackDebug.entitlements */,
+				24B54FAF2624F84C0041B18E /* JetpackRelease.entitlements */,
+				24B54FAE2624F8430041B18E /* JetpackRelease-Alpha.entitlements */,
+				24B54FAD2624F8350041B18E /* JetpackRelease-Internal.entitlements */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		FABB28482603068B00C8785C /* Resources */ = {
@@ -3779,8 +3793,10 @@
 				F465976528E464DE00D5F49A /* Icons */,
 				FABB286B2603086900C8785C /* AppImages.xcassets */,
 				FABB28462603067C00C8785C /* Launch Screen.storyboard */,
+				24F6903C2CD4039A00AAB1A3 /* AppStoreStrings.po */,
+				24F6903F2CD4039F00AAB1A3 /* release_notes.txt */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		FF2716901CAAC87B0006E2D4 /* UITests */ = {
@@ -4646,8 +4662,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24F690412CD4039F00AAB1A3 /* release_notes.txt in Resources */,
 				8096219428E561A800940A5D /* AppImages.xcassets in Resources */,
 				0C4CE8492C2F418000B9EEAC /* AppImages.xcassets in Resources */,
+				24F6903D2CD4039A00AAB1A3 /* AppStoreStrings.po in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4819,6 +4837,8 @@
 				F41E4ED828F2424B001880C6 /* dark-glow-icon-app-60@3x.png in Resources */,
 				F46597A628E6600800D5F49A /* jetpack-light-icon-app-83.5@2x.png in Resources */,
 				F41E4ED928F2424B001880C6 /* dark-glow-icon-app-60@2x.png in Resources */,
+				24F690402CD4039F00AAB1A3 /* release_notes.txt in Resources */,
+				24F6903E2CD4039A00AAB1A3 /* AppStoreStrings.po in Resources */,
 				F465977C28E6598900D5F49A /* black-on-white-icon-app-60@2x.png in Resources */,
 				F41E4EED28F247D3001880C6 /* white-on-green-icon-app-60@3x.png in Resources */,
 				FABB20B52602FC2C00C8785C /* richEmbedScript.js in Resources */,
@@ -9185,7 +9205,7 @@
 				CLANG_ENABLE_MODULES = "$(inherited)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = Jetpack/JetpackDebug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Jetpack/Supporting Files/JetpackDebug.entitlements";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "${VERSION_LONG}";
 				DEFINES_MODULE = YES;
@@ -9206,7 +9226,7 @@
 					"$(inherited)",
 					/usr/include/libxml2,
 				);
-				INFOPLIST_FILE = Jetpack/Info.plist;
+				INFOPLIST_FILE = "Jetpack/Supporting Files/Info.plist";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9253,7 +9273,7 @@
 				CLANG_ENABLE_MODULES = "$(inherited)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = Jetpack/JetpackRelease.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Jetpack/Supporting Files/JetpackRelease.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "${VERSION_LONG}";
@@ -9273,7 +9293,7 @@
 					"$(inherited)",
 					/usr/include/libxml2,
 				);
-				INFOPLIST_FILE = Jetpack/Info.plist;
+				INFOPLIST_FILE = "Jetpack/Supporting Files/Info.plist";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9318,7 +9338,7 @@
 				CLANG_ENABLE_MODULES = "$(inherited)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = "Jetpack/JetpackRelease-Internal.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Jetpack/Supporting Files/JetpackRelease-Internal.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "${VERSION_LONG}";
@@ -9338,7 +9358,7 @@
 					"$(inherited)",
 					/usr/include/libxml2,
 				);
-				INFOPLIST_FILE = Jetpack/Info.plist;
+				INFOPLIST_FILE = "Jetpack/Supporting Files/Info.plist";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9383,7 +9403,7 @@
 				CLANG_ENABLE_MODULES = "$(inherited)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = "Jetpack/JetpackRelease-Alpha.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Jetpack/Supporting Files/JetpackRelease-Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "${VERSION_LONG}";
@@ -9403,7 +9423,7 @@
 					"$(inherited)",
 					/usr/include/libxml2,
 				);
-				INFOPLIST_FILE = Jetpack/Info.plist;
+				INFOPLIST_FILE = "Jetpack/Supporting Files/Info.plist";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
