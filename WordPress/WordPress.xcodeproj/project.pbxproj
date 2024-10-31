@@ -775,7 +775,6 @@
 		FAF64B7B2637DEEC00E8A1DF /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED4D8321FF11E3800A11345 /* LoginFlow.swift */; };
 		FAF64B922637DEEC00E8A1DF /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8511CFC41C60884400B7CEED /* SnapshotHelper.swift */; };
 		FAF64B982637DEEC00E8A1DF /* ScreenshotCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9463A7221C05EE90081F11E /* ScreenshotCredentials.swift */; };
-		FAF64E4F2637E85800E8A1DF /* JetpackScreenshotGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF64E4E2637E85800E8A1DF /* JetpackScreenshotGeneration.swift */; };
 		FD3D6D2C1349F5D30061136A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3D6D2B1349F5D30061136A /* ImageIO.framework */; };
 		FE23EB4926E7C91F005A1698 /* richCommentTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = FE23EB4726E7C91F005A1698 /* richCommentTemplate.html */; };
 		FE23EB4A26E7C91F005A1698 /* richCommentTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = FE23EB4726E7C91F005A1698 /* richCommentTemplate.html */; };
@@ -1304,7 +1303,6 @@
 		24AD674C25FC262D0056102C /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Sites.strings; sourceTree = "<group>"; };
 		24AD674E25FC262E0056102C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Sites.strings; sourceTree = "<group>"; };
 		24AD675025FC262F0056102C /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/Sites.strings; sourceTree = "<group>"; };
-		24AE9E66264B34E500AC7F15 /* Secrets-example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Secrets-example.swift"; sourceTree = "<group>"; };
 		24B54FAD2624F8350041B18E /* JetpackRelease-Internal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "JetpackRelease-Internal.entitlements"; sourceTree = "<group>"; };
 		24B54FAE2624F8430041B18E /* JetpackRelease-Alpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "JetpackRelease-Alpha.entitlements"; sourceTree = "<group>"; };
 		24B54FAF2624F84C0041B18E /* JetpackRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JetpackRelease.entitlements; sourceTree = "<group>"; };
@@ -1452,9 +1450,6 @@
 		80535DBA294ABBEF00873161 /* JetpackAllFeaturesLogosAnimation_ltr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JetpackAllFeaturesLogosAnimation_ltr.json; sourceTree = "<group>"; };
 		8058730C28F7B70B00340C11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8096212328E540D700940A5D /* JetpackShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JetpackShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		8096212928E553A500940A5D /* Info-Alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Alpha.plist"; sourceTree = "<group>"; };
-		8096212A28E553A500940A5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8096212B28E553A500940A5D /* Info-Internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
 		8096218528E55C9400940A5D /* JetpackDraftActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JetpackDraftActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8096218828E55D2400940A5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8096218928E55D2400940A5D /* Info-Internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
@@ -1463,9 +1458,6 @@
 		80B42ABE2AB2CB1300377607 /* PagesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesTests.swift; sourceTree = "<group>"; };
 		80D65C1129CC0813008E69D5 /* JetpackUITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JetpackUITests-Info.plist"; sourceTree = "<group>"; };
 		80F6D05428EE866A00953C1A /* JetpackNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JetpackNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		80F6D05728EE86F800953C1A /* Info-Alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Alpha.plist"; sourceTree = "<group>"; };
-		80F6D05828EE86F800953C1A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		80F6D05928EE86F800953C1A /* Info-Internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
 		8298F3911EEF3BA7008EB7F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		83043E54126FA31400EC9953 /* MessageUI.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8332DD2329259AE300802F7D /* DataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMigrator.swift; sourceTree = "<group>"; };
@@ -1798,8 +1790,6 @@
 		FABB28462603067C00C8785C /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FABB286B2603086900C8785C /* AppImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppImages.xcassets; sourceTree = "<group>"; };
 		FAF64BA22637DEEC00E8A1DF /* JetpackScreenshotGeneration.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JetpackScreenshotGeneration.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAF64BDC2637DF7500E8A1DF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FAF64E4E2637E85800E8A1DF /* JetpackScreenshotGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JetpackScreenshotGeneration.swift; sourceTree = "<group>"; };
 		FD3D6D2B1349F5D30061136A /* ImageIO.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		FDCB9A89134B75B900E5C776 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FE23EB4726E7C91F005A1698 /* richCommentTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = richCommentTemplate.html; path = Resources/HTML/richCommentTemplate.html; sourceTree = "<group>"; };
@@ -2361,6 +2351,13 @@
 			);
 			target = 0107E13828FE9DB200DE87DB /* JetpackIntents */;
 		};
+		24F6E6E62CD3F6D300AAB1A3 /* Exceptions for "JetpackScreenshotGeneration" folder in "JetpackScreenshotGeneration" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				JetpackScreenshotGeneration.swift,
+			);
+			target = FAF64B662637DEEC00E8A1DF /* JetpackScreenshotGeneration */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -2413,6 +2410,29 @@
 				24F6E6D92CD3F6AB00AAB1A3 /* Exceptions for "JetpackStatsWidgets" folder in "JetpackIntents" target */,
 			);
 			path = JetpackStatsWidgets;
+			sourceTree = "<group>";
+		};
+		24F6E6DD2CD3F6C000AAB1A3 /* JetpackNotificationServiceExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = JetpackNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		24F6E6E12CD3F6C200AAB1A3 /* JetpackShareExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = JetpackShareExtension;
+			sourceTree = "<group>";
+		};
+		24F6E6E42CD3F6D300AAB1A3 /* JetpackScreenshotGeneration */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				24F6E6E62CD3F6D300AAB1A3 /* Exceptions for "JetpackScreenshotGeneration" folder in "JetpackScreenshotGeneration" target */,
+			);
+			path = JetpackScreenshotGeneration;
+			sourceTree = "<group>";
+		};
+		24F6E6E82CD3F6F500AAB1A3 /* Credentials */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Credentials;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -2907,7 +2927,7 @@
 			isa = PBXGroup;
 			children = (
 				F14B5F6F208E648200439554 /* config */,
-				E1B34C091CCDFFCE00889709 /* Credentials */,
+				24F6E6E82CD3F6F500AAB1A3 /* Credentials */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -2915,9 +2935,9 @@
 				FABB1F8E2602FC0100C8785C /* Jetpack */,
 				8096218728E55CB800940A5D /* JetpackDraftActionExtension */,
 				F1F163BF25658B4D003DC13B /* JetpackIntents */,
-				80F6D05628EE869900953C1A /* JetpackNotificationServiceExtension */,
+				24F6E6DD2CD3F6C000AAB1A3 /* JetpackNotificationServiceExtension */,
 				24F6E6802CD3F6AA00AAB1A3 /* JetpackStatsWidgets */,
-				8096212828E5535E00940A5D /* JetpackShareExtension */,
+				24F6E6E12CD3F6C200AAB1A3 /* JetpackShareExtension */,
 				74576673202B558C00F42E40 /* WordPressDraftActionExtension */,
 				733F36072126197800988727 /* WordPressNotificationContentExtension */,
 				7358E6B9210BD318002323EB /* WordPressNotificationServiceExtension */,
@@ -2925,7 +2945,7 @@
 				24F6E43C2CD3F3E600AAB1A3 /* WordPressTest */,
 				FF2716901CAAC87B0006E2D4 /* UITests */,
 				8511CFB71C607A7000B7CEED /* WordPressScreenshotGeneration */,
-				FAF64BC82637DF0600E8A1DF /* JetpackScreenshotGeneration */,
+				24F6E6E42CD3F6D300AAB1A3 /* JetpackScreenshotGeneration */,
 				24CEEF692CD3D4D300C7B37D /* WordPressAuthenticator */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -3378,16 +3398,6 @@
 			name = "Lottie Animations";
 			sourceTree = "<group>";
 		};
-		8096212828E5535E00940A5D /* JetpackShareExtension */ = {
-			isa = PBXGroup;
-			children = (
-				8096212928E553A500940A5D /* Info-Alpha.plist */,
-				8096212B28E553A500940A5D /* Info-Internal.plist */,
-				8096212A28E553A500940A5D /* Info.plist */,
-			);
-			path = JetpackShareExtension;
-			sourceTree = "<group>";
-		};
 		8096218728E55CB800940A5D /* JetpackDraftActionExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -3397,16 +3407,6 @@
 				8058730D28F7B70B00340C11 /* InfoPlist.strings */,
 			);
 			path = JetpackDraftActionExtension;
-			sourceTree = "<group>";
-		};
-		80F6D05628EE869900953C1A /* JetpackNotificationServiceExtension */ = {
-			isa = PBXGroup;
-			children = (
-				80F6D05728EE86F800953C1A /* Info-Alpha.plist */,
-				80F6D05928EE86F800953C1A /* Info-Internal.plist */,
-				80F6D05828EE86F800953C1A /* Info.plist */,
-			);
-			path = JetpackNotificationServiceExtension;
 			sourceTree = "<group>";
 		};
 		8332DD2229259ABA00802F7D /* Utility */ = {
@@ -3678,14 +3678,6 @@
 				E125F1E31E8E595E00320B67 /* SharePost.swift */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		E1B34C091CCDFFCE00889709 /* Credentials */ = {
-			isa = PBXGroup;
-			children = (
-				24AE9E66264B34E500AC7F15 /* Secrets-example.swift */,
-			);
-			path = Credentials;
 			sourceTree = "<group>";
 		};
 		F14B5F6F208E648200439554 /* config */ = {
@@ -4170,15 +4162,6 @@
 				FABB28462603067C00C8785C /* Launch Screen.storyboard */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		FAF64BC82637DF0600E8A1DF /* JetpackScreenshotGeneration */ = {
-			isa = PBXGroup;
-			children = (
-				FAF64BDC2637DF7500E8A1DF /* Info.plist */,
-				FAF64E4E2637E85800E8A1DF /* JetpackScreenshotGeneration.swift */,
-			);
-			path = JetpackScreenshotGeneration;
 			sourceTree = "<group>";
 		};
 		FF2716901CAAC87B0006E2D4 /* UITests */ = {
@@ -6155,7 +6138,6 @@
 				FAF64B6F2637DEEC00E8A1DF /* BaseScreen.swift in Sources */,
 				FAF64B722637DEEC00E8A1DF /* XCTest+Extensions.swift in Sources */,
 				0107E11628FD7FE800DE87DB /* AppConfiguration.swift in Sources */,
-				FAF64E4F2637E85800E8A1DF /* JetpackScreenshotGeneration.swift in Sources */,
 				FAF64B742637DEEC00E8A1DF /* WPUITestCredentials.swift in Sources */,
 				FAF64B7B2637DEEC00E8A1DF /* LoginFlow.swift in Sources */,
 				FAF64B922637DEEC00E8A1DF /* SnapshotHelper.swift in Sources */,
