@@ -11,7 +11,7 @@ source 'https://cdn.cocoapods.org/'
 
 raise 'Please run CocoaPods via `bundle exec`' unless %w[BUNDLE_BIN_PATH BUNDLE_GEMFILE].any? { |k| ENV.key?(k) }
 
-VERSION_XCCONFIG_PATH = File.join(File.expand_path(__dir__), 'config', 'Common.xcconfig')
+VERSION_XCCONFIG_PATH = File.join(File.expand_path(__dir__), 'WordPress', 'Config', 'Common.xcconfig')
 APP_IOS_DEPLOYMENT_TARGET = Gem::Version.new(Xcodeproj::Config.new(VERSION_XCCONFIG_PATH).to_hash['IPHONEOS_DEPLOYMENT_TARGET'])
 
 platform :ios, APP_IOS_DEPLOYMENT_TARGET.version

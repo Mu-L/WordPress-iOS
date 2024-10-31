@@ -5717,7 +5717,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = WordPressNotificationServiceExtension/WordPressNotificationServiceExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationServiceExtension/Supporting Files/WordPressNotificationServiceExtension.entitlements";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -5765,7 +5765,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = WordPressNotificationServiceExtension/WordPressNotificationServiceExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationServiceExtension/Supporting Files/WordPressNotificationServiceExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -5812,7 +5812,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationServiceExtension/WordPressNotificationServiceExtension-Internal.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationServiceExtension/Supporting Files/WordPressNotificationServiceExtension-Internal.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -5859,7 +5859,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationServiceExtension/WordPressNotificationServiceExtension-Alpha.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationServiceExtension/Supporting Files/WordPressNotificationServiceExtension-Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -6217,10 +6217,10 @@
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources",
 				);
-				INFOPLIST_FILE = "WordPressTest/WordPressTest-Info.plist";
+				INFOPLIST_FILE = "WordPressTest/Supporting Files/WordPressTest-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wordpress.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/WordPressTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/Supporting Files/WordPressTest-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -6652,10 +6652,10 @@
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources",
 				);
-				INFOPLIST_FILE = "WordPressTest/WordPressTest-Info.plist";
+				INFOPLIST_FILE = "WordPressTest/Supporting Files/WordPressTest-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wordpress.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/WordPressTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/Supporting Files/WordPressTest-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -6835,10 +6835,10 @@
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources",
 				);
-				INFOPLIST_FILE = "WordPressTest/WordPressTest-Info.plist";
+				INFOPLIST_FILE = "WordPressTest/Supporting Files/WordPressTest-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wordpress.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/WordPressTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/Supporting Files/WordPressTest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
@@ -6868,10 +6868,10 @@
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources",
 				);
-				INFOPLIST_FILE = "WordPressTest/WordPressTest-Info.plist";
+				INFOPLIST_FILE = "WordPressTest/Supporting Files/WordPressTest-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.wordpress.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/WordPressTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WordPressTest/Supporting Files/WordPressTest-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -7056,8 +7056,7 @@
 		};
 		FABB264E2602FC2C00C8785C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 24F694542CD4075000AAB1A3 /* Config */;
-			baseConfigurationReferenceRelativePath = Jetpack.debug.xcconfig;
+			baseConfigurationReference = 152F25D5C232985E30F56CAC /* Pods-Apps-Jetpack.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -7125,8 +7124,7 @@
 		};
 		FABB264F2602FC2C00C8785C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 24F694542CD4075000AAB1A3 /* Config */;
-			baseConfigurationReferenceRelativePath = Jetpack.release.xcconfig;
+			baseConfigurationReference = 011A2815DB0DE7E3973CBC0E /* Pods-Apps-Jetpack.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -7191,8 +7189,7 @@
 		};
 		FABB26502602FC2C00C8785C /* Release-Internal */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 24F694542CD4075000AAB1A3 /* Config */;
-			baseConfigurationReferenceRelativePath = Jetpack.internal.xcconfig;
+			baseConfigurationReference = 67832AB9D81652460A80BE66 /* Pods-Apps-Jetpack.release-internal.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -7257,8 +7254,7 @@
 		};
 		FABB26512602FC2C00C8785C /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 24F694542CD4075000AAB1A3 /* Config */;
-			baseConfigurationReferenceRelativePath = Jetpack.alpha.xcconfig;
+			baseConfigurationReference = 150B6590614A28DF9AD25491 /* Pods-Apps-Jetpack.release-alpha.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

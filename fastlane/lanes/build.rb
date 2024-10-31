@@ -359,13 +359,12 @@ platform :ios do
     configuration = 'Release-Alpha'
 
     # Get the current build version, and update it if needed
-    version_config_path = File.join(PROJECT_ROOT_FOLDER, 'config', 'Version.internal.xcconfig')
-    versions = Xcodeproj::Config.new(File.new(version_config_path)).to_hash
+    versions = Xcodeproj::Config.new(File.new(INTERNAL_CONFIG_FILE)).to_hash
     build_number = generate_prototype_build_number
     UI.message("Updating build version to #{build_number}")
     versions['VERSION_LONG'] = build_number
     new_config = Xcodeproj::Config.new(versions)
-    new_config.save_as(Pathname.new(version_config_path))
+    new_config.save_as(Pathname.new(INTERNAL_CONFIG_FILE))
 
     # Build
     build_app(

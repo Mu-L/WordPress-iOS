@@ -91,10 +91,10 @@ JETPACK_METADATA_GLOTPRESS_LOCALE_CODES = %w[ar de es fr he id it ja ko nl pt-br
 # See calls to `ios_merge_strings_files` and `ios_extract_keys_from_strings_files` for usage.
 #
 MANUALLY_MAINTAINED_STRINGS_FILES = {
-  File.join('WordPress', 'Resources', 'en.lproj', 'InfoPlist.strings') => 'infoplist.', # For now WordPress and Jetpack share the same InfoPlist.strings
-  File.join('WordPress', 'WordPressDraftActionExtension', 'en.lproj', 'InfoPlist.strings') => 'ios-sharesheet.', # CFBundleDisplayName for the "Save as Draft" share action
-  File.join('WordPress', 'JetpackDraftActionExtension', 'en.lproj', 'InfoPlist.strings') => 'ios-jetpack-sharesheet.', # CFBundleDisplayName for the "Save to Jetpack" share action
-  File.join('WordPress', 'JetpackIntents', 'en.lproj', 'Sites.strings') => 'ios-widget.' # Strings from the `.intentdefinition`, used for configuring the iOS Widget
+  File.join('WordPress', 'WordPress', 'Resources', 'Localizations', 'en.lproj', 'InfoPlist.strings') => 'infoplist.', # For now WordPress and Jetpack share the same InfoPlist.strings
+  File.join('WordPress', 'WordPressDraftActionExtension', 'Localizations', 'en.lproj', 'InfoPlist.strings') => 'ios-sharesheet.', # CFBundleDisplayName for the "Save as Draft" share action
+  File.join('WordPress', 'JetpackDraftActionExtension', 'Localizations', 'en.lproj', 'InfoPlist.strings') => 'ios-jetpack-sharesheet.', # CFBundleDisplayName for the "Save to Jetpack" share action
+  File.join('WordPress', 'JetpackIntents', 'Localization', 'en.lproj', 'Sites.strings') => 'ios-widget.' # Strings from the `.intentdefinition`, used for configuring the iOS Widget
 }.freeze
 
 # The names of the remote Swift Packages that we want to add to our localizations, as they'll be checked out during resolvePackageDependencies in the Derived Data folder
@@ -115,7 +115,7 @@ UPLOAD_TO_APP_STORE_COMMON_PARAMS = {
   app_rating_config_path: File.join(PROJECT_ROOT_FOLDER, 'fastlane', 'metadata', 'ratings_config.json')
 }.freeze
 
-WORDPRESS_EN_LPROJ = File.join('WordPress', 'Resources', 'en.lproj')
+WORDPRESS_EN_LPROJ = File.join('WordPress', 'WordPress', 'Resources', 'Localizations', 'en.lproj')
 
 #################################################
 # Lanes
