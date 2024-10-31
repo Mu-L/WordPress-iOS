@@ -1,3 +1,5 @@
+import Foundation
+
 /// Models the request to send for an OAuth token
 ///
 /// - Note: See documentation at https://developers.google.com/identity/protocols/oauth2/native-app#exchange-authorization-code

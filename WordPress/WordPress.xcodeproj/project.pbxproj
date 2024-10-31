@@ -3292,7 +3292,7 @@
 			);
 			target = EA14532229AD874C001F3143 /* JetpackUITests */;
 		};
-		24CEF06F2CD3D4D300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		24CEF24E2CD3D86300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Sources/Private/WPAuthenticator-Swift.h",
@@ -3340,7 +3340,6 @@
 				Tests/SingIn/AppleAuthenticatorTests.swift,
 				Tests/SingIn/LoginViewControllerTests.swift,
 				Tests/SingIn/SiteAddressViewModelTests.swift,
-				WordPressAuthenticator.xctestplan,
 			);
 			publicHeaders = (
 				Sources/Logging/WPAuthenticatorLogging.h,
@@ -3352,7 +3351,7 @@
 			);
 			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
 		};
-		24CEF0702CD3D4D300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		24CEF2502CD3D86800C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Tests/Analytics/AnalyticsTrackerTests.swift,
@@ -3406,7 +3405,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		24CE57C42CD3375200C7B37D /* Classes */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (24CE68AE2CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68AF2CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B02CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B12CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B22CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B32CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B42CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B52CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B62CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B72CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B82CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68B92CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68BA2CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CE68BB2CD3375300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Classes; sourceTree = "<group>"; };
-		24CEEF692CD3D4D300C7B37D /* WordPressAuthenticator */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (24CEF06F2CD3D4D300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CEF0702CD3D4D300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); name = WordPressAuthenticator; path = ../WordPressAuthenticator; sourceTree = "<group>"; };
+		24CEEF692CD3D4D300C7B37D /* WordPressAuthenticator */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (24CEF24E2CD3D86300C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 24CEF2502CD3D86800C7B37D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WordPressAuthenticator; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */

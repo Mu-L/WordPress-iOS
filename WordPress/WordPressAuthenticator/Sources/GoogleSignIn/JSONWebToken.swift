@@ -1,3 +1,5 @@
+import Foundation
+
 /// Represents a JSON Web Token (JWT)
 ///
 /// See https://jwt.io/introduction

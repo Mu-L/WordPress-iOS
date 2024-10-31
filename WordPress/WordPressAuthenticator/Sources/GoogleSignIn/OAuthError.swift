@@ -1,3 +1,5 @@
+import Foundation
+
 public enum OAuthError: LocalizedError {
 
     // ASWebAuthenticationSession

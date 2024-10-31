@@ -1,3 +1,5 @@
+import Foundation
+
 class GoogleOAuthTokenGetter: GoogleOAuthTokenGetting {
 
     let dataGetter: DataGetting

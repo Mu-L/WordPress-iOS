@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 // MARK: - Storyboard enum
 enum Storyboard: String {

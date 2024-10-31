@@ -1,3 +1,5 @@
+import Foundation
+
 extension URLRequest {
 
     static func googleSignInTokenRequest(

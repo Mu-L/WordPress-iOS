@@ -1,3 +1,5 @@
+import Foundation
+
 // See:
 // - https://developers.google.com/identity/protocols/oauth2/native-app#step1-code-verifier
 // - https://www.rfc-editor.org/rfc/rfc7636
