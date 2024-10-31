@@ -98,11 +98,8 @@
 		733F36042126197800988727 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E185474D1DED8D8800D875D7 /* UserNotifications.framework */; };
 		733F36062126197800988727 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 733F36052126197800988727 /* UserNotificationsUI.framework */; };
 		7358E6BF210BD318002323EB /* WordPressNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7358E6B8210BD318002323EB /* WordPressNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		736584EB2137533A0029C9A4 /* NotificationContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736584E82137533A0029C9A4 /* NotificationContentView.swift */; };
-		736584EC2137533A0029C9A4 /* Tracks+ContentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736584EA2137533A0029C9A4 /* Tracks+ContentExtension.swift */; };
 		73768B6B212B4E4F005136A1 /* UNNotificationContent+RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73768B6A212B4E4F005136A1 /* UNNotificationContent+RemoteNotification.swift */; };
 		7396FE66210F730600496D0D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7396FE65210F730600496D0D /* NotificationService.swift */; };
-		73D5AC63212622B200ADDDD2 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D5AC5C212622B200ADDDD2 /* NotificationViewController.swift */; };
 		73E40D8C21238C520012ABA6 /* Tracks+ServiceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E40D8B21238C520012ABA6 /* Tracks+ServiceExtension.swift */; };
 		73EDC70A212E5D6700E5E3ED /* RemoteNotificationStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDC709212E5D6700E5E3ED /* RemoteNotificationStyles.swift */; };
 		73F6DD42212BA54700CE447D /* RichNotificationContentFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6DD41212BA54700CE447D /* RichNotificationContentFormatter.swift */; };
@@ -585,13 +582,9 @@
 		5E48AA7F709A5B0F2318A7E3 /* Pods-JetpackDraftActionExtension.release-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JetpackDraftActionExtension.release-internal.xcconfig"; path = "../Pods/Target Support Files/Pods-JetpackDraftActionExtension/Pods-JetpackDraftActionExtension.release-internal.xcconfig"; sourceTree = "<group>"; };
 		67832AB9D81652460A80BE66 /* Pods-Apps-Jetpack.release-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apps-Jetpack.release-internal.xcconfig"; path = "../Pods/Target Support Files/Pods-Apps-Jetpack/Pods-Apps-Jetpack.release-internal.xcconfig"; sourceTree = "<group>"; };
 		6E5BA46826A59D620043A6F2 /* SupportScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportScreenTests.swift; sourceTree = "<group>"; };
-		732D4E1D2126253900BF7F11 /* WordPressNotificationContentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WordPressNotificationContentExtension.entitlements; sourceTree = "<group>"; };
-		732D4E1E212625A100BF7F11 /* WordPressNotificationContentExtension-Alpha.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "WordPressNotificationContentExtension-Alpha.entitlements"; sourceTree = "<group>"; };
-		732D4E1F212625A100BF7F11 /* WordPressNotificationContentExtension-Internal.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "WordPressNotificationContentExtension-Internal.entitlements"; sourceTree = "<group>"; };
 		7335AC5F21220D550012EF2D /* RemoteNotificationActionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotificationActionParser.swift; sourceTree = "<group>"; };
 		733F36032126197800988727 /* WordPressNotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WordPressNotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		733F36052126197800988727 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
-		733F360D2126197800988727 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		734740762114C296007FDDFF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		734740772114C296007FDDFF /* Info-Alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Alpha.plist"; sourceTree = "<group>"; };
 		734740782114C296007FDDFF /* Info-Internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
@@ -599,15 +592,9 @@
 		7347407E2114C5EF007FDDFF /* WordPressNotificationServiceExtension-Internal.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "WordPressNotificationServiceExtension-Internal.entitlements"; sourceTree = "<group>"; };
 		7347407F2114C5F0007FDDFF /* WordPressNotificationServiceExtension-Alpha.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "WordPressNotificationServiceExtension-Alpha.entitlements"; sourceTree = "<group>"; };
 		7358E6B8210BD318002323EB /* WordPressNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WordPressNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		736584E82137533A0029C9A4 /* NotificationContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationContentView.swift; sourceTree = "<group>"; };
-		736584EA2137533A0029C9A4 /* Tracks+ContentExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tracks+ContentExtension.swift"; sourceTree = "<group>"; };
 		73768B6A212B4E4F005136A1 /* UNNotificationContent+RemoteNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNNotificationContent+RemoteNotification.swift"; sourceTree = "<group>"; };
 		7396FE65210F730600496D0D /* NotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		73ACDF9F2118B03700233AD4 /* WordPressNotificationServiceExtension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WordPressNotificationServiceExtension-Bridging-Header.h"; sourceTree = "<group>"; };
-		73B05D2A21374FE50073ECAA /* WordPressNotificationContentExtension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WordPressNotificationContentExtension-Bridging-Header.h"; sourceTree = "<group>"; };
-		73D5AC5C212622B200ADDDD2 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		73D5AC662126236600ADDDD2 /* Info-Alpha.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Alpha.plist"; sourceTree = "<group>"; };
-		73D5AC672126236600ADDDD2 /* Info-Internal.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
 		73E40D8B21238C520012ABA6 /* Tracks+ServiceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tracks+ServiceExtension.swift"; sourceTree = "<group>"; };
 		73EDC709212E5D6700E5E3ED /* RemoteNotificationStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotificationStyles.swift; sourceTree = "<group>"; };
 		73F6DD41212BA54700CE447D /* RichNotificationContentFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichNotificationContentFormatter.swift; sourceTree = "<group>"; };
@@ -1524,6 +1511,15 @@
 			);
 			target = 0107E13828FE9DB200DE87DB /* JetpackIntents */;
 		};
+		24F694692CD40AB300AAB1A3 /* Exceptions for "WordPressNotificationContentExtension" folder in "WordPressNotificationContentExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Sources/NotificationViewController.swift,
+				"Sources/Tracks/Tracks+ContentExtension.swift",
+				Sources/Views/NotificationContentView.swift,
+			);
+			target = 733F36022126197800988727 /* WordPressNotificationContentExtension */;
+		};
 		24F6E6242CD3F3E700AAB1A3 /* Exceptions for "WordPressTest" folder in "WordPress" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -1718,6 +1714,14 @@
 		24F694542CD4075000AAB1A3 /* Config */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Config;
+			sourceTree = "<group>";
+		};
+		24F694652CD40AB200AAB1A3 /* WordPressNotificationContentExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				24F694692CD40AB300AAB1A3 /* Exceptions for "WordPressNotificationContentExtension" folder in "WordPressNotificationContentExtension" target */,
+			);
+			path = WordPressNotificationContentExtension;
 			sourceTree = "<group>";
 		};
 		24F6E43C2CD3F3E600AAB1A3 /* WordPressTest */ = {
@@ -2031,7 +2035,7 @@
 				24F6E6802CD3F6AA00AAB1A3 /* JetpackStatsWidgets */,
 				24F6E6E12CD3F6C200AAB1A3 /* JetpackShareExtension */,
 				24F66C0A2CD3FDEA00AAB1A3 /* WordPressDraftActionExtension */,
-				733F36072126197800988727 /* WordPressNotificationContentExtension */,
+				24F694652CD40AB200AAB1A3 /* WordPressNotificationContentExtension */,
 				7358E6B9210BD318002323EB /* WordPressNotificationServiceExtension */,
 				24F66AC22CD3FBD100AAB1A3 /* WordPressShareExtension */,
 				24F6E43C2CD3F3E600AAB1A3 /* WordPressTest */,
@@ -2124,15 +2128,6 @@
 			path = FormattableContent;
 			sourceTree = "<group>";
 		};
-		733F36072126197800988727 /* WordPressNotificationContentExtension */ = {
-			isa = PBXGroup;
-			children = (
-				73D5AC5B212622B200ADDDD2 /* Sources */,
-				73D5AC5A2126225300ADDDD2 /* Supporting Files */,
-			);
-			path = WordPressNotificationContentExtension;
-			sourceTree = "<group>";
-		};
 		7347407C2114C29B007FDDFF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -2156,22 +2151,6 @@
 			path = WordPressNotificationServiceExtension;
 			sourceTree = "<group>";
 		};
-		736584E72137533A0029C9A4 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				736584E82137533A0029C9A4 /* NotificationContentView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		736584E92137533A0029C9A4 /* Tracks */ = {
-			isa = PBXGroup;
-			children = (
-				736584EA2137533A0029C9A4 /* Tracks+ContentExtension.swift */,
-			);
-			path = Tracks;
-			sourceTree = "<group>";
-		};
 		73768B69212B4DE8005136A1 /* NotificationContent */ = {
 			isa = PBXGroup;
 			children = (
@@ -2189,30 +2168,6 @@
 				73E40D8A21238C400012ABA6 /* Tracks */,
 				7396FE65210F730600496D0D /* NotificationService.swift */,
 				73ACDF9F2118B03700233AD4 /* WordPressNotificationServiceExtension-Bridging-Header.h */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		73D5AC5A2126225300ADDDD2 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				733F360D2126197800988727 /* Info.plist */,
-				73D5AC662126236600ADDDD2 /* Info-Alpha.plist */,
-				73D5AC672126236600ADDDD2 /* Info-Internal.plist */,
-				732D4E1D2126253900BF7F11 /* WordPressNotificationContentExtension.entitlements */,
-				732D4E1E212625A100BF7F11 /* WordPressNotificationContentExtension-Alpha.entitlements */,
-				732D4E1F212625A100BF7F11 /* WordPressNotificationContentExtension-Internal.entitlements */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		73D5AC5B212622B200ADDDD2 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				736584E92137533A0029C9A4 /* Tracks */,
-				736584E72137533A0029C9A4 /* Views */,
-				73D5AC5C212622B200ADDDD2 /* NotificationViewController.swift */,
-				73B05D2A21374FE50073ECAA /* WordPressNotificationContentExtension-Bridging-Header.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -3628,10 +3583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				736584EB2137533A0029C9A4 /* NotificationContentView.swift in Sources */,
-				73D5AC63212622B200ADDDD2 /* NotificationViewController.swift in Sources */,
 				73F6DD44212C714F00CE447D /* RichNotificationViewModel.swift in Sources */,
-				736584EC2137533A0029C9A4 /* Tracks+ContentExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4875,7 +4827,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = WordPressNotificationContentExtension/WordPressNotificationContentExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationContentExtension/Supporting Files/WordPressNotificationContentExtension.entitlements";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4888,7 +4840,7 @@
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = WordPressNotificationContentExtension/Info.plist;
+				INFOPLIST_FILE = "WordPressNotificationContentExtension/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4922,7 +4874,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = WordPressNotificationContentExtension/WordPressNotificationContentExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationContentExtension/Supporting Files/WordPressNotificationContentExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -4935,7 +4887,7 @@
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = WordPressNotificationContentExtension/Info.plist;
+				INFOPLIST_FILE = "WordPressNotificationContentExtension/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4968,7 +4920,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationContentExtension/WordPressNotificationContentExtension-Internal.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationContentExtension/Supporting Files/WordPressNotificationContentExtension-Internal.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -4981,7 +4933,7 @@
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "WordPressNotificationContentExtension/Info-Internal.plist";
+				INFOPLIST_FILE = "WordPressNotificationContentExtension/Supporting Files/Info-Internal.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5014,7 +4966,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationContentExtension/WordPressNotificationContentExtension-Alpha.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressNotificationContentExtension/Supporting Files/WordPressNotificationContentExtension-Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -5027,7 +4979,7 @@
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "WordPressNotificationContentExtension/Info-Alpha.plist";
+				INFOPLIST_FILE = "WordPressNotificationContentExtension/Supporting Files/Info-Alpha.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
