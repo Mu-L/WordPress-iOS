@@ -195,6 +195,10 @@
 		223EA61E212A7C26A456C32C /* Pods_JetpackDraftActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430F7B409FE22699ADB1A724 /* Pods_JetpackDraftActionExtension.framework */; };
 		24351254264DCA08009BB2B6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24351253264DCA08009BB2B6 /* Secrets.swift */; };
 		24351255264DCA08009BB2B6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24351253264DCA08009BB2B6 /* Secrets.swift */; };
+		24F6E6EA2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F6E6E92CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift */; };
+		24F6E6EB2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F6E6E92CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift */; };
+		24F6E6EC2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F6E6E92CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift */; };
+		24F6E6ED2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F6E6E92CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift */; };
 		296890780FE971DC00770264 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 296890770FE971DC00770264 /* Security.framework */; };
 		2FAE97090E33B21600CA8540 /* defaultPostTemplate_old.html in Resources */ = {isa = PBXBuildFile; fileRef = 2FAE97040E33B21600CA8540 /* defaultPostTemplate_old.html */; };
 		2FAE970C0E33B21600CA8540 /* xhtml1-transitional.dtd in Resources */ = {isa = PBXBuildFile; fileRef = 2FAE97070E33B21600CA8540 /* xhtml1-transitional.dtd */; };
@@ -280,7 +284,6 @@
 		74021A07202E1307006CC39F /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AC1DA0200D0CC300973CAD /* UINavigationController+Extensions.swift */; };
 		74021A09202E1323006CC39F /* ShareSegueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745EAF442003FD050066F415 /* ShareSegueHandler.swift */; };
 		74021A0A202E1329006CC39F /* AppExtensionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FA2EE3200E8A6C001DDC13 /* AppExtensionsService.swift */; };
-		74021A0B202E1330006CC39F /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */; };
 		74021A0C202E1338006CC39F /* ShareExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CE41641E8D101A000CF5A4 /* ShareExtractor.swift */; };
 		74021A0D202E133D006CC39F /* ShareMediaFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7430C4481F97F23600E2673E /* ShareMediaFileManager.swift */; };
 		74021A0E202E1358006CC39F /* Tracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA22821C99F6180016CA7C /* Tracks.swift */; };
@@ -359,7 +362,6 @@
 		809620D228E540D700940A5D /* UploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741E22441FC0CC55007967AB /* UploadOperation.swift */; };
 		809620D328E540D700940A5D /* TextBundleWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EE90EE223B1028006A33E9 /* TextBundleWrapper.m */; };
 		809620D428E540D700940A5D /* ShareNoticeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EA3B87202A0462004F802D /* ShareNoticeConstants.swift */; };
-		809620D528E540D700940A5D /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */; };
 		809620D628E540D700940A5D /* ShareExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CE41641E8D101A000CF5A4 /* ShareExtractor.swift */; };
 		809620D928E540D700940A5D /* ShareTagsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747F88C0203778E000523C7C /* ShareTagsPickerViewController.swift */; };
 		809620DA28E540D700940A5D /* ShareCategoriesPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7414A140203CBADF005A7D9B /* ShareCategoriesPickerViewController.swift */; };
@@ -421,7 +423,6 @@
 		8096215A28E55C9400940A5D /* ExtensionTransitioningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74402F2B2005337D00A1D4A2 /* ExtensionTransitioningManager.swift */; };
 		8096215B28E55C9400940A5D /* WordPressDraft-Lumberjack.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E44AD72031ED2300556205 /* WordPressDraft-Lumberjack.m */; };
 		8096215C28E55C9400940A5D /* Tracks+DraftAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741AF3A4202F3E2A00C771A5 /* Tracks+DraftAction.swift */; };
-		8096215E28E55C9400940A5D /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */; };
 		8096216128E55C9400940A5D /* ShareData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745EAF4920040B220066F415 /* ShareData.swift */; };
 		8096216328E55C9400940A5D /* MainShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74337EDC20054D5500777997 /* MainShareViewController.swift */; };
 		8096216628E55C9400940A5D /* ShareModularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6787F41FFF2886005D9F01 /* ShareModularViewController.swift */; };
@@ -479,7 +480,6 @@
 		A01C55480E25E0D000D411F2 /* defaultPostTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = A01C55470E25E0D000D411F2 /* defaultPostTemplate.html */; };
 		A1C54EBE8C34FFD5015F8FC9 /* Pods_Apps_WordPress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E826CD5B4B116AF78FF391C /* Pods_Apps_WordPress.framework */; };
 		A2C95CCF203760D9372C5857 /* Pods_WordPressDraftActionExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B40A77F0765C1E93B11727 /* Pods_WordPressDraftActionExtension.framework */; };
-		B50248AF1C96FF6200AFBDED /* WPStyleGuide+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */; };
 		B50248C21C96FFCC00AFBDED /* WordPressShare-Lumberjack.m in Sources */ = {isa = PBXBuildFile; fileRef = B50248BC1C96FFCC00AFBDED /* WordPressShare-Lumberjack.m */; };
 		B504F5F51C9C2BD000F8B1C6 /* Tracks+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B504F5F41C9C2BD000F8B1C6 /* Tracks+ShareExtension.swift */; };
 		B51535D41BBB16AA0029B84B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51535D31BBB16AA0029B84B /* Launch Screen.storyboard */; };
@@ -1307,6 +1307,7 @@
 		24B54FAE2624F8430041B18E /* JetpackRelease-Alpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "JetpackRelease-Alpha.entitlements"; sourceTree = "<group>"; };
 		24B54FAF2624F84C0041B18E /* JetpackRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JetpackRelease.entitlements; sourceTree = "<group>"; };
 		24B54FB02624F8690041B18E /* JetpackDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JetpackDebug.entitlements; sourceTree = "<group>"; };
+		24F6E6E92CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WPStyleGuide+Share.swift"; sourceTree = "<group>"; };
 		28A0AAE50D9B0CCF005BE974 /* WordPress_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordPress_Prefix.pch; sourceTree = "<group>"; };
 		293E283D7339E7B6D13F6E09 /* Pods-JetpackShareExtension.release-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JetpackShareExtension.release-internal.xcconfig"; path = "../Pods/Target Support Files/Pods-JetpackShareExtension/Pods-JetpackShareExtension.release-internal.xcconfig"; sourceTree = "<group>"; };
 		296890770FE971DC00770264 /* Security.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1508,8 +1509,8 @@
 		9371F2651E4A213300BF26A0 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9371F2691E4A23A200BF26A0 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
 		93A3F7DD1843F6F00082FEEA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		93C3C2561CAB031E0092F837 /* Info-Internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Info-Internal.plist"; path = "WordPressShareExtension/Info-Internal.plist"; sourceTree = SOURCE_ROOT; };
-		93C3C2581CAB032C0092F837 /* Info-Alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Info-Alpha.plist"; path = "WordPressShareExtension/Info-Alpha.plist"; sourceTree = SOURCE_ROOT; };
+		93C3C2561CAB031E0092F837 /* Info-Internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
+		93C3C2581CAB032C0092F837 /* Info-Alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Alpha.plist"; sourceTree = "<group>"; };
 		93D86B931C63EC31003D8E3E /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		93D86B941C63EC31003D8E3E /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		93E5283B19A7741A003A1A9C /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -1528,21 +1529,20 @@
 		A20971B519B0BC390058F395 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		A20971B719B0BC570058F395 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A20971B819B0BC570058F395 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WPStyleGuide+Share.swift"; path = "WordPressShareExtension/WPStyleGuide+Share.swift"; sourceTree = SOURCE_ROOT; };
-		B50248B81C96FFB000AFBDED /* WordPressShare-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WordPressShare-Bridging-Header.h"; path = "WordPressShareExtension/WordPressShare-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		B50248B91C96FFCC00AFBDED /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WordPressShareExtension/Info.plist; sourceTree = SOURCE_ROOT; };
-		B50248BA1C96FFCC00AFBDED /* WordPressShare-Alpha.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "WordPressShare-Alpha.entitlements"; path = "WordPressShareExtension/WordPressShare-Alpha.entitlements"; sourceTree = SOURCE_ROOT; };
-		B50248BB1C96FFCC00AFBDED /* WordPressShare-Internal.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "WordPressShare-Internal.entitlements"; path = "WordPressShareExtension/WordPressShare-Internal.entitlements"; sourceTree = SOURCE_ROOT; };
-		B50248BC1C96FFCC00AFBDED /* WordPressShare-Lumberjack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WordPressShare-Lumberjack.m"; path = "WordPressShareExtension/WordPressShare-Lumberjack.m"; sourceTree = SOURCE_ROOT; };
-		B50248BD1C96FFCC00AFBDED /* WordPressShare.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = WordPressShare.entitlements; path = WordPressShareExtension/WordPressShare.entitlements; sourceTree = SOURCE_ROOT; };
-		B50248BE1C96FFCC00AFBDED /* WordPressSharePrefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WordPressSharePrefix.pch; path = WordPressShareExtension/WordPressSharePrefix.pch; sourceTree = SOURCE_ROOT; };
-		B504F5F41C9C2BD000F8B1C6 /* Tracks+ShareExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tracks+ShareExtension.swift"; sourceTree = SOURCE_ROOT; };
+		B50248B81C96FFB000AFBDED /* WordPressShare-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WordPressShare-Bridging-Header.h"; sourceTree = "<group>"; };
+		B50248B91C96FFCC00AFBDED /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B50248BA1C96FFCC00AFBDED /* WordPressShare-Alpha.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "WordPressShare-Alpha.entitlements"; sourceTree = "<group>"; };
+		B50248BB1C96FFCC00AFBDED /* WordPressShare-Internal.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "WordPressShare-Internal.entitlements"; sourceTree = "<group>"; };
+		B50248BC1C96FFCC00AFBDED /* WordPressShare-Lumberjack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WordPressShare-Lumberjack.m"; sourceTree = "<group>"; };
+		B50248BD1C96FFCC00AFBDED /* WordPressShare.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WordPressShare.entitlements; sourceTree = "<group>"; };
+		B50248BE1C96FFCC00AFBDED /* WordPressSharePrefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordPressSharePrefix.pch; sourceTree = "<group>"; };
+		B504F5F41C9C2BD000F8B1C6 /* Tracks+ShareExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tracks+ShareExtension.swift"; sourceTree = "<group>"; };
 		B51535D31BBB16AA0029B84B /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		B5552D7D1CD101A600B26DF6 /* NSExtensionContext+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSExtensionContext+Extensions.swift"; path = "WordPressShareExtension/NSExtensionContext+Extensions.swift"; sourceTree = SOURCE_ROOT; };
-		B5552D7F1CD1028C00B26DF6 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Extensions.swift"; path = "WordPressShareExtension/String+Extensions.swift"; sourceTree = SOURCE_ROOT; };
+		B5552D7D1CD101A600B26DF6 /* NSExtensionContext+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSExtensionContext+Extensions.swift"; sourceTree = "<group>"; };
+		B5552D7F1CD1028C00B26DF6 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B5AA54D41A8E7510003BDD12 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		B5FA22821C99F6180016CA7C /* Tracks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tracks.swift; path = WordPressShareExtension/Tracks.swift; sourceTree = SOURCE_ROOT; wrapsLines = 0; };
-		B5FA868A1D10A41600AB5F7E /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Extensions.swift"; path = "WordPressShareExtension/UIImage+Extensions.swift"; sourceTree = SOURCE_ROOT; };
+		B5FA22821C99F6180016CA7C /* Tracks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracks.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		B5FA868A1D10A41600AB5F7E /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		B7556D1D8CFA5CEAEAC481B9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B921F5DD9A1F257C792EC225 /* Pods_WordPressTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WordPressTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA98A42A5503D734AC9C936 /* Pods-Apps-WordPress.release-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apps-WordPress.release-internal.xcconfig"; path = "../Pods/Target Support Files/Pods-Apps-WordPress/Pods-Apps-WordPress.release-internal.xcconfig"; sourceTree = "<group>"; };
@@ -1620,8 +1620,8 @@
 		E19853331755E461001CC6D5 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E1A386C714DB05C300954CF8 /* AVFoundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E1A386C914DB05F700954CF8 /* CoreMedia.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		E1AFA8C21E8E34230004A323 /* WordPressShare.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = WordPressShare.js; path = WordPressShareExtension/WordPressShare.js; sourceTree = SOURCE_ROOT; };
-		E1CE41641E8D101A000CF5A4 /* ShareExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareExtractor.swift; path = WordPressShareExtension/ShareExtractor.swift; sourceTree = SOURCE_ROOT; };
+		E1AFA8C21E8E34230004A323 /* WordPressShare.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WordPressShare.js; sourceTree = "<group>"; };
+		E1CE41641E8D101A000CF5A4 /* ShareExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareExtractor.swift; sourceTree = "<group>"; };
 		E1D91455134A853D0089019C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E1D91457134A854A0089019C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E1E977BC17B0FA9A00AFB867 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3273,7 +3273,7 @@
 				CB48172926E0D93D008C2D9B /* SharePostTypePickerViewController.swift */,
 				745EAF4920040B220066F415 /* ShareData.swift */,
 			);
-			name = "Shared UI";
+			path = "Shared UI";
 			sourceTree = "<group>";
 		};
 		741AF3A3202F3DFC00C771A5 /* Tracks */ = {
@@ -3287,9 +3287,9 @@
 		741D1478200D5533003DFD30 /* Style */ = {
 			isa = PBXGroup;
 			children = (
-				B50248AE1C96FF6200AFBDED /* WPStyleGuide+Share.swift */,
+				24F6E6E92CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift */,
 			);
-			name = Style;
+			path = Style;
 			sourceTree = "<group>";
 		};
 		7430C4471F97F0DA00E2673E /* UI */ = {
@@ -3299,7 +3299,7 @@
 				740C7C4E202F4CD6001C31B0 /* MainInterface.storyboard */,
 				74337EDC20054D5500777997 /* MainShareViewController.swift */,
 			);
-			name = UI;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		74402F2F2005346100A1D4A2 /* Presentation */ = {
@@ -3309,7 +3309,7 @@
 				74402F29200528F200A1D4A2 /* ExtensionPresentationController.swift */,
 				74402F2D2005344700A1D4A2 /* ExtensionPresentationAnimator.swift */,
 			);
-			name = Presentation;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		74576673202B558C00F42E40 /* WordPressDraftActionExtension */ = {
@@ -3344,7 +3344,7 @@
 			children = (
 				745EAF442003FD050066F415 /* ShareSegueHandler.swift */,
 			);
-			name = Protocols;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		7462BFD22028CD0500B552D8 /* Notices */ = {
@@ -3355,7 +3355,7 @@
 				7462BFCF2028C49800B552D8 /* ShareNoticeViewModel.swift */,
 				7462BFD32028CD4400B552D8 /* ShareNoticeNavigationCoordinator.swift */,
 			);
-			name = Notices;
+			path = Notices;
 			sourceTree = "<group>";
 		};
 		74FA2EE2200E8A1D001DDC13 /* Services */ = {
@@ -3363,7 +3363,7 @@
 			children = (
 				74FA2EE3200E8A6C001DDC13 /* AppExtensionsService.swift */,
 			);
-			name = Services;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		74FA4BDB1FBF994F0031EAAD /* Data */ = {
@@ -3376,7 +3376,7 @@
 				740C7DB220386E5700FF0229 /* EXTENSION_MIGRATIONS.md */,
 				74FA4BE31FBFA0660031EAAD /* Extensions.xcdatamodeld */,
 			);
-			name = Data;
+			path = Data;
 			sourceTree = "<group>";
 		};
 		801D94F4291AB36A0051993E /* Lottie Animations */ = {
@@ -3472,7 +3472,7 @@
 				74CEF0761F9AA0F700B729CA /* ShareExtensionSessionManager.swift */,
 				74448F532044BC7600BD4CDA /* CategoryTree.swift */,
 			);
-			name = Tools;
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		B565D41C3DB27630CD503F9A /* Pods */ = {
@@ -3523,7 +3523,7 @@
 				B50248BE1C96FFCC00AFBDED /* WordPressSharePrefix.pch */,
 				4A690C202BA7974E00A8E0C5 /* PrivacyInfo.xcprivacy */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B5FA22841C99F6340016CA7C /* Tracks */ = {
@@ -3533,7 +3533,7 @@
 				B504F5F41C9C2BD000F8B1C6 /* Tracks+ShareExtension.swift */,
 				01CE5006290A889F00A9C2E0 /* TracksConfiguration.swift */,
 			);
-			name = Tracks;
+			path = Tracks;
 			sourceTree = "<group>";
 		};
 		B5FA22851C99F63B0016CA7C /* Extensions */ = {
@@ -3547,7 +3547,7 @@
 				CE39E17120CB117B00CABA05 /* RemoteBlog+Capabilities.swift */,
 				CBF6201226E8FB520061A1F8 /* RemotePost+ShareData.swift */,
 			);
-			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		BE2B4E991FD6640E007AE3E4 /* Screens */ = {
@@ -5829,6 +5829,7 @@
 				74021A05202E1307006CC39F /* UIImage+Extensions.swift in Sources */,
 				74021A0D202E133D006CC39F /* ShareMediaFileManager.swift in Sources */,
 				CB1FD8D826E4BBAA00EDAF06 /* SharePostTypePickerViewController.swift in Sources */,
+				24F6E6ED2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */,
 				74E44AD52031E83C00556205 /* ExtensionNotificationManager.swift in Sources */,
 				74448F552044BC7600BD4CDA /* CategoryTree.swift in Sources */,
 				74021A09202E1323006CC39F /* ShareSegueHandler.swift in Sources */,
@@ -5840,7 +5841,6 @@
 				01CE5008290A88BD00A9C2E0 /* TracksConfiguration.swift in Sources */,
 				74E44AD92031ED2300556205 /* WordPressDraft-Lumberjack.m in Sources */,
 				741AF3A5202F3E2A00C771A5 /* Tracks+DraftAction.swift in Sources */,
-				74021A0B202E1330006CC39F /* WPStyleGuide+Share.swift in Sources */,
 				74021A16202E139A006CC39F /* ShareData.swift in Sources */,
 				F5EF481723ABCAD8004C3532 /* MainShareViewController.swift in Sources */,
 				74021A15202E1397006CC39F /* ShareModularViewController.swift in Sources */,
@@ -5861,7 +5861,6 @@
 				809620D228E540D700940A5D /* UploadOperation.swift in Sources */,
 				809620D328E540D700940A5D /* TextBundleWrapper.m in Sources */,
 				809620D428E540D700940A5D /* ShareNoticeConstants.swift in Sources */,
-				809620D528E540D700940A5D /* WPStyleGuide+Share.swift in Sources */,
 				809620D628E540D700940A5D /* ShareExtractor.swift in Sources */,
 				809620D928E540D700940A5D /* ShareTagsPickerViewController.swift in Sources */,
 				809620DA28E540D700940A5D /* ShareCategoriesPickerViewController.swift in Sources */,
@@ -5876,6 +5875,7 @@
 				809620EA28E540D700940A5D /* ExtensionTransitioningManager.swift in Sources */,
 				809620EB28E540D700940A5D /* MainShareViewController.swift in Sources */,
 				809620EC28E540D700940A5D /* SharePostTypePickerViewController.swift in Sources */,
+				24F6E6EB2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */,
 				809620EF28E540D700940A5D /* ExtensionPresentationAnimator.swift in Sources */,
 				809620F328E540D700940A5D /* SharedCoreDataStack.swift in Sources */,
 				809620F428E540D700940A5D /* ShareExtensionAbstractViewController.swift in Sources */,
@@ -5921,6 +5921,7 @@
 				8096214D28E55C9400940A5D /* SharePostTypePickerViewController.swift in Sources */,
 				8096215028E55C9400940A5D /* ExtensionNotificationManager.swift in Sources */,
 				8096215128E55C9400940A5D /* CategoryTree.swift in Sources */,
+				24F6E6EA2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */,
 				8096215328E55C9400940A5D /* ShareSegueHandler.swift in Sources */,
 				8096215428E55C9400940A5D /* SharedCoreDataStack.swift in Sources */,
 				8096215628E55C9400940A5D /* ShareExtensionEditorViewController.swift in Sources */,
@@ -5931,7 +5932,6 @@
 				8031F347292FF46200E8F95E /* ExtensionConfiguration.swift in Sources */,
 				01CE5014290A890E00A9C2E0 /* TracksConfiguration.swift in Sources */,
 				8096215C28E55C9400940A5D /* Tracks+DraftAction.swift in Sources */,
-				8096215E28E55C9400940A5D /* WPStyleGuide+Share.swift in Sources */,
 				8096216128E55C9400940A5D /* ShareData.swift in Sources */,
 				8096216328E55C9400940A5D /* MainShareViewController.swift in Sources */,
 				8096216628E55C9400940A5D /* ShareModularViewController.swift in Sources */,
@@ -5986,7 +5986,6 @@
 				741E224B1FC0E5C0007967AB /* UploadOperation.swift in Sources */,
 				43EE90EF223B1029006A33E9 /* TextBundleWrapper.m in Sources */,
 				74EA3B89202A0462004F802D /* ShareNoticeConstants.swift in Sources */,
-				B50248AF1C96FF6200AFBDED /* WPStyleGuide+Share.swift in Sources */,
 				E1CE41661E8D1026000CF5A4 /* ShareExtractor.swift in Sources */,
 				747F88C1203778E000523C7C /* ShareTagsPickerViewController.swift in Sources */,
 				7414A141203CBAE0005A7D9B /* ShareCategoriesPickerViewController.swift in Sources */,
@@ -5999,6 +5998,7 @@
 				E125F1E51E8E596200320B67 /* SharePost.swift in Sources */,
 				745EAF4A20040B220066F415 /* ShareData.swift in Sources */,
 				74402F2C2005337D00A1D4A2 /* ExtensionTransitioningManager.swift in Sources */,
+				24F6E6EC2CD3F7B400AAB1A3 /* WPStyleGuide+Share.swift in Sources */,
 				74337EDD20054D5500777997 /* MainShareViewController.swift in Sources */,
 				CB48172A26E0D93D008C2D9B /* SharePostTypePickerViewController.swift in Sources */,
 				74402F2E2005344700A1D4A2 /* ExtensionPresentationAnimator.swift in Sources */,
@@ -8020,7 +8020,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = WordPressShareExtension/WordPressShare.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare.entitlements";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -8029,7 +8029,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"DEBUG=1",
@@ -8090,7 +8090,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = WordPressShareExtension/WordPressShare.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -8099,7 +8099,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"WPCOM_SCHEME=\\@\\\"${WPCOM_SCHEME}\\\"",
@@ -8157,7 +8157,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/WordPressShare-Internal.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare-Internal.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -8166,7 +8166,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					INTERNAL_BUILD,
@@ -8226,7 +8226,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/WordPressShare-Alpha.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare-Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -8235,7 +8235,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					ALPHA_BUILD,
@@ -9042,7 +9042,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = WordPressShareExtension/WordPressShare.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare.entitlements";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -9051,7 +9051,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"DEBUG=1",
@@ -9071,7 +9071,7 @@
 					"\"${PODS_ROOT}/Headers/Public/HockeySDK\"",
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 				);
-				INFOPLIST_FILE = WordPressShareExtension/Info.plist;
+				INFOPLIST_FILE = "WordPressShareExtension/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9111,7 +9111,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = WordPressShareExtension/WordPressShare.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -9120,7 +9120,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"WPCOM_SCHEME=\\@\\\"${WPCOM_SCHEME}\\\"",
@@ -9139,7 +9139,7 @@
 					"\"${PODS_ROOT}/Headers/Public/HockeySDK\"",
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 				);
-				INFOPLIST_FILE = WordPressShareExtension/Info.plist;
+				INFOPLIST_FILE = "WordPressShareExtension/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9177,7 +9177,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/WordPressShare-Internal.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare-Internal.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -9186,7 +9186,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					INTERNAL_BUILD,
@@ -9206,7 +9206,7 @@
 					"\"${PODS_ROOT}/Headers/Public/HockeySDK\"",
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 				);
-				INFOPLIST_FILE = "WordPressShareExtension/Info-Internal.plist";
+				INFOPLIST_FILE = "WordPressShareExtension/Supporting Files/Info-Internal.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9245,7 +9245,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/WordPressShare-Alpha.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "WordPressShareExtension/Supporting Files/WordPressShare-Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -9254,7 +9254,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WordPressShareExtension/WordPressSharePrefix.pch;
+				GCC_PREFIX_HEADER = "WordPressShareExtension/Supporting Files/WordPressSharePrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					ALPHA_BUILD,
@@ -9274,7 +9274,7 @@
 					"\"${PODS_ROOT}/Headers/Public/HockeySDK\"",
 					"\"$(SDKROOT)/usr/include/libxml2/\"",
 				);
-				INFOPLIST_FILE = "WordPressShareExtension/Info-Alpha.plist";
+				INFOPLIST_FILE = "WordPressShareExtension/Supporting Files/Info-Alpha.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
