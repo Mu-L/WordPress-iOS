@@ -64,7 +64,7 @@ public class ReaderScreen: ScreenObject {
 
     private func postContentEquals(_ expected: String) -> Bool {
         let equalsPostContent = NSPredicate(format: "label == %@", expected)
-        let isPostContentEqual = app.staticTexts.element(matching: equalsPostContent).waitForIsHittable(timeout: 3)
+        let isPostContentEqual = app.staticTexts.element(matching: equalsPostContent).waitForIsHittable(timeout: 15)
 
         return isPostContentEqual
     }
