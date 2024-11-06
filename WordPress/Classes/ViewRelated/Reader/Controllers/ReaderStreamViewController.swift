@@ -193,6 +193,8 @@ import AutomatticTracks
         }
     }
 
+    private var isTabBarHidden = false
+
     private var emptyStateView: UIView? {
         didSet {
             oldValue?.removeFromSuperview()
@@ -337,6 +339,7 @@ import AutomatticTracks
         super.viewWillDisappear(animated)
 
         dismissNoNetworkAlert()
+        setTabBarHidden(false)
     }
 
     override func viewDidLayoutSubviews() {
@@ -1710,6 +1713,18 @@ extension ReaderStreamViewController: UITableViewDelegate, JPScrollViewDelegate 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         processJetpackBannerVisibility(scrollView)
         $titleView.value?.updateAlpha(in: scrollView)
+
+        let translation = scrollView.panGestureRecognizer.translation(in: scrollView).y
+        setTabBarHidden(translation < 0)
+    }
+
+    private func setTabBarHidden(_ isHidden: Bool) {
+        guard isTabBarHidden != isHidden else { return }
+        isTabBarHidden = isHidden
+        let tabBar = tabBarController?.tabBar
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.beginFromCurrentState, .allowUserInteraction]) {
+            tabBar?.alpha = isHidden ? 0 : 1
+        }
     }
 }
 
