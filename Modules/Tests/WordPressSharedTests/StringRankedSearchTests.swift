@@ -66,6 +66,35 @@ final class StringRankedSearchTests: XCTestCase {
         XCTAssertLessThan(score("john-appleseed-xxxx", "project"), score("john-appleseed", "project"))
     }
 
+    func testSearchBeginingOrEnd() {
+        XCTAssertEqual(score("AB00", "AB"), score("ABXX", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("4200", "42"), score("42XX", "42"), accuracy: 0.1)
+
+        XCTAssertEqual(score("00AB", "AB"), score("XXAB", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("0042", "42"), score("XX42", "42"), accuracy: 0.1)
+
+        XCTAssertEqual(score("AB_00", "AB"), score("AB_XX", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("42_00", "42"), score("42_XX", "42"), accuracy: 0.1)
+
+        XCTAssertEqual(score("00_AB", "AB"), score("XX_AB", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("00_42", "42"), score("XX_42", "42"), accuracy: 0.1)
+
+        XCTAssertEqual(score("AB/00", "AB"), score("AB/XX", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("42/00", "42"), score("42/XX", "42"), accuracy: 0.1)
+
+        XCTAssertEqual(score("00/AB", "AB"), score("XX/AB", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("00/42", "42"), score("XX/42", "42"), accuracy: 0.1)
+    }
+
+    func testCompareSearchNumbersAndLetters() {
+        XCTAssertEqual(score("42XX", "42"), score("ABXX", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("0042", "42"), score("XXAB", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("42_00", "42"), score("AB_XX", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("00_42", "42"), score("XX_AB", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("42/00", "42"), score("AB/XX", "AB"), accuracy: 0.1)
+        XCTAssertEqual(score("00/42", "42"), score("XX/AB", "AB"), accuracy: 0.1)
+    }
+
     func xtestPerformance() throws {
         measure {
             for _ in 0..<10000 {
