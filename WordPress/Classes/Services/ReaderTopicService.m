@@ -106,7 +106,6 @@
 - (void)deleteAllTopics
 {
     [self.coreDataStack performAndSaveUsingBlock:^(NSManagedObjectContext *context) {
-        [self setCurrentTopic:nil];
         NSArray *currentTopics = [ReaderAbstractTopic lookupAllInContext:context error:nil];
         for (ReaderAbstractTopic *topic in currentTopics) {
             DDLogInfo(@"Deleting topic: %@", topic.title);
@@ -235,8 +234,6 @@
             NSDictionary *properties = @{@"tag":topicName, @"source":source};
             [WPAnalytics trackReaderStat:WPAnalyticsStatReaderTagFollowed properties:properties];
             [self.coreDataStack performAndSaveUsingBlock:^(NSManagedObjectContext *context) {
-                [self selectTopicWithID:topicID inContext:context];
-
                 // mark tag topic as followed
                 ReaderTagTopic *tag = [ReaderTagTopic lookupWithTagID:topicID inContext:context];
                 if (tag) {
@@ -525,16 +522,6 @@
         api = [self apiForRequestInContext:context];
     }];
     return api;
-}
-
-/**
- Finds an existing topic matching the specified topicID and, if found, makes it the
- selected topic.
- */
-- (void)selectTopicWithID:(NSNumber *)topicID inContext:(NSManagedObjectContext *)context
-{
-    ReaderAbstractTopic *topic = [ReaderTagTopic lookupWithTagID:topicID inContext:context];
-    [self setCurrentTopic:topic];
 }
 
 /**

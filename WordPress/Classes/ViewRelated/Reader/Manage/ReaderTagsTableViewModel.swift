@@ -181,15 +181,8 @@ extension ReaderTagsTableViewModel {
         let generator = UINotificationFeedbackGenerator()
         generator.prepare()
 
-        service.followTagNamed(tagName, withSuccess: { [weak self] in
+        service.followTagNamed(tagName, withSuccess: {
             generator.notificationOccurred(.success)
-
-            guard let self else { return }
-
-            // A successful follow makes the new tag the currentTopic.
-            if let tag = service.currentTopic(in: self.context) as? ReaderTagTopic {
-                self.scrollToTag(tag)
-            }
         }, failure: { (error) in
             DDLogError("Could not follow topic named \(tagName) : \(String(describing: error))")
 
@@ -218,17 +211,6 @@ extension ReaderTagsTableViewModel {
             alert.addCancelActionWithTitle(NSLocalizedString("OK", comment: "Button title. An acknowledgement of the message displayed in a prompt."))
             alert.presentFromRootViewController()
         }
-    }
-
-    /// Scrolls the tableView so the specified tag is in view and flashes that row
-    ///
-    /// - Parameters:
-    ///     - tag: The tag to scroll into view.
-    private func scrollToTag(_ tag: ReaderTagTopic) {
-        guard let indexPath = tableViewHandler.resultsController?.indexPath(forObject: tag) else {
-            return
-        }
-        tableView?.flashRowAtIndexPath(tableViewHandler.adjustedToTable(indexPath: indexPath), scrollPosition: .middle, completion: {})
     }
 }
 
