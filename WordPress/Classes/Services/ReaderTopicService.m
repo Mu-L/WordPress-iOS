@@ -10,9 +10,6 @@
 @import WordPressKit;
 @import WordPressShared;
 
-NSString * const ReaderTopicFreshlyPressedPathCommponent = @"freshly-pressed";
-static NSString * const ReaderTopicCurrentTopicPathKey = @"ReaderTopicCurrentTopicPathKey";
-
 @implementation ReaderTopicService
 
 - (void)fetchReaderMenuWithSuccess:(void (^)(void))success failure:(void (^)(NSError *error))failure
@@ -41,73 +38,6 @@ static NSString * const ReaderTopicCurrentTopicPathKey = @"ReaderTopicCurrentTop
 
         } failure:failure];
     } completion:nil onQueue:dispatch_get_main_queue()];
-}
-
-- (ReaderAbstractTopic *)currentTopicInContext:(NSManagedObjectContext *)context
-{
-    ReaderAbstractTopic *topic;
-    topic = [self currentTopicFromSavedPathInContext:context];
-
-    if (!topic) {
-        topic = [self currentTopicFromDefaultTopicInContext:context];
-        [self setCurrentTopic:topic];
-    }
-
-    return topic;
-}
-
-- (ReaderAbstractTopic *)currentTopicFromSavedPathInContext:(NSManagedObjectContext *)context
-{
-    ReaderAbstractTopic *topic;
-    NSString *topicPathString = [[UserPersistentStoreFactory userDefaultsInstance] stringForKey:ReaderTopicCurrentTopicPathKey];
-    if (topicPathString) {
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[ReaderAbstractTopic classNameWithoutNamespaces]];
-        request.predicate = [NSPredicate predicateWithFormat:@"path = %@", topicPathString];
-
-        NSError *error;
-        topic = [[context executeFetchRequest:request error:&error] firstObject];
-        if (error) {
-            DDLogError(@"%@ error fetching topic: %@", NSStringFromSelector(_cmd), error);
-        }
-    }
-    return topic;
-}
-
-- (ReaderAbstractTopic *)currentTopicFromDefaultTopicInContext:(NSManagedObjectContext *)context
-{
-    // Return the default topic
-    ReaderAbstractTopic *topic;
-    NSError *error;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[ReaderDefaultTopic classNameWithoutNamespaces]];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    request.sortDescriptors = @[sortDescriptor];
-    NSArray *topics = [context executeFetchRequest:request error:&error];
-    if (error) {
-        DDLogError(@"%@ error fetching topic: %@", NSStringFromSelector(_cmd), error);
-        return nil;
-    }
-
-    if ([topics count] == 0) {
-        return nil;
-    }
-
-    NSArray *matches = [topics filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"path CONTAINS[cd] %@", ReaderTopicFreshlyPressedPathCommponent]];
-    if ([matches count]) {
-        topic = matches[0];
-    } else {
-        topic = topics[0];
-    }
-
-    return topic;
-}
-
-- (void)setCurrentTopic:(ReaderAbstractTopic *)topic
-{
-    if (!topic) {
-        [[UserPersistentStoreFactory userDefaultsInstance] removeObjectForKey:ReaderTopicCurrentTopicPathKey];
-    } else {
-        [[UserPersistentStoreFactory userDefaultsInstance] setObject:topic.path forKey:ReaderTopicCurrentTopicPathKey];
-    }
 }
 
 - (void)deleteAllSearchTopics
@@ -862,10 +792,7 @@ array are marked as being unfollowed in Core Data.
         if ([currentTopics count] > 0) {
             for (ReaderAbstractTopic *topic in currentTopics) {
                 if (![topic isKindOfClass:[ReaderSiteTopic class]] && ![topicsToKeep containsObject:topic]) {
-                    
-                    if ([topic isEqual:[self currentTopicInContext:context]]) {
-                        self.currentTopic = nil;
-                    }
+
                     if (topic.inUse) {
                         if (!ReaderHelpers.isLoggedIn && [topic isKindOfClass:ReaderTagTopic.class]) {
                             DDLogInfo(@"Not unfollowing a locally saved topic: %@", topic.title);

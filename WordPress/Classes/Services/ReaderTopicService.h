@@ -1,18 +1,12 @@
 #import <Foundation/Foundation.h>
 #import "CoreDataService.h"
 
-extern NSString * const ReaderTopicFreshlyPressedPathCommponent;
-
 @class ReaderAbstractTopic;
 @class ReaderTagTopic;
 @class ReaderSiteTopic;
 @class ReaderSearchTopic;
 
 @interface ReaderTopicService : CoreDataService
-
-- (ReaderAbstractTopic *)currentTopicInContext:(NSManagedObjectContext *)context;
-
-- (void)setCurrentTopic:(ReaderAbstractTopic *)topic;
 
 /**
  Fetches the topics for the reader's menu.
