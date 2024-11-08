@@ -118,14 +118,14 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
     private func makeViewController(for screen: ReaderStaticScreen) -> UIViewController {
         switch screen {
         case .recent, .discover, .likes:
-            if let topic = screen.topicType.flatMap(sidebarViewModel.getTopic) {
-                if screen == .discover {
-                    return ReaderDiscoverViewController(topic: topic)
-                } else {
-                    return ReaderStreamViewController.controllerWithTopic(topic)
-                }
+            if screen == .discover {
+                return ReaderDiscoverViewController()
             } else {
-                return makeErrorViewController() // This should never happen
+                if let topic = screen.topicType.flatMap(sidebarViewModel.getTopic) {
+                    return ReaderStreamViewController.controllerWithTopic(topic)
+                } else {
+                    return makeErrorViewController() // This should never happen
+                }
             }
         case .saved:
             return ReaderStreamViewController.controllerForContentType(.saved)

@@ -7,7 +7,6 @@ import WordPressShared
 class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDelegate {
     private let headerView = ReaderDiscoverHeaderView()
     private var selectedChannel: ReaderDiscoverChannel = .recommended
-    private let topic: ReaderAbstractTopic
     private var streamVC: ReaderStreamViewController?
     private weak var selectInterestsVC: ReaderSelectInterestsViewController?
     private let selectInterestsCoordinator = ReaderSelectInterestsCoordinator()
@@ -15,10 +14,8 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
     private let viewContext: NSManagedObjectContext
     private var cancellables: [AnyCancellable] = []
 
-    init(topic: ReaderAbstractTopic) {
-        wpAssert(ReaderHelpers.topicIsDiscover(topic))
+    init() {
         self.viewContext = ContextManager.shared.mainContext
-        self.topic = topic
         self.tags = ManagedObjectsObserver(
             predicate: ReaderSidebarTagsSection.predicate,
             sortDescriptors: [SortDescriptor(\.title, order: .forward)],
@@ -40,6 +37,8 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
         configureStream(for: selectedChannel)
 
         showSelectInterestsIfNeeded()
+
+        WPAnalytics.trackReaderEvent(.readerDiscoverShown, properties: [:])
     }
 
     private func setupNavigation() {
@@ -66,22 +65,30 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
     // MARK: - Selected Stream
 
     private func configureStream(for channel: ReaderDiscoverChannel) {
-        showStreamViewController(makeViewController(for: channel))
+        do {
+            showStreamViewController(try makeViewController(for: channel))
+        } catch {
+            wpAssertionFailure("failed to show stream", userInfo: ["error": "\(error)"])
+        }
     }
 
-    private func makeViewController(for channel: ReaderDiscoverChannel) -> ReaderStreamViewController {
+    private func makeViewController(for channel: ReaderDiscoverChannel) throws -> ReaderStreamViewController {
         switch channel {
         case .recommended:
-            ReaderDiscoverStreamViewController(topic: topic)
+            ReaderDiscoverStreamViewController(topic: try makeTopic(path: .recommended))
         case .firstPosts:
-            ReaderDiscoverStreamViewController(topic: topic, stream: .firstPosts, sorting: .date)
+            ReaderDiscoverStreamViewController(topic: try makeTopic(path: .firstPosts), stream: .firstPosts, sorting: .date)
         case .latest:
-            ReaderDiscoverStreamViewController(topic: topic, sorting: .date)
+            ReaderDiscoverStreamViewController(topic: try makeTopic(path: .latest), sorting: .date)
         case .dailyPrompts:
             ReaderStreamViewController.controllerWithTagSlug(ReaderTagTopic.dailyPromptTag)
         case .tag(let tag):
             ReaderStreamViewController.controllerWithTopic(tag)
         }
+    }
+
+    private func makeTopic(path: ReaderDefaultTopic.Path) throws -> ReaderDefaultTopic {
+        try ReaderDefaultTopic.make(path: path, in: viewContext)
     }
 
     private func showStreamViewController(_ streamVC: ReaderStreamViewController) {

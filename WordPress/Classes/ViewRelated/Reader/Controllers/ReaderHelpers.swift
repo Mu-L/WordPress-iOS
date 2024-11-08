@@ -167,16 +167,11 @@ struct ReaderNotificationKeys {
         } else if isTopicSite(topic) {
             WPAnalytics.trackReader(.readerBlogPreviewed, properties: properties)
 
-        } else if isTopicDefault(topic) && topicIsDiscover(topic) {
-            // Tracks Discover only if it was one of the default menu items.
-            WPAnalytics.trackReaderEvent(.readerDiscoverShown, properties: properties)
-
         } else if isTopicList(topic) {
             stat = .readerListLoaded
 
         } else if isTopicTag(topic) {
             stat = .readerTagLoaded
-
         } else if let teamTopic = topic as? ReaderTeamTopic {
             WPAnalytics.trackReader(teamTopic.shownTrackEvent, properties: properties)
         }

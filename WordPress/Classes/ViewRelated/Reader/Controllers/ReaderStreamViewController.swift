@@ -215,11 +215,6 @@ import AutomatticTracks
     /// - Returns: An instance of the controller
     ///
     @objc class func controllerWithTopic(_ topic: ReaderAbstractTopic) -> ReaderStreamViewController {
-        // if a default discover topic is provided, treat it as a site to retrieve the header
-        if ReaderHelpers.topicIsDiscover(topic) {
-            return controllerWithSiteID(ReaderHelpers.discoverSiteID, isFeed: false)
-        }
-
         let controller = ReaderStreamViewController()
         controller.readerTopic = topic
         return controller
@@ -238,7 +233,6 @@ import AutomatticTracks
         let controller = ReaderStreamViewController()
         controller.isFeed = isFeed
         controller.siteID = siteID
-
         return controller
     }
 
