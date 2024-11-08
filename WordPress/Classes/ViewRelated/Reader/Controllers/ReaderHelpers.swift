@@ -106,17 +106,6 @@ struct ReaderNotificationKeys {
         return topic.isKind(of: ReaderSearchTopic.self)
     }
 
-    /// Check if the specified topic is for Freshly Pressed
-    ///
-    /// - Parameters:
-    ///     - topic: A ReaderAbstractTopic
-    ///
-    /// - Returns: True if the topic is for Freshly Pressed
-    ///
-    @objc open class func topicIsFreshlyPressed(_ topic: ReaderAbstractTopic) -> Bool {
-        return topic.path.hasSuffix("/freshly-pressed")
-    }
-
     /// Check if the specified topic is for Discover
     ///
     /// - Parameters:
@@ -155,10 +144,7 @@ struct ReaderNotificationKeys {
     class func trackLoadedTopic(_ topic: ReaderAbstractTopic, withProperties properties: [AnyHashable: Any]) {
         var stat: WPAnalyticsStat?
 
-        if topicIsFreshlyPressed(topic) {
-            stat = .readerFreshlyPressedLoaded
-
-        } else if topicIsFollowing(topic) {
+        if topicIsFollowing(topic) {
             WPAnalytics.trackReader(.readerFollowingShown, properties: properties)
 
         } else if topicIsLiked(topic) {
