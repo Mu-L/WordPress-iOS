@@ -106,17 +106,6 @@ struct ReaderNotificationKeys {
         return topic.isKind(of: ReaderSearchTopic.self)
     }
 
-    /// Check if the specified topic is for Discover
-    ///
-    /// - Parameters:
-    ///     - topic: A ReaderAbstractTopic
-    ///
-    /// - Returns: True if the topic is for Discover
-    ///
-    @objc open class func topicIsDiscover(_ topic: ReaderAbstractTopic) -> Bool {
-        return topic.path.contains("/read/sites/53424024/posts")
-    }
-
     /// Check if the specified topic is for Following
     ///
     /// - Parameters:
