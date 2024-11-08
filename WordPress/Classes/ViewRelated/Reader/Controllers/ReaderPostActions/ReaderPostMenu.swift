@@ -161,10 +161,10 @@ struct ReaderPostMenu {
         guard let topic else {
             return false
         }
-        return ReaderHelpers.isTopicTag(topic) ||
-            ReaderHelpers.topicIsDiscover(topic) ||
-            ReaderHelpers.topicIsFreshlyPressed(topic) ||
-            ReaderHelpers.topicIsFollowing(topic)
+        if ReaderHelpers.isTopicTag(topic) {
+            return true
+        }
+        return (topic is ReaderDefaultTopic) && !ReaderHelpers.topicIsLiked(topic)
     }
 
     // MARK: Helpers

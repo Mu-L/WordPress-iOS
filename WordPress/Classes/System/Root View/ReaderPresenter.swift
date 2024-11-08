@@ -117,15 +117,20 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
 
     private func makeViewController(for screen: ReaderStaticScreen) -> UIViewController {
         switch screen {
-        case .recent, .discover, .likes:
-            if screen == .discover {
-                return ReaderDiscoverViewController()
+        case .discover:
+            return ReaderDiscoverViewController()
+        case .recent:
+            // TODO: (tech debt) Fix an issue where this fails if opened before the menus are fetched for the first time
+            if let topic = sidebarViewModel.getRecentTopic() {
+                return ReaderStreamViewController.controllerWithTopic(topic)
             } else {
-                if let topic = screen.topicType.flatMap(sidebarViewModel.getTopic) {
-                    return ReaderStreamViewController.controllerWithTopic(topic)
-                } else {
-                    return makeErrorViewController() // This should never happen
-                }
+                return makeErrorViewController()
+            }
+        case .likes:
+            if let topic = sidebarViewModel.getLikesTopic() {
+                return ReaderStreamViewController.controllerWithTopic(topic)
+            } else {
+                return makeErrorViewController()
             }
         case .saved:
             return ReaderStreamViewController.controllerForContentType(.saved)

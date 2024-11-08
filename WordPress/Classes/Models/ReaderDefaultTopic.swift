@@ -25,7 +25,5 @@ import Foundation
         case recommended = "/jpios/discover/recommended"
         case firstPosts = "/jpios/discover/first-posts"
         case latest = "/jpios/discover/latest"
-        case recent = "/jpios/recent"
-        case liked = "/jpios/liked"
     }
 }

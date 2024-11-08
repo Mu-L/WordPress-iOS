@@ -34,6 +34,16 @@ final class ReaderSidebarViewModel: ObservableObject {
         }
     }
 
+    func getRecentTopic() -> ReaderAbstractTopic? {
+        try? ReaderAbstractTopic.lookupAllMenus(in: contextManager.mainContext)
+            .first(where: ReaderHelpers.topicIsFollowing)
+    }
+
+    func getLikesTopic() -> ReaderAbstractTopic? {
+        try? ReaderAbstractTopic.lookupAllMenus(in: contextManager.mainContext)
+            .first(where: ReaderHelpers.topicIsLiked)
+    }
+
     func getTopic(for topicType: ReaderTopicType) -> ReaderAbstractTopic? {
         return try? ReaderAbstractTopic.lookupAllMenus(in: contextManager.mainContext).first {
             ReaderHelpers.topicType($0) == topicType
