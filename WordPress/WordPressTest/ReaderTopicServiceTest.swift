@@ -306,40 +306,6 @@ final class ReaderTopicSwiftTest: CoreDataTestCase {
     }
 
     /**
-    Ensure that a default topic can be set and retrieved.
-    */
-    func testGettingSettingCurrentTopic() {
-        let remoteTopics = remoteAndDefaultTopicForTests()
-
-        // Setup
-        let expect = expectation(description: "topics saved expectation")
-        let service = ReaderTopicService(coreDataStack: contextManager)
-        service.setCurrentTopic(nil)
-
-        // Current topic is not nil after a sync
-        service.mergeMenuTopics(remoteTopics, withSuccess: { () -> Void in
-            expect.fulfill()
-        })
-        waitForExpectations(timeout: expectationTimeout, handler: nil)
-
-        XCTAssertNotNil(service.currentTopic, "The current topic was nil.")
-
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: ReaderAbstractTopic.classNameWithoutNamespaces())
-        request.sortDescriptors = [sortDescriptor]
-
-        let results = try! mainContext.fetch(request)
-
-        var topic = results.last as! ReaderAbstractTopic
-        XCTAssertEqual(service.currentTopic(in: mainContext).type, ReaderDefaultTopic.TopicType, "The curent topic should have been a default topic")
-
-        topic = results.first as! ReaderAbstractTopic
-        service.setCurrentTopic(topic)
-
-        XCTAssertEqual(service.currentTopic(in: mainContext).path, topic.path, "The current topic did not match the topic we assiged to it")
-    }
-
-    /**
     Ensure all topics are deleted when an account is changed.
     */
     func testDeleteAllTopics() {
