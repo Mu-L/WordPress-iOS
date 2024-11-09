@@ -44,12 +44,6 @@ final class ReaderSidebarViewModel: ObservableObject {
             .first(where: ReaderHelpers.topicIsLiked)
     }
 
-    func getTopic(for topicType: ReaderTopicType) -> ReaderAbstractTopic? {
-        return try? ReaderAbstractTopic.lookupAllMenus(in: contextManager.mainContext).first {
-            ReaderHelpers.topicType($0) == topicType
-        }
-    }
-
     func onAppear() {
         reloadMenuIfNeeded()
     }
@@ -114,16 +108,6 @@ enum ReaderStaticScreen: String, CaseIterable, Identifiable, Hashable {
         case .saved: "bookmark"
         case .likes: "star"
         case .search: "magnifyingglass"
-        }
-    }
-
-    var topicType: ReaderTopicType? {
-        switch self {
-        case .recent: .following
-        case .discover: .discover
-        case .saved: nil
-        case .likes: .likes
-        case .search: nil
         }
     }
 

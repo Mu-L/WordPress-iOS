@@ -230,38 +230,6 @@ struct ReaderNotificationKeys {
         Blog.lookup(withID: siteID, in: ContextManager.sharedInstance().mainContext)?.isAdmin ?? false
     }
 
-    // convenience method that returns the topic type
-    class func topicType(_ topic: ReaderAbstractTopic?) -> ReaderTopicType {
-        guard let topic = topic else {
-            return .noTopic
-        }
-        if topicIsDiscover(topic) {
-            return .discover
-        }
-        if topicIsFollowing(topic) {
-            return .following
-        }
-        if topicIsLiked(topic) {
-            return .likes
-        }
-        if isTopicList(topic) {
-            return .list
-        }
-        if isTopicSearchTopic(topic) {
-            return .search
-        }
-        if isTopicSite(topic) {
-            return .site
-        }
-        if isTopicTag(topic) {
-            return .tag
-        }
-        if topic is ReaderTeamTopic {
-            return .organization
-        }
-        return .noTopic
-    }
-
     // MARK: Logged in helper
 
     @objc open class func isLoggedIn() -> Bool {
@@ -495,19 +463,6 @@ struct ReaderNotificationKeys {
                 """
         )
     }
-}
-
-/// Typed topic type
-enum ReaderTopicType {
-    case discover
-    case following
-    case likes
-    case list
-    case search
-    case site
-    case tag
-    case organization
-    case noTopic
 }
 
 @objc enum SiteOrganizationType: Int {
