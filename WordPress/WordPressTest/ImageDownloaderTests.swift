@@ -125,6 +125,40 @@ class ImageDownloaderTests: CoreDataTestCase {
         XCTAssertEqual(image.size, CGSize(width: 1024, height: 680))
     }
 
+    func testReuseHTTPRequest() async throws {
+        // GIVEN
+        let httpRequestReceived = self.expectation(description: "HTTP request received")
+        let imageURL = try XCTUnwrap(URL(string: "https://example.files.wordpress.com/2023/09/image.jpg"))
+        stub(condition: { _ in true }, response: { _ in
+            httpRequestReceived.fulfill()
+
+            guard let sourceURL = try? XCTUnwrap(Bundle.test.url(forResource: "test-image", withExtension: "jpg")),
+                  let data = try? Data(contentsOf: sourceURL) else {
+                return HTTPStubsResponse(error: URLError(.unknown))
+            }
+
+            return HTTPStubsResponse(data: data, statusCode: 200, headers: nil)
+                .responseTime(0.3)
+        })
+
+        // WHEN
+        let taskCompleted = self.expectation(description: "Image downloaded")
+        taskCompleted.expectedFulfillmentCount = 3
+        for _ in 1...3 {
+            try await Task.sleep(for: .milliseconds(50))
+            Task.detached {
+                do {
+                    _ = try await self.sut.image(from: imageURL)
+                } catch {
+                    XCTFail("Unexpected error: \(error)")
+                }
+                taskCompleted.fulfill()
+            }
+        }
+
+        await fulfillment(of: [httpRequestReceived, taskCompleted], timeout: 0.5)
+    }
+
     // MARK: - Helpers
 
     /// `Media` is hardcoded to work with a specific direcoty URL managed by `MediaFileManager`
