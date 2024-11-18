@@ -43,10 +43,6 @@ private class StaticTokenProvider: ApplicationTokenListDataProvider {
         self.result = tokens
     }
 
-    func loadApplicationTokens() async throws -> [ApplicationTokenItem] {
-        try result.get()
-    }
-
     func loadApplicationTokens(userId: Int32) async throws -> [ApplicationTokenItem] {
         try result.get()
     }

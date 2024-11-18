@@ -70,7 +70,7 @@ struct UserDetailsView: View {
             }
 
             if !viewModel.applicationTokens.isEmpty {
-                Section(ApplicationTokenListView.title) {
+                Section(Strings.applicationPasswordSectionTitle) {
                     ForEach(viewModel.applicationTokens) { token in
                         ApplicationTokenListItemView(item: token)
                     }
@@ -140,6 +140,12 @@ struct UserDetailsView: View {
     }
 
     enum Strings {
+        static let applicationPasswordSectionTitle = NSLocalizedString(
+            "applicationPassword.list.title",
+            value: "Application Passwords",
+            comment: "Title of application passwords list"
+        )
+
         static let accountManagementSectionTitle = NSLocalizedString(
             "userDetails.accountManagementSectionTitle",
             value: "Account Management",

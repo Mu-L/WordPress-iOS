@@ -17,11 +17,6 @@ import WordPressAPI
 }
 
 extension ApplicationPasswordService: ApplicationTokenListDataProvider {
-    func loadApplicationTokens() async throws -> [ApplicationTokenItem] {
-        try await fetchTokens(forUserId: Int32(currentUserId))
-            .compactMap(ApplicationTokenItem.init)
-    }
-
     func loadApplicationTokens(userId: Int32) async throws -> [ApplicationTokenItem] {
         try await fetchTokens(forUserId: userId)
             .compactMap(ApplicationTokenItem.init)
