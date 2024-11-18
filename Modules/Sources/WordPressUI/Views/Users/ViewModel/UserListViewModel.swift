@@ -12,9 +12,9 @@ class UserListViewModel: ObservableObject {
     }
 
     /// The initial set of users fetched by `fetchItems`
-    private var users: [DisplayUser] = [] {
+    private var users: [Int32: DisplayUser] = [:] {
         didSet {
-            sortedUsers = self.sortUsers(users)
+            sortedUsers = self.sortUsers(Array(users.values))
         }
     }
     private var updateUsersTask: Task<Void, Never>?
@@ -36,7 +36,7 @@ class UserListViewModel: ObservableObject {
             if searchTerm.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
                 setSearchResults(sortUsers(users))
             } else {
-                let searchResults = users.search(searchTerm, using: \.searchString)
+                let searchResults = users.values.search(searchTerm, using: \.searchString)
                 setSearchResults([Section(role: "Search Results", users: searchResults)])
             }
         }
@@ -51,16 +51,6 @@ class UserListViewModel: ObservableObject {
     }
 
     func onAppear() async {
-        if updateUsersTask == nil {
-            updateUsersTask = Task { @MainActor [weak self, usersUpdates = userService.usersUpdates] in
-                for await users in usersUpdates {
-                    guard let self else { break }
-
-                    self.users = users
-                }
-            }
-        }
-
         if !initialLoad {
             initialLoad = true
             await fetchItems()
@@ -68,24 +58,33 @@ class UserListViewModel: ObservableObject {
     }
 
     private func fetchItems() async {
-        isLoadingItems = true
-        defer { isLoadingItems = false }
 
-        _ = try? await userService.fetchUsers()
+        do {
+            for try await page in await userService.fetchPaginatedUsers() {
+                for user in page {
+                    self.users[user.id] = user
+                }
+
+                // Show results after the first page has loaded
+                isLoadingItems = false
+            }
+        } catch {
+            self.error = error
+        }
     }
 
     @Sendable
     func refreshItems() async {
-        _ = try? await userService.fetchUsers()
+        await fetchItems()
     }
 
-    func setUsers(_ newValue: [DisplayUser]) {
-        withAnimation {
-            self.users = newValue
-            self.sortedUsers = sortUsers(newValue)
-            isLoadingItems = false
-        }
-    }
+//    func setUsers(_ newValue: [DisplayUser]) {
+//        withAnimation {
+//            self.users = newValue
+//            self.sortedUsers = sortUsers(newValue)
+//            isLoadingItems = false
+//        }
+//    }
 
     func setSearchResults(_ newValue: [Section]) {
         withAnimation {
@@ -95,6 +94,12 @@ class UserListViewModel: ObservableObject {
 
     private func sortUsers(_ users: [DisplayUser]) -> [Section] {
         Dictionary(grouping: users, by: { $0.role })
+            .map { Section(role: $0.key, users: $0.value.sorted(by: { $0.username < $1.username })) }
+            .sorted { $0.role < $1.role }
+    }
+
+    private func sortUsers(_ users: [Int32: DisplayUser]) -> [Section] {
+        Dictionary(grouping: users.values, by: { $0.role })
             .map { Section(role: $0.key, users: $0.value.sorted(by: { $0.username < $1.username })) }
             .sorted { $0.role < $1.role }
     }

@@ -67,21 +67,21 @@ public struct UserListView: View {
         )
     }
 }
-
-#Preview("Loading") {
-    NavigationView {
-        UserListView(userService: MockUserProvider())
-    }
-}
-
-#Preview("Error") {
-    NavigationView {
-        UserListView(userService: MockUserProvider(scenario: .error))
-    }
-}
-
-#Preview("List") {
-    NavigationView {
-        UserListView(userService: MockUserProvider(scenario: .dummyData))
-    }
-}
+//
+//#Preview("Loading") {
+//    NavigationView {
+//        UserListView(userService: MockUserProvider())
+//    }
+//}
+//
+//#Preview("Error") {
+//    NavigationView {
+//        UserListView(userService: MockUserProvider(scenario: .error))
+//    }
+//}
+//
+//#Preview("List") {
+//    NavigationView {
+//        UserListView(userService: MockUserProvider(scenario: .dummyData))
+//    }
+//}

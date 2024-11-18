@@ -380,8 +380,8 @@ private extension String {
     }
 }
 
-#Preview {
-    NavigationStack {
-        UserDetailsView(user: DisplayUser.MockUser, userService: MockUserProvider())
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        UserDetailsView(user: DisplayUser.MockUser, userService: MockUserProvider())
+//    }
+//}

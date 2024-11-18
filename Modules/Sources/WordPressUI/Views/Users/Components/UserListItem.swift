@@ -32,7 +32,7 @@ struct UserListItem: View {
         }
     }
 }
-
-#Preview {
-    UserListItem(user: DisplayUser.MockUser, userService: MockUserProvider())
-}
+//
+//#Preview {
+//    UserListItem(user: DisplayUser.MockUser, userService: MockUserProvider())
+//}

@@ -49,8 +49,11 @@ public class UserDeleteViewModel: ObservableObject {
         }
 
         do {
-            let users = try await userService.fetchUsers()
-            self.otherUsers = users
+            let users = await userService.fetchPaginatedUsers()
+            self.otherUsers = try await users
+                .reduce(into: [DisplayUser](), { partialResult, users in
+                    partialResult.append(contentsOf: users)
+                })
                 .filter { $0.id != self.user.id } // Don't allow re-assigning to yourself
                 .sorted(using: KeyPathComparator(\.username))
         } catch {
