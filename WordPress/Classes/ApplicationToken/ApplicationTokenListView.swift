@@ -125,6 +125,10 @@ class StaticTokenProvider: ApplicationTokenListDataProvider {
         try result.get()
     }
 
+    func loadApplicationTokens(userId: Int32) async throws -> [ApplicationTokenItem] {
+        try result.get()
+    }
+
 }
 
 #Preview {

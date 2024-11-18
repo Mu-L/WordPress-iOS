@@ -21,8 +21,6 @@ struct UserDetailsView: View {
     @StateObject
     fileprivate var viewModel: UserDetailViewModel
     @StateObject
-    fileprivate var applicationTokenListViewModel: ApplicationTokenListViewModel
-    @StateObject
     fileprivate var deleteUserViewModel: UserDeleteViewModel
 
     @Environment(\.dismiss)
@@ -31,9 +29,19 @@ struct UserDetailsView: View {
     init(user: DisplayUser, userService: UserServiceProtocol, applicationTokenListDataProvider: ApplicationTokenListDataProvider) {
         self.user = user
         self.userService = userService
-        _viewModel = StateObject(wrappedValue: UserDetailViewModel(userService: userService))
-        _applicationTokenListViewModel = StateObject(wrappedValue: ApplicationTokenListViewModel(dataProvider: applicationTokenListDataProvider))
-        _deleteUserViewModel = StateObject(wrappedValue: UserDeleteViewModel(user: user, userService: userService))
+        _viewModel = StateObject(
+            wrappedValue: UserDetailViewModel(
+                user: user,
+                userService: userService,
+                applicationTokenListDataProvider: applicationTokenListDataProvider
+            )
+        )
+        _deleteUserViewModel = StateObject(
+            wrappedValue: UserDeleteViewModel(
+                user: user,
+                userService: userService
+            )
+        )
     }
 
     var body: some View {
@@ -61,9 +69,9 @@ struct UserDetailsView: View {
                 }
             }
 
-            if !applicationTokenListViewModel.applicationTokens.isEmpty {
+            if !viewModel.applicationTokens.isEmpty {
                 Section(ApplicationTokenListView.title) {
-                    ForEach(applicationTokenListViewModel.applicationTokens) { token in
+                    ForEach(viewModel.applicationTokens) { token in
                         ApplicationTokenListItemView(item: token)
                     }
                 }
@@ -113,12 +121,8 @@ struct UserDetailsView: View {
         .deleteUser(in: self)
         .onAppear() {
             Task {
-                await viewModel.loadCurrentUserRole()
+                await viewModel.onAppear()
                 await deleteUserViewModel.fetchOtherUsers()
-
-                if await userService.isCurrentUser(user) {
-                    await applicationTokenListViewModel.fetchTokens()
-                }
             }
         }
     }
