@@ -14,13 +14,14 @@ class ApplicationPasswordsViewModelTests: XCTestCase {
         ]
 
         let shuffled = expectedOrder.shuffled()
-        let viewModel = ApplicationTokenListViewModel(dataProvider: StaticTokenProvider(tokens: .success(shuffled)))
+        let viewModel = await UserDetailViewModel(user: .init(id: 1, handle: "foo", username: "foo", firstName: "Foo", lastName: "Bar", displayName: "Foo Bar", profilePhotoUrl: nil, role: "administrator", emailAddress: "hello@example.com", websiteUrl: nil, biography: nil), userService: MockUserProvider(), applicationTokenListDataProvider: StaticTokenProvider(tokens: .success(shuffled)))
 
-        await viewModel.fetchTokens()
+        await viewModel.onAppear()
 
-        XCTAssertEqual(viewModel.applicationTokens.count, expectedOrder.count)
+        let tokens = await viewModel.applicationTokens
+        XCTAssertEqual(tokens.count, expectedOrder.count)
 
-        for (index, token) in viewModel.applicationTokens.enumerated() {
+        for (index, token) in tokens.enumerated() {
             let expectedIndex = try XCTUnwrap(expectedOrder.firstIndex { $0.uuid == token.uuid })
             XCTAssertEqual(index, expectedIndex, "\(token.name) is in the wrong place")
         }
@@ -43,6 +44,10 @@ private class StaticTokenProvider: ApplicationTokenListDataProvider {
     }
 
     func loadApplicationTokens() async throws -> [ApplicationTokenItem] {
+        try result.get()
+    }
+
+    func loadApplicationTokens(userId: Int32) async throws -> [ApplicationTokenItem] {
         try result.get()
     }
 
