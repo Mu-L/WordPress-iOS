@@ -68,6 +68,51 @@ class ImageDownloaderTests: CoreDataTestCase {
         }
     }
 
+    func testCancelOneOfManySubscribers() async throws {
+        // GIVEN
+        let httpRequestReceived = self.expectation(description: "HTTP request received")
+        let imageURL = try XCTUnwrap(URL(string: "https://example.files.wordpress.com/2023/09/image.jpg"))
+        stub(condition: { _ in true }, response: { _ in
+            httpRequestReceived.fulfill()
+
+            guard let sourceURL = try? XCTUnwrap(Bundle.test.url(forResource: "test-image", withExtension: "jpg")),
+                  let data = try? Data(contentsOf: sourceURL) else {
+                return HTTPStubsResponse(error: URLError(.unknown))
+            }
+
+            return HTTPStubsResponse(data: data, statusCode: 200, headers: nil)
+                .responseTime(0.3)
+        })
+
+        // WHEN there are concurrent calls to download the same image and one of those downloads is cancelled
+        let taskCompleted = self.expectation(description: "Image downloaded")
+        taskCompleted.expectedFulfillmentCount = 3
+        for _ in 1...3 {
+            try await Task.sleep(for: .milliseconds(50))
+            Task.detached {
+                do {
+                    _ = try await self.sut.image(from: imageURL)
+                } catch {
+                    XCTFail("Unexpected error: \(error)")
+                }
+                taskCompleted.fulfill()
+            }
+        }
+
+        let taskCancelled = expectation(description: "Task is cancelled")
+        let taskToBeCancelled = Task.detached {
+            do {
+                _ = try await self.sut.image(from: imageURL)
+                XCTFail("Unexpected successful result.")
+            } catch {
+                taskCancelled.fulfill()
+            }
+        }
+        taskToBeCancelled.cancel()
+
+        await fulfillment(of: [httpRequestReceived, taskCompleted, taskCancelled], timeout: 0.5)
+    }
+
     func testMemoryCache() async throws {
         // GIVEN
         let imageURL = try XCTUnwrap(URL(string: "https://example.files.wordpress.com/2023/09/image.jpg"))
