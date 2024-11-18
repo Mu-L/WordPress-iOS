@@ -15,13 +15,14 @@ public struct ApplicationTokenListItemView: View {
         }, label: {
             VStack(alignment: .leading) {
                 Text(item.name)
-                    .font(.headline)
+                    .font(.body)
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
                     .truncationMode(.middle)
                 Text(lastUsedText)
                     .font(.callout)
                     .lineLimit(1)
+                    .foregroundStyle(.secondary)
             }
         })
     }
