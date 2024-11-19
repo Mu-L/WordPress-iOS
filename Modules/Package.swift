@@ -138,6 +138,7 @@ enum XcodeSupport {
                 "WordPressFlux",
                 "WordPressShared",
                 "WordPressUI",
+                "AsyncCombine",
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "AlamofireImage", package: "AlamofireImage"),
                 .product(name: "AutomatticAbout", package: "AutomatticAbout-swift"),

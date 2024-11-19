@@ -1,4 +1,6 @@
 import UIKit
+import Combine
+import AsyncCombine
 
 struct ImageRequestOptions {
     /// Resize the thumbnail to the given size. By default, `nil`.
@@ -30,7 +32,7 @@ actor ImageDownloader {
         )
     }
 
-    private var tasks: [String: ImageDataTask] = [:]
+    private var tasks: [String: AnyPublisher<Data, Error>] = [:]
 
     init(cache: MemoryCacheProtocol = MemoryCache.shared) {
         self.cache = cache
@@ -115,32 +117,21 @@ actor ImageDownloader {
 
     private func data(for request: URLRequest, options: ImageRequestOptions) async throws -> Data {
         let requestKey = request.urlRequest?.url?.absoluteString ?? ""
-        let task = tasks[requestKey] ?? ImageDataTask(key: requestKey, Task {
-            try await self._data(for: request, options: options, key: requestKey)
-        })
-        task.downloader = self
+        let task = tasks[requestKey] ?? {
+            Task {
+                try await self._data(for: request, options: options, key: requestKey)
+            }
+            .publisher
+            .eraseToAnyPublisher()
+        }()
 
-        let subscriptionID = UUID()
-        task.subscriptions.insert(subscriptionID)
         tasks[requestKey] = task
 
-        return try await task.getData(subscriptionID: subscriptionID)
-    }
-
-    fileprivate nonisolated func unsubscribe(_ subscriptionID: UUID, key: String) {
-        Task {
-            await _unsubscribe(subscriptionID, key: key)
+        let result: [Data] = try await task.values.reduce(into: []) { $0.append($1) }
+        if result.count != 1 {
+            throw CancellationError()
         }
-    }
-
-    private func _unsubscribe(_ subscriptionID: UUID, key: String) {
-        guard let task = tasks[key],
-              task.subscriptions.remove(subscriptionID) != nil,
-              task.subscriptions.isEmpty else {
-            return
-        }
-        task.task.cancel()
-        tasks[key] = nil
+        return result[0]
     }
 
     private func _data(for request: URLRequest, options: ImageRequestOptions, key: String) async throws -> Data {
@@ -157,27 +148,6 @@ actor ImageDownloader {
         }
         guard (200..<400).contains(response.statusCode) else {
             throw ImageDownloaderError.unacceptableStatusCode(response.statusCode)
-        }
-    }
-}
-
-private final class ImageDataTask {
-    let key: String
-    var subscriptions = Set<UUID>()
-    let task: Task<Data, Error>
-    weak var downloader: ImageDownloader?
-
-    init(key: String, _ task: Task<Data, Error>) {
-        self.key = key
-        self.task = task
-    }
-
-    func getData(subscriptionID: UUID) async throws -> Data {
-        try await withTaskCancellationHandler {
-            try await task.value
-        } onCancel: { [weak self] in
-            guard let self else { return }
-            self.downloader?.unsubscribe(subscriptionID, key: self.key)
         }
     }
 }
