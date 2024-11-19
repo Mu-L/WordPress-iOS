@@ -13,6 +13,7 @@ let package = Package(
         .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
         .library(name: "WordPressUI", targets: ["WordPressUI"]),
+        .library(name: "AsyncCombine", targets: ["AsyncCombine"]),
     ],
     dependencies: [
         .package(url: "https://github.com/airbnb/lottie-ios", from: "4.4.0"),
@@ -49,6 +50,7 @@ let package = Package(
         .package(url: "https://github.com/Automattic/wordpress-rs", revision: "alpha-swift-20240813"),
         .package(url: "https://github.com/wordpress-mobile/GutenbergKit", revision: "6cc307e7fc24910697be5f71b7d70f465a9c0f63"),
         .package(url: "https://github.com/Automattic/color-studio", branch: "trunk"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
     ],
     targets: XcodeSupport.targets + [
         .target(name: "JetpackStatsWidgetsCore"),
@@ -61,12 +63,14 @@ let package = Package(
         .target(name: "WordPressSharedObjC", resources: [.process("Resources")]),
         .target(name: "WordPressShared", dependencies: [.target(name: "WordPressSharedObjC")], resources: [.process("Resources")]),
         .target(name: "WordPressUI", dependencies: [.target(name: "WordPressShared")], resources: [.process("Resources")]),
+        .target(name: "AsyncCombine"),
         .testTarget(name: "JetpackStatsWidgetsCoreTests", dependencies: [.target(name: "JetpackStatsWidgetsCore")]),
         .testTarget(name: "DesignSystemTests", dependencies: [.target(name: "DesignSystem")]),
         .testTarget(name: "WordPressFluxTests", dependencies: ["WordPressFlux"]),
         .testTarget(name: "WordPressSharedTests", dependencies: [.target(name: "WordPressShared")]),
         .testTarget(name: "WordPressSharedObjCTests", dependencies: [.target(name: "WordPressShared")], resources: [.process("Resources")]),
         .testTarget(name: "WordPressUITests", dependencies: [.target(name: "WordPressUI")]),
+        .testTarget(name: "AsyncCombineTests", dependencies: [.target(name: "AsyncCombine"), .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")]),
     ]
 )
 
