@@ -44,7 +44,9 @@ class UserListViewModel: ObservableObject {
     /// The initial set of users fetched by `fetchItems`
     private var users: [DisplayUser] = [] {
         didSet {
-            sortedUsers = self.sortUsers(users)
+            if !isSearching {
+                self.listContent = self.sortUsers(users)
+            }
         }
     }
     private var updateUsersTask: Task<Void, Never>?
@@ -53,7 +55,7 @@ class UserListViewModel: ObservableObject {
     private var initialLoad = false
 
     @Published
-    private(set) var sortedUsers: [Section] = []
+    private(set) var listContent: [Section] = []
 
     @Published
     private(set) var error: Error? = nil
@@ -65,13 +67,15 @@ class UserListViewModel: ObservableObject {
     var searchTerm: String = "" {
         didSet {
             if searchTerm.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-                setSearchResults(sortUsers(users))
+                self.listContent = sortUsers(users)
             } else {
                 let searchResults = users.search(searchTerm, using: \.searchString)
-                setSearchResults([Section(id: .searchResult, users: searchResults)])
+                self.listContent = [Section(id: .searchResult, users: searchResults)]
             }
         }
     }
+
+    var isSearching: Bool { !searchTerm.isEmpty }
 
     init(userService: UserServiceProtocol, currentUserId: Int32) {
         self.userService = userService
@@ -109,20 +113,6 @@ class UserListViewModel: ObservableObject {
     @Sendable
     func refreshItems() async {
         _ = try? await userService.fetchUsers()
-    }
-
-    func setUsers(_ newValue: [DisplayUser]) {
-        withAnimation {
-            self.users = newValue
-            self.sortedUsers = sortUsers(newValue)
-            isLoadingItems = false
-        }
-    }
-
-    func setSearchResults(_ newValue: [Section]) {
-        withAnimation {
-            self.sortedUsers = newValue
-        }
     }
 
     private func sortUsers(_ users: [DisplayUser]) -> [Section] {

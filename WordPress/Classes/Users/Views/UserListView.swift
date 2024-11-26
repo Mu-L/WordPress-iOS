@@ -27,7 +27,7 @@ public struct UserListView: View {
                 } else if viewModel.isLoadingItems {
                     ProgressView()
                 } else {
-                    List(viewModel.sortedUsers) { section in
+                    List(viewModel.listContent) { section in
                         Section(section.headerText) {
                             if section.users.isEmpty {
                                 Text(Strings.noUsersFound)
