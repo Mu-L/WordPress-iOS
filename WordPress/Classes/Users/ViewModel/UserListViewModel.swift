@@ -46,7 +46,7 @@ class UserListViewModel: ObservableObject {
     private var initialLoad = false
 
     @Published
-    private(set) var query: UserDataStoreQuery = .all
+    private(set) var query: Query<DisplayUser> = .all
 
     @Published
     private(set) var sortedUsers: [Section] = []

@@ -1,17 +1,18 @@
 import Foundation
 import Combine
 
-public protocol UserDataStore: DataStore where T == DisplayUser, Query == UserDataStoreQuery {
+public protocol Searchable {
+    var searchString: String { get }
 }
 
-public enum UserDataStoreQuery: Equatable {
+public enum Query<T>: Equatable where T: Identifiable, T: Searchable {
     case all
-    case id(Set<DisplayUser.ID>)
+    case id(Set<T.ID>)
     case search(String)
 }
 
 public protocol UserServiceProtocol: Actor {
-    var dataStore: any UserDataStore { get }
+    var dataStore: any DataStore<DisplayUser> { get }
 
     func fetchUsers() async throws
 
@@ -23,6 +24,7 @@ public protocol UserServiceProtocol: Actor {
 }
 
 actor MockUserProvider: UserServiceProtocol {
+    var dataStore: any DataStore<DisplayUser> = InMemoryDataStore<DisplayUser>()
 
     enum Scenario {
         case infinitLoading
@@ -31,11 +33,6 @@ actor MockUserProvider: UserServiceProtocol {
     }
 
     var scenario: Scenario
-
-    private let _dataStore: InMemoryUserDataStore = .init()
-    var dataStore: any UserDataStore {
-        _dataStore
-    }
 
     nonisolated let usersUpdates: AsyncStream<[DisplayUser]>
     private let usersUpdatesContinuation: AsyncStream<[DisplayUser]>.Continuation
@@ -62,8 +59,8 @@ actor MockUserProvider: UserServiceProtocol {
             let dummyDataUrl = URL(string: "https://my.api.mockaroo.com/users.json?key=067c9730")!
             let response = try await URLSession.shared.data(from: dummyDataUrl)
             let users = try JSONDecoder().decode([DisplayUser].self, from: response.0)
-            try await _dataStore.delete(query: .all)
-            try await _dataStore.store(users)
+            try await dataStore.delete(query: Query<DisplayUser>.all)
+            try await dataStore.store(users)
         case .error:
             throw URLError(.timedOut)
         }

@@ -8,10 +8,7 @@ import WordPressUI
 actor UserService: UserServiceProtocol {
     private let client: WordPressClient
 
-    private let _dataStore: InMemoryUserDataStore = .init()
-    var dataStore: any UserDataStore {
-        _dataStore
-    }
+    internal let dataStore: any DataStore<DisplayUser> = InMemoryDataStore()
 
     private var _currentUser: UserWithEditContext?
     private var currentUser: UserWithEditContext? {

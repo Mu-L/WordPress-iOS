@@ -57,8 +57,8 @@ public struct DisplayUser: Identifiable, Codable, Hashable {
     )
 }
 
-extension DisplayUser {
-    var searchString: String {
+extension DisplayUser: Searchable {
+    public var searchString: String {
         // These are in ranked order – the higher something is in the list, the more heavily it's weighted
         [
             displayName,
