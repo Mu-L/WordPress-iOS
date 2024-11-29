@@ -5,6 +5,11 @@ import WordPressShared
 @MainActor
 class UserListViewModel: ObservableObject {
 
+    enum Mode: Equatable {
+        case allUsers
+        case search(String)
+    }
+
     enum RoleSection: Hashable, Comparable {
         case me
         case role(String)
@@ -46,7 +51,7 @@ class UserListViewModel: ObservableObject {
     private var initialLoad = false
 
     @Published
-    private(set) var query: UserDataStoreQuery = .all
+    private(set) var mode: Mode = .allUsers
 
     @Published
     private(set) var sortedUsers: [Section] = []
@@ -57,7 +62,7 @@ class UserListViewModel: ObservableObject {
     @Published
     var searchTerm: String = "" {
         didSet {
-            self.query = .search(searchTerm)
+            self.mode = .search(searchTerm)
         }
     }
 
@@ -82,7 +87,14 @@ class UserListViewModel: ObservableObject {
     }
 
     func performQuery() async {
-        let usersUpdates = await userService.dataStore.listStream(query: query)
+        let usersUpdates: AsyncStream<Result<[DisplayUser], Error>>
+        switch mode {
+        case .allUsers:
+            usersUpdates = await userService.streamAll()
+        case let .search(keyword):
+            usersUpdates = await userService.streamSearchResult(input: keyword)
+        }
+
         for await users in usersUpdates {
             switch users {
             case let .success(users):
