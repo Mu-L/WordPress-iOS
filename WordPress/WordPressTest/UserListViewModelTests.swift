@@ -53,7 +53,7 @@ class UserListViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Updated after fetch")
         expectation.expectedFulfillmentCount = 5
         let task = Task.detached {
-            for await _ in await self.service.streamAll(){
+            for await _ in await self.service.streamAll() {
                 expectation.fulfill()
             }
         }
