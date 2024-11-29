@@ -2,22 +2,24 @@ import Foundation
 import Combine
 
 /// A `DataStore` type that stores data in memory.
-public protocol InMemoryDataStore: DataStore {
+public actor InMemoryDataStore<T: Identifiable & Sendable>: DataStore where T.ID: Sendable {
     /// A `Dictionary` to store the data in memory.
-    var storage: [T.ID: T] { get set }
+    var storage: [T.ID: T] = [:]
 
     /// A publisher for sending and subscribing data changes.
     ///
     /// The publisher emits events when data changes, with identifiers of changed models.
     ///
     /// The publisher does not complete as long as the `InMemoryDataStore` remains alive and valid.
-    var updates: PassthroughSubject<Set<T.ID>, Never> { get }
-}
+    let updates: PassthroughSubject<Set<T.ID>, Never> = .init()
 
-public extension InMemoryDataStore {
-    func delete(query: Query) async throws {
+    deinit {
+        updates.send(completion: .finished)
+    }
+
+    public func delete(query: DataStoreQuery<T>) async throws {
         var updated = Set<T.ID>()
-        let result = try await list(query: query)
+        let result = try list(query: query)
         result.forEach {
             if storage.removeValue(forKey: $0.id) != nil {
                 updated.insert($0.id)
@@ -29,7 +31,7 @@ public extension InMemoryDataStore {
         }
     }
 
-    func store(_ data: [T]) async throws {
+    public func store(_ data: [T]) async throws {
         var updated = Set<T.ID>()
         data.forEach {
             updated.insert($0.id)
@@ -41,7 +43,11 @@ public extension InMemoryDataStore {
         }
     }
 
-    func listStream(query: Query) -> AsyncStream<Result<[T], Error>> {
+    public func list(query: DataStoreQuery<T>) throws -> [T] {
+        query.perform(on: storage.values)
+    }
+
+    public func listStream(query: DataStoreQuery<T>) -> AsyncStream<Result<[T], Error>> {
         let stream = AsyncStream<Result<[T], Error>>.makeStream()
 
         let updatingTask = Task { [weak self] in

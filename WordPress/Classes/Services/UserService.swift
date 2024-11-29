@@ -8,8 +8,8 @@ import WordPressUI
 actor UserService: UserServiceProtocol, UserDataStoreProvider {
     private let client: WordPressClient
 
-    private let _dataStore: InMemoryUserDataStore = .init()
-    var userDataStore: any UserDataStore { _dataStore }
+    private let _dataStore: InMemoryDataStore<DisplayUser> = .init()
+    var userDataStore: any DataStore<DisplayUser> { _dataStore }
 
     private var _currentUser: UserWithEditContext?
     private var currentUser: UserWithEditContext? {
@@ -51,7 +51,7 @@ actor UserService: UserServiceProtocol, UserDataStoreProvider {
 
         // Remove the deleted user from the cached users list.
         if result.deleted {
-            try await _dataStore.delete(query: .id([id]))
+            try await _dataStore.delete(query: .identifier(in: [id]))
         }
     }
 

@@ -1,15 +1,6 @@
 import Foundation
 import Combine
 
-public protocol UserDataStore: DataStore where T == DisplayUser, Query == UserDataStoreQuery {
-}
-
-public enum UserDataStoreQuery: Equatable {
-    case all
-    case id(Set<DisplayUser.ID>)
-    case search(String)
-}
-
 public protocol UserServiceProtocol: Actor {
     func fetchUsers() async throws
 
@@ -27,7 +18,7 @@ public protocol UserServiceProtocol: Actor {
 }
 
 protocol UserDataStoreProvider: Actor {
-    var userDataStore: any UserDataStore { get }
+    var userDataStore: any DataStore<DisplayUser> { get }
 }
 
 extension UserServiceProtocol where Self: UserDataStoreProvider {
@@ -36,7 +27,7 @@ extension UserServiceProtocol where Self: UserDataStoreProvider {
     }
 
     func streamSearchResult(input: String) async -> AsyncStream<Result<[DisplayUser], Error>> {
-        await userDataStore.listStream(query: .search(input))
+        await userDataStore.listStream(query: .search(input, transform: \.searchString))
     }
 
     func streamAll() async -> AsyncStream<Result<[DisplayUser], Error>> {
@@ -54,8 +45,8 @@ actor MockUserProvider: UserServiceProtocol, UserDataStoreProvider {
 
     var scenario: Scenario
 
-    private let _dataStore: InMemoryUserDataStore = .init()
-    var userDataStore: any UserDataStore { _dataStore }
+    private let _dataStore: InMemoryDataStore<DisplayUser> = .init()
+    var userDataStore: any DataStore<DisplayUser> { _dataStore }
 
     nonisolated let usersUpdates: AsyncStream<[DisplayUser]>
     private let usersUpdatesContinuation: AsyncStream<[DisplayUser]>.Continuation
