@@ -62,7 +62,8 @@ class UserListViewModel: ObservableObject {
     @Published
     var searchTerm: String = "" {
         didSet {
-            self.mode = .search(searchTerm)
+            let keyword = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.mode = keyword.isEmpty ? .allUsers : .search(keyword)
         }
     }
 
