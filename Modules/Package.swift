@@ -162,6 +162,8 @@ enum XcodeSupport {
                 .product(name: "ZIPFoundation", package: "ZIPFoundation"),
                 .product(name: "WordPressAPI", package: "wordpress-rs"),
                 .product(name: "ColorStudio", package: "color-studio"),
+            ], plugins: [
+                .plugin(name: "GutenbergKitPlugin", package: "GutenbergKit"),
             ]),
             .xcodeTarget("XcodeTarget_WordPressTests", dependencies: testDependencies + [
                 "WordPressShared",
@@ -197,7 +199,7 @@ enum XcodeSupport {
 }
 
 extension Target {
-    static func xcodeTarget(_ name: String, dependencies: [Dependency]) -> Target {
-        .target(name: name, dependencies: dependencies, path: "Sources/XcodeSupport/\(name)")
+    static func xcodeTarget(_ name: String, dependencies: [Dependency], plugins: [Target.PluginUsage] = []) -> Target {
+        .target(name: name, dependencies: dependencies, path: "Sources/XcodeSupport/\(name)", plugins: plugins)
     }
 }
