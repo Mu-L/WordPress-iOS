@@ -184,7 +184,7 @@ platform :ios do
     upload_build_to_testflight(
       whats_new_path: WORDPRESS_RELEASE_NOTES_PATH,
       distribution_groups: ['Internal a8c Testers', 'Public Beta Testers'],
-      beta_app_description_path: WORDPRESS_BETA_APP_DESCRIPTION_PATH,
+      beta_app_description_path: WORDPRESS_BETA_APP_DESCRIPTION_PATH
     )
 
     sentry_upload_dsym(
@@ -250,7 +250,7 @@ platform :ios do
     upload_build_to_testflight(
       whats_new_path: JETPACK_RELEASE_NOTES_PATH,
       distribution_groups: ['Beta Testers'],
-      beta_app_description_path: JETPACK_BETA_APP_DESCRIPTION_PATH,
+      beta_app_description_path: JETPACK_BETA_APP_DESCRIPTION_PATH
     )
 
     sentry_upload_dsym(
