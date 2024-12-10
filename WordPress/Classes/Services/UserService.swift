@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import WordPressAPI
+import WordPressService
 import WordPressUI
 
 /// UserService is responsible for fetching user acounts via the .org REST API – it's the replacement for `UsersService` (the XMLRPC-based approach)

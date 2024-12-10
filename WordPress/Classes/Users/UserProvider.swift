@@ -1,14 +1,6 @@
 import Foundation
 import Combine
-
-public protocol UserDataStore: DataStore where T == DisplayUser, Query == UserDataStoreQuery {
-}
-
-public enum UserDataStoreQuery: Equatable {
-    case all
-    case id(Set<DisplayUser.ID>)
-    case search(String)
-}
+import WordPressService
 
 public protocol UserServiceProtocol: Actor {
     func fetchUsers() async throws
@@ -26,10 +18,6 @@ public protocol UserServiceProtocol: Actor {
     func streamAll() async -> AsyncStream<Result<[DisplayUser], Error>>
 }
 
-protocol UserDataStoreProvider: Actor {
-    var userDataStore: any UserDataStore { get }
-}
-
 extension UserServiceProtocol where Self: UserDataStoreProvider {
     func allUsers() async throws -> [DisplayUser] {
         try await userDataStore.list(query: .all)
@@ -44,7 +32,7 @@ extension UserServiceProtocol where Self: UserDataStoreProvider {
     }
 }
 
-actor MockUserProvider: UserServiceProtocol, UserDataStoreProvider {
+actor MockUserProvider: UserServiceProtocol {
 
     enum Scenario {
         case infinitLoading

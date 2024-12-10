@@ -1,6 +1,8 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 
 import PackageDescription
+
+let legacyPackageSettings: [SwiftSetting] = [.swiftLanguageMode(.v5)]
 
 let package = Package(
     name: "Modules",
@@ -11,6 +13,7 @@ let package = Package(
         .library(name: "JetpackStatsWidgetsCore", targets: ["JetpackStatsWidgetsCore"]),
         .library(name: "DesignSystem", targets: ["DesignSystem"]),
         .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
+        .library(name: "WordPressService", targets: ["WordPressService"]),
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
         .library(name: "WordPressUI", targets: ["WordPressUI"]),
     ],
@@ -51,16 +54,17 @@ let package = Package(
         .package(url: "https://github.com/Automattic/color-studio", branch: "trunk"),
     ],
     targets: XcodeSupport.targets + [
-        .target(name: "JetpackStatsWidgetsCore"),
-        .target(name: "DesignSystem"),
+        .target(name: "JetpackStatsWidgetsCore", swiftSettings: legacyPackageSettings),
+        .target(name: "DesignSystem", swiftSettings: legacyPackageSettings),
         .target(name: "UITestsFoundation", dependencies: [
             .product(name: "ScreenObject", package: "ScreenObject"),
             .product(name: "XCUITestHelpers", package: "XCUITestHelpers"),
         ]),
-        .target(name: "WordPressFlux"),
-        .target(name: "WordPressSharedObjC", resources: [.process("Resources")]),
-        .target(name: "WordPressShared", dependencies: [.target(name: "WordPressSharedObjC")], resources: [.process("Resources")]),
-        .target(name: "WordPressUI", dependencies: [.target(name: "WordPressShared")], resources: [.process("Resources")]),
+        .target(name: "WordPressService", dependencies: [.target(name: "WordPressShared")]),
+        .target(name: "WordPressFlux", swiftSettings: legacyPackageSettings),
+        .target(name: "WordPressSharedObjC", resources: [.process("Resources")], swiftSettings: legacyPackageSettings),
+        .target(name: "WordPressShared", dependencies: [.target(name: "WordPressSharedObjC")], resources: [.process("Resources")], swiftSettings: legacyPackageSettings),
+        .target(name: "WordPressUI", dependencies: [.target(name: "WordPressShared")], resources: [.process("Resources")], swiftSettings: legacyPackageSettings),
         .testTarget(name: "JetpackStatsWidgetsCoreTests", dependencies: [.target(name: "JetpackStatsWidgetsCore")]),
         .testTarget(name: "DesignSystemTests", dependencies: [.target(name: "DesignSystem")]),
         .testTarget(name: "WordPressFluxTests", dependencies: ["WordPressFlux"]),
@@ -84,6 +88,7 @@ let package = Package(
 ///   - SwiftPM copies resource bundles from a target, including dynamic frameworks,
 /// into every target that depends on it. Make sure to avoid including frameworks
 /// with large resources bundled into multiple targets.
+@MainActor
 enum XcodeSupport {
     static let products: [Product] = [
         .library(name: "XcodeTarget_App", targets: ["XcodeTarget_App"]),
@@ -131,6 +136,7 @@ enum XcodeSupport {
             .xcodeTarget("XcodeTarget_App", dependencies: [
                 "DesignSystem",
                 "JetpackStatsWidgetsCore",
+                "WordPressService",
                 "WordPressFlux",
                 "WordPressShared",
                 "WordPressUI",
