@@ -23,12 +23,6 @@ final class ReaderPostCell: ReaderStreamBaseCell {
         ])
     }
 
-    static func makeSelectedBackgroundView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = UIColor.opaqueSeparator.withAlphaComponent(0.2)
-        return view
-    }
-
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }

@@ -32,8 +32,6 @@ final class ReaderCrossPostCell: ReaderStreamBaseCell {
 
         setupStyle()
         setupLayout()
-
-        selectedBackgroundView = ReaderPostCell.makeSelectedBackgroundView()
     }
 
     required init?(coder: NSCoder) {
