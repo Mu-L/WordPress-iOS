@@ -5,7 +5,6 @@ import WordPressShared
 
 final class ReaderPostCell: ReaderStreamBaseCell {
     private let view = ReaderPostCellView()
-
     private var contentViewConstraints: [NSLayoutConstraint] = []
 
     static let avatarSize: CGFloat = SiteIconViewModel.Size.small.width
