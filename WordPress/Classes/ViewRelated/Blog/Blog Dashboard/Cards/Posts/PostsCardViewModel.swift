@@ -125,12 +125,12 @@ private extension PostsCardViewModel {
             return UITableViewCell()
         }
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: PostCompactCell.defaultReuseID, for: indexPath) as? PostCompactCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostListCell.defaultReuseID, for: indexPath) as! PostListCell
 
-        cell?.accessoryType = .none
-        cell?.configureForDashboard(with: post)
+        cell.configure(with: .init(post: post))
+        cell.configureCompactCell()
 
-        return cell ?? UITableViewCell()
+        return cell
     }
 
     private func configureErrorCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {

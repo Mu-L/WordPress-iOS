@@ -88,7 +88,17 @@ final class PostListCell: UITableViewCell, AbstractPostListCell, PostSearchResul
         accessibilityLabel = viewModel.accessibilityLabel
 
         configure(with: viewModel.syncStateViewModel)
+
         self.viewModel = viewModel
+    }
+
+    /// Configures cell for presentation on dashboard.
+    func configureCompactCell() {
+        headerView.removeFromSuperview()
+
+        mainStackView.removeFromSuperview()
+        contentView.addSubview(mainStackView)
+        mainStackView.pinEdges(insets: UIEdgeInsets(horizontal: 16, vertical: 12))
     }
 
     private func configure(with viewModel: PostSyncStateViewModel) {
