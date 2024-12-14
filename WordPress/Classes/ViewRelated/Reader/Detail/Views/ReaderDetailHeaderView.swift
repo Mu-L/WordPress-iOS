@@ -49,7 +49,7 @@ class ReaderDetailNewHeaderViewHost: UIView {
     func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
 
-        let headerView = ReaderDetailNewHeaderView(viewModel: viewModel) { [weak self] in
+        let headerView = ReaderDetailHeaderView(viewModel: viewModel) { [weak self] in
             self?.refreshContainerLayout()
         }
 
@@ -151,7 +151,7 @@ class ReaderDetailHeaderViewModel: ObservableObject {
 
             self.isFollowingSite = post.isFollowing
 
-            self.siteIconURL = post.getSiteIconURL(size: Int(ReaderDetailNewHeaderView.Constants.siteIconLength))
+            self.siteIconURL = post.getSiteIconURL(size: Int(ReaderDetailHeaderView.Constants.siteIconLength))
             self.authorAvatarURL = post.avatarURLForDisplay() ?? nil
 
             if let authorName = post.authorForDisplay(), !authorName.isEmpty {
@@ -223,10 +223,7 @@ class ReaderDetailHeaderViewModel: ObservableObject {
 // MARK: - SwiftUI
 
 /// The updated header version for Reader Details.
-///
-/// TODO: Rename this to `ReaderDetailHeaderView` once the `readerImprovements` flag is removed.
-///
-struct ReaderDetailNewHeaderView: View {
+struct ReaderDetailHeaderView: View {
 
     @Environment(\.layoutDirection) var direction
     @Environment(\.colorScheme) var colorScheme
@@ -427,7 +424,7 @@ struct ReaderDetailNewHeaderView: View {
 
 // MARK: Private Helpers
 
-fileprivate extension ReaderDetailNewHeaderView {
+fileprivate extension ReaderDetailHeaderView {
 
     struct Constants {
         static let siteIconLength: CGFloat = 40.0
