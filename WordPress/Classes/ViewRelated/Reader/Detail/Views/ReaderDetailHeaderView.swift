@@ -8,6 +8,7 @@ protocol ReaderDetailHeaderViewDelegate: AnyObject {
     func didSelectTopic(_ topic: String)
     func didTapLikes()
     func didTapComments()
+    func didTapFeaturedImage()
 }
 
 class ReaderDetailNewHeaderViewHost: UIView {
@@ -279,13 +280,18 @@ struct ReaderDetailHeaderView: View {
             }
             if let imageURL = viewModel.featuredImageURL {
                 CachedAsyncImage(url: imageURL) { image in
-                    image.resizable()
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
                 } placeholder: {
                     Color(.secondarySystemBackground)
                 }
                 .aspectRatio(1.0 / ReaderPostCell.coverAspectRatio, contentMode: .fill)
-                .frame(maxWidth: .infinity)
+//                .frame(maxWidth: .infinity)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                .onTapGesture {
+                    viewModel.headerDelegate?.didTapFeaturedImage()
+                }
             }
         }
         // Added an extra 4.0 to top padding to account for a legacy layout issue with featured image.

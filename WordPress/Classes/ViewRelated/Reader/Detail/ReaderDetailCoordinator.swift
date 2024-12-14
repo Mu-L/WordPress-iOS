@@ -481,20 +481,9 @@ class ReaderDetailCoordinator {
 
     /// Show the featured image fullscreen
     ///
-    private func showFeaturedImage(_ sender: CachedAnimatedImageView) {
-        guard let post else {
-            return
-        }
-
-        var controller: WPImageViewController
-        if post.featuredImageURL.isGif, let data = sender.animatedGifData {
-            controller = WPImageViewController(gifData: data)
-        } else if let featuredImage = sender.image {
-            controller = WPImageViewController(image: featuredImage)
-        } else {
-            return
-        }
-
+    private func showFeaturedImage() {
+        guard let post, let imageURL = post.featuredImage.flatMap(URL.init) else { return }
+        let controller = WPImageViewController(url: imageURL)
         controller.modalTransitionStyle = .crossDissolve
         controller.modalPresentationStyle = .fullScreen
         viewController?.present(controller, animated: true)
@@ -718,12 +707,9 @@ extension ReaderDetailCoordinator: ReaderDetailHeaderViewDelegate {
         }
         ReaderCommentAction().execute(post: post, origin: viewController, source: .postDetails)
     }
-}
 
-// MARK: - ReaderDetailFeaturedImageViewDelegate
-extension ReaderDetailCoordinator: ReaderDetailFeaturedImageViewDelegate {
-    func didTapFeaturedImage(_ sender: CachedAnimatedImageView) {
-        showFeaturedImage(sender)
+    func didTapFeaturedImage() {
+        showFeaturedImage()
     }
 }
 

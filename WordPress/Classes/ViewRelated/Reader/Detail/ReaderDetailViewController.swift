@@ -80,9 +80,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     /// The actual header
-    private let featuredImage: ReaderDetailFeaturedImageView = .loadFromNib()
-
-    /// The actual header
     private lazy var header: ReaderDetailNewHeaderViewHost = {
         return .init()
     }()
@@ -124,12 +121,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     var postLoadFailureBlock: (() -> Void)? {
         didSet {
             coordinator?.postLoadFailureBlock = postLoadFailureBlock
-        }
-    }
-
-    var currentPreferredStatusBarStyle = UIStatusBarStyle.lightContent {
-        didSet {
-            setNeedsStatusBarAppearanceUpdate()
         }
     }
 
@@ -178,7 +169,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
         configureNavigationBar()
         applyStyles()
         configureWebView()
-        configureFeaturedImage()
         configureHeader()
         configureRelatedPosts()
         configureToolbar()
@@ -200,8 +190,8 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         updateLeftBarButtonItem()
-        setupFeaturedImage()
         updateFollowButtonState()
         toolbar.viewWillAppear()
     }
@@ -213,16 +203,7 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
             return
         }
 
-        featuredImage.viewWillDisappear()
         toolbar.viewWillDisappear()
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-
-        coordinator.animate(alongsideTransition: { _ in
-            self.featuredImage.deviceDidRotate()
-        })
     }
 
     override func accessibilityPerformEscape() -> Bool {
@@ -233,7 +214,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     func render(_ post: ReaderPost) {
         configureDiscoverAttribution(post)
 
-        featuredImage.configure(for: post, with: self)
         toolbar.configure(for: post, in: self)
         header.configure(for: post)
         fetchLikes()
@@ -254,15 +234,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
 
         coordinator?.storeAuthenticationCookies(in: webView) { [weak self] in
             self?.webView.loadHTMLString(post.contentForDisplay())
-        }
-
-        guard !featuredImage.isLoaded else {
-            return
-        }
-
-        // Load the image
-        featuredImage.load { [weak self] in
-            self?.hideLoading()
         }
 
         navigateToCommentIfNecessary()
@@ -312,7 +283,7 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     }
 
     func hideLoading() {
-        guard !featuredImage.isLoading, !isLoadingWebView else {
+        guard !isLoadingWebView else {
             return
         }
 
@@ -479,9 +450,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
             toolbarSafeAreaView.backgroundColor = toolbar.backgroundColor
         }
 
-        // Featured image view
-        featuredImage.displaySetting = displaySetting
-
         // Update Reader Post web view
         if let contentForDisplay = post?.contentForDisplay() {
             webView.displaySetting = displaySetting
@@ -532,52 +500,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
                 self.webViewHeight.constant = min(scaledWebViewHeight, height)
             })
         }
-    }
-
-    private func setupFeaturedImage() {
-        configureFeaturedImage()
-
-        featuredImage.configure(
-            scrollView: scrollView,
-            navigationBar: navigationController?.navigationBar,
-            navigationItem: navigationItem
-        )
-
-        guard !featuredImage.isLoaded else {
-            return
-        }
-
-        // Load the image
-        featuredImage.load { [weak self] in
-            guard let self else {
-                return
-            }
-            self.hideLoading()
-        }
-    }
-
-    private func configureFeaturedImage() {
-        guard featuredImage.superview == nil else {
-            return
-        }
-
-        if ReaderDisplaySetting.customizationEnabled {
-            featuredImage.displaySetting = displaySetting
-        }
-
-        featuredImage.useCompatibilityMode = useCompatibilityMode
-
-        featuredImage.delegate = coordinator
-
-        view.insertSubview(featuredImage, belowSubview: webView)
-
-        NSLayoutConstraint.activate([
-            featuredImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            featuredImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            featuredImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
-        ])
-
-        headerContainerView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     private func configureHeader() {
@@ -958,17 +880,6 @@ extension ReaderDetailViewController: UIGestureRecognizerDelegate {
 extension ReaderDetailViewController: ReaderCardDiscoverAttributionViewDelegate {
     public func attributionActionSelectedForVisitingSite(_ view: ReaderCardDiscoverAttributionView) {
         coordinator?.showMore()
-    }
-}
-
-// MARK: - UpdatableStatusBarStyle
-extension ReaderDetailViewController: UpdatableStatusBarStyle {
-    func updateStatusBarStyle(to style: UIStatusBarStyle) {
-        guard style != currentPreferredStatusBarStyle else {
-            return
-        }
-
-        currentPreferredStatusBarStyle = style
     }
 }
 
