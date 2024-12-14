@@ -240,9 +240,6 @@ struct ReaderDetailHeaderView: View {
 
     @ObservedObject var viewModel: ReaderDetailHeaderViewModel
 
-    /// A callback for the parent to react to content size changes.
-    var onContentSizeChanged: (() -> Void)? = nil
-
     /// Used for the inward border. We want the color to be inverted, such that the avatar can "preserve" its shape
     /// when the image has low or almost no contrast with the background (imagine white avatar on white background).
     var avatarInnerBorderColor: UIColor {
@@ -279,20 +276,7 @@ struct ReaderDetailHeaderView: View {
                 tagsView
             }
         }
-        // Added an extra 4.0 to top padding to account for a legacy layout issue with featured image.
-        // Bottom padding is 0 as there's already padding between the header container and the webView in the storyboard.
-        .padding(EdgeInsets(top: 12.0, leading: 16.0, bottom: 0.0, trailing: 16.0))
-        .background {
-            GeometryReader { proxy in
-                Color.clear
-                    .onAppear {
-                        onContentSizeChanged?()
-                    }
-                    .onChange(of: proxy.size) { _ in
-                        onContentSizeChanged?()
-                    }
-            }
-        }
+        .padding(EdgeInsets(top: 12, leading: 16, bottom: 0, trailing: 16))
     }
 
     var headerRow: some View {
@@ -411,14 +395,6 @@ struct ReaderDetailHeaderView: View {
 
     var tagsView: some View {
         ReaderDetailTagsWrapperView(topics: viewModel.tags, displaySetting: viewModel.displaySetting, delegate: viewModel.topicDelegate)
-            .background(GeometryReader { geometry in
-                // The host view does not react properly after the collection view finished its layout.
-                // This informs any size changes to the host view so that it can readjust correctly.
-                Color.clear
-                    .onChange(of: geometry.size) { _ in
-                        onContentSizeChanged?()
-                    }
-            })
     }
 
     var authorAndTimestampView: some View {
