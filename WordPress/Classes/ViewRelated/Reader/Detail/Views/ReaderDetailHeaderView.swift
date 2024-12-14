@@ -108,15 +108,16 @@ class ReaderDetailHeaderViewModel: ObservableObject {
     @Published var isFollowingSite = false
     @Published var isFollowButtonInteractive = true
 
-    @Published var siteIconURL: URL? = nil
-    @Published var authorAvatarURL: URL? = nil
-    @Published var authorName = String()
-    @Published var relativePostTime = String()
+    @Published var siteIconURL: URL?
+    @Published var authorAvatarURL: URL?
+    @Published var authorName = ""
+    @Published var relativePostTime = ""
     @Published var siteName = String()
-    @Published var postTitle: String? = nil // post title can be empty.
-    @Published var likeCount: Int? = nil
-    @Published var commentCount: Int? = nil
+    @Published var postTitle: String? // post title can be empty.
+    @Published var likeCount: Int?
+    @Published var commentCount: Int?
     @Published var tags: [String] = []
+    @Published var featuredImageURL: URL?
 
     @Published var showsAuthorName: Bool = true
 
@@ -174,11 +175,22 @@ class ReaderDetailHeaderViewModel: ObservableObject {
             self.likeCount = post.likeCount?.intValue
             self.commentCount = post.commentCount?.intValue
             self.tags = post.tagsForDisplay() ?? []
+            self.featuredImageURL = getFeaturedImageURL(for: post)
         }
 
         DispatchQueue.main.async {
             completion?()
         }
+    }
+
+    func getFeaturedImageURL(for post: ReaderPost) -> URL? {
+        guard let imageURL = URL(string: post.featuredImage) else {
+            return nil
+        }
+        guard !post.contentIncludesFeaturedImage() else {
+            return nil
+        }
+        return imageURL
     }
 
     func refreshFollowState() {
@@ -264,6 +276,16 @@ struct ReaderDetailHeaderView: View {
             }
             if !viewModel.tags.isEmpty {
                 tagsView
+            }
+            if let imageURL = viewModel.featuredImageURL {
+                CachedAsyncImage(url: imageURL) { image in
+                    image.resizable()
+                } placeholder: {
+                    Color(.secondarySystemBackground)
+                }
+                .aspectRatio(1.0 / ReaderPostCell.coverAspectRatio, contentMode: .fill)
+                .frame(maxWidth: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
         }
         // Added an extra 4.0 to top padding to account for a legacy layout issue with featured image.

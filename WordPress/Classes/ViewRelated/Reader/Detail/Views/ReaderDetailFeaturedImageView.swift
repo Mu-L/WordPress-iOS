@@ -440,6 +440,8 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
     // MARK: - Private: Calculations
 
     private func featuredImageHeight() -> CGFloat {
+        return 0
+
         guard
             let imageSize = self.imageSize,
             let superview = self.superview
