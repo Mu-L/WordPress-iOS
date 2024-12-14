@@ -63,6 +63,8 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     /// Header container
     @IBOutlet weak var headerContainerView: UIView!
 
+    private let headerStackView = UIStackView()
+
     /// Wrapper for the toolbar
     @IBOutlet weak var toolbarContainerView: UIView!
 
@@ -216,10 +218,11 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     func render(_ post: ReaderPost) {
         configureDiscoverAttribution(post)
 
-        let coverURL = ReaderPostCoverView.getFeaturedImageURL(for: post)
-        coverView.delegate = coordinator
-        coverView.isHidden = coverURL == nil
-        if let coverURL {
+        if let coverURL = ReaderPostCoverView.getFeaturedImageURL(for: post) {
+            if coverView.superview == nil {
+                headerStackView.addArrangedSubview(coverView)
+            }
+            coverView.delegate = coordinator
             coverView.setImageURL(coverURL)
         }
 
@@ -516,9 +519,11 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
         header.useCompatibilityMode = useCompatibilityMode
         header.delegate = coordinator
 
-        let stackView = UIStackView(axis: .vertical, [header, coverView])
-        headerContainerView.addSubview(stackView)
-        stackView.pinEdges()
+        headerStackView.axis = .vertical
+        headerStackView.addArrangedSubview(header)
+
+        headerContainerView.addSubview(headerStackView)
+        headerStackView.pinEdges()
     }
 
     private func fetchLikes() {
