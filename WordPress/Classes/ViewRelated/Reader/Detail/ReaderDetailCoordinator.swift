@@ -707,13 +707,14 @@ extension ReaderDetailCoordinator: ReaderDetailHeaderViewDelegate {
         }
         ReaderCommentAction().execute(post: post, origin: viewController, source: .postDetails)
     }
+}
 
+extension ReaderDetailCoordinator: ReaderPostCoverViewDelegate {
     func didTapFeaturedImage() {
         showFeaturedImage()
     }
 }
 
-// MARK: - ReaderDetailLikesViewDelegate
 extension ReaderDetailCoordinator: ReaderDetailLikesViewDelegate {
     func didTapLikesView() {
         showLikesList()

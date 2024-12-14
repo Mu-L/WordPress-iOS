@@ -84,6 +84,8 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
         return .init()
     }()
 
+    private let coverView = ReaderPostCoverView()
+
     /// Bottom toolbar
     private let toolbar: ReaderDetailToolbar = .loadFromNib()
 
@@ -213,6 +215,13 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
 
     func render(_ post: ReaderPost) {
         configureDiscoverAttribution(post)
+
+        let coverURL = ReaderPostCoverView.getFeaturedImageURL(for: post)
+        coverView.delegate = coordinator
+        coverView.isHidden = coverURL == nil
+        if let coverURL {
+            coverView.setImageURL(coverURL)
+        }
 
         toolbar.configure(for: post, in: self)
         header.configure(for: post)
@@ -506,10 +515,10 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
         header.displaySetting = displaySetting
         header.useCompatibilityMode = useCompatibilityMode
         header.delegate = coordinator
-        headerContainerView.addSubview(header)
-        headerContainerView.translatesAutoresizingMaskIntoConstraints = false
 
-        headerContainerView.pinSubviewToAllEdges(header)
+        let stackView = UIStackView(axis: .vertical, [header, coverView])
+        headerContainerView.addSubview(stackView)
+        stackView.pinEdges()
     }
 
     private func fetchLikes() {
