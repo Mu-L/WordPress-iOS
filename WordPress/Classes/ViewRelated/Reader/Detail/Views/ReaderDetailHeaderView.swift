@@ -10,15 +10,12 @@ protocol ReaderDetailHeaderViewDelegate: AnyObject {
     func didTapComments()
 }
 
-class ReaderDetailNewHeaderViewHost: UIView {
+final class ReaderDetailHeaderHostingView: UIView {
     weak var delegate: ReaderDetailHeaderViewDelegate? {
         didSet {
             viewModel.headerDelegate = delegate
         }
     }
-
-    // TODO: Find out if we still need this.
-    var useCompatibilityMode: Bool = false
 
     var displaySetting: ReaderDisplaySetting = .standard {
         didSet {
@@ -72,7 +69,7 @@ class ReaderDetailNewHeaderViewHost: UIView {
 
 // MARK: ReaderDetailHeader
 
-extension ReaderDetailNewHeaderViewHost {
+extension ReaderDetailHeaderHostingView {
     func configure(for post: ReaderPost) {
         viewModel.configure(with: TaggedManagedObjectID(post),
                             completion: refreshContainerLayout)
@@ -85,7 +82,7 @@ extension ReaderDetailNewHeaderViewHost {
 
 // MARK: ReaderTopicCollectionViewCoordinatorDelegate
 
-extension ReaderDetailNewHeaderViewHost: ReaderTopicCollectionViewCoordinatorDelegate {
+extension ReaderDetailHeaderHostingView: ReaderTopicCollectionViewCoordinatorDelegate {
     func coordinator(_ coordinator: ReaderTopicCollectionViewCoordinator, didSelectTopic topic: String) {
         delegate?.didSelectTopic(topic)
     }
