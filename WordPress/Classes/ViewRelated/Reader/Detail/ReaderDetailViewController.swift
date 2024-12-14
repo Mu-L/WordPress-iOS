@@ -63,8 +63,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     /// Header container
     @IBOutlet weak var headerContainerView: UIView!
 
-    private let headerStackView = UIStackView()
-
     /// Wrapper for the toolbar
     @IBOutlet weak var toolbarContainerView: UIView!
 
@@ -81,12 +79,7 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
 
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
-    /// The actual header
-    private lazy var header: ReaderDetailHeaderHostingView = {
-        return .init()
-    }()
-
-    private let coverView = ReaderPostCoverView()
+    private lazy var header = ReaderDetailHeaderHostingView()
 
     /// Bottom toolbar
     private let toolbar: ReaderDetailToolbar = .loadFromNib()
@@ -206,14 +199,6 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
 
     func render(_ post: ReaderPost) {
         configureDiscoverAttribution(post)
-
-        if let coverURL = ReaderPostCoverView.getFeaturedImageURL(for: post) {
-            if coverView.superview == nil {
-                headerStackView.addArrangedSubview(coverView)
-            }
-            coverView.delegate = coordinator
-            coverView.setImageURL(coverURL)
-        }
 
         toolbar.configure(for: post, in: self)
         header.configure(for: post)
@@ -506,12 +491,10 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     private func configureHeader() {
         header.displaySetting = displaySetting
         header.delegate = coordinator
+        headerContainerView.addSubview(header)
+        headerContainerView.translatesAutoresizingMaskIntoConstraints = false
 
-        headerStackView.axis = .vertical
-        headerStackView.addArrangedSubview(header)
-
-        headerContainerView.addSubview(headerStackView)
-        headerStackView.pinEdges()
+        headerContainerView.pinSubviewToAllEdges(header)
     }
 
     private func fetchLikes() {

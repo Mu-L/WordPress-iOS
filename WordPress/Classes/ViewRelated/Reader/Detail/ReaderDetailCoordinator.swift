@@ -675,7 +675,6 @@ class ReaderDetailCoordinator {
     }
 }
 
-// MARK: - ReaderDetailHeaderViewDelegate
 extension ReaderDetailCoordinator: ReaderDetailHeaderViewDelegate {
     func didTapBlogName() {
         previewSite()
@@ -707,9 +706,7 @@ extension ReaderDetailCoordinator: ReaderDetailHeaderViewDelegate {
         }
         ReaderCommentAction().execute(post: post, origin: viewController, source: .postDetails)
     }
-}
 
-extension ReaderDetailCoordinator: ReaderPostCoverViewDelegate {
     func didTapFeaturedImage() {
         showFeaturedImage()
     }
@@ -721,7 +718,6 @@ extension ReaderDetailCoordinator: ReaderDetailLikesViewDelegate {
     }
 }
 
-// MARK: - ReaderDetailToolbarDelegate
 extension ReaderDetailCoordinator: ReaderDetailToolbarDelegate {
     func didTapLikeButton(isLiked: Bool) {
         guard let userAvatarURL = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)?.avatarURL else {
