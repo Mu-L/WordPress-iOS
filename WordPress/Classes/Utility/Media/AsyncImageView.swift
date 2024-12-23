@@ -9,7 +9,7 @@ final class AsyncImageView: UIView {
     private let imageView = GIFImageView()
     private var errorView: UIImageView?
     private var spinner: UIActivityIndicatorView?
-    private let controller = ImageViewController()
+    private let controller = ImageLoadingController()
 
     enum LoadingStyle {
         /// Shows a secondary background color during the download.
@@ -88,7 +88,7 @@ final class AsyncImageView: UIView {
         controller.setImage(with: imageURL, host: host, size: size, completion: completion)
     }
 
-    private func setState(_ state: ImageViewController.State) {
+    private func setState(_ state: ImageLoadingController.State) {
         imageView.isHidden = true
         errorView?.isHidden = true
         spinner?.stopAnimating()

@@ -4,7 +4,7 @@ import WordPressMedia
 
 /// A convenience class for managing image downloads for individual views.
 @MainActor
-final class ImageViewController {
+final class ImageLoadingController {
     var downloader: ImageDownloader = .shared
     var onStateChanged: (State) -> Void = { _ in }
 
