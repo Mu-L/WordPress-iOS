@@ -31,11 +31,11 @@ struct ImageViewExtensions {
         controller.setImage(with: imageURL, host: host, size: size, completion: completion)
     }
 
-    var controller: ImageViewController {
-        if let controller = objc_getAssociatedObject(imageView, ImageViewExtensions.controllerKey) as? ImageViewController {
+    var controller: ImageLoadingController {
+        if let controller = objc_getAssociatedObject(imageView, ImageViewExtensions.controllerKey) as? ImageLoadingController {
             return controller
         }
-        let controller = ImageViewController()
+        let controller = ImageLoadingController()
         controller.onStateChanged = { [weak imageView] in
             guard let imageView else { return }
             setState($0, for: imageView)
@@ -44,7 +44,7 @@ struct ImageViewExtensions {
         return controller
     }
 
-    private func setState(_ state: ImageViewController.State, for imageView: UIImageView) {
+    private func setState(_ state: ImageLoadingController.State, for imageView: UIImageView) {
         switch state {
         case .loading:
             break
