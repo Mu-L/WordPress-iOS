@@ -58,7 +58,7 @@ final class LightboxViewController: UIViewController {
 
     // MARK: Presentation
 
-    func configureZoomTransition(souceItemProvider: @escaping (UIViewController) -> UIView) {
+    func configureZoomTransition(souceItemProvider: @escaping (UIViewController) -> UIView?) {
         if #available(iOS 18.0, *) {
             let options = UIViewController.Transition.ZoomOptions()
             options.alignmentRectProvider = { context in
@@ -75,7 +75,7 @@ final class LightboxViewController: UIViewController {
         }
     }
 
-    func configureZoomTransition(sourceView: UIView) {
+    func configureZoomTransition(sourceView: UIView?) {
         configureZoomTransition { _ in sourceView }
     }
 }
