@@ -493,11 +493,12 @@ class ReaderDetailCoordinator {
         guard let post, let imageURL = post.featuredImage.flatMap(URL.init) else {
             return
         }
-        let controller = WPImageViewController(url: imageURL)
-        controller.readerPost = post
-        controller.modalTransitionStyle = .crossDissolve
-        controller.modalPresentationStyle = .fullScreen
-        viewController?.present(controller, animated: true)
+        let lightboxVC = LightboxViewController(sourceURL: imageURL, host: MediaHost(with: post))
+        MainActor.assumeIsolated {
+            lightboxVC.thumbnail = sender.image
+        }
+        lightboxVC.configureZoomTransition(sourceView: sender)
+        viewController?.present(lightboxVC, animated: true)
     }
 
     private func followSite(completion: @escaping () -> Void) {
