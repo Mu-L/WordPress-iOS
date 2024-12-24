@@ -284,8 +284,8 @@ class ReaderDetailCoordinator {
     func presentImage(_ url: URL) {
         WPAnalytics.trackReader(.readerArticleImageTapped)
 
-        let image = LightboxItem(sourceURL: url, host: post.map(MediaHost.init))
-        let lightboxVC = LightboxViewController(items: [image])
+        let image = LightboxAsset(sourceURL: url, host: post.map(MediaHost.init))
+        let lightboxVC = LightboxViewController(items: [.asset(image)])
         lightboxVC.configureZoomTransition(sourceView: nil)
         viewController?.present(lightboxVC, animated: true)
     }

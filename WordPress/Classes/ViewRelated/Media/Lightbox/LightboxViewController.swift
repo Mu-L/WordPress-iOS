@@ -31,7 +31,7 @@ final class LightboxViewController: UIViewController {
     }
 
     private func show(_ item: LightboxItem) {
-        let pageVC = LightboxImagePageViewController(image: item)
+        let pageVC = LightboxImagePageViewController(item: item)
         pageVC.willMove(toParent: self)
         addChild(pageVC)
         view.addSubview(pageVC.view)
@@ -87,9 +87,10 @@ final class LightboxViewController: UIViewController {
 
 /// An example of ``LightboxController`` usage.
 final class LightboxDemoViewController: UIViewController {
-    let imageView = UIImageView()
-    let images: [LightboxItem] = [
-        LightboxItem(sourceURL: URL(string: "https://github.com/user-attachments/assets/5a1d0d95-8ce6-4a87-8175-d67396511143")!)
+    private let imageView = UIImageView()
+    private let imageURL = URL(string: "https://github.com/user-attachments/assets/5a1d0d95-8ce6-4a87-8175-d67396511143")!
+    private let images: [LightboxItem] = [
+        .asset(LightboxAsset(sourceURL: imageURL))
     ]
 
     override func viewDidLoad() {
@@ -103,7 +104,7 @@ final class LightboxDemoViewController: UIViewController {
         ])
 
         Task { @MainActor in
-            imageView.image = try? await ImageDownloader.shared.image(from: images[0].sourceURL)
+            imageView.image = try? await ImageDownloader.shared.image(from: imageURL)
         }
 
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
