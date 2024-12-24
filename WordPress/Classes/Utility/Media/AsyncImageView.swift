@@ -30,6 +30,8 @@ final class AsyncImageView: UIView {
 
         /// By default, `background`.
         var loadingStyle = LoadingStyle.background
+
+        var passTouchesToSuperview = false
     }
 
     var configuration = Configuration() {
@@ -144,6 +146,14 @@ final class AsyncImageView: UIView {
         pinSubviewAtCenter(errorView)
         self.errorView = errorView
         return errorView
+    }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if configuration.passTouchesToSuperview && self.bounds.contains(point) {
+            // Pass the touch to the superview
+            return nil
+        }
+        return super.hitTest(point, with: event)
     }
 }
 
