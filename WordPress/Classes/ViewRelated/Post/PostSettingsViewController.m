@@ -1030,21 +1030,6 @@ FeaturedImageViewControllerDelegate>
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)showFeaturedImageSelector
-{
-    if (self.apost.featuredImage && self.featuredImage) {
-        FeaturedImageViewController *featuredImageVC;
-        if (self.animatedFeaturedImageData) {
-            featuredImageVC = [[FeaturedImageViewController alloc] initWithGifData:self.animatedFeaturedImageData];
-        } else {
-            featuredImageVC = [[FeaturedImageViewController alloc] initWithImage:self.featuredImage];
-        }
-        featuredImageVC.delegate = self;
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:featuredImageVC];
-        [self presentViewController:navigationController animated:YES completion:nil];
-    }
-}
-
 - (void)showEditSlugController
 {
     SettingsMultiTextViewController *vc = [[SettingsMultiTextViewController alloc] initWithText:self.apost.slugForDisplay
@@ -1229,6 +1214,16 @@ FeaturedImageViewControllerDelegate>
 
 - (void)FeaturedImageViewControllerOnRemoveImageButtonPressed:(FeaturedImageViewController *)controller
 {
+    [WPAnalytics trackEvent:WPAnalyticsEventEditorPostFeaturedImageChanged properties:@{@"via": @"settings", @"action": @"removed"}];
+    self.featuredImage = nil;
+    self.animatedFeaturedImageData = nil;
+    [self.apost setFeaturedImage:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.tableView reloadData];
+    [self.featuredImageDelegate gutenbergDidRequestFeaturedImageId:nil];
+}
+
+- (void)removeFeaturedImage {
     [WPAnalytics trackEvent:WPAnalyticsEventEditorPostFeaturedImageChanged properties:@{@"via": @"settings", @"action": @"removed"}];
     self.featuredImage = nil;
     self.animatedFeaturedImageData = nil;

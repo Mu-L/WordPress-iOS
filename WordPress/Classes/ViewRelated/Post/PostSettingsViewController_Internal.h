@@ -28,4 +28,6 @@ typedef enum {
 
 @property (nullable, nonatomic, strong) WPProgressTableViewCell *progressCell;
 
+- (void)removeFeaturedImage;
+
 @end
