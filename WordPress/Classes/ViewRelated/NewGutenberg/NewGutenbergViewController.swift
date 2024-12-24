@@ -1,4 +1,5 @@
 import UIKit
+import WordPressMedia
 import AutomatticTracks
 import GutenbergKit
 import SafariServices
@@ -452,19 +453,9 @@ extension NewGutenbergViewController {
 
     // TODO: are we going to show this natively?
     func gutenbergDidRequestImagePreview(with fullSizeUrl: URL, thumbUrl: URL?) {
-        navigationController?.definesPresentationContext = true
-
-        let controller: WPImageViewController
-        if let image = AnimatedImageCache.shared.cachedStaticImage(url: fullSizeUrl) {
-            controller = WPImageViewController(image: image)
-        } else {
-            controller = WPImageViewController(externalMediaURL: fullSizeUrl)
-        }
-
-        controller.post = self.post
-        controller.modalTransitionStyle = .crossDissolve
-        controller.modalPresentationStyle = .overCurrentContext
-        self.present(controller, animated: true)
+        let lightboxVC = LightboxViewController(sourceURL: fullSizeUrl, host: MediaHost(post))
+        lightboxVC.configureZoomTransition()
+        present(lightboxVC, animated: true)
     }
 
     // TODO: reimplement

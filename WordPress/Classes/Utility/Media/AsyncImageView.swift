@@ -9,7 +9,7 @@ final class AsyncImageView: UIView {
     private let imageView = GIFImageView()
     private var errorView: UIImageView?
     private var spinner: UIActivityIndicatorView?
-    private let controller = ImageViewController()
+    private let controller = ImageLoadingController()
 
     enum LoadingStyle {
         /// Shows a secondary background color during the download.
@@ -30,6 +30,8 @@ final class AsyncImageView: UIView {
 
         /// By default, `background`.
         var loadingStyle = LoadingStyle.background
+
+        var passTouchesToSuperview = false
     }
 
     var configuration = Configuration() {
@@ -88,7 +90,7 @@ final class AsyncImageView: UIView {
         controller.setImage(with: imageURL, host: host, size: size, completion: completion)
     }
 
-    private func setState(_ state: ImageViewController.State) {
+    private func setState(_ state: ImageLoadingController.State) {
         imageView.isHidden = true
         errorView?.isHidden = true
         spinner?.stopAnimating()
@@ -144,6 +146,14 @@ final class AsyncImageView: UIView {
         pinSubviewAtCenter(errorView)
         self.errorView = errorView
         return errorView
+    }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if configuration.passTouchesToSuperview && self.bounds.contains(point) {
+            // Pass the touch to the superview
+            return nil
+        }
+        return super.hitTest(point, with: event)
     }
 }
 
