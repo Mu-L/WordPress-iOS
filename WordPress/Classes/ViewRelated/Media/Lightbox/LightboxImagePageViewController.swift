@@ -48,6 +48,8 @@ final class LightboxImagePageViewController: UIViewController {
 
     private func startFetching() {
         switch item {
+        case .image(let image):
+            setState(.success(image))
         case .asset(let asset):
             controller.setImage(with: asset.sourceURL, host: asset.host)
         case .media(let media):

@@ -20,7 +20,11 @@ final class LightboxViewController: UIViewController {
         self.init(items: [.media(media)])
     }
 
-    init(items: [LightboxItem]) {
+    convenience init(_ item: LightboxItem) {
+        self.init(items: [item])
+    }
+
+    private init(items: [LightboxItem]) {
         assert(items.count == 1, "Current API supports only one item at a time")
         self.items = items
         super.init(nibName: nil, bundle: nil)
@@ -91,7 +95,7 @@ final class LightboxViewController: UIViewController {
         }
     }
 
-    func configureZoomTransition(sourceView: UIView?) {
+    func configureZoomTransition(sourceView: UIView? = nil) {
         configureZoomTransition { _ in sourceView }
     }
 }
