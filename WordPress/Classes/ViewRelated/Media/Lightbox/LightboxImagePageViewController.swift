@@ -4,12 +4,12 @@ import WordPressUI
 final class LightboxImagePageViewController: UIViewController {
     private(set) var scrollView = LightboxImageScrollView()
     private let controller = ImageLoadingController()
-    private let image: LightboxItem
+    private let item: LightboxItem
     private let activityIndicator = UIActivityIndicatorView()
     private var errorView: UIImageView?
 
-    init(image: LightboxItem) {
-        self.image = image
+    init(item: LightboxItem) {
+        self.item = item
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -34,7 +34,7 @@ final class LightboxImagePageViewController: UIViewController {
             self?.setState($0)
         }
 
-        controller.setImage(with: image.sourceURL, host: image.host)
+        startFetching()
     }
 
     override func viewDidLayoutSubviews() {
@@ -43,6 +43,15 @@ final class LightboxImagePageViewController: UIViewController {
         if scrollView.frame != view.bounds {
             scrollView.frame = view.bounds
             scrollView.configureLayout()
+        }
+    }
+
+    private func startFetching() {
+        switch item {
+        case .asset(let asset):
+            controller.setImage(with: asset.sourceURL, host: asset.host)
+        case .media(let media):
+            controller.setImage(with: media, size: .original)
         }
     }
 
