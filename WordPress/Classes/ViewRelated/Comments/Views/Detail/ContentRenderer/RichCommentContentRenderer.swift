@@ -79,7 +79,7 @@ private extension RichCommentContentRenderer {
                 WordPressAppDelegate.crashLogging?.logError(error)
             })
         } else if let post = comment.post as? ReaderPost, post.isBlogPrivate {
-            return MediaHost(with: post)
+            return MediaHost(post)
         }
 
         return .publicSite
