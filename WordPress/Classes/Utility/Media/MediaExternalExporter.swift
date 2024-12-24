@@ -46,8 +46,6 @@ class MediaExternalExporter: MediaExporter {
         return Progress.discreteCompletedProgress()
     }
 
-    /// Downloads an external GIF file, or uses one from the AnimatedImageCache.
-    ///
     private func downloadGif(from url: URL, onCompletion: @escaping OnMediaExport, onError: @escaping OnExportError) -> Progress {
         Task {
             do {
