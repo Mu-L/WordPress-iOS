@@ -137,17 +137,18 @@ class EditorMediaUtility {
             callbackQueue.async {
                 failure(error)
             }
-            return EmptyImageDownloaderTask()
-        case let .success((requestURL, mediaHost)):
-            let imageDownload = AuthenticatedImageDownload(
-                url: requestURL,
-                mediaHost: mediaHost,
-                callbackQueue: callbackQueue,
-                onSuccess: success,
-                onFailure: failure
-            )
-            imageDownload.start()
-            return imageDownload
+            return MeediaUtilityTask { /* do nothing */ }
+        case let .success((imageURL, host)):
+            let task = Task { @MainActor in
+                do {
+                    let image = try await ImageDownloader.shared.image(from: imageURL, host: host)
+                    success(image)
+                } catch {
+                    failure(error)
+
+                }
+            }
+            return MeediaUtilityTask { task.cancel() }
         }
     }
 
@@ -251,8 +252,10 @@ class EditorMediaUtility {
     }
 }
 
-private class EmptyImageDownloaderTask: ImageDownloaderTask {
+private struct MeediaUtilityTask: ImageDownloaderTask {
+    let closure: @Sendable () -> Void
+
     func cancel() {
-        // Do nothing
+        closure()
     }
 }
