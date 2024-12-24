@@ -8,9 +8,16 @@ final class LightboxViewController: UIViewController {
     private var pageVC: LightboxImagePageViewController?
     private var items: [LightboxItem]
 
+    /// A thumbnail to display during transition and for the initial image download.
+    var thumbnail: UIImage?
+
     convenience init(sourceURL: URL, host: MediaHost? = nil) {
         let asset = LightboxAsset(sourceURL: sourceURL, host: host)
         self.init(items: [.asset(asset)])
+    }
+
+    convenience init(media: Media) {
+        self.init(items: [.media(media)])
     }
 
     init(items: [LightboxItem]) {
@@ -42,6 +49,10 @@ final class LightboxViewController: UIViewController {
         view.addSubview(pageVC.view)
         pageVC.view.pinEdges()
         pageVC.didMove(toParent: self)
+        if let thumbnail {
+            pageVC.scrollView.configure(with: thumbnail)
+            self.thumbnail = nil
+        }
         self.pageVC = pageVC
     }
 

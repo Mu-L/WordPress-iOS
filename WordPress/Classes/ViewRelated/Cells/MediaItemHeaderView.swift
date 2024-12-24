@@ -4,7 +4,7 @@ import WordPressShared
 import WordPressMedia
 
 final class MediaItemHeaderView: UIView {
-    private let imageView = CachedAnimatedImageView()
+    let imageView = CachedAnimatedImageView()
     private let errorView = UIImageView()
     private let videoIconView = PlayIconView()
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
