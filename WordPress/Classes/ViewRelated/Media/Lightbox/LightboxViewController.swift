@@ -8,6 +8,11 @@ final class LightboxViewController: UIViewController {
     private var pageVC: LightboxImagePageViewController?
     private var items: [LightboxItem]
 
+    convenience init(sourceURL: URL, host: MediaHost? = nil) {
+        let asset = LightboxAsset(sourceURL: sourceURL, host: host)
+        self.init(items: [.asset(asset)])
+    }
+
     init(items: [LightboxItem]) {
         assert(items.count == 1, "Current API supports only one item at a time")
         self.items = items
@@ -89,9 +94,6 @@ final class LightboxViewController: UIViewController {
 final class LightboxDemoViewController: UIViewController {
     private let imageView = UIImageView()
     private let imageURL = URL(string: "https://github.com/user-attachments/assets/5a1d0d95-8ce6-4a87-8175-d67396511143")!
-    private let images: [LightboxItem] = [
-        .asset(LightboxAsset(sourceURL: imageURL))
-    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +114,7 @@ final class LightboxDemoViewController: UIViewController {
     }
 
     @objc private func imageTapped() {
-        let lightboxVC = LightboxViewController(items: images)
+        let lightboxVC = LightboxViewController(sourceURL: imageURL)
         lightboxVC.configureZoomTransition(sourceView: imageView)
         present(lightboxVC, animated: true)
     }
