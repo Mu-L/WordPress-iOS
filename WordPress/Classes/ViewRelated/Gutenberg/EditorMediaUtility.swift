@@ -4,65 +4,15 @@ import Gridicons
 import WordPressShared
 import WordPressMedia
 
-final class AuthenticatedImageDownload: AsyncOperation, @unchecked Sendable {
-    enum DownloadError: Error {
-        case blogNotFound
-    }
-
-    let url: URL
-    let mediaHost: MediaHost
-    private let callbackQueue: DispatchQueue
-    private let onSuccess: (UIImage) -> ()
-    private let onFailure: (Error) -> ()
-
-    init(url: URL, mediaHost: MediaHost, callbackQueue: DispatchQueue, onSuccess: @escaping (UIImage) -> (), onFailure: @escaping (Error) -> ()) {
-        self.url = url
-        self.mediaHost = mediaHost
-        self.callbackQueue = callbackQueue
-        self.onSuccess = onSuccess
-        self.onFailure = onFailure
-    }
-
-    override func main() {
-        let mediaRequestAuthenticator = MediaRequestAuthenticator()
-        mediaRequestAuthenticator.authenticatedRequest(
-            for: url,
-            from: mediaHost,
-            onComplete: { request in
-                ImageDownloader.shared.downloadImage(for: request) { (image, error) in
-                    self.state = .isFinished
-
-                    self.callbackQueue.async {
-                        guard let image else {
-                            DDLogError("Unable to download image for attachment with url = \(String(describing: request.url)). Details: \(String(describing: error?.localizedDescription))")
-                            if let error {
-                                self.onFailure(error)
-                            } else {
-                                self.onFailure(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
-                            }
-
-                            return
-                        }
-
-                        self.onSuccess(image)
-                    }
-                }
-            },
-            onFailure: { error in
-                self.state = .isFinished
-                self.callbackQueue.async {
-                    self.onFailure(error)
-                }
-            }
-        )
-    }
-}
-
 class EditorMediaUtility {
     private static let InternalInconsistencyError = NSError(domain: NSExceptionName.internalInconsistencyException.rawValue, code: 0)
 
     private struct Constants {
         static let placeholderDocumentLink = URL(string: "documentUploading://")!
+    }
+
+    enum DownloadError: Error {
+        case blogNotFound
     }
 
     func placeholderImage(for attachment: NSTextAttachment, size: CGSize, tintColor: UIColor?) -> UIImage {
@@ -161,7 +111,7 @@ class EditorMediaUtility {
     ) throws -> (URL, MediaHost) {
         // This function is added to debug the issue linked below.
         let safeExistingObject: (NSManagedObjectID) throws -> NSManagedObject = { objectID in
-            var object: Result<NSManagedObject, Error> = .failure(AuthenticatedImageDownload.DownloadError.blogNotFound)
+            var object: Result<NSManagedObject, Error> = .failure(DownloadError.blogNotFound)
             do {
                 // Catch an Objective-C `NSInvalidArgumentException` exception from `existingObject(with:)`.
                 // See https://github.com/wordpress-mobile/WordPress-iOS/issues/20630
