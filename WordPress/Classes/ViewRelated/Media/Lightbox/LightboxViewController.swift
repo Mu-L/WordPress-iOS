@@ -11,6 +11,13 @@ final class LightboxViewController: UIViewController {
     /// A thumbnail to display during transition and for the initial image download.
     var thumbnail: UIImage?
 
+    var configuration: Configuration
+
+    struct Configuration {
+        var backgroundColor: UIColor = .black
+        var showsCloseButton = true
+    }
+
     convenience init(sourceURL: URL, host: MediaHost? = nil) {
         let asset = LightboxAsset(sourceURL: sourceURL, host: host)
         self.init(items: [.asset(asset)])
@@ -20,13 +27,14 @@ final class LightboxViewController: UIViewController {
         self.init(items: [.media(media)])
     }
 
-    convenience init(_ item: LightboxItem) {
+    convenience init(_ item: LightboxItem, configuration: Configuration = .init()) {
         self.init(items: [item])
     }
 
-    private init(items: [LightboxItem]) {
+    private init(items: [LightboxItem], configuration: Configuration = .init()) {
         assert(items.count == 1, "Current API supports only one item at a time")
         self.items = items
+        self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -37,13 +45,14 @@ final class LightboxViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .black
+        view.backgroundColor = configuration.backgroundColor
 
         if let item = items.first {
             show(item)
         }
-
-        addCloseButton()
+        if configuration.showsCloseButton {
+            addCloseButton()
+        }
     }
 
     private func show(_ item: LightboxItem) {
