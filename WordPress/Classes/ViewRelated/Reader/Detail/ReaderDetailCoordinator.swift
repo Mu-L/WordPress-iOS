@@ -493,7 +493,7 @@ class ReaderDetailCoordinator {
         guard let post, let imageURL = post.featuredImage.flatMap(URL.init) else {
             return
         }
-        let lightboxVC = LightboxViewController(sourceURL: imageURL, host: MediaHost(with: post))
+        let lightboxVC = LightboxViewController(sourceURL: imageURL, host: MediaHost(post))
         MainActor.assumeIsolated {
             lightboxVC.thumbnail = sender.image
         }
