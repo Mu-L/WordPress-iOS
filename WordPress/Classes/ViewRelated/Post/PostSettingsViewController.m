@@ -1,7 +1,6 @@
 #import "PostSettingsViewController.h"
 #import "PostSettingsViewController_Internal.h"
 #import "Media.h"
-#import "PostFeaturedImageCell.h"
 #import "SettingsSelectionViewController.h"
 #import "SharingDetailViewController.h"
 #import "WPTableViewActivityCell.h"
@@ -40,7 +39,6 @@ typedef NS_ENUM(NSInteger, PostSettingsRow) {
 };
 
 static CGFloat CellHeight = 44.0f;
-static CGFloat LoadingIndicatorHeight = 28.0f;
 
 static NSString *const PostSettingsAnalyticsTrackingSource = @"post_settings";
 static NSString *const TableViewActivityCellIdentifier = @"TableViewActivityCellIdentifier";
@@ -52,13 +50,12 @@ static NSString *const TableViewGenericCellIdentifier = @"TableViewGenericCellId
 
 @interface PostSettingsViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate,
 UIPopoverControllerDelegate,
-PostCategoriesViewControllerDelegate, PostFeaturedImageCellDelegate>
+PostCategoriesViewControllerDelegate>
 
 @property (nonatomic, strong) AbstractPost *apost;
 @property (nonatomic, strong) NSArray *postMetaSectionRows;
 @property (nonatomic, strong) NSArray *formatsList;
 @property (nonatomic, strong) UIImage *featuredImage;
-@property (nonatomic, strong) NSData *animatedFeaturedImageData;
 
 @property (nonatomic, readonly) CGSize featuredImageSize;
 
@@ -443,11 +440,7 @@ PostCategoriesViewControllerDelegate, PostFeaturedImageCellDelegate>
 
     if (sectionId == PostSettingsSectionFeaturedImage) {
         if ([self isUploadingMedia]) {
-            return CellHeight + (2.f * PostFeaturedImageCellMargin);
-        } else if (self.featuredImage) {
-            return self.featuredImageSize.height + 2.f * PostFeaturedImageCellMargin;
-        } else {
-            return LoadingIndicatorHeight + 2.f * PostFeaturedImageCellMargin;
+            return CellHeight;
         }
     }
 
@@ -717,10 +710,7 @@ PostCategoriesViewControllerDelegate, PostFeaturedImageCellDelegate>
 - (UITableViewCell *)cellForFeaturedImageWithURL:(nonnull NSURL *)featuredURL atIndexPath:(NSIndexPath *)indexPath
 {
     PostFeaturedImageCell *featuredImageCell = [self.tableView dequeueReusableCellWithIdentifier:TableViewFeaturedImageCellIdentifier forIndexPath:indexPath];
-    featuredImageCell.delegate = self;
-    [WPStyleGuide configureTableViewCell:featuredImageCell];
-
-    [featuredImageCell setImageWithURL:featuredURL inPost:self.apost withSize:self.featuredImageSize];
+    [featuredImageCell setImageWithURL:featuredURL post:self.apost];
     featuredImageCell.tag = PostSettingsRowFeaturedImage;
     return featuredImageCell;
 }
@@ -1090,7 +1080,6 @@ PostCategoriesViewControllerDelegate, PostFeaturedImageCellDelegate>
 - (CGSize)featuredImageSize
 {
     CGFloat width = CGRectGetWidth(self.view.frame);
-    width = width - (PostFeaturedImageCellMargin * 2); // left and right cell margins
     CGFloat height = ceilf(width * 0.66);
     return CGSizeMake(width, height);
 }
@@ -1173,47 +1162,11 @@ PostCategoriesViewControllerDelegate, PostFeaturedImageCellDelegate>
     }
 }
 
-#pragma mark - PostFeaturedImageCellDelegate
-
-- (void)postFeatureImageCell:(PostFeaturedImageCell *)cell didFinishLoadingAnimatedImageWithData:(NSData *)animationData
-{
-    if (self.animatedFeaturedImageData == nil) {
-        self.animatedFeaturedImageData = animationData;
-        [self updateFeaturedImageCell:cell];
-    }
-}
-
-- (void)postFeatureImageCellDidFinishLoadingImage:(PostFeaturedImageCell *)cell
-{
-    self.animatedFeaturedImageData = nil;
-    if (!self.featuredImage) {
-        [self updateFeaturedImageCell:cell];
-    }
-}
-
-- (void)postFeatureImageCell:(PostFeaturedImageCell *)cell didFinishLoadingImageWithError:(NSError *)error
-{
-    self.featuredImage = nil;
-    if (error) {
-        NSIndexPath *featureImageCellPath = [NSIndexPath indexPathForRow:0 inSection:[self.sections indexOfObject:@(PostSettingsSectionFeaturedImage)]];
-        [self featuredImageFailedLoading:featureImageCellPath withError:error];
-    }
-}
-
-- (void)updateFeaturedImageCell:(PostFeaturedImageCell *)cell
-{
-    self.featuredImage = cell.image;
-    NSInteger featuredImageSection = [self.sections indexOfObject:@(PostSettingsSectionFeaturedImage)];
-    NSIndexSet *featuredImageSectionSet = [NSIndexSet indexSetWithIndex:featuredImageSection];
-    [self.tableView reloadSections:featuredImageSectionSet withRowAnimation:UITableViewRowAnimationNone];
-}
-
 #pragma mark - Featured Image
 
 - (void)removeFeaturedImage {
     [WPAnalytics trackEvent:WPAnalyticsEventEditorPostFeaturedImageChanged properties:@{@"via": @"settings", @"action": @"removed"}];
     self.featuredImage = nil;
-    self.animatedFeaturedImageData = nil;
     [self.apost setFeaturedImage:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.tableView reloadData];
