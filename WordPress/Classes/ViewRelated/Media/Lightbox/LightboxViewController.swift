@@ -1,0 +1,118 @@
+import UIKit
+import WordPressMedia
+import WordPressUI
+import UniformTypeIdentifiers
+
+/// A fullscreen preview of a set of media assets.
+final class LightboxViewController: UIViewController {
+    private var pageVC: LightboxImagePageViewController?
+    private var items: [LightboxItem]
+
+    init(items: [LightboxItem]) {
+        assert(items.count == 1, "Current API supports only one item at a time")
+        self.items = items
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .black
+
+        if let item = items.first {
+            show(item)
+        }
+
+        addCloseButton()
+    }
+
+    private func show(_ item: LightboxItem) {
+        let pageVC = LightboxImagePageViewController(image: item)
+        pageVC.willMove(toParent: self)
+        addChild(pageVC)
+        view.addSubview(pageVC.view)
+        pageVC.view.pinEdges()
+        pageVC.didMove(toParent: self)
+        self.pageVC = pageVC
+    }
+
+    private func addCloseButton() {
+        let button = UIButton(type: .system)
+        let image = UIImage(systemName: "xmark.circle.fill")?
+            .withConfiguration(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 22, weight: .medium)))
+            .applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors: [.lightGray, .opaqueSeparator.withAlphaComponent(0.2)]))
+        button.setImage(image, for: [])
+        button.addTarget(self, action: #selector(buttonCloseTapped), for: .primaryActionTriggered)
+        button.accessibilityLabel = SharedStrings.Button.close
+        view.addSubview(button)
+        button.pinEdges([.top, .trailing], to: view.safeAreaLayoutGuide, insets: UIEdgeInsets(.all, 8))
+    }
+
+    @objc private func buttonCloseTapped() {
+        presentingViewController?.dismiss(animated: true)
+    }
+
+    // MARK: Presentation
+
+    func configureZoomTransition(souceItemProvider: @escaping (UIViewController) -> UIView) {
+        if #available(iOS 18.0, *) {
+            let options = UIViewController.Transition.ZoomOptions()
+            options.alignmentRectProvider = { context in
+                // For more info, see https://douglashill.co/zoom-transitions/#Zooming-to-only-part-of-the-destination-view
+                let detailViewController = context.zoomedViewController as! LightboxViewController
+                let detailsView: UIView = detailViewController.pageVC?.scrollView.imageView ?? detailViewController.view
+                return detailsView.convert(detailsView.bounds, to: detailViewController.view)
+            }
+            preferredTransition = .zoom(options: options) { context in
+                souceItemProvider(context.zoomedViewController)
+            }
+        } else {
+            modalTransitionStyle = .crossDissolve
+        }
+    }
+
+    func configureZoomTransition(sourceView: UIView) {
+        configureZoomTransition { _ in sourceView }
+    }
+}
+
+@available(iOS 17, *)
+#Preview {
+    UINavigationController(rootViewController: LightboxDemoViewController())
+}
+
+/// An example of ``LightboxController`` usage.
+final class LightboxDemoViewController: UIViewController {
+    let imageView = UIImageView()
+    let images: [LightboxItem] = [
+        LightboxItem(sourceURL: URL(string: "https://github.com/user-attachments/assets/5a1d0d95-8ce6-4a87-8175-d67396511143")!)
+    ]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.addSubview(imageView)
+        imageView.pinCenter()
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: 120),
+            imageView.heightAnchor.constraint(equalToConstant: 80),
+        ])
+
+        Task { @MainActor in
+            imageView.image = try? await ImageDownloader.shared.image(from: images[0].sourceURL)
+        }
+
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
+        imageView.isUserInteractionEnabled = true
+    }
+
+    @objc private func imageTapped() {
+        let lightboxVC = LightboxViewController(items: images)
+        lightboxVC.configureZoomTransition(sourceView: imageView)
+        present(lightboxVC, animated: true)
+    }
+}
