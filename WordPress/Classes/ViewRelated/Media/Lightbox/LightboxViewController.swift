@@ -106,7 +106,23 @@ final class LightboxViewController: UIViewController {
 
     func configureZoomTransition(sourceView: UIView? = nil) {
         configureZoomTransition { _ in sourceView }
+        if let sourceView, thumbnail == nil {
+            MainActor.assumeIsolated {
+                thumbnail = getThumbnail(fromSourceView: sourceView)
+            }
+        }
     }
+}
+
+@MainActor
+private func getThumbnail(fromSourceView sourceView: UIView) -> UIImage? {
+    if let imageView = sourceView as? AsyncImageView {
+        return imageView.image
+    }
+    if let imageView = sourceView as? UIImageView {
+        return imageView.image
+    }
+    return nil
 }
 
 @available(iOS 17, *)
