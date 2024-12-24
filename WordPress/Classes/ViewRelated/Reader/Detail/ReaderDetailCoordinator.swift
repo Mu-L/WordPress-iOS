@@ -1,5 +1,6 @@
 import Foundation
 import WordPressShared
+import WordPressMedia
 import Combine
 
 class ReaderDetailCoordinator {
@@ -283,12 +284,10 @@ class ReaderDetailCoordinator {
     func presentImage(_ url: URL) {
         WPAnalytics.trackReader(.readerArticleImageTapped)
 
-        let imageViewController = WPImageViewController(url: url)
-        imageViewController.readerPost = post
-        imageViewController.modalTransitionStyle = .crossDissolve
-        imageViewController.modalPresentationStyle = .fullScreen
-
-        viewController?.present(imageViewController, animated: true)
+        let image = LightboxItem(sourceURL: url, host: post.map(MediaHost.init))
+        let lightboxVC = LightboxViewController(items: [image])
+        lightboxVC.configureZoomTransition(sourceView: nil)
+        viewController?.present(lightboxVC, animated: true)
     }
 
     /// Open the postURL in a separated view controller
