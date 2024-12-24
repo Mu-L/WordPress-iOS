@@ -1,6 +1,5 @@
 #import "PostSettingsViewController.h"
 #import "PostSettingsViewController_Internal.h"
-#import "FeaturedImageViewController.h"
 #import "Media.h"
 #import "PostFeaturedImageCell.h"
 #import "SettingsSelectionViewController.h"
@@ -53,8 +52,7 @@ static NSString *const TableViewGenericCellIdentifier = @"TableViewGenericCellId
 
 @interface PostSettingsViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate,
 UIPopoverControllerDelegate,
-PostCategoriesViewControllerDelegate, PostFeaturedImageCellDelegate,
-FeaturedImageViewControllerDelegate>
+PostCategoriesViewControllerDelegate, PostFeaturedImageCellDelegate>
 
 @property (nonatomic, strong) AbstractPost *apost;
 @property (nonatomic, strong) NSArray *postMetaSectionRows;
@@ -1210,18 +1208,7 @@ FeaturedImageViewControllerDelegate>
     [self.tableView reloadSections:featuredImageSectionSet withRowAnimation:UITableViewRowAnimationNone];
 }
 
-#pragma mark - FeaturedImageViewControllerDelegate
-
-- (void)FeaturedImageViewControllerOnRemoveImageButtonPressed:(FeaturedImageViewController *)controller
-{
-    [WPAnalytics trackEvent:WPAnalyticsEventEditorPostFeaturedImageChanged properties:@{@"via": @"settings", @"action": @"removed"}];
-    self.featuredImage = nil;
-    self.animatedFeaturedImageData = nil;
-    [self.apost setFeaturedImage:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self.tableView reloadData];
-    [self.featuredImageDelegate gutenbergDidRequestFeaturedImageId:nil];
-}
+#pragma mark - Featured Image
 
 - (void)removeFeaturedImage {
     [WPAnalytics trackEvent:WPAnalyticsEventEditorPostFeaturedImageChanged properties:@{@"via": @"settings", @"action": @"removed"}];
