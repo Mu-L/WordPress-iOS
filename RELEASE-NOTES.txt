@@ -1,5 +1,6 @@
 25.7
 -----
+* [**] Add new lightbox screen for images with modern transitions and enhanced performance [#23922]
 
 25.6
 -----
