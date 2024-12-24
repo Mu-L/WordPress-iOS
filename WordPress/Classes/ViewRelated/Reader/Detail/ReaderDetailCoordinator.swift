@@ -286,7 +286,7 @@ class ReaderDetailCoordinator {
 
         let host = post.map(MediaHost.init)
         let lightboxVC = LightboxViewController(sourceURL: url, host: host)
-        lightboxVC.configureZoomTransition(sourceView: nil)
+        lightboxVC.configureZoomTransition()
         viewController?.present(lightboxVC, animated: true)
     }
 
