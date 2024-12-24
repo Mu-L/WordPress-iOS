@@ -222,6 +222,7 @@ final class ExternalMediaPickerViewController: UIViewController, UICollectionVie
         let viewController = MediaPreviewController()
         viewController.dataSource = self
         let navigation = UINavigationController(rootViewController: viewController)
+        navigation.modalPresentationStyle = .fullScreen
         present(navigation, animated: true)
     }
 
