@@ -1,6 +1,7 @@
 import Foundation
 
 extension MediaHost {
+
     // MARK: - MediaHost (AbstractPost)
 
     init(_ post: AbstractPost) {
