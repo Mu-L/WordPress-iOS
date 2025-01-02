@@ -1,8 +1,9 @@
 import Foundation
+import AsyncImageKit
 
 /// Defines a media host for request authentication purposes.
 ///
-public enum MediaHost: Equatable, Sendable {
+public enum MediaHost: Equatable, Sendable, MediaHostProtocol {
     case publicSite
     case publicWPComSite
     case privateSelfHostedSite
@@ -89,5 +90,11 @@ public enum MediaHost: Equatable, Sendable {
         }
 
         self = .privateAtomicWPComSite(siteID: siteID, username: username, authToken: authToken)
+    }
+
+    // MARK: - MediaHostProtocol
+
+    public func authenticatedRequest(for url: URL) async throws -> URLRequest {
+        try await MediaRequestAuthenticator().authenticatedRequest(for: url, host: self)
     }
 }

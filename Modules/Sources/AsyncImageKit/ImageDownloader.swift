@@ -4,7 +4,6 @@ import UIKit
 @ImageDownloaderActor
 public final class ImageDownloader {
     private nonisolated let cache: MemoryCacheProtocol
-    private let authenticator: MediaRequestAuthenticatorProtocol?
 
     private let urlSession = URLSession {
         $0.urlCache = nil
@@ -21,14 +20,12 @@ public final class ImageDownloader {
     private var tasks: [String: ImageDataTask] = [:]
 
     public nonisolated init(
-        cache: MemoryCacheProtocol = MemoryCache.shared,
-        authenticator: MediaRequestAuthenticatorProtocol?
+        cache: MemoryCacheProtocol = MemoryCache.shared
     ) {
         self.cache = cache
-        self.authenticator = authenticator
     }
 
-    public func image(from url: URL, host: MediaHost? = nil, options: ImageRequestOptions = .init()) async throws -> UIImage {
+    public func image(from url: URL, host: MediaHostProtocol? = nil, options: ImageRequestOptions = .init()) async throws -> UIImage {
         try await image(for: ImageRequest(url: url, host: host, options: options))
     }
 
@@ -55,8 +52,8 @@ public final class ImageDownloader {
         switch request.source {
         case .url(let url, let host):
             var request: URLRequest
-            if let host, let authenticator {
-                request = try await authenticator.authenticatedRequest(for: url, host: host)
+            if let host {
+                request = try await host.authenticatedRequest(for: url)
             } else {
                 request = URLRequest(url: url)
             }
@@ -195,6 +192,6 @@ private extension URLSession {
     }
 }
 
-public protocol MediaRequestAuthenticatorProtocol: Sendable {
-    @MainActor func authenticatedRequest(for url: URL, host: MediaHost) async throws -> URLRequest
+public protocol MediaHostProtocol: Sendable {
+    @MainActor func authenticatedRequest(for url: URL) async throws -> URLRequest
 }

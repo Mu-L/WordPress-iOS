@@ -185,6 +185,7 @@
 		0C0DF8942C2DF14600011B7D /* LoginFacadeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0DF8932C2DF12A00011B7D /* LoginFacadeTests.m */; };
 		0C2155A62C39A24D00EFE2C0 /* XcodeTarget_UITests in Frameworks */ = {isa = PBXBuildFile; productRef = 0C2155A52C39A24D00EFE2C0 /* XcodeTarget_UITests */; };
 		0C2155A82C39A25400EFE2C0 /* XcodeTarget_UITests in Frameworks */ = {isa = PBXBuildFile; productRef = 0C2155A72C39A25400EFE2C0 /* XcodeTarget_UITests */; };
+		0C22EE0B2D2749A40058F329 /* MediaHostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C22EE0A2D2749A40058F329 /* MediaHostTests.swift */; };
 		0C235BD22C3862D400D0E163 /* XcodeTarget_WordPressTests in Frameworks */ = {isa = PBXBuildFile; productRef = 0C235BD12C3862D400D0E163 /* XcodeTarget_WordPressTests */; };
 		0C2518AE2ABE1F2800381D31 /* iphone-photo.heic in Resources */ = {isa = PBXBuildFile; fileRef = 0C2518AD2ABE1EA000381D31 /* iphone-photo.heic */; };
 		0C35FFF429CBA6DA00D224EB /* BlogDashboardPersonalizationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C35FFF329CBA6DA00D224EB /* BlogDashboardPersonalizationViewModelTests.swift */; };
@@ -2015,6 +2016,7 @@
 		0A69300A28B5AA5E00E98DE1 /* FullScreenCommentReplyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCommentReplyViewModelTests.swift; sourceTree = "<group>"; };
 		0A9687BB28B40771009DCD2F /* FullScreenCommentReplyViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCommentReplyViewModelMock.swift; sourceTree = "<group>"; };
 		0C0DF8932C2DF12A00011B7D /* LoginFacadeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginFacadeTests.m; sourceTree = "<group>"; };
+		0C22EE0A2D2749A40058F329 /* MediaHostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaHostTests.swift; sourceTree = "<group>"; };
 		0C2518AD2ABE1EA000381D31 /* iphone-photo.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iphone-photo.heic"; sourceTree = "<group>"; };
 		0C35FFF329CBA6DA00D224EB /* BlogDashboardPersonalizationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogDashboardPersonalizationViewModelTests.swift; sourceTree = "<group>"; };
 		0C38581F2CA74DC7004880ED /* AppSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsTests.swift; sourceTree = "<group>"; };
@@ -6032,6 +6034,7 @@
 			isa = PBXGroup;
 			children = (
 				F1450CF82437EEBB00A28BFE /* MediaRequestAuthenticatorTests.swift */,
+				0C22EE0A2D2749A40058F329 /* MediaHostTests.swift */,
 				4688E6CB26AB571D00A5D894 /* RequestAuthenticatorTests.swift */,
 				E15027641E03E54100B847E3 /* PinghubTests.swift */,
 				4AB6A35F2B7C3EB500769115 /* PinghubWebSocketTests.swift */,
@@ -9966,6 +9969,7 @@
 				572FB401223A806000933C76 /* NoticeStoreTests.swift in Sources */,
 				748437EE1F1D4A7300E8DDAF /* RichContentFormatterTests.swift in Sources */,
 				FE9438B22A050251006C40EC /* BlockEditorSettings_GutenbergEditorSettingsTests.swift in Sources */,
+				0C22EE0B2D2749A40058F329 /* MediaHostTests.swift in Sources */,
 				C81CCD6A243AEE1100A83E27 /* TenorAPIResponseTests.swift in Sources */,
 				8BE7C84123466927006EDE70 /* I18n.swift in Sources */,
 				C396C80B280F2401006FE7AC /* SiteDesignTests.swift in Sources */,

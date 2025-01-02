@@ -83,7 +83,7 @@ final class AsyncImageView: UIView {
     /// - parameter size: Target image size in pixels.
     func setImage(
         with imageURL: URL,
-        host: MediaHost? = nil,
+        host: MediaHostProtocol? = nil,
         size: ImageSize? = nil
     ) {
         let request = ImageRequest(url: imageURL, host: host, options: ImageRequestOptions(size: size))

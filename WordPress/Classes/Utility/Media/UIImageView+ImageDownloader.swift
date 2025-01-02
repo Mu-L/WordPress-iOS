@@ -22,7 +22,7 @@ struct ImageViewExtensions {
         }
     }
 
-    func setImage(with imageURL: URL, host: MediaHost? = nil, size: ImageSize? = nil) {
+    func setImage(with imageURL: URL, host: MediaHostProtocol? = nil, size: ImageSize? = nil) {
         setImage(with: ImageRequest(url: imageURL, host: host, options: ImageRequestOptions(size: size)))
     }
 

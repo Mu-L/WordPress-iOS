@@ -2,7 +2,7 @@ import Foundation
 import AsyncImageKit
 
 extension ImageDownloader {
-    nonisolated static let shared = ImageDownloader(authenticator: MediaRequestAuthenticator())
+    nonisolated static let shared = ImageDownloader()
 }
 
 extension ImagePrefetcher {
