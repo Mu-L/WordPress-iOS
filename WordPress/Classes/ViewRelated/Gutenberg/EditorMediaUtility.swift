@@ -150,7 +150,7 @@ class EditorMediaUtility {
             requestURL = PhotonImageURLHelper.photonURL(with: size, forImageURL: url)
         }
 
-        return (requestURL, MediaHost(with: post.blog))
+        return (requestURL, MediaHost(post.blog))
     }
 
     static func fetchRemoteVideoURL(for media: Media, in post: AbstractPost, withToken: Bool = false, completion: @escaping ( Result<(URL), Error> ) -> Void) {

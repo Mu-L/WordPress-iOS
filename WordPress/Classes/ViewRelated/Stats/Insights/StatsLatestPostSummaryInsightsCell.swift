@@ -231,9 +231,7 @@ class StatsLatestPostSummaryInsightsCell: StatsBaseCell, LatestPostSummaryConfig
            let blog = try? Blog.lookup(withID: siteID, in: ContextManager.shared.mainContext) {
             postImageView.isHidden = false
 
-            let host = MediaHost(with: blog, failure: { error in
-                DDLogError("Failed to create media host: \(error.localizedDescription)")
-            })
+            let host = MediaHost(blog)
             let targetSize = CGSize(width: Metrics.thumbnailSize, height: Metrics.thumbnailSize)
             postImageView.setImage(with: url, host: host, size: ImageSize(scaling: targetSize, in: self))
         } else {

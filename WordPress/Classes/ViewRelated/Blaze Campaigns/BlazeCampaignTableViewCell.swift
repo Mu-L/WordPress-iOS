@@ -107,9 +107,7 @@ final class BlazeCampaignTableViewCell: UITableViewCell, Reusable {
         featuredImageView.prepareForReuse()
         featuredImageView.isHidden = viewModel.imageURL == nil
         if let imageURL = viewModel.imageURL {
-            let host = MediaHost(with: blog, failure: { error in
-                WordPressAppDelegate.crashLogging?.logError(error)
-            })
+            let host = MediaHost(blog)
             let preferredSize = ImageSize(scaling: CGSize(width: Metrics.featuredImageSize, height: Metrics.featuredImageSize), in: self)
             featuredImageView.setImage(with: imageURL, host: host, size: preferredSize)
         }

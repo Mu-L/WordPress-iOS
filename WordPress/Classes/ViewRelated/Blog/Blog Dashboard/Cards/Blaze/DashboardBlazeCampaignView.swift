@@ -61,9 +61,7 @@ final class DashboardBlazeCampaignView: UIView {
         imageView.prepareForReuse()
         imageView.isHidden = viewModel.imageURL == nil
         if let imageURL = viewModel.imageURL {
-            let host = MediaHost(with: blog, failure: { error in
-                WordPressAppDelegate.crashLogging?.logError(error)
-            })
+            let host = MediaHost(blog)
             let targetSize = ImageSize(scaling: Constants.imageSize, in: self)
             imageView.setImage(with: imageURL, host: host, size: targetSize)
         }
