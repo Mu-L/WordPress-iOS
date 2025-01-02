@@ -1,5 +1,5 @@
 import Testing
-import WordPressMedia
+@testable import WordPress
 
 struct MediaHostTests {
     @Test func initializationWithPublicSite() {

@@ -34,7 +34,7 @@ struct SiteIconViewModel {
 
         if blog.hasIcon, let icon = blog.icon {
             self.imageURL = SiteIconViewModel.optimizedURL(for: icon, imageSize: size.size, isP2: blog.isAutomatticP2)
-            self.host = MediaHost(with: blog)
+            self.host = MediaHost(blog)
         }
     }
 

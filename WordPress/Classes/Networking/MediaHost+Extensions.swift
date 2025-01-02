@@ -1,58 +1,31 @@
 import Foundation
-import AsyncImageKit
 
-/// Extends `MediaRequestAuthenticator.MediaHost` so that we can easily
-/// initialize it from a given `AbstractPost`.
-///
 extension MediaHost {
+
+    // MARK: - MediaHost (AbstractPost)
+
     init(_ post: AbstractPost) {
-        self.init(with: post.blog, failure: { error in
-            // We just associate a post with the underlying error for simpler debugging.
-            WordPressAppDelegate.crashLogging?.logError(error)
-        })
+        self.init(post.blog)
    }
-}
 
-/// Extends `MediaRequestAuthenticator.MediaHost` so that we can easily
-/// initialize it from a given `Blog`.
-///
-extension MediaHost {
-    enum BlogError: Swift.Error {
-        case baseInitializerError(error: Error)
-    }
+    // MARK: - MediaHost (Blog)
 
-    init(with blog: Blog) {
-        self.init(with: blog) { error in
-            // We'll log the error, so we know it's there, but we won't halt execution.
-            WordPressAppDelegate.crashLogging?.logError(error)
-        }
-    }
-
-    init(with blog: Blog, failure: (BlogError) -> ()) {
-        let isAtomic = blog.isAtomic()
-        self.init(with: blog, isAtomic: isAtomic, failure: failure)
-    }
-
-    init(with blog: Blog, isAtomic: Bool, failure: (BlogError) -> ()) {
+    init(_ blog: Blog) {
         self.init(
             isAccessibleThroughWPCom: blog.isAccessibleThroughWPCom(),
             isPrivate: blog.isPrivate(),
-            isAtomic: isAtomic,
+            isAtomic: blog.isAtomic(),
             siteID: blog.dotComID?.intValue,
             username: blog.usernameForSite,
             authToken: blog.authToken,
             failure: { error in
-                // We just associate a blog with the underlying error for simpler debugging.
-                failure(BlogError.baseInitializerError(error: error))
+                WordPressAppDelegate.crashLogging?.logError(error)
             }
         )
    }
-}
 
-/// Extends `MediaRequestAuthenticator.MediaHost` so that we can easily
-/// initialize it from a given `Blog`.
-///
-extension MediaHost {
+    // MARK: - MediaHost (ReaderPost)
+
     init(_ post: ReaderPost) {
         let isAccessibleThroughWPCom = post.isWPCom || post.isJetpack
 
