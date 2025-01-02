@@ -5,6 +5,7 @@ import AsyncImageKit
 final class LightboxImagePageViewController: UIViewController {
     private(set) var scrollView = LightboxImageScrollView()
     private let controller = ImageLoadingController()
+    private let siteMediaImageLoadingController = SiteMediaImageLoadingController()
     private let item: LightboxItem
     private let activityIndicator = UIActivityIndicatorView()
     private var errorView: UIImageView?
@@ -35,6 +36,10 @@ final class LightboxImagePageViewController: UIViewController {
             self?.setState($0)
         }
 
+        siteMediaImageLoadingController.onStateChanged = { [weak self] in
+            self?.setState($0)
+        }
+
         startFetching()
     }
 
@@ -54,7 +59,7 @@ final class LightboxImagePageViewController: UIViewController {
         case .asset(let asset):
             controller.setImage(with: ImageRequest(url: asset.sourceURL, host: asset.host))
         case .media(let media):
-            controller.setImage(with: media, size: .original)
+            siteMediaImageLoadingController.setImage(with: media, size: .original)
         }
     }
 

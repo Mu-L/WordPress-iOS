@@ -1,15 +1,13 @@
 import SwiftUI
-import DesignSystem
-import AsyncImageKit
 
 /// Asynchronous Image View that replicates the public API of `SwiftUI.AsyncImage`.
 /// It uses `ImageDownloader` to fetch and cache the images.
-struct CachedAsyncImage<Content>: View where Content: View {
+public struct CachedAsyncImage<Content>: View where Content: View {
     @State private var phase: AsyncImagePhase = .empty
     private let url: URL?
     private let content: (AsyncImagePhase) -> Content
     private let imageDownloader: ImageDownloader
-    private let host: MediaHost?
+    private let host: MediaHostProtocol?
 
     public var body: some View {
         content(phase)
@@ -20,19 +18,24 @@ struct CachedAsyncImage<Content>: View where Content: View {
 
     /// Initializes an image without any customization.
     /// Provides a plain color as placeholder
-    init(url: URL?) where Content == _ConditionalContent<Image, Color> {
+    public init(url: URL?) where Content == _ConditionalContent<Image, Color> {
         self.init(url: url) { phase in
             if let image = phase.image {
                 image
             } else {
-                Color(uiColor: UIAppColor.gray(.shade40))
+                Color(uiColor: .secondarySystemBackground)
             }
         }
     }
 
     /// Allows content customization and providing a placeholder that will be shown
     /// until the image download is finalized.
-    init<I, P>(url: URL?, host: MediaHost? = nil, @ViewBuilder content: @escaping (Image) -> I, @ViewBuilder placeholder: @escaping () -> P) where Content == _ConditionalContent<I, P>, I: View, P: View {
+    public init<I, P>(
+        url: URL?,
+        host: MediaHostProtocol? = nil,
+        @ViewBuilder content: @escaping (Image) -> I,
+        @ViewBuilder placeholder: @escaping () -> P
+    ) where Content == _ConditionalContent<I, P>, I: View, P: View {
         self.init(url: url, host: host) { phase in
             if let image = phase.image {
                 content(image)
@@ -42,9 +45,9 @@ struct CachedAsyncImage<Content>: View where Content: View {
         }
     }
 
-    init(
+    public init(
         url: URL?,
-        host: MediaHost? = nil,
+        host: MediaHostProtocol? = nil,
         imageDownloader: ImageDownloader = .shared,
         @ViewBuilder content: @escaping (AsyncImagePhase) -> Content
     ) {

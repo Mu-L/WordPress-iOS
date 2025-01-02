@@ -8,10 +8,10 @@ let package = Package(
         .iOS(.v16),
     ],
     products: XcodeSupport.products + [
-        .library(name: "JetpackStatsWidgetsCore", targets: ["JetpackStatsWidgetsCore"]),
-        .library(name: "DesignSystem", targets: ["DesignSystem"]),
-        .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
         .library(name: "AsyncImageKit", targets: ["AsyncImageKit"]),
+        .library(name: "DesignSystem", targets: ["DesignSystem"]),
+        .library(name: "JetpackStatsWidgetsCore", targets: ["JetpackStatsWidgetsCore"]),
+        .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
         .library(name: "WordPressUI", targets: ["WordPressUI"]),
     ],
@@ -52,16 +52,17 @@ let package = Package(
         .package(url: "https://github.com/Automattic/color-studio", branch: "trunk"),
     ],
     targets: XcodeSupport.targets + [
-        .target(name: "JetpackStatsWidgetsCore", swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "AsyncImageKit", dependencies: [
+            .product(name: "Collections", package: "swift-collections"),
+            .product(name: "Gifu", package: "Gifu"),
+        ]),
         .target(name: "DesignSystem", swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "JetpackStatsWidgetsCore", swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "UITestsFoundation", dependencies: [
             .product(name: "ScreenObject", package: "ScreenObject"),
             .product(name: "XCUITestHelpers", package: "XCUITestHelpers"),
         ], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "WordPressFlux", swiftSettings: [.swiftLanguageMode(.v5)]),
-        .target(name: "AsyncImageKit", dependencies: [
-            .product(name: "Collections", package: "swift-collections"),
-        ]),
         .target(name: "WordPressSharedObjC", resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "WordPressShared", dependencies: [.target(name: "WordPressSharedObjC")], resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "WordPressTesting", resources: [.process("Resources")]),
