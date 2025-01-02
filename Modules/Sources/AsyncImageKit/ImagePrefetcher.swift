@@ -15,7 +15,10 @@ public final class ImagePrefetcher {
         }
     }
 
-    public nonisolated init(downloader: ImageDownloader, maxConcurrentTasks: Int = 2) {
+    public nonisolated init(
+        downloader: ImageDownloader = .shared,
+        maxConcurrentTasks: Int = 2
+    ) {
         self.downloader = downloader
         self.maxConcurrentTasks = maxConcurrentTasks
     }

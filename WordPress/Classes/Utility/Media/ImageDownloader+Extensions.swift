@@ -1,16 +1,6 @@
 import Foundation
 import AsyncImageKit
 
-extension ImageDownloader {
-    nonisolated static let shared = ImageDownloader()
-}
-
-extension ImagePrefetcher {
-    convenience nonisolated init() {
-        self.init(downloader: .shared)
-    }
-}
-
 // MARK: - ImageDownloader (Closures)
 
 extension ImageDownloader {

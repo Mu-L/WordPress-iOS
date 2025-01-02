@@ -3,6 +3,8 @@ import UIKit
 /// The system that downloads and caches images, and prepares them for display.
 @ImageDownloaderActor
 public final class ImageDownloader {
+    public nonisolated static let shared = ImageDownloader()
+
     private nonisolated let cache: MemoryCacheProtocol
 
     private let urlSession = URLSession {
