@@ -1,6 +1,6 @@
 import UIKit
 import Gifu
-import WordPressMedia
+import AsyncImageKit
 
 /// A simple image view that supports rendering both static and animated images
 /// (see ``AnimatedImage``).

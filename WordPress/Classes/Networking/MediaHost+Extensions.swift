@@ -1,5 +1,5 @@
 import Foundation
-import WordPressMedia
+import AsyncImageKit
 
 /// Extends `MediaRequestAuthenticator.MediaHost` so that we can easily
 /// initialize it from a given `AbstractPost`.

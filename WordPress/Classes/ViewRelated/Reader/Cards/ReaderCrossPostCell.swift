@@ -2,7 +2,7 @@ import Foundation
 import AutomatticTracks
 import WordPressShared
 import WordPressUI
-import WordPressMedia
+import AsyncImageKit
 
 final class ReaderCrossPostCell: ReaderStreamBaseCell {
     private let view = ReaderCrossPostView()

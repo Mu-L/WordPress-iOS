@@ -2,7 +2,7 @@ import AutomatticTracks
 import Aztec
 import Gridicons
 import WordPressShared
-import WordPressMedia
+import AsyncImageKit
 
 class EditorMediaUtility {
     private static let InternalInconsistencyError = NSError(domain: NSExceptionName.internalInconsistencyException.rawValue, code: 0)

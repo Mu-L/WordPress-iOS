@@ -11,7 +11,7 @@ let package = Package(
         .library(name: "JetpackStatsWidgetsCore", targets: ["JetpackStatsWidgetsCore"]),
         .library(name: "DesignSystem", targets: ["DesignSystem"]),
         .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
-        .library(name: "WordPressMedia", targets: ["WordPressMedia"]),
+        .library(name: "AsyncImageKit", targets: ["AsyncImageKit"]),
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
         .library(name: "WordPressUI", targets: ["WordPressUI"]),
     ],
@@ -59,7 +59,7 @@ let package = Package(
             .product(name: "XCUITestHelpers", package: "XCUITestHelpers"),
         ], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "WordPressFlux", swiftSettings: [.swiftLanguageMode(.v5)]),
-        .target(name: "WordPressMedia", dependencies: [
+        .target(name: "AsyncImageKit", dependencies: [
             .product(name: "Collections", package: "swift-collections"),
         ]),
         .target(name: "WordPressSharedObjC", resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
@@ -69,8 +69,8 @@ let package = Package(
         .testTarget(name: "JetpackStatsWidgetsCoreTests", dependencies: [.target(name: "JetpackStatsWidgetsCore")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .testTarget(name: "DesignSystemTests", dependencies: [.target(name: "DesignSystem")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .testTarget(name: "WordPressFluxTests", dependencies: ["WordPressFlux"], swiftSettings: [.swiftLanguageMode(.v5)]),
-        .testTarget(name: "WordPressMediaTests", dependencies: [
-            .target(name: "WordPressMedia"),
+        .testTarget(name: "AsyncImageKitTests", dependencies: [
+            .target(name: "AsyncImageKit"),
             .target(name: "WordPressTesting"),
             .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
         ]),
@@ -145,7 +145,7 @@ enum XcodeSupport {
                 "JetpackStatsWidgetsCore",
                 "WordPressFlux",
                 "WordPressShared",
-                "WordPressMedia",
+                "AsyncImageKit",
                 "WordPressUI",
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "AutomatticAbout", package: "AutomatticAbout-swift"),

@@ -1,5 +1,5 @@
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 
 final class BlazePostPreviewView: UIView {
 

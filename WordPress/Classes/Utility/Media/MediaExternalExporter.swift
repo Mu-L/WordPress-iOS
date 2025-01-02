@@ -1,5 +1,5 @@
 import Foundation
-import WordPressMedia
+import AsyncImageKit
 
 /// Media export handling assets from external sources i.e.: Stock Photos
 ///

@@ -1,6 +1,6 @@
 import UIKit
 import WordPressUI
-import WordPressMedia
+import AsyncImageKit
 
 final class LightboxImagePageViewController: UIViewController {
     private(set) var scrollView = LightboxImageScrollView()

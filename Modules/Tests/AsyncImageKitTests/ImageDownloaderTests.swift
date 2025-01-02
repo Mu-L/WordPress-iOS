@@ -1,6 +1,6 @@
 import UIKit
 import Testing
-import WordPressMedia
+import AsyncImageKit
 import WordPressTesting
 import OHHTTPStubs
 import OHHTTPStubsSwift

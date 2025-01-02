@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 import Gifu
-import WordPressMedia
+import AsyncImageKit
 
 extension UIImageView {
     @MainActor
