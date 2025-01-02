@@ -18,8 +18,7 @@ extension URL {
 ///
 /// This also includes regular and photon URLs.
 ///
-struct MediaRequestAuthenticator: MediaRequestAuthenticatorProtocol {
-
+struct MediaRequestAuthenticator {
     /// Errors conditions that this class can find.
     ///
     enum Error: Swift.Error {
@@ -56,7 +55,7 @@ struct MediaRequestAuthenticator: MediaRequestAuthenticatorProtocol {
     ///         authentication.
     ///     - fail: the closure that will be called upon finding an error condition.
     ///
-    func authenticatedRequest(
+    private func authenticatedRequest(
         for url: URL,
         from host: MediaHost,
         onComplete provide: @escaping (URLRequest) -> (),

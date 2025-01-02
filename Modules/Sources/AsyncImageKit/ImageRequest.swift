@@ -2,7 +2,7 @@ import UIKit
 
 public final class ImageRequest: Sendable {
     public enum Source: Sendable {
-        case url(URL, MediaHost?)
+        case url(URL, MediaHostProtocol?)
         case urlRequest(URLRequest)
 
         var url: URL? {
@@ -16,7 +16,7 @@ public final class ImageRequest: Sendable {
     let source: Source
     let options: ImageRequestOptions
 
-    public init(url: URL, host: MediaHost? = nil, options: ImageRequestOptions = .init()) {
+    public init(url: URL, host: MediaHostProtocol? = nil, options: ImageRequestOptions = .init()) {
         self.source = .url(url, host)
         self.options = options
     }

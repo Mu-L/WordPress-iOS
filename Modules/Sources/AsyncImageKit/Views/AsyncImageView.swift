@@ -1,46 +1,47 @@
 import UIKit
 import Gifu
-import AsyncImageKit
 
 /// A simple image view that supports rendering both static and animated images
 /// (see ``AnimatedImage``).
 @MainActor
-final class AsyncImageView: UIView {
+public final class AsyncImageView: UIView {
     private let imageView = GIFImageView()
     private var errorView: UIImageView?
     private var spinner: UIActivityIndicatorView?
     private let controller = ImageLoadingController()
 
-    enum LoadingStyle {
+    public enum LoadingStyle {
         /// Shows a secondary background color during the download.
         case background
         /// Shows a spinner during the download.
         case spinner
     }
 
-    struct Configuration {
+    public struct Configuration {
         /// Image tint color.
-        var tintColor: UIColor?
+        public var tintColor: UIColor?
 
         /// Image view content mode.
-        var contentMode: UIView.ContentMode?
+        public var contentMode: UIView.ContentMode?
 
         /// Enabled by default and shows an error icon on failures.
-        var isErrorViewEnabled = true
+        public var isErrorViewEnabled = true
 
         /// By default, `background`.
-        var loadingStyle = LoadingStyle.background
+        public var loadingStyle = LoadingStyle.background
 
-        var passTouchesToSuperview = false
+        public var passTouchesToSuperview = false
+
+        public init() {}
     }
 
-    var configuration = Configuration() {
+    public var configuration = Configuration() {
         didSet { didUpdateConfiguration(configuration) }
     }
 
     /// The currently displayed image. If the image is animated, returns an
     /// instance of ``AnimatedImage``.
-    var image: UIImage? {
+    public var image: UIImage? {
         didSet {
             if let image {
                 imageView.configure(image: image)
@@ -50,12 +51,12 @@ final class AsyncImageView: UIView {
         }
     }
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
 
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
     }
@@ -65,7 +66,12 @@ final class AsyncImageView: UIView {
 
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        pinSubviewToAllEdges(imageView)
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: topAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+        ])
 
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -75,22 +81,22 @@ final class AsyncImageView: UIView {
     }
 
     /// Removes the current image and stops the outstanding downloads.
-    func prepareForReuse() {
+    public func prepareForReuse() {
         controller.prepareForReuse()
         image = nil
     }
 
     /// - parameter size: Target image size in pixels.
-    func setImage(
+    public func setImage(
         with imageURL: URL,
-        host: MediaHost? = nil,
+        host: MediaHostProtocol? = nil,
         size: ImageSize? = nil
     ) {
         let request = ImageRequest(url: imageURL, host: host, options: ImageRequestOptions(size: size))
         controller.setImage(with: request)
     }
 
-    func setImage(with request: ImageRequest, completion: (@MainActor (Result<UIImage, Error>) -> Void)? = nil) {
+    public func setImage(with request: ImageRequest, completion: (@MainActor (Result<UIImage, Error>) -> Void)? = nil) {
         controller.setImage(with: request, completion: completion)
     }
 
@@ -134,7 +140,10 @@ final class AsyncImageView: UIView {
         let spinner = UIActivityIndicatorView()
         addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        pinSubviewAtCenter(spinner)
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
         self.spinner = spinner
         return spinner
     }
@@ -147,12 +156,15 @@ final class AsyncImageView: UIView {
         errorView.tintColor = .separator
         addSubview(errorView)
         errorView.translatesAutoresizingMaskIntoConstraints = false
-        pinSubviewAtCenter(errorView)
+        NSLayoutConstraint.activate([
+            errorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
         self.errorView = errorView
         return errorView
     }
 
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if configuration.passTouchesToSuperview && self.bounds.contains(point) {
             // Pass the touch to the superview
             return nil
@@ -164,7 +176,7 @@ final class AsyncImageView: UIView {
 extension GIFImageView {
     /// If the image is an instance of `AnimatedImage` type, plays it as an
     /// animated image.
-    func configure(image: UIImage) {
+    public func configure(image: UIImage) {
         if let gif = image as? AnimatedImage, let data = gif.gifData {
             self.animate(withGIFData: data)
         } else {

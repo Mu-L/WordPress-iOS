@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import WordPressUI
 
-final class CompliancePopoverViewModel: ObservableObject {
+class CompliancePopoverViewModel: ObservableObject {
 
     @Published
     var isAnalyticsEnabled: Bool = !WPAppAnalytics.userHasOptedOut()

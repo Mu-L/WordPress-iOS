@@ -1,18 +1,16 @@
-import Foundation
 import UIKit
 import Gifu
-import AsyncImageKit
 
 extension UIImageView {
     @MainActor
-    var wp: ImageViewExtensions { ImageViewExtensions(imageView: self) }
+    public var wp: ImageViewExtensions { ImageViewExtensions(imageView: self) }
 }
 
 @MainActor
-struct ImageViewExtensions {
+public struct ImageViewExtensions {
     var imageView: UIImageView
 
-    func prepareForReuse() {
+    public func prepareForReuse() {
         controller.prepareForReuse()
 
         if let gifView = imageView as? GIFImageView, gifView.isAnimatingGIF {
@@ -22,15 +20,15 @@ struct ImageViewExtensions {
         }
     }
 
-    func setImage(with imageURL: URL, host: MediaHost? = nil, size: ImageSize? = nil) {
+    public func setImage(with imageURL: URL, host: MediaHostProtocol? = nil, size: ImageSize? = nil) {
         setImage(with: ImageRequest(url: imageURL, host: host, options: ImageRequestOptions(size: size)))
     }
 
-    func setImage(with request: ImageRequest, completion: (@MainActor (Result<UIImage, Error>) -> Void)? = nil) {
+    public func setImage(with request: ImageRequest, completion: (@MainActor (Result<UIImage, Error>) -> Void)? = nil) {
         controller.setImage(with: request, completion: completion)
     }
 
-    var controller: ImageLoadingController {
+    public var controller: ImageLoadingController {
         if let controller = objc_getAssociatedObject(imageView, ImageViewExtensions.controllerKey) as? ImageLoadingController {
             return controller
         }
