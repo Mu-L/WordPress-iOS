@@ -2,7 +2,7 @@ import AutomatticTracks
 import UIKit
 import WordPressShared
 import WordPressUI
-import WordPressMedia
+import AsyncImageKit
 
 final class PostCompactCell: UITableViewCell, Reusable {
     private let titleLabel = UILabel()

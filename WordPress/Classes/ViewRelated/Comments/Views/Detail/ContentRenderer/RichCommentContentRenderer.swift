@@ -1,5 +1,5 @@
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 
 /// Renders the comment body through `WPRichContentView`.
 ///

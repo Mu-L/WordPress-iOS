@@ -1,5 +1,5 @@
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 import Gifu
 
 class WPRichTextImage: UIControl, WPRichTextMediaAttachment {

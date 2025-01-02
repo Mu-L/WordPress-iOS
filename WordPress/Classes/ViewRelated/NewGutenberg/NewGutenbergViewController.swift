@@ -1,5 +1,5 @@
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 import AutomatticTracks
 import GutenbergKit
 import SafariServices

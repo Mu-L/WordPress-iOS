@@ -1,5 +1,5 @@
 import Foundation
-import WordPressMedia
+import AsyncImageKit
 
 extension ImageDownloader {
     nonisolated static let shared = ImageDownloader(authenticator: MediaRequestAuthenticator())

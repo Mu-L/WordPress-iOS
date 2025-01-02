@@ -1,6 +1,6 @@
 import Foundation
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 
 /// A convenience class for managing image downloads for individual views.
 @MainActor

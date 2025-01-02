@@ -1,7 +1,7 @@
 import Foundation
 import WordPressShared
 import WordPressUI
-import WordPressMedia
+import AsyncImageKit
 import Gravatar
 
 // MARK: - NoteBlockHeaderTableViewCell

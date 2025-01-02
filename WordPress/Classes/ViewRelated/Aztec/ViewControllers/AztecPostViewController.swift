@@ -6,7 +6,7 @@ import Gridicons
 import WordPressShared
 import MobileCoreServices
 import WordPressEditor
-import WordPressMedia
+import AsyncImageKit
 import AVKit
 import AutomatticTracks
 import MediaEditor

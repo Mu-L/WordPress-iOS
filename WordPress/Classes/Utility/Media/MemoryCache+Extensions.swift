@@ -1,5 +1,5 @@
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 import WordPressUI
 
 extension MemoryCache {

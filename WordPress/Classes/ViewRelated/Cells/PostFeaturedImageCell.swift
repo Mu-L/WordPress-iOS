@@ -1,6 +1,6 @@
 import UIKit
 import WordPressUI
-import WordPressMedia
+import AsyncImageKit
 
 final class PostFeaturedImageCell: UITableViewCell {
     let featuredImageView = AsyncImageView()

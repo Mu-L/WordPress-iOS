@@ -1,5 +1,5 @@
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 
 final class ExternalMediaPickerCollectionCell: UICollectionViewCell {
     private let imageView = AsyncImageView()

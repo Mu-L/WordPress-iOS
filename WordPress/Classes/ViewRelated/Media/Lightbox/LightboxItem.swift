@@ -1,5 +1,5 @@
 import Foundation
-import WordPressMedia
+import AsyncImageKit
 
 enum LightboxItem {
     case image(UIImage)

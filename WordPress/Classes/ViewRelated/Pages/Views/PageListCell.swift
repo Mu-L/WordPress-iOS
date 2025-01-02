@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 import Combine
-import WordPressMedia
+import AsyncImageKit
 
 final class PageListCell: UITableViewCell, AbstractPostListCell, PostSearchResultCell, Reusable {
 

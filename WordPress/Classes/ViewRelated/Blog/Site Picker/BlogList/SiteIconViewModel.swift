@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import WordPressShared
 import WordPressKit
-import WordPressMedia
+import AsyncImageKit
 
 struct SiteIconViewModel {
     var imageURL: URL?

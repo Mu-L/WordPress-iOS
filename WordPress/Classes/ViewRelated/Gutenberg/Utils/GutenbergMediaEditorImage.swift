@@ -1,6 +1,6 @@
 import Foundation
 import MediaEditor
-import WordPressMedia
+import AsyncImageKit
 
 /**
  This is a struct to be given to MediaEditor that represent the image.

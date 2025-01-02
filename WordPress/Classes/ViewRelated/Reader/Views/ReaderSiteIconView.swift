@@ -1,5 +1,5 @@
 import SwiftUI
-import WordPressMedia
+import AsyncImageKit
 
 struct ReaderSiteIconView: View, Hashable {
     let site: ReaderSiteTopic

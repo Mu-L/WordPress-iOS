@@ -2,7 +2,7 @@ import Foundation
 import SVProgressHUD
 import WordPressShared
 import WordPressFlux
-import WordPressMedia
+import AsyncImageKit
 import UIKit
 import Combine
 import WordPressUI

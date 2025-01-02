@@ -1,5 +1,5 @@
 import UIKit
-import WordPressMedia
+import AsyncImageKit
 
 protocol ReaderDetailFeaturedImageViewDelegate: AnyObject {
     func didTapFeaturedImage(_ sender: AsyncImageView)

@@ -1,7 +1,7 @@
 import UIKit
 import Gridicons
 import WordPressShared
-import WordPressMedia
+import AsyncImageKit
 
 final class MediaItemHeaderView: UIView {
     let imageView = AsyncImageView()
