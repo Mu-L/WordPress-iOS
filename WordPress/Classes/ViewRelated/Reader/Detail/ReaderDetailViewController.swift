@@ -1068,8 +1068,8 @@ private extension ReaderDetailViewController {
 
     func backButtonItem() -> UIBarButtonItem {
         let config = UIImage.SymbolConfiguration(weight: .semibold)
-        let image = UIImage(systemName: "chevron.backward", withConfiguration: config) ?? .gridicon(.chevronLeft)
-        let button = barButtonItem(with: image, action: #selector(didTapBackButton(_:)))
+        let image = UIImage(systemName: "chevron.backward", withConfiguration: config)
+        let button = barButtonItem(with: image ?? UIImage(), action: #selector(didTapBackButton(_:)))
         button.accessibilityLabel = Strings.backButtonAccessibilityLabel
         return button
     }

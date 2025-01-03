@@ -52,7 +52,7 @@ final class BloggingRemindersTimeSelectionButton: UIButton {
     private lazy var chevron: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage.gridicon(.chevronRight)
+        imageView.image = UIImage(systemName: "chevron.forward")
         imageView.tintColor = .separator
         return imageView
     }()
