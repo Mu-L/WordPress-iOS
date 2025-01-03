@@ -79,7 +79,7 @@ struct ReaderPostMenu {
     }
 
     private var goToBlog: UIAction {
-        UIAction(Strings.goToBlog, systemImage: "chevron.right") {
+        UIAction(Strings.goToBlog, systemImage: "chevron.forward") {
             guard let viewController else { return }
             ReaderHeaderAction().execute(post: post, origin: viewController)
             track(.goToBlog)

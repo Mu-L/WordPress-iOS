@@ -89,7 +89,7 @@ struct SiteDomainsView: View {
                     Button(action: { showDetails(for: navigation) }) {
                         HStack(alignment: .center) {
                             AllDomainsListCardView(viewModel: row.viewModel, padding: 0)
-                            Image(systemName: "chevron.right")
+                            Image(systemName: "chevron.forward")
                                 .font(.subheadline.weight(.medium))
                                 .foregroundColor(.secondary.opacity(0.5))
                         }

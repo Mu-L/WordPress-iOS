@@ -77,7 +77,7 @@ final class BlazeCampaignTableViewCell: UITableViewCell, Reusable {
     }()
 
     private lazy var chevronView: UIImageView = {
-        let image = UIImage(systemName: "chevron.right")?.imageFlippedForRightToLeftLayoutDirection()
+        let image = UIImage(systemName: "chevron.forward")
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.tintColor = .separator
