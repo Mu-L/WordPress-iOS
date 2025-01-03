@@ -143,19 +143,14 @@ import Gridicons
 
     // MARK: - IBActions
     @IBAction fileprivate func btnReplyPressed() {
-        guard let handler = onReply else {
-            return
-        }
+        guard let onReply else { return }
 
         // Load the new text
         let newText = textView.text
         textView.resignFirstResponder()
 
-        // Cleanup + Shrink
-        text = String()
-
         // Hit the handler
-        handler(newText!)
+        onReply(newText ?? "")
     }
 
     @IBAction fileprivate func btnEnterFullscreenPressed(_ sender: Any) {
@@ -275,8 +270,12 @@ import Gridicons
                                                                       comment: "Accessibility Label for the enter full screen button on the comment reply text view")
 
         // Reply button
-        replyButton.setTitleColor(UIAppColor.brand, for: .normal)
-        replyButton.titleLabel?.text = NSLocalizedString("Reply", comment: "Reply to a comment.")
+        replyButton.configuration = {
+            var configuration = UIButton.Configuration.plain()
+            configuration.baseForegroundColor = UIAppColor.brand
+            configuration.title = NSLocalizedString("Reply", comment: "Reply to a comment.")
+            return configuration
+        }()
         replyButton.accessibilityIdentifier = "reply-button"
         replyButton.accessibilityLabel = NSLocalizedString("Reply", comment: "Accessibility label for the reply button")
         refreshReplyButton()
@@ -295,6 +294,16 @@ import Gridicons
         /// Initial Sizing: Final step, since this depends on other control(s) initialization
         ///
         frame.size.height = minimumHeight
+    }
+
+    @objc func setShowingLoadingIndicator(_ isLoading: Bool) {
+        isUserInteractionEnabled = !isLoading
+
+        textView.alpha = isLoading ? 0.33 : 1.0
+
+        replyButton.isEnabled = !isLoading
+        replyButton.configuration?.title = isLoading ? nil : NSLocalizedString("Reply", comment: "Reply to a comment.")
+        replyButton.configuration?.showsActivityIndicator = isLoading
     }
 
     // MARK: - Refresh Helpers
