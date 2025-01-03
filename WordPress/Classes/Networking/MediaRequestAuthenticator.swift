@@ -55,7 +55,7 @@ struct MediaRequestAuthenticator {
     ///         authentication.
     ///     - fail: the closure that will be called upon finding an error condition.
     ///
-    private func authenticatedRequest(
+    func authenticatedRequest(
         for url: URL,
         from host: MediaHost,
         onComplete provide: @escaping (URLRequest) -> (),
