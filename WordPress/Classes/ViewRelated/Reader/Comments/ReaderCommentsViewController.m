@@ -916,6 +916,9 @@ static NSString *CommentContentCellIdentifier = @"CommentContentTableViewCell";
         NSString *successMessage = NSLocalizedString(@"Reply Sent!", @"The app successfully sent a comment");
         [weakSelf displayNoticeWithTitle:successMessage message:nil];
 
+        [weakSelf.replyTextView setShowingLoadingIndicator:NO];
+        weakSelf.replyTextView.text = @"";
+
         [weakSelf trackReplyTo:replyToComment];
         [weakSelf.tableView deselectSelectedRowWithAnimation:YES];
         [weakSelf refreshReplyTextViewPlaceholder];
@@ -931,10 +934,15 @@ static NSString *CommentContentCellIdentifier = @"CommentContentTableViewCell";
         DDLogError(@"Error sending reply: %@", error);
         [generator notificationOccurred:UINotificationFeedbackTypeError];
         NSString *message = NSLocalizedString(@"There has been an unexpected error while sending your reply", "Reply Failure Message");
-        [weakSelf displayNoticeWithTitle:message message:nil];
+        [weakSelf.replyTextView setShowingLoadingIndicator:NO];
+        [weakSelf displayNoticeWithTitle:message message:[error localizedDescription]];
+
+        [weakSelf.replyTextView becomeFirstResponder];
 
         [weakSelf refreshTableViewAndNoResultsView:NO];
     };
+
+    [self.replyTextView setShowingLoadingIndicator:YES];
 
     CommentService *service = [[CommentService alloc] initWithCoreDataStack:[ContextManager sharedInstance]];
 
