@@ -53,12 +53,12 @@ public final class AsyncImageView: UIView {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
+
         setupView()
     }
 
     public required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupView() {

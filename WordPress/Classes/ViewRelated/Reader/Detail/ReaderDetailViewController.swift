@@ -67,7 +67,7 @@ class ReaderDetailViewController: UIViewController, ReaderDetailView {
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     /// The actual header
-    private let featuredImage: ReaderDetailFeaturedImageView = .loadFromNib()
+    private let featuredImage = ReaderDetailFeaturedImageView()
 
     /// The actual header
     private lazy var header: ReaderDetailHeaderHostingView = {
