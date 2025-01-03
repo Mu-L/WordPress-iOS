@@ -10,6 +10,7 @@
 * [*] Add "Share" action to site link context menu on dashboard [#23935]
 * [*] Fix layout issues in Privacy Settings section of App Settings [#23936]
 * [*] Fix incorrect chevron icons direction in RTL languages [#23940]
+* [*] Fix an issue with clear navigation bar background in revision browser [#23941]
 
 25.6
 -----
