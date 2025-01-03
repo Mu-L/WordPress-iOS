@@ -20,6 +20,7 @@ class StatsBaseCell: UITableViewCell {
         configuration.imagePadding = 4
         configuration.baseForegroundColor = .secondaryLabel
         configuration.imagePlacement = .trailing
+        configuration.titleLineBreakMode = .byTruncatingTail
 
         let button = UIButton(configuration: configuration)
         button.translatesAutoresizingMaskIntoConstraints = true
