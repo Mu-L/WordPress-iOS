@@ -1,4 +1,4 @@
-import Gridicons
+import UIKit
 
 // Revisions browser view controller
 //
@@ -29,10 +29,10 @@ class RevisionDiffsBrowserViewController: UIViewController {
     }()
 
     private lazy var moreBarButtonItem: UIBarButtonItem = {
-        let image = UIImage.gridicon(.ellipsis)
+        let image = UIImage(systemName: "ellipsis")
         let button = UIButton(type: .system)
         button.setImage(image, for: .normal)
-        button.frame = CGRect(origin: .zero, size: image.size)
+        button.frame = CGRect(origin: .zero, size: image?.size ?? .zero)
         button.accessibilityLabel = NSLocalizedString("More", comment: "Action button to display more available options")
         button.on(.touchUpInside) { [weak self] _ in
             self?.moreWasPressed()
@@ -127,14 +127,14 @@ private extension RevisionDiffsBrowserViewController {
     }
 
     private func setNextPreviousButtons() {
-        previousButton.setImage(.gridicon(.chevronLeft), for: .normal)
-        previousButton.tintColor = UIAppColor.neutral(.shade70)
+        previousButton.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        previousButton.tintColor = UIAppColor.tint
         previousButton.on(.touchUpInside) { [weak self] _ in
             self?.showPrevious()
         }
 
-        nextButton.setImage(.gridicon(.chevronRight), for: .normal)
-        nextButton.tintColor = UIAppColor.neutral(.shade70)
+        nextButton.setImage(UIImage(systemName: "chevron.forward"), for: .normal)
+        nextButton.tintColor = UIAppColor.tint
         nextButton.on(.touchUpInside) { [weak self] _ in
             self?.showNext()
         }

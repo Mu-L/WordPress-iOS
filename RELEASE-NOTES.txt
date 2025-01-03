@@ -9,6 +9,7 @@
 * [*] Improve transisions and interactive dismiss gestures for sheets [#23933]
 * [*] Add "Share" action to site link context menu on dashboard [#23935]
 * [*] Fix layout issues in Privacy Settings section of App Settings [#23936]
+* [*] Fix incorrect chevron icons direction in RTL languages [#23940]
 
 25.6
 -----

@@ -1,3 +1,5 @@
+import UIKit
+
 class RevisionsNavigationController: UINavigationController {
     var revisionState: RevisionBrowserState? {
         didSet {

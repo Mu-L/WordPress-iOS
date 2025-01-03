@@ -3088,10 +3088,10 @@ extension AztecPostViewController {
     }
 
     struct Assets {
-        static let closeButtonModalImage    = UIImage.gridicon(.cross)
-        static let closeButtonRegularImage  = UIImage(named: "icon-posts-editor-chevron")
-        static let defaultMissingImage      = UIImage.gridicon(.image)
-        static let linkPlaceholderImage     = UIImage.gridicon(.pages)
+        static let closeButtonModalImage = UIImage.gridicon(.cross)
+        static let closeButtonRegularImage = UIImage(systemName: "chevron.backward")
+        static let defaultMissingImage = UIImage.gridicon(.image)
+        static let linkPlaceholderImage = UIImage.gridicon(.pages)
     }
 
     struct Constants {
