@@ -6,6 +6,7 @@ let package = Package(
     name: "Modules",
     platforms: [
         .iOS(.v16),
+        .macOS(.v14)
     ],
     products: XcodeSupport.products + [
         .library(name: "JetpackStatsWidgetsCore", targets: ["JetpackStatsWidgetsCore"]),
@@ -13,6 +14,7 @@ let package = Package(
         .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
         .library(name: "WordPressMedia", targets: ["WordPressMedia"]),
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
+        .library(name: "WordPressSettings", targets: ["WordPressSettings"]),
         .library(name: "WordPressUI", targets: ["WordPressUI"]),
     ],
     dependencies: [
@@ -62,6 +64,7 @@ let package = Package(
         .target(name: "WordPressMedia"),
         .target(name: "WordPressSharedObjC", resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "WordPressShared", dependencies: [.target(name: "WordPressSharedObjC")], resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "WordPressSettings"),
         .target(name: "WordPressTesting", resources: [.process("Resources")]),
         .target(name: "WordPressUI", dependencies: [.target(name: "WordPressShared")], resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .testTarget(name: "JetpackStatsWidgetsCoreTests", dependencies: [.target(name: "JetpackStatsWidgetsCore")], swiftSettings: [.swiftLanguageMode(.v5)]),
@@ -74,6 +77,7 @@ let package = Package(
         ]),
         .testTarget(name: "WordPressSharedTests", dependencies: [.target(name: "WordPressShared")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .testTarget(name: "WordPressSharedObjCTests", dependencies: [.target(name: "WordPressShared"), .target(name: "WordPressTesting")], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .testTarget(name: "WordPressSettingsTests", dependencies: [.target(name: "WordPressSettings")], resources: [.process("Resources")]),
         .testTarget(name: "WordPressUITests", dependencies: [.target(name: "WordPressUI")], swiftSettings: [.swiftLanguageMode(.v5)]),
     ]
 )

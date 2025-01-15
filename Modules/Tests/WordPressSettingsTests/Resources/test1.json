@@ -1,0 +1,61 @@
+{
+  "title": "Jetpack",
+  "icon": "",
+  "color": "#fff",
+  "settings": [
+    {
+      "title": "Sharing",
+      "description": "Share your content to social media, reaching new audiences and increasing engagement.",
+      "settings": [
+        {
+          "title": "Jetpack Social",
+          "settings": [
+            {
+              "type": "bool",
+              "key": "jetpack_social",
+              "value": false,
+              "default": null,
+              "description": null,
+              "allowed_values": null,
+              "required_capability": null
+            }
+          ],
+          "header_text": "Enable Jetpack Social and connect your social accounts to automatically share your content with your followers with a single click. When you publish a post, you will be able to share it on all connected accounts.",
+          "footer_text": null
+        },
+        {
+          "title": "Sharing buttons",
+          "settings": [
+            {
+              "type": "bool",
+              "key": "add_sharing_buttons_to_posts",
+              "value": false,
+              "default": null,
+              "description": null,
+              "allowed_values": null,
+              "required_capability": null
+            }
+          ],
+          "header_text": "Add sharing buttons so visitors can share your posts and pages on social media with a couple of quick clicks.",
+          "footer_text": null
+        },
+        {
+          "title": "Like buttons",
+          "settings": [
+            {
+              "type": "bool",
+              "key": "add_like_buttons_to_posts",
+              "value": false,
+              "default": null,
+              "description": null,
+              "allowed_values": null,
+              "required_capability": null
+            }
+          ],
+          "header_text": "The Like button is a way for people on WordPress.com to show their appreciation for your content.",
+          "footer_text": null
+        }
+      ]
+    }
+  ]
+}
