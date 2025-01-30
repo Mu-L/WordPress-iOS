@@ -151,7 +151,7 @@ extension BlogDetailsViewController {
             let feature = NSLocalizedString("applicationPasswordRequired.feature.plugins", value: "Plugin Management", comment: "Feature name for managing plugins in the app")
             let rootView = ApplicationPasswordRequiredView(blog: self.blog, localizedFeatureName: feature) { client in
                 let service = PluginService(client: client)
-                InstalledPluginsListView(service: service)
+                InstalledPluginsListView(site: site, service: service)
             }
             viewController = UIHostingController(rootView: rootView)
         } else {

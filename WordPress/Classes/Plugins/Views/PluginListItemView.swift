@@ -48,18 +48,11 @@ struct PluginListItemView: View {
             .frame(width: Self.iconSize, height: Self.iconSize)
             .padding(.all, 4)
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(name)
                     .lineLimit(1)
                     .font(.headline)
                     .foregroundStyle(.primary)
-
-                if !author.isEmpty {
-                    Text(Strings.author(author))
-                        .lineLimit(1)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
 
                 Group {
                     if shortDescription.isEmpty {
@@ -72,11 +65,7 @@ struct PluginListItemView: View {
                             .font(.system(size: descriptionFontSize))
                     }
                 }
-                .padding(.vertical, 4)
-
-                Text(Strings.version(version))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                .lineLimit(3)
             }
         }
     }

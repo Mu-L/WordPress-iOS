@@ -5,13 +5,15 @@ import WordPressAPI
 import WordPressCore
 
 struct InstalledPluginsListView: View {
+    private var site: JetpackSiteRef
     @StateObject private var viewModel: InstalledPluginsListViewModel
 
-    init(client: WordPressClient) {
-        self.init(service: PluginService(client: client))
+    init(site: JetpackSiteRef, client: WordPressClient) {
+        self.init(site: site, service: PluginService(client: client))
     }
 
-    init(service: PluginServiceProtocol) {
+    init(site: JetpackSiteRef, service: PluginServiceProtocol) {
+        self.site = site
         _viewModel = StateObject(wrappedValue: .init(service: service))
     }
 
@@ -25,13 +27,20 @@ struct InstalledPluginsListView: View {
                 List {
                     Section {
                         ForEach(viewModel.displayingPlugins, id: \.self) { plugin in
-                            PluginListItemView(
-                                plugin: plugin,
-                                iconResolver: PluginIconResolver(
+                            NavigationLink {
+                                PluginDetailsView(site: site, plugin: plugin, iconResolver: PluginIconResolver(
                                     slug: plugin.possibleWpOrgDirectorySlug,
                                     service: viewModel.service
+                                ))
+                            } label: {
+                                PluginListItemView(
+                                    plugin: plugin,
+                                    iconResolver: PluginIconResolver(
+                                        slug: plugin.possibleWpOrgDirectorySlug,
+                                        service: viewModel.service
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                     .listSectionSeparator(.hidden, edges: .top)
