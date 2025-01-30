@@ -9,19 +9,31 @@ struct PluginListItemView: View {
 
     @ScaledMetric(relativeTo: .body) var descriptionFontSize: CGFloat = 14
 
-    private var iconURL: URL?
-    private var name: String
-    private var version: String
-    private var author: String
-    private var shortDescription: String
+    private var iconURL: URL? {
+        plugin.iconURL
+    }
+
+    private var name: String {
+        plugin.name
+    }
+
+    private var version: String {
+        plugin.version
+    }
+
+    private var author: String {
+        plugin.author
+    }
+
+    private var shortDescription: String {
+        plugin.shortDescription
+    }
+
+    private var plugin: InstalledPlugin
     private var iconResolver: PluginIconResolver
 
     init(plugin: InstalledPlugin, iconResolver: PluginIconResolver) {
-        self.iconURL = plugin.iconURL
-        self.name = plugin.name
-        self.version = plugin.version
-        self.author = plugin.author
-        self.shortDescription = plugin.shortDescription
+        self.plugin = plugin
         self.iconResolver = iconResolver
     }
 

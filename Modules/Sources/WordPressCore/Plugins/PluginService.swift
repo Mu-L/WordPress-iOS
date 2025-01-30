@@ -20,8 +20,8 @@ public actor PluginService: PluginServiceProtocol {
         try await installedPluginDataStore.store(plugins)
     }
 
-    public func streamInstalledPlugins() async -> AsyncStream<Result<[InstalledPlugin], Error>> {
-        await installedPluginDataStore.listStream(query: .all)
+    public func streamInstalledPlugins(query: PluginDataStoreQuery) async -> AsyncStream<Result<[InstalledPlugin], Error>> {
+        await installedPluginDataStore.listStream(query: query)
     }
 
     public func resolveIconURL(of slug: PluginWpOrgDirectorySlug) async -> URL? {
