@@ -3,9 +3,9 @@ import Foundation
 /// - Warning:
 /// This configuration class has a **Jetpack** counterpart in the Jetpack bundle.
 /// Make sure to keep them in sync to avoid build errors when building the Jetpack target.
-@objc class AppDependency: NSObject {
+struct AppDependency {
     static func authenticationManager(windowManager: WindowManager) -> WordPressAuthenticationManager {
-        return WordPressAuthenticationManager(
+        WordPressAuthenticationManager(
             windowManager: windowManager,
             remoteFeaturesStore: RemoteFeatureFlagStore()
         )
@@ -14,4 +14,6 @@ import Foundation
     static func windowManager(window: UIWindow) -> WindowManager {
         return WindowManager(window: window)
     }
+
+    static let dotComAuthenticator = WordPressDotComAuthenticator()
 }

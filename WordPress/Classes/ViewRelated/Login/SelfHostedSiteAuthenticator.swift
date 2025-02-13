@@ -85,6 +85,53 @@ final actor SelfHostedSiteAuthenticator {
         )
     }
 
+    @MainActor
+    func pushLoginScreen(from viewController: UIViewController, onCompletion: @escaping (WordPressOrgCredentials) -> Void) {
+        let viewController = buildLoginViewController(presentedFrom: viewController, onCompletion: onCompletion)
+        viewController.navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    @MainActor
+    func presentLoginScreenOverlay(from viewController: UIViewController, onCompletion: @escaping (WordPressOrgCredentials) -> Void) {
+        let navigationVC = UINavigationController(rootViewController: buildLoginViewController(presentedFrom: viewController, onCompletion: onCompletion))
+        navigationVC.modalPresentationStyle = .formSheet
+        viewController.present(navigationVC, animated: true)
+    }
+
+    @MainActor @discardableResult
+    func login(with credentials: WordPressOrgCredentials) async throws -> WordPressOrgCredentials{
+        let credentials = try await self.handleSuccess(WpApiApplicationPasswordDetails(
+            siteUrl: credentials.siteURL,
+            userLogin: credentials.username,
+            password: credentials.password
+        ))
+
+        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification), object: nil)
+
+        return credentials
+    }
+
+    @MainActor
+    private func buildLoginViewController(
+        presentedFrom viewController: UIViewController,
+        onCompletion: @escaping (WordPressOrgCredentials) -> Void
+    ) -> UIViewController {
+        let loginView = LoginWithUrlView(loginCompleted: { credentials in
+            WordPressAuthenticator.shared.delegate!.sync(credentials: .init(wporg: credentials)) {
+                NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification), object: nil)
+            }
+        })
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(SharedStrings.Button.cancel) { [weak viewController] in
+                    viewController?.dismiss(animated: true)
+                }
+            }
+        }
+
+        return UIHostingController(rootView: loginView)
+    }
+
     private func handleSuccess(_ success: WpApiApplicationPasswordDetails) async throws(SignInError) -> WordPressOrgCredentials {
         let xmlrpc: String
         let blogOptions: [AnyHashable: Any]
@@ -123,4 +170,10 @@ final actor SelfHostedSiteAuthenticator {
         }
     }
 
+}
+
+// Allow injecting `SelfHostedSiteAuthenticator` into SwiftUI Views
+extension EnvironmentValues {
+    @Entry
+    var selfHostedSiteAuthenticator: SelfHostedSiteAuthenticator = SelfHostedSiteAuthenticator(session: .shared)
 }

@@ -2,6 +2,9 @@ import SwiftUI
 
 struct SplashPrologueView: View {
 
+    @ScaledMetric(relativeTo: .largeTitle)
+    var logoSize: CGFloat = 50
+
     var body: some View {
         ZStack {
             Color(SplashPrologueStyleGuide.backgroundColor)
@@ -16,15 +19,21 @@ struct SplashPrologueView: View {
                     .accessibility(hidden: true)
             }
             VStack {
+                Spacer()
                 Image("splashLogo")
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: logoSize, height: logoSize)
                     .padding(10)
                     .accessibility(hidden: true)
                 Text(Self.caption)
                     .multilineTextAlignment(.center)
                     .font(SplashPrologueStyleGuide.Title.font)
                     .foregroundColor(Color(SplashPrologueStyleGuide.Title.textColor))
+                    .padding(.horizontal)
+                Spacer()
+                Image("darkgrey-shadow")
+                    .resizable(resizingMode: .tile)
+                    .frame(height: 10)
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -45,4 +54,8 @@ private extension SplashPrologueView {
         """,
         comment: "Caption displayed during the login flow."
     )
+}
+
+#Preview {
+    SplashPrologueView()
 }

@@ -42,7 +42,7 @@ enum FeatureFlag: Int, CaseIterable {
         case .voiceToContent:
             return AppConfiguration.isJetpack && BuildConfiguration.current ~= [.localDeveloper, .a8cBranchTest]
         case .authenticateUsingApplicationPassword:
-            return false
+            return true
         case .newGutenberg:
             return false
         case .newGutenbergThemeStyles:
@@ -54,7 +54,7 @@ enum FeatureFlag: Int, CaseIterable {
         case .readerCommentsWebKit:
             return false
         case .pluginManagementOverhaul:
-            return false
+            return true
         }
     }
 

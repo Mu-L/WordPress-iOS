@@ -1,5 +1,6 @@
 import Foundation
 import WordPressAuthenticator
+import SwiftUI
 
 extension NSNotification.Name {
     static let WPAppUITypeChanged = NSNotification.Name(rawValue: "WPAppUITypeChanged")
@@ -56,6 +57,9 @@ class RootViewCoordinator {
     private let wordPressAuthenticator: WordPressAuthenticatorProtocol.Type
     var isSiteCreationActive = false
     var isFullScreenOverlayBeingDisplayed = false
+
+    private let dotComAuthenticator: WordPressDotComAuthenticator
+
     // MARK: Initializer
 
     init(featureFlagStore: RemoteFeatureFlagStore,
@@ -65,6 +69,10 @@ class RootViewCoordinator {
         self.windowManager = windowManager
         self.currentAppUIType = Self.appUIType(featureFlagStore: featureFlagStore)
         self.wordPressAuthenticator = wordPressAuthenticator
+
+        self.dotComAuthenticator = AppDependency.dotComAuthenticator
+        self.subscribeToLoginCompletionNotification()
+
         updateJetpackFeaturesRemovalCoordinatorState()
     }
 
@@ -79,15 +87,35 @@ class RootViewCoordinator {
     }
 
     func showSignInUI(completion: (() -> Void)? = nil) {
-        guard let loginViewController = wordPressAuthenticator.loginUI() else {
-            fatalError("No login UI to show to the user.  There's no way to gracefully handle this error.")
+
+        if #available(iOS 16.4, *) {
+            let newLoginScreen = UIHostingController(rootView: NavigationStack {
+                WordPressLoginView()
+            })
+
+            windowManager?.show(newLoginScreen, completion: completion)
+        } else {
+            guard let loginViewController = wordPressAuthenticator.loginUI() else {
+                fatalError("No login UI to show to the user.  There's no way to gracefully handle this error.")
+            }
+
+            windowManager?.show(loginViewController, completion: completion)
         }
 
-        windowManager?.show(loginViewController, completion: completion)
         wordPressAuthenticator.track(.openedLogin)
         self.rootViewPresenter = nil
 
         WordPressAppDelegate.shared?.autoSignInUITestSite()
+    }
+
+    func subscribeToLoginCompletionNotification() {
+        NotificationCenter.default.addObserver(
+            forName: Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.showAppUI()
+        }
     }
 
     private func createPresenter(_ appType: AppUIType) -> RootViewPresenter {

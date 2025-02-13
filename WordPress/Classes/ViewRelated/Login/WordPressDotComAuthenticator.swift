@@ -2,6 +2,7 @@ import AuthenticationServices
 import Foundation
 import UIKit
 import WordPressAuthenticator
+import SwiftUI
 
 import Alamofire
 
@@ -99,6 +100,13 @@ struct WordPressDotComAuthenticator {
             SVProgressHUD.dismiss()
         }
 
+        return try await performLogin(with: token, context: context)
+    }
+
+    @MainActor
+    private func performLogin(with token: String, context: SignInContext) async throws(SignInError) -> TaggedManagedObjectID<WPAccount> {
+        let defaultAccount = try? WPAccount.lookupDefaultWordPressComAccount(in: coreDataStack.mainContext)
+
         // Fetch WP.com account details
         let user: RemoteUser
         do {
@@ -193,6 +201,35 @@ struct WordPressDotComAuthenticator {
         let callbackURL = try await authorize(from: viewController, url: authorizeURL, prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession)
 
         return try await handleAuthorizeCallbackURL(callbackURL, clientId: clientId, clientSecret: clientSecret, redirectURI: redirectURI)
+    }
+
+    var wpComAuthenticationURL: URL {
+        self.buildLoginURL()
+    }
+
+    func loginUsing(callbackUrl: URL) async throws {
+        let accessToken = try await self.handleAuthorizeCallbackURL(
+            callbackUrl,
+            clientId: ApiCredentials.client,
+            clientSecret: ApiCredentials.secret,
+            redirectURI: "x-wordpress-app://oauth2-callback"
+        )
+
+        _ = try await self.performLogin(with: accessToken, context: .default)
+    }
+
+    private func buildLoginURL() -> URL {
+
+        var components = URLComponents(string: "https://public-api.wordpress.com/oauth2/authorize")!
+
+        components.queryItems = [
+            URLQueryItem(name: "client_id", value: ApiCredentials.client),
+            URLQueryItem(name: "redirect_uri", value: "x-wordpress-app://oauth2-callback"),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: "global")
+        ]
+
+        return components.url!
     }
 
     private func authorize(from viewController: UIViewController, url authorizeURL: URL, prefersEphemeralWebBrowserSession: Bool) async throws(AuthenticationError) -> URL {
@@ -331,4 +368,11 @@ private extension WordPressDotComAuthenticator.AuthenticationError {
             return SharedStrings.Error.generic
         }
     }
+}
+
+
+// Allow injecting `SelfHostedSiteAuthenticator` into SwiftUI Views
+extension EnvironmentValues {
+    @Entry
+    var dotComAuthenticator: WordPressDotComAuthenticator = WordPressDotComAuthenticator()
 }

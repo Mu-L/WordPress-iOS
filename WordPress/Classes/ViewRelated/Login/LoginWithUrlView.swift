@@ -6,12 +6,10 @@ import DesignSystem
 
 struct LoginWithUrlView: View {
 
-    private let client: SelfHostedSiteAuthenticator
-    private let loginCompleted: (WordPressOrgCredentials) -> Void
+    @Environment(\.selfHostedSiteAuthenticator)
+    private var client: SelfHostedSiteAuthenticator
 
-    // Since the anchor is a window that typically is the window this view is presented in,
-    // using a weak reference here to avoid retain cycle.
-    private weak var anchor: ASPresentationAnchor?
+    private let loginCompleted: (WordPressOrgCredentials) -> Void
 
     @State fileprivate var errorMessage: String?
     @State private var urlField: String = ""
@@ -21,13 +19,7 @@ struct LoginWithUrlView: View {
         isLoading || urlField.trim().isEmpty
     }
 
-    init(
-        client: SelfHostedSiteAuthenticator,
-        anchor: ASPresentationAnchor,
-        loginCompleted: @escaping (WordPressOrgCredentials) -> Void
-    ) {
-        self.client = client
-        self.anchor = anchor
+    init(loginCompleted: @escaping (WordPressOrgCredentials) -> Void) {
         self.loginCompleted = loginCompleted
     }
 
@@ -88,7 +80,7 @@ struct LoginWithUrlView: View {
         // https://github.com/swiftlang/swift/issues/76807
         func login() async {
             do {
-                let credentials = try await client.signIn(site: urlField, from: anchor)
+                let credentials = try await client.signIn(site: urlField, from: ASPresentationAnchor())
                 self.loginCompleted(credentials)
             } catch {
                 errorMessage = error.errorMessage
@@ -180,8 +172,5 @@ private extension UrlDiscoveryError {
 // MARK: - SwiftUI Preview
 
 #Preview {
-    LoginWithUrlView(
-        client: .init(session: .shared),
-        anchor: ASPresentationAnchor()
-    ) { _ in }
+    LoginWithUrlView { _ in }
 }

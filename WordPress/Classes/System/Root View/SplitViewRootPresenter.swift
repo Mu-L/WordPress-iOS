@@ -182,8 +182,10 @@ final class SplitViewRootPresenter: RootViewPresenter {
     }
 
     private func showAddSiteScreen(selection: AddSiteMenuViewModel.Selection) {
-        AddSiteController(viewController: splitVC.presentedViewController ?? splitVC, source: "sidebar")
-            .showSiteCreationScreen(selection: selection)
+        Task {
+            await AddSiteController(viewController: splitVC.presentedViewController ?? splitVC, source: "sidebar")
+                .showSiteCreationScreen(selection: selection)
+        }
     }
 
     private func handleCoreDataChanges(_ notification: Foundation.Notification) {

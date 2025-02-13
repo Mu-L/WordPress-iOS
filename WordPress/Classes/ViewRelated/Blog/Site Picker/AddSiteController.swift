@@ -3,9 +3,12 @@ import SwiftUI
 import WordPressAuthenticator
 
 /// Manages the site creation flows.
+@MainActor
 struct AddSiteController {
     let viewController: UIViewController
     let source: String
+
+    let selfHostedSiteAuthenticator = SelfHostedSiteAuthenticator(session: .shared)
 
     func showSiteCreationScreen(selection: AddSiteMenuViewModel.Selection) {
         switch selection {
@@ -31,34 +34,14 @@ struct AddSiteController {
     }
 
     func showSelfHostedSiteLoginScreen() {
-        guard FeatureFlag.authenticateUsingApplicationPassword.enabled else {
-            WordPressAuthenticator.showLoginForSelfHostedSite(viewController)
-            return
-        }
-        showApplicationPasswordAuthenticationForSelfHostedSite()
-    }
+//        guard FeatureFlag.authenticateUsingApplicationPassword.enabled else {
+//            WordPressAuthenticator.showLoginForSelfHostedSite(viewController)
+//            return
+//        }
 
-    private func showApplicationPasswordAuthenticationForSelfHostedSite() {
-        guard let window = viewController.view.window else {
-            return wpAssertionFailure("window missing")
+        selfHostedSiteAuthenticator.presentLoginScreenOverlay(from: self.viewController) { credentials in
+            
         }
-        let client = SelfHostedSiteAuthenticator(session: URLSession(configuration: .ephemeral))
-        let view = LoginWithUrlView(client: client, anchor: window) { [weak viewController] credentials in
-            viewController?.dismiss(animated: true)
-            WordPressAuthenticator.shared.delegate!.sync(credentials: .init(wporg: credentials)) {
-                NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification), object: nil)
-            }
-        }.toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(SharedStrings.Button.cancel) { [weak viewController] in
-                    viewController?.dismiss(animated: true)
-                }
-            }
-        }
-        let hostVC = UIHostingController(rootView: view)
-        let navigationVC = UINavigationController(rootViewController: hostVC)
-        navigationVC.modalPresentationStyle = .formSheet
-        viewController.present(navigationVC, animated: true)
     }
 }
 
