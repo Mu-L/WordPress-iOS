@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import WordPressShared
-import WordPressAuthenticator
 
 /// A view controller that presents a Jetpack login form.
 ///
@@ -32,9 +31,9 @@ class JetpackLoginViewController: UIViewController {
 
     @IBOutlet fileprivate weak var jetpackImage: UIImageView!
     @IBOutlet fileprivate weak var descriptionLabel: UILabel!
-    @IBOutlet fileprivate weak var signinButton: WPNUXMainButton!
+    @IBOutlet fileprivate weak var signinButton: NUXButton!
     @IBOutlet fileprivate weak var connectUserButton: NUXButton!
-    @IBOutlet fileprivate weak var installJetpackButton: WPNUXMainButton!
+    @IBOutlet fileprivate weak var installJetpackButton: NUXButton!
     @IBOutlet private var tacButton: UIButton!
     @IBOutlet private var faqButton: UIButton!
 

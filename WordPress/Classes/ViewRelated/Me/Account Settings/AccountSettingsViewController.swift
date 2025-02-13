@@ -358,11 +358,11 @@ private class AccountSettingsController: SettingsController {
                 guard let leafViewController = UIApplication.shared.leafViewController else {
                     return
                 }
-                ZendeskUtils.sharedInstance.showNewRequestIfPossible(from: leafViewController, with: .closeAccount) { [weak self] identityUpdated in
-                    if identityUpdated {
-                        self?.refreshModel()
-                    }
-                }
+//                ZendeskUtils.sharedInstance.showNewRequestIfPossible(from: leafViewController, with: .closeAccount) { [weak self] identityUpdated in
+//                    if identityUpdated {
+//                        self?.refreshModel()
+//                    }
+//                }
             } else {
                 guard let url = Constants.forumsURL else {
                     return

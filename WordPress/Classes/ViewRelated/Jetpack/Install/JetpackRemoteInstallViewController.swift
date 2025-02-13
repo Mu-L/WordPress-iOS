@@ -1,4 +1,3 @@
-import WordPressAuthenticator
 
 protocol JetpackRemoteInstallDelegate: AnyObject {
     func jetpackRemoteInstallCompleted()
@@ -162,7 +161,6 @@ extension JetpackRemoteInstallViewController: JetpackRemoteInstallStateViewDeleg
 
     func customerSupportButtonDidTouch() {
         let supportViewController = SupportTableViewController()
-        supportViewController.sourceTag = viewModel.supportSourceTag
         navigationController?.pushViewController(supportViewController, animated: true)
     }
 }

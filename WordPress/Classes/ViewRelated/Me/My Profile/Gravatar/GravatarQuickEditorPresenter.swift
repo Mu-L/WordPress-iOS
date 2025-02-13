@@ -1,7 +1,6 @@
 import Foundation
 import GravatarUI
 import WordPressShared
-import WordPressAuthenticator
 import AsyncImageKit
 
 @MainActor
@@ -46,7 +45,7 @@ struct GravatarQuickEditorPresenter {
         presenter.present(
             in: presentingViewController,
             onAvatarUpdated: {
-                AuthenticatorAnalyticsTracker.shared.track(click: .selectAvatar)
+//                AuthenticatorAnalyticsTracker.shared.track(click: .selectAvatar)
                 Task {
                     // Purge the cache otherwise the old avatars remain around.
                     await ImageDownloader.shared.clearURLSessionCache()

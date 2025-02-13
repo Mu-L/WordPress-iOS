@@ -1,4 +1,3 @@
-import WordPressAuthenticator
 import UIKit
 import SwiftUI
 import WordPressUI
@@ -577,7 +576,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
     }
 
     private func launchLoginForSelfHostedSite() {
-        WordPressAuthenticator.showLoginForSelfHostedSite(self)
+        preconditionFailure("We should handle this")
     }
 
     func launchSiteCreation(source: String) {
@@ -599,7 +598,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
 
     @objc
     private func showAddSelfHostedSite() {
-        WordPressAuthenticator.showLoginForSelfHostedSite(self)
+        preconditionFailure("We should handle this case")
     }
 
     // MARK: - Blog Details UI Logic

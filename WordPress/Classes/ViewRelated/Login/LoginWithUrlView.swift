@@ -1,7 +1,6 @@
 import SwiftUI
 import AuthenticationServices
 import WordPressAPI
-import WordPressAuthenticator
 import DesignSystem
 
 struct LoginWithUrlView: View {

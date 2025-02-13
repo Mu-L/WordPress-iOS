@@ -86,11 +86,11 @@ static NSInteger const WPTabBarIconOffsetiPhone = 5;
                                                  selector:@selector(defaultAccountDidChange:)
                                                      name:WPAccountDefaultWordPressComAccountChangedNotification
                                                    object:nil];
-
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(signinDidFinish:)
-                                                     name:WPTabBarController.wpSigninDidFinishNotification
-                                                   object:nil];
+//
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(signinDidFinish:)
+//                                                     name: .WPSigninDidFinishNotification
+//                                                   object:nil];
 
         // Watch for application badge number changes
         [[UIApplication sharedApplication] addObserver:self

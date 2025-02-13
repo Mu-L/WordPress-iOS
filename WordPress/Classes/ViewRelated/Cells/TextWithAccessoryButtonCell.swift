@@ -1,5 +1,4 @@
 import UIKit
-import WordPressAuthenticator
 
 class TextWithAccessoryButtonCell: WPReusableTableViewCell {
     var buttonText: String? {

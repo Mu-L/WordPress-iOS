@@ -93,12 +93,6 @@ class ChangeUsernameViewModel {
     }
 }
 
-extension ChangeUsernameViewModel: SignupUsernameViewControllerDelegate {
-    func usernameSelected(_ username: String) {
-        selectedUsername = username
-    }
-}
-
 private extension ChangeUsernameViewModel {
     func addObservers() {
         let notificationCenter = NotificationCenter.default

@@ -1,7 +1,5 @@
-
 import UIKit
 
-import WordPressAuthenticator
 
 // MARK: - SiteAssemblyWizardContent
 
@@ -27,7 +25,7 @@ final class SiteAssemblyWizardContent: UIViewController {
     private let contentView: SiteAssemblyContentView
 
     /// We reuse a `NUXButtonViewController` from `WordPressAuthenticator`. Ideally this might be in `WordPressUI`.
-    private let buttonViewController = NUXButtonViewController.instance()
+//    private let buttonViewController = NUXButtonViewController.instance()
 
     /// This view controller manages the interaction with error states that can arise during site assembly.
     private var errorStateViewController: ErrorStateViewController?
@@ -162,17 +160,17 @@ final class SiteAssemblyWizardContent: UIViewController {
     }
 
     private func installButtonViewController() {
-        buttonViewController.delegate = self
-
-        let primaryButtonText = NSLocalizedString("Done",
-                                                  comment: "Tapping a button with this label allows the user to exit the Site Creation flow")
-        buttonViewController.setButtonTitles(primary: primaryButtonText)
-
-        contentView.buttonContainerView = buttonViewController.view
-
-        buttonViewController.willMove(toParent: self)
-        addChild(buttonViewController)
-        buttonViewController.didMove(toParent: self)
+//        buttonViewController.delegate = self
+//
+//        let primaryButtonText = NSLocalizedString("Done",
+//                                                  comment: "Tapping a button with this label allows the user to exit the Site Creation flow")
+//        buttonViewController.setButtonTitles(primary: primaryButtonText)
+//
+//        contentView.buttonContainerView = buttonViewController.view
+//
+//        buttonViewController.willMove(toParent: self)
+//        addChild(buttonViewController)
+//        buttonViewController.didMove(toParent: self)
     }
 
     private func installErrorStateViewController(with type: ErrorStateViewType) {
@@ -270,22 +268,5 @@ private extension SiteAssemblyWizardContent {
 extension SiteAssemblyWizardContent: NetworkStatusDelegate {
     func networkStatusDidChange(active: Bool) {
         isNetworkActive = active
-    }
-}
-
-// MARK: - NUXButtonViewControllerDelegate
-
-extension SiteAssemblyWizardContent: NUXButtonViewControllerDelegate {
-    func primaryButtonPressed() {
-        SiteCreationAnalyticsHelper.trackSiteCreationSuccessPreviewOkButtonTapped()
-
-        guard let blog = createdBlog else { return }
-
-        RootViewCoordinator.shared.isSiteCreationActive = false
-        RootViewCoordinator.shared.reloadUIIfNeeded(blog: blog)
-
-        dismissTapped(viaDone: true) { [blog] in
-            RootViewCoordinator.sharedPresenter.showBlogDetails(for: blog)
-        }
     }
 }

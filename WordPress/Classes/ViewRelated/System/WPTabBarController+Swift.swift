@@ -1,4 +1,3 @@
-import WordPressAuthenticator
 
 // MARK: - Tab Access Tracking
 
@@ -27,10 +26,6 @@ extension WPTabBarController {
         if let path {
             self.readerPresenter?.navigate(to: path)
         }
-    }
-
-    @objc public class var wpSigninDidFinishNotification: String {
-        WordPressAuthenticator.WPSigninDidFinishNotification
     }
 
     private static let tabIndexToStatMap: [WPTab: WPAnalyticsStat] = [.mySites: .mySitesTabAccessed, .reader: .readerAccessed]

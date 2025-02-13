@@ -1,5 +1,4 @@
 import Foundation
-import WordPressAuthenticator
 import WordPressKit
 import WordPressShared
 import DesignSystem
@@ -58,8 +57,6 @@ protocol ZendeskUtilsProtocol {
     }
 
     // MARK: - Private Properties
-
-    private var sourceTag: WordPressSupportSourceTag?
 
     private var userName: String?
     private var userEmail: String? {
@@ -138,7 +135,7 @@ protocol ZendeskUtilsProtocol {
     /// Displays the Zendesk New Request view from the given controller, for users to submit new tickets.
     /// If the user's identity (i.e. contact info) was updated, inform the caller in the `identityUpdated` completion block.
     ///
-    func showNewRequestIfPossible(from controller: UIViewController, with sourceTag: WordPressSupportSourceTag? = nil, identityUpdated: ((Bool) -> Void)? = nil) {
+    func showNewRequestIfPossible(from controller: UIViewController, identityUpdated: ((Bool) -> Void)? = nil) {
 
         presentInController = controller
 
@@ -148,7 +145,6 @@ protocol ZendeskUtilsProtocol {
                 return
             }
 
-            self.sourceTag = sourceTag
             self.trackSourceEvent(.supportNewRequestViewed)
 
             self.createRequest() { requestConfig in
@@ -163,7 +159,7 @@ protocol ZendeskUtilsProtocol {
     /// Displays the Zendesk Request List view from the given controller, allowing user to access their tickets.
     /// If the user's identity (i.e. contact info) was updated, inform the caller in the `identityUpdated` completion block.
     ///
-    func showTicketListIfPossible(from controller: UIViewController, with sourceTag: WordPressSupportSourceTag? = nil, identityUpdated: ((Bool) -> Void)? = nil) {
+    func showTicketListIfPossible(from controller: UIViewController, identityUpdated: ((Bool) -> Void)? = nil) {
 
         presentInController = controller
 
@@ -173,7 +169,6 @@ protocol ZendeskUtilsProtocol {
                 return
             }
 
-            self.sourceTag = sourceTag
             self.trackSourceEvent(.supportTicketListViewed)
 
             // Get custom request configuration so new tickets from this path have all the necessary information.
@@ -783,11 +778,6 @@ private extension ZendeskUtils {
         let allBlogs = (try? BlogQuery().blogs(in: context)) ?? []
         var tags = [String]()
 
-        // Add sourceTag
-        if let sourceTagOrigin = ZendeskUtils.sharedInstance.sourceTag?.origin {
-            tags.append(sourceTagOrigin)
-        }
-
         // Add platformTag
         tags.append(Constants.platformTag)
 
@@ -823,13 +813,7 @@ private extension ZendeskUtils {
     }
 
     func trackSourceEvent(_ event: WPAnalyticsStat) {
-        guard let sourceTag else {
-            WPAnalytics.track(event)
-            return
-        }
-
-        let properties = ["source": sourceTag.origin ?? sourceTag.name]
-        WPAnalytics.track(event, withProperties: properties)
+        WPAnalytics.track(event)
     }
 
     // MARK: - Push Notification Helpers

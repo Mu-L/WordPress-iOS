@@ -1,5 +1,4 @@
 import Foundation
-import WordPressAuthenticator
 import SwiftUI
 
 extension NSNotification.Name {
@@ -54,7 +53,7 @@ class RootViewCoordinator {
     }
     private var featureFlagStore: RemoteFeatureFlagStore
     private var windowManager: WindowManager?
-    private let wordPressAuthenticator: WordPressAuthenticatorProtocol.Type
+
     var isSiteCreationActive = false
     var isFullScreenOverlayBeingDisplayed = false
 
@@ -62,13 +61,13 @@ class RootViewCoordinator {
 
     // MARK: Initializer
 
-    init(featureFlagStore: RemoteFeatureFlagStore,
-         windowManager: WindowManager?,
-         wordPressAuthenticator: WordPressAuthenticatorProtocol.Type = WordPressAuthenticator.self) {
+    init(
+        featureFlagStore: RemoteFeatureFlagStore,
+        windowManager: WindowManager?
+    ) {
         self.featureFlagStore = featureFlagStore
         self.windowManager = windowManager
         self.currentAppUIType = Self.appUIType(featureFlagStore: featureFlagStore)
-        self.wordPressAuthenticator = wordPressAuthenticator
 
         self.dotComAuthenticator = AppDependency.dotComAuthenticator
         self.subscribeToLoginCompletionNotification()
@@ -95,14 +94,10 @@ class RootViewCoordinator {
 
             windowManager?.show(newLoginScreen, completion: completion)
         } else {
-            guard let loginViewController = wordPressAuthenticator.loginUI() else {
-                fatalError("No login UI to show to the user.  There's no way to gracefully handle this error.")
-            }
 
-            windowManager?.show(loginViewController, completion: completion)
         }
 
-        wordPressAuthenticator.track(.openedLogin)
+//        wordPressAuthenticator.track(.openedLogin)
         self.rootViewPresenter = nil
 
         WordPressAppDelegate.shared?.autoSignInUITestSite()
@@ -110,7 +105,7 @@ class RootViewCoordinator {
 
     func subscribeToLoginCompletionNotification() {
         NotificationCenter.default.addObserver(
-            forName: Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification),
+            forName: .WPSigninDidFinishNotification,
             object: nil,
             queue: .main
         ) { [weak self] _ in

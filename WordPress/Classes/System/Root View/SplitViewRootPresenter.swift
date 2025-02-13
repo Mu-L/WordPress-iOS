@@ -1,7 +1,6 @@
 import UIKit
 import Combine
 import SwiftUI
-import WordPressAuthenticator
 import WordPressUI
 import WordPressShared
 

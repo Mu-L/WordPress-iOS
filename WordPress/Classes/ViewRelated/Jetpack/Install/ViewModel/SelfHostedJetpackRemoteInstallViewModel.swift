@@ -1,5 +1,4 @@
 import WordPressFlux
-import WordPressAuthenticator
 
 class SelfHostedJetpackRemoteInstallViewModel: JetpackRemoteInstallViewModel {
     var onChangeState: ((JetpackRemoteInstallState, JetpackRemoteInstallStateViewModel) -> Void)?
@@ -8,8 +7,6 @@ class SelfHostedJetpackRemoteInstallViewModel: JetpackRemoteInstallViewModel {
 
     /// Always proceed to the Jetpack Connection flow after successfully installing Jetpack.
     let shouldConnectToJetpack = true
-
-    let supportSourceTag: WordPressSupportSourceTag? = nil
 
     private(set) var state: JetpackRemoteInstallState = .install {
         didSet {

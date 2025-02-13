@@ -1,4 +1,3 @@
-import WordPressAuthenticator
 
 /// Represents the core logic behind the Jetpack Remote Install.
 ///
@@ -17,9 +16,6 @@ protocol JetpackRemoteInstallViewModel: AnyObject {
 
     /// Whether the install flow should continue with establishing a Jetpack connection for the site.
     var shouldConnectToJetpack: Bool { get }
-
-    /// The source tag to be used when the user opens the Support screen in case of installation errors.
-    var supportSourceTag: WordPressSupportSourceTag? { get }
 
     // MARK: Methods
 

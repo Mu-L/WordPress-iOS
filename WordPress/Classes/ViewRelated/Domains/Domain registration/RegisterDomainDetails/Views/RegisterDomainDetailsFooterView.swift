@@ -1,5 +1,4 @@
 import UIKit
-import WordPressAuthenticator
 
 class RegisterDomainDetailsFooterView: UIView, NibLoadable {
 

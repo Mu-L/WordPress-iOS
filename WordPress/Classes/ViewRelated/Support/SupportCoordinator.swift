@@ -1,9 +1,7 @@
 import Foundation
-import WordPressAuthenticator
 
 final class SupportCoordinator {
     private weak var controllerToShowFrom: UIViewController?
-    private var tag: WordPressSupportSourceTag?
 
     private var navigationController: UINavigationController? {
         guard let navigationController = (controllerToShowFrom as? UINavigationController) ?? controllerToShowFrom?.navigationController else {
@@ -18,10 +16,8 @@ final class SupportCoordinator {
         return navigationController
     }
 
-    init(controllerToShowFrom: UIViewController?,
-         tag: WordPressSupportSourceTag? = nil) {
+    init(controllerToShowFrom: UIViewController?) {
         self.controllerToShowFrom = controllerToShowFrom
-        self.tag = tag
     }
 
     func showSupport(onIdentityUpdated: (() -> ())? = nil) {
@@ -38,7 +34,7 @@ final class SupportCoordinator {
                 controllerToShowFrom.present(navigationController, animated: true)
             }
         } else {
-            ZendeskUtils.sharedInstance.showNewRequestIfPossible(from: controllerToShowFrom, with: tag) { identityUpdated in
+            ZendeskUtils.sharedInstance.showNewRequestIfPossible(from: controllerToShowFrom) { identityUpdated in
                 if identityUpdated {
                     onIdentityUpdated?()
                 }
@@ -50,7 +46,7 @@ final class SupportCoordinator {
         guard let controllerToShowFrom else { return }
 
         ZendeskUtils.pushNotificationRead()
-        ZendeskUtils.sharedInstance.showTicketListIfPossible(from: controllerToShowFrom, with: tag) { identityUpdated in
+        ZendeskUtils.sharedInstance.showTicketListIfPossible(from: controllerToShowFrom) { identityUpdated in
             if identityUpdated {
                 onIdentityUpdated?()
             }

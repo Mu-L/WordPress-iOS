@@ -1,5 +1,4 @@
 import Foundation
-import WordPressAuthenticator
 import Gravatar
 
 /// A simple container for the user info shown on the login epilogue screen.
@@ -41,10 +40,5 @@ extension LoginEpilogueUserInfo {
     mutating func update(with profile: GravatarProfile) {
         gravatarUrl = profile.thumbnailUrl
         fullName = profile.displayName
-    }
-
-    mutating func update(with socialUser: SocialUser) {
-        fullName = socialUser.fullName
-        email = socialUser.email
     }
 }

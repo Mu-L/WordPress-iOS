@@ -1,12 +1,11 @@
 import Combine
-import WordPressAuthenticator
 
-class ChangeUsernameViewController: SignupUsernameTableViewController {
+class ChangeUsernameViewController: UITableViewController {
     typealias CompletionBlock = (String?) -> Void
 
-    override var analyticsSource: String {
-        return "account_settings"
-    }
+//    override var analyticsSource: String {
+//        return "account_settings"
+//    }
     private let viewModel: ChangeUsernameViewModel
     private let completionBlock: CompletionBlock
     private lazy var saveBarButtonItem: UIBarButtonItem = {
@@ -46,16 +45,16 @@ class ChangeUsernameViewController: SignupUsernameTableViewController {
         viewModel.start()
     }
 
-    override func buildHeaderDescription() -> NSAttributedString {
-        return viewModel.headerDescription()
-    }
-
-    override func startSearch(for searchTerm: String) {
-        saveBarButtonItem.isEnabled = false
-        viewModel.suggestUsernames(for: searchTerm, reloadingAllSections: false)
-
-        trackSearchPerformed()
-    }
+//    override func buildHeaderDescription() -> NSAttributedString {
+//        return viewModel.headerDescription()
+//    }
+//
+//    override func startSearch(for searchTerm: String) {
+//        saveBarButtonItem.isEnabled = false
+//        viewModel.suggestUsernames(for: searchTerm, reloadingAllSections: false)
+//
+//        trackSearchPerformed()
+//    }
 }
 
 private extension ChangeUsernameViewController {
@@ -70,29 +69,29 @@ private extension ChangeUsernameViewController {
         }
         viewModel.suggestionsListener = { [weak self] state, suggestions, reloadAllSections in
             switch state {
-            case .loading:
-                self?.showLoader()
+//            case .loading:
+//                self?.showLoader()
             case .success:
                 if suggestions.isEmpty {
                     WPAppAnalytics.track(.accountSettingsChangeUsernameSuggestionsFailed)
                 }
-                self?.hideLoader()
-                self?.suggestions = suggestions
-                self?.reloadSections(includingAllSections: reloadAllSections)
+//                self?.hideLoader()
+//                self?.suggestions = suggestions
+//                self?.reloadSections(includingAllSections: reloadAllSections)
             default:
                 break
             }
         }
-        currentUsername = viewModel.username
-        delegate = viewModel
+//        currentUsername = viewModel.username
+//        delegate = viewModel
     }
 
     func setupUI() {
         navigationItem.title = Constants.username
         navigationItem.rightBarButtonItems = [saveBarButtonItem]
 
-        registerNibs()
-        setupBackgroundTapGestureRecognizer()
+//        registerNibs()
+//        setupBackgroundTapGestureRecognizer()
         setNeedsSaveButtonIsEnabled()
     }
 

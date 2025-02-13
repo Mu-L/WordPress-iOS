@@ -4,7 +4,118 @@ import AutomatticTracks
 import SwiftUI
 import AuthenticationServices
 import WordPressKit
-import WordPressAuthenticator
+
+// MARK: - WordPress.org (aka self-hosted site) Credentials
+//
+public struct WordPressOrgCredentials: Equatable {
+    /// Self-hosted login username.
+    /// The one used in the /wp-admin/ panel.
+    ///
+    public let username: String
+
+    /// Self-hosted login password.
+    /// The one used in the /wp-admin/ panel.
+    ///
+    public let password: String
+
+    /// The URL to reach the XMLRPC file.
+    /// e.g.: https://exmaple.com/xmlrpc.php
+    ///
+    public let xmlrpc: String
+
+    /// Self-hosted site options
+    ///
+    public let options: [AnyHashable: Any]
+
+    /// Designated initializer
+    ///
+    public init(username: String, password: String, xmlrpc: String, options: [AnyHashable: Any]) {
+        self.username = username
+        self.password = password
+        self.xmlrpc = xmlrpc
+        self.options = options
+    }
+
+    /// Returns site URL by stripping "/xmlrpc.php" from `xmlrpc` String property
+    ///
+    public var siteURL: String {
+        xmlrpc.removingSuffix("/xmlrpc.php")
+    }
+}
+
+extension Foundation.Notification.Name {
+    static let WPSigninDidFinishNotification = Foundation.Notification.Name("WPSigninDidFinishNotification")
+    static let JPSigninDidFinishNotification = Foundation.Notification.Name("wordpressLoginFinishedJetpackLogin")
+}
+
+import Foundation
+
+// MARK: - WordPress.com Credentials
+//
+public struct WordPressComCredentials: Equatable {
+
+    /// WordPress.com authentication token
+    ///
+    public let authToken: String
+
+    /// Is this a Jetpack-connected site?
+    ///
+    public let isJetpackLogin: Bool
+
+    /// Is 2-factor Authentication Enabled?
+    ///
+    public let multifactor: Bool
+
+    /// The site address used during login
+    ///
+    public var siteURL: String
+
+    private let wpComURL = "https://wordpress.com"
+
+    /// Legacy  initializer, for backwards compatibility
+    ///
+    public init(authToken: String,
+                isJetpackLogin: Bool,
+                multifactor: Bool,
+                siteURL: String = "https://wordpress.com") {
+        self.authToken = authToken
+        self.isJetpackLogin = isJetpackLogin
+        self.multifactor = multifactor
+        self.siteURL = !siteURL.isEmpty ? siteURL : wpComURL
+    }
+}
+
+// MARK: - Equatable Conformance
+//
+public func ==(lhs: WordPressComCredentials, rhs: WordPressComCredentials) -> Bool {
+    return lhs.authToken == rhs.authToken && lhs.siteURL == rhs.siteURL
+}
+
+// MARK: - Authenticator Credentials
+//
+public struct AuthenticatorCredentials {
+    /// WordPress.com credentials
+    ///
+    public let wpcom: WordPressComCredentials?
+
+    /// Self-hosted site credentials
+    ///
+    public let wporg: WordPressOrgCredentials?
+
+    /// Designated initializer
+    ///
+    public init(wpcom: WordPressComCredentials? = nil, wporg: WordPressOrgCredentials? = nil) {
+        self.wpcom = wpcom
+        self.wporg = wporg
+    }
+}
+
+
+// MARK: - Equatable Conformance
+//
+public func ==(lhs: WordPressOrgCredentials, rhs: WordPressOrgCredentials) -> Bool {
+    return lhs.username == rhs.username && lhs.password == rhs.password && lhs.xmlrpc == rhs.xmlrpc
+}
 
 final actor SelfHostedSiteAuthenticator {
 
@@ -106,7 +217,7 @@ final actor SelfHostedSiteAuthenticator {
             password: credentials.password
         ))
 
-        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification), object: nil)
+        NotificationCenter.default.post(name: .WPSigninDidFinishNotification, object: nil)
 
         return credentials
     }
@@ -117,8 +228,15 @@ final actor SelfHostedSiteAuthenticator {
         onCompletion: @escaping (WordPressOrgCredentials) -> Void
     ) -> UIViewController {
         let loginView = LoginWithUrlView(loginCompleted: { credentials in
-            WordPressAuthenticator.shared.delegate!.sync(credentials: .init(wporg: credentials)) {
-                NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification), object: nil)
+            guard let window = viewController.navigationController?.navigationBar.window else {
+                preconditionFailure("We hit a bad bug")
+            }
+
+            let windowManager = AppDependency.windowManager(window: window)
+            let authManager = AppDependency.authenticationManager(windowManager: windowManager)
+
+            authManager.syncWPOrg(username: credentials.username, password: credentials.password, xmlrpc: credentials.xmlrpc, options: [:]) {
+                NotificationCenter.default.post(name: .WPSigninDidFinishNotification, object: nil)
             }
         })
         .toolbar {
@@ -161,15 +279,43 @@ final actor SelfHostedSiteAuthenticator {
     private func loadSiteOptions(details: WpApiApplicationPasswordDetails) async throws -> [AnyHashable: Any] {
         let xmlrpc = try details.derivedXMLRPCRoot
         return try await withCheckedThrowingContinuation { continuation in
-            let api = WordPressXMLRPCAPIFacade()
-            api.getBlogOptions(withEndpoint: xmlrpc, username: details.userLogin, password: details.password) { options in
-                continuation.resume(returning: options ?? [:])
-            } failure: { error in
-                continuation.resume(throwing: error ?? Blog.BlogCredentialsError.incorrectCredentials)
+
+//            WordPressOrgXMLRPCApi *api = [[WordPressOrgXMLRPCApi alloc] initWithEndpoint:xmlrpc userAgent:self.userAgent];
+//            [api checkCredentials:username password:password success:^(id responseObject, NSHTTPURLResponse *httpResponse __unused) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    if (![responseObject isKindOfClass:[NSDictionary class]]) {
+//                        if (failure) {
+//                            NSDictionary *userInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Unable to read the WordPress site at that URL. Tap 'Need more help?' to view the FAQ.", nil)};
+//                            NSError *error = [NSError errorWithDomain:WordPressOrgXMLRPCApiErrorDomain code:WordPressOrgXMLRPCApiErrorResponseSerializationFailed userInfo:userInfo];
+//                            failure(error);
+//                        }
+//                        return;
+//                    }
+//                    if (success) {
+//                        success((NSDictionary *)responseObject);
+//                    }
+//                });
+//
+//            } failure:^(NSError *error, NSHTTPURLResponse *httpResponse __unused) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    if (failure) {
+//                        failure(error);
+//                    }
+//                });
+//            }];
+
+            let api = WordPressOrgXMLRPCApi(endpoint: xmlrpc, userAgent: WPUserAgent.defaultUserAgent())
+            api.checkCredentials(details.userLogin, password: details.password) { dictionary, response in
+                if let dictionary = dictionary as? [AnyHashable: Any] {
+                    continuation.resume(returning: dictionary)
+                } else {
+                    continuation.resume(throwing: CocoaError.error(.coderInvalidValue))
+                }
+            } failure: { error, httpResponse in
+                continuation.resume(throwing: error)
             }
         }
     }
-
 }
 
 // Allow injecting `SelfHostedSiteAuthenticator` into SwiftUI Views

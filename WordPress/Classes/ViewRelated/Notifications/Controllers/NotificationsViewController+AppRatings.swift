@@ -73,7 +73,7 @@ extension NotificationsViewController {
         hideInlinePrompt(delay: 0.0)
 
         if ZendeskUtils.zendeskEnabled {
-            ZendeskUtils.sharedInstance.showNewRequestIfPossible(from: self, with: .inAppFeedback)
+//            ZendeskUtils.sharedInstance.showNewRequestIfPossible(from: self, with: .inAppFeedback)
         } else {
             if let contact = URL(string: NotificationsViewController.contactURL) {
                 UIApplication.shared.open(contact)

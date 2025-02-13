@@ -1,4 +1,3 @@
-import WordPressAuthenticator
 import AutomatticTracks
 
 @objc extension WordPressAppDelegate {
@@ -55,16 +54,18 @@ import AutomatticTracks
     private func handleMagicLogin(url: URL) -> Bool {
         DDLogInfo("App launched with authentication link")
 
-        guard AccountHelper.noWordPressDotComAccount || url.isJetpackConnect else {
-            DDLogInfo("The user clicked on a login or signup magic link when already logged into a WPCom account.  Since this is not a Jetpack connection attempt we're cancelling the operation.")
-            return false
-        }
+//        guard AccountHelper.noWordPressDotComAccount || url.isJetpackConnect else {
+//            DDLogInfo("The user clicked on a login or signup magic link when already logged into a WPCom account.  Since this is not a Jetpack connection attempt we're cancelling the operation.")
+//            return false
+//        }
 
         guard let rvc = window?.rootViewController else {
             return false
         }
 
-        return WordPressAuthenticator.openAuthenticationURL(url, fromRootViewController: rvc)
+        return false
+
+//        return WordPressAuthenticator.openAuthenticationURL(url, fromRootViewController: rvc)
     }
 
     private func handleViewPost(url: URL) -> Bool {

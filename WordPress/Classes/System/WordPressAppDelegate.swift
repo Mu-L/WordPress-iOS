@@ -3,7 +3,6 @@ import CocoaLumberjackSwift
 import Reachability
 import AutomatticTracks
 import AutomatticEncryptedLogs
-import WordPressAuthenticator
 import WordPressShared
 import AsyncImageKit
 import AutomatticAbout
@@ -126,8 +125,6 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
         })
 
-        startObservingAppleIDCredentialRevoked()
-
         NotificationCenter.default.post(name: .applicationLaunchCompleted, object: nil)
 
         return true
@@ -241,7 +238,6 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
             let libraryLogger = WordPressLibraryLogger()
             TracksLogging.delegate = libraryLogger
             WPKitSetLoggingDelegate(libraryLogger)
-            WPAuthenticatorSetLoggingDelegate(libraryLogger)
             printDebugLaunchInfoWithLaunchOptions(launchOptions)
             toggleExtraDebuggingIfNeeded()
         }
@@ -416,12 +412,11 @@ extension WordPressAppDelegate {
         authManager.initializeWordPressAuthenticator()
         authManager.startRelayingSupportNotifications()
 
-        WordPressAuthenticator.shared.delegate = authManager
         self.authManager = authManager
     }
 
     func presentDefaultAccountPrimarySite(from navigationController: UINavigationController) {
-        self.authManager?.presentDefaultAccountPrimarySite(from: navigationController)
+        preconditionFailure("We should probably handle this")
     }
 
     func handleWebActivity(_ activity: NSUserActivity) {
@@ -514,8 +509,6 @@ extension WordPressAppDelegate {
         switch rootViewController.presentedViewController ?? rootViewController {
         case is EditPostViewController:
             return "Post Editor"
-        case is LoginNavigationController:
-            return "Login View"
 #if IS_JETPACK
         case is MigrationNavigationController:
             return "Jetpack Migration View"
@@ -680,14 +673,12 @@ extension WordPressAppDelegate {
         // If the notification object is not nil, then it's a login
         if notification.object != nil {
             setupWordPressExtensions()
-            startObservingAppleIDCredentialRevoked()
             AccountService.loadDefaultAccountCookies()
         } else {
             trackLogoutIfNeeded()
             removeShareExtensionConfiguration()
             removeNotificationExtensionConfiguration()
             windowManager.showFullscreenSignIn()
-            stopObservingAppleIDCredentialRevoked()
             clearReaderStuff()
         }
 
@@ -791,59 +782,10 @@ extension WordPressAppDelegate {
 extension WordPressAppDelegate {
 
     func checkAppleIDCredentialState() {
-
-        // If not logged in, remove the Apple User ID from the keychain, if it exists.
-        guard AccountHelper.isLoggedIn else {
-            removeAppleIDFromKeychain()
-            return
-        }
-
-        // Get the Apple User ID from the keychain
-        let appleUserID: String
-        do {
-            appleUserID = try SFHFKeychainUtils.getPasswordForUsername(WPAppleIDKeychainUsernameKey,
-                                                                       andServiceName: WPAppleIDKeychainServiceName)
-        } catch {
-            DDLogInfo("checkAppleIDCredentialState: No Apple ID found.")
-            return
-        }
-
-        // Get the Apple User ID state. If not authorized, log out the account.
-        WordPressAuthenticator.shared.getAppleIDCredentialState(for: appleUserID) { [weak self] (state, error) in
-
-            DDLogDebug("checkAppleIDCredentialState: Apple ID state: \(state.rawValue)")
-
-            switch state {
-            case .revoked:
-                DDLogInfo("checkAppleIDCredentialState: Revoked Apple ID. User signed out.")
-                self?.logOutRevokedAppleAccount()
-            default:
-                // An error exists only for the notFound state.
-                // notFound is a valid state when logging in with an Apple account for the first time.
-                if let error {
-                    DDLogDebug("checkAppleIDCredentialState: Apple ID state not found: \(error.localizedDescription)")
-                }
-                break
-            }
-        }
-    }
-
-    func startObservingAppleIDCredentialRevoked() {
-        WordPressAuthenticator.shared.startObservingAppleIDCredentialRevoked { [weak self] in
-            if AccountHelper.isLoggedIn {
-                DDLogInfo("Apple credentialRevokedNotification received. User signed out.")
-                self?.logOutRevokedAppleAccount()
-            }
-        }
-    }
-
-    func stopObservingAppleIDCredentialRevoked() {
-        WordPressAuthenticator.shared.stopObservingAppleIDCredentialRevoked()
     }
 
     func logOutRevokedAppleAccount() {
-        removeAppleIDFromKeychain()
-        logOutDefaultWordPressComAccount()
+
     }
 
     func logOutDefaultWordPressComAccount() {

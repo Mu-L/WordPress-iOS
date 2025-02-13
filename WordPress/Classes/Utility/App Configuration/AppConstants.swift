@@ -1,5 +1,4 @@
 import Foundation
-import WordPressAuthenticator
 
 /// - Warning:
 /// This configuration class has a **Jetpack** counterpart in the Jetpack bundle.
@@ -66,7 +65,7 @@ extension AppConstants {
     }
 
     struct Login {
-        static let continueButtonTitle = WordPressAuthenticatorDisplayStrings.defaultStrings.continueWithWPButtonTitle
+        static let continueButtonTitle = "FOO"
     }
 
     struct Logout {

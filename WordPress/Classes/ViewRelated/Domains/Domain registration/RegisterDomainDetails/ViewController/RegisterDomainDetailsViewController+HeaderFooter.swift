@@ -49,22 +49,22 @@ extension RegisterDomainDetailsViewController {
         return view
     }
 
-    func privacyProtectionSectionFooter() -> EpilogueSectionHeaderFooter? {
-        guard let view = tableView.dequeueReusableHeaderFooterView(
-            withIdentifier: EpilogueSectionHeaderFooter.identifier
-            ) as? EpilogueSectionHeaderFooter else {
-                return nil
-        }
-        view.titleLabel?.attributedText = termsAndConditionsFooterTitle
-        view.titleLabel?.textColor = .secondaryLabel
-        view.titleLabel?.numberOfLines = 0
-        view.titleLabel?.lineBreakMode = .byWordWrapping
-        view.topConstraint.constant = Constant.privacyProtectionSectionTitleTopDistance
-        view.contentView.backgroundColor = .systemGroupedBackground
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTermsAndConditionsTap(_:)))
-        view.addGestureRecognizer(tap)
-        return view
-    }
+//    func privacyProtectionSectionFooter() -> EpilogueSectionHeaderFooter? {
+//        guard let view = tableView.dequeueReusableHeaderFooterView(
+//            withIdentifier: EpilogueSectionHeaderFooter.identifier
+//            ) as? EpilogueSectionHeaderFooter else {
+//                return nil
+//        }
+//        view.titleLabel?.attributedText = termsAndConditionsFooterTitle
+//        view.titleLabel?.textColor = .secondaryLabel
+//        view.titleLabel?.numberOfLines = 0
+//        view.titleLabel?.lineBreakMode = .byWordWrapping
+//        view.topConstraint.constant = Constant.privacyProtectionSectionTitleTopDistance
+//        view.contentView.backgroundColor = .systemGroupedBackground
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTermsAndConditionsTap(_:)))
+//        view.addGestureRecognizer(tap)
+//        return view
+//    }
 
     func errorShowingSectionFooter(section: Int) -> RegisterDomainDetailsErrorSectionFooter? {
         let errors = viewModel.sections[section].validationErrors(forContext: .serverSide)

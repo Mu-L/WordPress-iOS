@@ -1,4 +1,3 @@
-import WordPressAuthenticator
 
 final class JetpackPluginOverlayCoordinator: JetpackOverlayCoordinator {
 
@@ -31,7 +30,7 @@ final class JetpackPluginOverlayCoordinator: JetpackOverlayCoordinator {
         }
 
         let supportViewController = SupportTableViewController()
-        supportViewController.sourceTag = Constants.supportSourceTag
+//        supportViewController.sourceTag = Constants.supportSourceTag
         navigationController.pushViewController(supportViewController, animated: true)
     }
 
@@ -40,14 +39,5 @@ final class JetpackPluginOverlayCoordinator: JetpackOverlayCoordinator {
         let navigationController = UINavigationController(rootViewController: webViewController)
         let presentingViewController = viewController.navigationController ?? viewController
         presentingViewController.present(navigationController, animated: true)
-    }
-}
-
-private extension JetpackPluginOverlayCoordinator {
-    enum Constants {
-        static let supportSourceTag = WordPressSupportSourceTag(
-            name: "jetpackInstallFullPluginOverlay",
-            origin: "origin:jp-install-full-plugin-overlay"
-        )
     }
 }

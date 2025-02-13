@@ -44,7 +44,7 @@ class GutenbergViewController: UIViewController, PostEditor, FeaturedImageDelega
     }()
 
     private lazy var coordinator: SupportCoordinator = {
-        SupportCoordinator(controllerToShowFrom: topmostPresentedViewController, tag: .editorHelp)
+        SupportCoordinator(controllerToShowFrom: topmostPresentedViewController)
     }()
 
     // MARK: - Aztec

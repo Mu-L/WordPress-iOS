@@ -1,5 +1,4 @@
 import UIKit
-import WordPressAuthenticator
 
 @objc
 class MySitesCoordinator: NSObject {
@@ -93,10 +92,9 @@ class MySitesCoordinator: NSObject {
     // MARK: Notifications Handling
 
     private func addSignInObserver() {
-        let notificationName = NSNotification.Name(WordPressAuthenticator.WPSigninDidFinishNotification)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(signinDidFinish),
-                                               name: notificationName,
+                                               name: .WPSigninDidFinishNotification,
                                                object: nil)
     }
 

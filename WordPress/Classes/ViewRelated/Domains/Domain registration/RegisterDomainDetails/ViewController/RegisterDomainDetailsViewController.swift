@@ -1,5 +1,4 @@
 import UIKit
-import WordPressAuthenticator
 import WordPressEditor
 
 class RegisterDomainDetailsViewController: UITableViewController {
@@ -82,26 +81,26 @@ class RegisterDomainDetailsViewController: UITableViewController {
     private func configureTableView() {
         configureTableFooterView()
 
-        tableView.register(
-            UINib(nibName: RegisterDomainSectionHeaderView.identifier, bundle: nil),
-            forHeaderFooterViewReuseIdentifier: RegisterDomainSectionHeaderView.identifier
-        )
-        tableView.register(
-            UINib(nibName: EpilogueSectionHeaderFooter.identifier, bundle: nil),
-            forHeaderFooterViewReuseIdentifier: EpilogueSectionHeaderFooter.identifier
-        )
-        tableView.register(
-            RegisterDomainDetailsErrorSectionFooter.defaultNib,
-            forHeaderFooterViewReuseIdentifier: RegisterDomainDetailsErrorSectionFooter.defaultReuseID
-        )
-        tableView.register(
-            InlineEditableNameValueCell.defaultNib,
-            forCellReuseIdentifier: InlineEditableNameValueCell.defaultReuseID
-        )
-        tableView.register(
-            WPTableViewCellDefault.self,
-            forCellReuseIdentifier: WPTableViewCellDefault.defaultReuseID
-        )
+//        tableView.register(
+//            UINib(nibName: RegisterDomainSectionHeaderView.identifier, bundle: nil),
+//            forHeaderFooterViewReuseIdentifier: RegisterDomainSectionHeaderView.identifier
+//        )
+//        tableView.register(
+//            UINib(nibName: EpilogueSectionHeaderFooter.identifier, bundle: nil),
+//            forHeaderFooterViewReuseIdentifier: EpilogueSectionHeaderFooter.identifier
+//        )
+//        tableView.register(
+//            RegisterDomainDetailsErrorSectionFooter.defaultNib,
+//            forHeaderFooterViewReuseIdentifier: RegisterDomainDetailsErrorSectionFooter.defaultReuseID
+//        )
+//        tableView.register(
+//            InlineEditableNameValueCell.defaultNib,
+//            forCellReuseIdentifier: InlineEditableNameValueCell.defaultReuseID
+//        )
+//        tableView.register(
+//            WPTableViewCellDefault.self,
+//            forCellReuseIdentifier: WPTableViewCellDefault.defaultReuseID
+//        )
 
         tableView.estimatedRowHeight = Constants.estimatedRowHeight
 
@@ -232,26 +231,26 @@ extension RegisterDomainDetailsViewController: InlineEditableNameValueCellDelega
     }
 
     func inlineEditableNameValueCell(_ cell: InlineEditableNameValueCell, valueTextFieldShouldReturn textField: UITextField) -> Bool {
-        guard let indexPath = tableView.indexPath(for: cell) else {
-                return false
-        }
-
-        let nextSection = indexPath.section + 1
-        let nextRow = indexPath.row + 1
-
-        // If there's an enabled editable row next in this section then select it, otherwise check the next section
-        if tableView.numberOfRows(inSection: indexPath.section) > nextRow,
-            let nextCell = tableView.cellForRow(at: IndexPath(row: nextRow, section: indexPath.section)) as? InlineEditableNameValueCell,
-            nextCell.valueTextField.isEnabled {
-            nextCell.valueTextField.becomeFirstResponder()
-        } else if tableView.numberOfSections > nextSection,
-            let nextCell = tableView.cellForRow(at: IndexPath(row: indexPath.row, section: nextSection)) as? InlineEditableNameValueCell,
-            nextCell.valueTextField.isEnabled {
-            nextCell.valueTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-        }
-
+//        guard let indexPath = tableView.indexPath(for: cell) else {
+//                return false
+//        }
+//
+//        let nextSection = indexPath.section + 1
+//        let nextRow = indexPath.row + 1
+//
+//        // If there's an enabled editable row next in this section then select it, otherwise check the next section
+//        if tableView.numberOfRows(inSection: indexPath.section) > nextRow,
+//            let nextCell = tableView.cellForRow(at: IndexPath(row: nextRow, section: indexPath.section)) as? InlineEditableNameValueCell,
+//            nextCell.valueTextField.isEnabled {
+//            nextCell.valueTextField.becomeFirstResponder()
+//        } else if tableView.numberOfSections > nextSection,
+//            let nextCell = tableView.cellForRow(at: IndexPath(row: indexPath.row, section: nextSection)) as? InlineEditableNameValueCell,
+//            nextCell.valueTextField.isEnabled {
+//            nextCell.valueTextField.becomeFirstResponder()
+//        } else {
+//            textField.resignFirstResponder()
+//        }
+//
         return true
     }
 }
@@ -370,8 +369,8 @@ extension RegisterDomainDetailsViewController {
             return nil
         }
         switch sectionType {
-        case .privacyProtection:
-            return privacyProtectionSectionFooter()
+//        case .privacyProtection:
+//            return privacyProtectionSectionFooter()
         default:
             return errorShowingSectionFooter(section: section)
         }

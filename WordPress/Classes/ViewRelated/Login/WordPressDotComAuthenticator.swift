@@ -1,7 +1,6 @@
 import AuthenticationServices
 import Foundation
 import UIKit
-import WordPressAuthenticator
 import SwiftUI
 
 import Alamofire
@@ -148,9 +147,8 @@ struct WordPressDotComAuthenticator {
         // This sending notification code exists because that's what the existing login system does. We can consider
         // removing this notification once WordPressAuthenticator is removed.
         if case .default = context {
-            let notification = Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification)
             let newAccount = try? coreDataStack.mainContext.existingObject(with: accountID)
-            NotificationCenter.default.post(name: notification, object: newAccount)
+            NotificationCenter.default.post(name: .WPSigninDidFinishNotification, object: newAccount)
         }
 
         return accountID

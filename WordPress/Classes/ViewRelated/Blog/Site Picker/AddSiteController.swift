@@ -1,6 +1,5 @@
 import UIKit
 import SwiftUI
-import WordPressAuthenticator
 
 /// Manages the site creation flows.
 @MainActor

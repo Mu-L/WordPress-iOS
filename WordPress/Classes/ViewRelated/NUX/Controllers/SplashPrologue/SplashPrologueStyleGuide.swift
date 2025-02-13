@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import WordPressAuthenticator
 
 struct SplashPrologueStyleGuide {
     static let backgroundColor = UIColor(light: .colorFromHex("F6F7F7"), dark: .colorFromHex("2C3338"))

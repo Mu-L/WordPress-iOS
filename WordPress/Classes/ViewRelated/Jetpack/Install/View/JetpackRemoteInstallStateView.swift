@@ -1,4 +1,3 @@
-import WordPressAuthenticator
 
 protocol JetpackRemoteInstallStateViewDelegate: AnyObject {
     func mainButtonDidTouch()

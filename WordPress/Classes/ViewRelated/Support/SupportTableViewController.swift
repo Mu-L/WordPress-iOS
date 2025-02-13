@@ -1,5 +1,4 @@
 import UIKit
-import WordPressAuthenticator
 
 class SupportTableViewController: UITableViewController {
 
@@ -7,8 +6,6 @@ class SupportTableViewController: UITableViewController {
 
     /// Configures the appearance of the support screen.
     let configuration: Configuration
-
-    var sourceTag: WordPressSupportSourceTag?
 
     // If set, the Zendesk views will be shown from this view instead of in the navigation controller.
     // Specifically for Me > Help & Support on the iPad.
@@ -23,7 +20,7 @@ class SupportTableViewController: UITableViewController {
     private var dismissTapped: (() -> ())?
 
     private lazy var coordinator: SupportCoordinator = {
-        SupportCoordinator(controllerToShowFrom: controllerToShowFrom(), tag: sourceTag)
+        SupportCoordinator(controllerToShowFrom: controllerToShowFrom())
     }()
 
     // MARK: - Init

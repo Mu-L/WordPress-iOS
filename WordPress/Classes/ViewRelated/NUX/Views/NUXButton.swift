@@ -27,18 +27,18 @@ public struct NUXButtonStyle {
 
     public static var linkButtonStyle: NUXButtonStyle {
         let backgroundColor = UIColor.clear
-        let buttonTitleColor = WordPressAuthenticator.shared.unifiedStyle?.textButtonColor ?? WordPressAuthenticator.shared.style.textButtonColor
-        let buttonHighlightColor = WordPressAuthenticator.shared.unifiedStyle?.textButtonHighlightColor ?? WordPressAuthenticator.shared.style.textButtonHighlightColor
+//        let buttonTitleColor = WordPressAuthenticator.shared.unifiedStyle?.textButtonColor ?? WordPressAuthenticator.shared.style.textButtonColor
+//        let buttonHighlightColor = WordPressAuthenticator.shared.unifiedStyle?.textButtonHighlightColor ?? WordPressAuthenticator.shared.style.textButtonHighlightColor
 
         let normalButtonStyle = ButtonStyle(backgroundColor: backgroundColor,
                                             borderColor: backgroundColor,
-                                            titleColor: buttonTitleColor)
+                                            titleColor: .black)
         let highlightedButtonStyle = ButtonStyle(backgroundColor: backgroundColor,
                                                  borderColor: backgroundColor,
-                                                 titleColor: buttonHighlightColor)
+                                                 titleColor: .black)
         let disabledButtonStyle = ButtonStyle(backgroundColor: backgroundColor,
                                               borderColor: backgroundColor,
-                                              titleColor: buttonTitleColor.withAlphaComponent(0.5))
+                                              titleColor: .black.withAlphaComponent(0.5))
         return NUXButtonStyle(normal: normalButtonStyle,
                               highlighted: highlightedButtonStyle,
                               disabled: disabledButtonStyle)
@@ -86,7 +86,7 @@ public struct NUXButtonStyle {
         configureTitleColors()
 
         if socialService == .apple {
-            setAttributedTitle(WPStyleGuide.formattedAppleString(), for: .normal)
+//            setAttributedTitle(WPStyleGuide.formattedAppleString(), for: .normal)
         }
     }
 
@@ -185,28 +185,28 @@ public struct NUXButtonStyle {
     /// Fallback method to configure the background colors based on the shared `WordPressAuthenticatorStyle`
     ///
     private func legacyConfigureBackgrounds() {
-        let style = WordPressAuthenticator.shared.style
-
-        let normalImage: UIImage
-        let highlightedImage: UIImage
-        let disabledImage = UIImage.renderBackgroundImage(fill: style.disabledBackgroundColor,
-                                                          border: style.disabledBorderColor)
-
-        if isPrimary {
-            normalImage = UIImage.renderBackgroundImage(fill: style.primaryNormalBackgroundColor,
-                                                        border: style.primaryNormalBorderColor)
-            highlightedImage = UIImage.renderBackgroundImage(fill: style.primaryHighlightBackgroundColor,
-                                                             border: style.primaryHighlightBorderColor)
-        } else {
-            normalImage = UIImage.renderBackgroundImage(fill: style.secondaryNormalBackgroundColor,
-                                                        border: style.secondaryNormalBorderColor)
-            highlightedImage = UIImage.renderBackgroundImage(fill: style.secondaryHighlightBackgroundColor,
-                                                             border: style.secondaryHighlightBorderColor)
-        }
-
-        setBackgroundImage(normalImage, for: .normal)
-        setBackgroundImage(highlightedImage, for: .highlighted)
-        setBackgroundImage(disabledImage, for: .disabled)
+//        let style = WordPressAuthenticator.shared.style
+//
+//        let normalImage: UIImage
+//        let highlightedImage: UIImage
+//        let disabledImage = UIImage.renderBackgroundImage(fill: style.disabledBackgroundColor,
+//                                                          border: style.disabledBorderColor)
+//
+//        if isPrimary {
+//            normalImage = UIImage.renderBackgroundImage(fill: style.primaryNormalBackgroundColor,
+//                                                        border: style.primaryNormalBorderColor)
+//            highlightedImage = UIImage.renderBackgroundImage(fill: style.primaryHighlightBackgroundColor,
+//                                                             border: style.primaryHighlightBorderColor)
+//        } else {
+//            normalImage = UIImage.renderBackgroundImage(fill: style.secondaryNormalBackgroundColor,
+//                                                        border: style.secondaryNormalBorderColor)
+//            highlightedImage = UIImage.renderBackgroundImage(fill: style.secondaryHighlightBackgroundColor,
+//                                                             border: style.secondaryHighlightBorderColor)
+//        }
+//
+//        setBackgroundImage(normalImage, for: .normal)
+//        setBackgroundImage(highlightedImage, for: .highlighted)
+//        setBackgroundImage(disabledImage, for: .disabled)
     }
 
     /// Setup: TitleColor
@@ -225,12 +225,12 @@ public struct NUXButtonStyle {
     /// Fallback method to configure the title colors based on the shared `WordPressAuthenticatorStyle`
     ///
     private func legacyConfigureTitleColors() {
-        let style = WordPressAuthenticator.shared.style
-        let titleColorNormal = isPrimary ? style.primaryTitleColor : style.secondaryTitleColor
-
-        setTitleColor(titleColorNormal, for: .normal)
-        setTitleColor(titleColorNormal, for: .highlighted)
-        setTitleColor(style.disabledTitleColor, for: .disabled)
+//        let style = WordPressAuthenticator.shared.style
+//        let titleColorNormal = isPrimary ? style.primaryTitleColor : style.secondaryTitleColor
+//
+//        setTitleColor(titleColorNormal, for: .normal)
+//        setTitleColor(titleColorNormal, for: .highlighted)
+//        setTitleColor(style.disabledTitleColor, for: .disabled)
     }
 
     /// Setup: TitleLabel
@@ -244,13 +244,14 @@ public struct NUXButtonStyle {
     /// Returns the current color that should be used for the activity indicator
     ///
     private func activityIndicatorColor(isEnabled: Bool = true) -> UIColor {
-        guard let style = buttonStyle else {
-            let style = WordPressAuthenticator.shared.style
-
-            return isEnabled ? style.primaryTitleColor : style.disabledButtonActivityIndicatorColor
-        }
-
-        return isEnabled ? style.normal.titleColor : style.disabled.titleColor
+//        guard let style = buttonStyle else {
+//            let style = WordPressAuthenticator.shared.style
+//
+//            return isEnabled ? style.primaryTitleColor : style.disabledButtonActivityIndicatorColor
+//        }
+//
+//        return isEnabled ? style.normal.titleColor : style.disabled.titleColor
+        return .gray
     }
 }
 

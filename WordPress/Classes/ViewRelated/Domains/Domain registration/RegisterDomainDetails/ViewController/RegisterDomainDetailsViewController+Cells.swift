@@ -56,33 +56,33 @@ extension RegisterDomainDetailsViewController {
     }
 
     private func updateStyle(of cell: InlineEditableNameValueCell, at indexPath: IndexPath) {
-        guard let section = SectionIndex(rawValue: indexPath.section) else {
-            return
-        }
-
-        cell.valueTextField.returnKeyType = .next
-
-        switch section {
-        case .contactInformation:
-            guard let index = RegisterDomainDetailsViewModel.CellIndex.ContactInformation(rawValue: indexPath.row) else {
-                return
-            }
-            cell.valueTextField.keyboardType = index.keyboardType
-            cell.valueTextField.autocapitalizationType = .words
-        case .phone:
-            cell.valueTextField.keyboardType = .numberPad
-        case .address:
-            let addressField = viewModel.addressSectionIndexHelper.addressField(for: indexPath.row)
-            switch addressField {
-            case .postalCode:
-                cell.valueTextField.keyboardType = .numbersAndPunctuation
-            default:
-                cell.valueTextField.keyboardType = .default
-                cell.valueTextField.autocapitalizationType = .words
-            }
-        default:
-            cell.valueTextField.keyboardType = .default
-            cell.valueTextField.autocapitalizationType = .none
-        }
+//        guard let section = SectionIndex(rawValue: indexPath.section) else {
+//            return
+//        }
+//
+//        cell.valueTextField.returnKeyType = .next
+//
+//        switch section {
+//        case .contactInformation:
+//            guard let index = RegisterDomainDetailsViewModel.CellIndex.ContactInformation(rawValue: indexPath.row) else {
+//                return
+//            }
+//            cell.valueTextField.keyboardType = index.keyboardType
+//            cell.valueTextField.autocapitalizationType = .words
+//        case .phone:
+//            cell.valueTextField.keyboardType = .numberPad
+//        case .address:
+//            let addressField = viewModel.addressSectionIndexHelper.addressField(for: indexPath.row)
+//            switch addressField {
+//            case .postalCode:
+//                cell.valueTextField.keyboardType = .numbersAndPunctuation
+//            default:
+//                cell.valueTextField.keyboardType = .default
+//                cell.valueTextField.autocapitalizationType = .words
+//            }
+//        default:
+//            cell.valueTextField.keyboardType = .default
+//            cell.valueTextField.autocapitalizationType = .none
+//        }
     }
 }
