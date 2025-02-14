@@ -260,10 +260,13 @@ private extension ReaderCommentsViewController {
     ///     --------
     ///
     func menu(for comment: Comment, indexPath: IndexPath, tableView: UITableView, sourceView: UIView?) -> UIMenu {
-        let commentMenus = commentMenu(for: comment, indexPath: indexPath, tableView: tableView, sourceView: sourceView)
-        return UIMenu(title: "", options: .displayInline, children: commentMenus.map {
-            UIMenu(title: "", options: .displayInline, children: $0.map({ menu in menu.toAction }))
-        })
+        let menu = CommentContextMenu(comment: comment, presentingViewController: self)
+        return menu.makeMenu()
+
+//        let commentMenus = commentMenu(for: comment, indexPath: indexPath, tableView: tableView, sourceView: sourceView)
+//        return UIMenu(title: "", options: .displayInline, children: commentMenus.map {
+//            UIMenu(title: "", options: .displayInline, children: $0.map({ menu in menu.toAction }))
+//        })
     }
 
     /// Returns a list of array that each contains a menu item. Separators will be shown between each array. Note that
@@ -417,6 +420,7 @@ private extension String {
                                                                 comment: "Error displayed if a comment fails to get updated")
     static let undoActionTitle = NSLocalizedString("Undo", comment: "Button title. Reverts a comment moderation action.")
 
+    // TODO: (kean) remove
     // moderation messages
     static let pendingSuccess = NSLocalizedString("Comment set to pending.", comment: "Message displayed when pending a comment succeeds.")
     static let pendingFailed = NSLocalizedString("Error setting comment to pending.", comment: "Message displayed when pending a comment fails.")
@@ -430,6 +434,7 @@ private extension String {
 
 // MARK: - Reader Comment Menu
 
+// TODO: (kean) remove
 /// Represents the available menu when the ellipsis accessory button on the comment cell is tapped.
 enum ReaderCommentMenu {
     case unapprove(_ handler: () -> Void)

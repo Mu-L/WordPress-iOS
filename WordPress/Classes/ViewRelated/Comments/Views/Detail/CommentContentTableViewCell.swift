@@ -90,6 +90,8 @@ class CommentContentTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet private weak var highlightBarView: UIView!
 
+    private var activityIndicator: UIActivityIndicatorView?
+
     // MARK: Private Properties
 
     /// Called when the cell has finished loading and calculating the height of the HTML content. Passes the new content height as parameter.
@@ -122,6 +124,17 @@ class CommentContentTableViewCell: UITableViewCell, NibReusable {
         }
     }
 
+    var contextMenu: CommentContextMenu? {
+        didSet {
+            accessoryButton.isHidden = contextMenu != nil
+            if let contextMenu {
+                contextMenu.$isPerformingAction.sink { [weak self] in
+
+                }.store(in: &cancellables)
+            }
+        }
+    }
+
     // MARK: Lifecycle
 
     override func prepareForReuse() {
@@ -139,6 +152,7 @@ class CommentContentTableViewCell: UITableViewCell, NibReusable {
         accessoryButtonAction = nil
         replyButtonAction = nil
         contentLinkTapAction = nil
+        contextMenu = nil
 
         onContentLoaded = nil
     }
@@ -210,6 +224,17 @@ class CommentContentTableViewCell: UITableViewCell, NibReusable {
         likeButton.isHidden = !state.isLikeEnabled
 
         updateLikeButton(isLiked: state.isLiked, likeCount: state.likeCount)
+    }
+
+    private func getLoadingIndicator() -> UIActivityIndicatorView {
+        if let activityIndicator {
+            return activityIndicator
+        }
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        contentView.addSubview(activityIndicator)
+        activityIndicator.pinCenter(to: accessoryButton)
+        self.activityIndicator = activityIndicator
+        return activityIndicator
     }
 }
 
