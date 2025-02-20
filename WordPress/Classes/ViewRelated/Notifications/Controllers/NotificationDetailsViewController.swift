@@ -48,10 +48,6 @@ class NotificationDetailsViewController: UIViewController, NoResultsViewHost {
     ///
     @IBOutlet var badgeCenterLayoutConstraint: NSLayoutConstraint!
 
-    /// RelpyTextView
-    ///
-    @IBOutlet var replyTextView: CommentLargeButton!
-
     /// Embedded Media Downloader
     ///
     fileprivate var mediaDownloader = NotificationMediaDownloader()
@@ -139,7 +135,6 @@ class NotificationDetailsViewController: UIViewController, NoResultsViewHost {
         setupTableView()
         setupTableViewCells()
         setupTableDelegates()
-        setupReplyTextView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -396,22 +391,6 @@ extension NotificationDetailsViewController {
         }
     }
 
-    func setupReplyTextView() {
-        let replyTextView = CommentLargeButton()
-
-        replyTextView.placeholder = NSLocalizedString("Write a reply", comment: "Placeholder text for inline compose view")
-        replyTextView.accessibilityLabel = NSLocalizedString("Reply Text", comment: "Notifications Reply Accessibility Identifier")
-
-        replyTextView.onTap = {
-            // TODO: (kean) remove the remaining .comment-related code
-            wpAssertionFailure("Notifications have been using NotificationCommentDetailViewController since 2023")
-        }
-
-        replyTextView.setContentCompressionResistancePriority(.required, for: .vertical)
-
-        self.replyTextView = replyTextView
-    }
-
     func setupNotificationListeners() {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(notificationWasUpdated), name: .NSManagedObjectContextObjectsDidChange, object: note.managedObjectContext)
@@ -420,28 +399,6 @@ extension NotificationDetailsViewController {
     func tearDownNotificationListeners() {
         let nc = NotificationCenter.default
         nc.removeObserver(self, name: .NSManagedObjectContextObjectsDidChange, object: note.managedObjectContext)
-    }
-}
-
-// MARK: - Reply View Helpers
-//
-extension NotificationDetailsViewController {
-    func attachReplyViewIfNeeded() {
-        guard shouldAttachReplyView else {
-            replyTextView.removeFromSuperview()
-            return
-        }
-
-        stackView.addArrangedSubview(replyTextView)
-    }
-
-    var shouldAttachReplyView: Bool {
-        // Attach the Reply component only if the notification has a comment, and it can be replied to.
-        //
-        guard let block: FormattableCommentContent = note.contentGroup(ofKind: .comment)?.blockOfKind(.comment) else {
-            return false
-        }
-        return block.action(id: ReplyToCommentAction.actionIdentifier())?.on ?? false
     }
 }
 
@@ -623,11 +580,6 @@ private extension NotificationDetailsViewController {
         cell.site                   = userBlock.metaTitlesHome ?? userBlock.metaLinksHome?.host
         cell.attributedCommentText  = text.trimNewlines()
         cell.isApproved             = commentBlock.isCommentApproved
-
-        // Add comment author's name to Reply placeholder.
-        let placeholderFormat = NSLocalizedString("Reply to %1$@",
-                                                  comment: "Placeholder text for replying to a comment. %1$@ is a placeholder for the comment author's name.")
-        replyTextView.placeholder = String(format: placeholderFormat, cell.name ?? String())
 
         // Setup: Callbacks
         cell.onUserClick = { [weak self] in
@@ -1219,5 +1171,4 @@ extension NotificationDetailsViewController {
 //
 private extension String {
     static let notificationDetailsTableAccessibilityId = "notifications-details-table"
-    static let replyTextViewAccessibilityId = "reply-text-view"
 }
