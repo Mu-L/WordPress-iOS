@@ -16,8 +16,6 @@
 #import "CoreDataStack.h"
 #import "Coordinate.h"
 
-#import "EditCommentViewController.h"
-
 #import "LocalCoreDataService.h"
 
 #import "Media.h"
