@@ -196,7 +196,6 @@ class NotificationDetailsViewController: UIViewController, NoResultsViewHost {
     fileprivate func refreshInterface() {
         formatter.resetCache()
         tableView.reloadData()
-        attachReplyViewIfNeeded()
         adjustLayoutConstraintsIfNeeded()
         refreshNavigationBar()
     }
@@ -342,19 +341,17 @@ extension NotificationDetailsViewController {
     }
 
     func setupTableView() {
-        tableView.separatorStyle            = .none
-        tableView.keyboardDismissMode       = .interactive
-        tableView.accessibilityIdentifier   = .notificationDetailsTableAccessibilityId
-        tableView.accessibilityLabel        = NSLocalizedString("Notification Details Table", comment: "Notifications Details Accessibility Identifier")
-        tableView.backgroundColor           = .systemBackground
+        tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .interactive
+        tableView.accessibilityIdentifier = .notificationDetailsTableAccessibilityId
+        tableView.accessibilityLabel = NSLocalizedString("Notification Details Table", comment: "Notifications Details Accessibility Identifier")
+        tableView.backgroundColor = .systemBackground
     }
 
     func setupTableViewCells() {
         let cellClassNames: [NoteBlockTableViewCell.Type] = [
             NoteBlockHeaderTableViewCell.self,
             NoteBlockTextTableViewCell.self,
-            NoteBlockActionsTableViewCell.self,
-            NoteBlockCommentTableViewCell.self,
             NoteBlockImageTableViewCell.self,
             NoteBlockUserTableViewCell.self,
             NoteBlockButtonTableViewCell.self
@@ -437,10 +434,6 @@ private extension NotificationDetailsViewController {
             fallthrough
         case .text:
             return NoteBlockTextTableViewCell.reuseIdentifier()
-        case .comment:
-            return NoteBlockCommentTableViewCell.reuseIdentifier()
-        case .actions:
-            return NoteBlockActionsTableViewCell.reuseIdentifier()
         case .image:
             return NoteBlockImageTableViewCell.reuseIdentifier()
         case .user:
@@ -472,10 +465,6 @@ private extension NotificationDetailsViewController {
             setupFooterCell(cell, blockGroup: blockGroup)
         case let cell as NoteBlockUserTableViewCell:
             setupUserCell(cell, blockGroup: blockGroup)
-        case let cell as NoteBlockCommentTableViewCell:
-            setupCommentCell(cell, blockGroup: blockGroup, at: indexPath)
-        case let cell as NoteBlockActionsTableViewCell:
-            setupActionsCell(cell, blockGroup: blockGroup)
         case let cell as NoteBlockImageTableViewCell:
             setupImageCell(cell, blockGroup: blockGroup)
         case let cell as NoteBlockTextTableViewCell:
@@ -547,123 +536,6 @@ private extension NotificationDetailsViewController {
         // Download the Gravatar
         let mediaURL = userBlock.media.first?.mediaURL
         cell.downloadGravatarWithURL(mediaURL)
-    }
-
-    func setupCommentCell(_ cell: NoteBlockCommentTableViewCell, blockGroup: FormattableContentGroup, at indexPath: IndexPath) {
-        // Note:
-        // The main reason why it's a very good idea *not* to reuse NoteBlockHeaderTableViewCell, just to display the
-        // gravatar, is because we're implementing a custom behavior whenever the user approves/ unapproves the comment.
-        //
-        //  -   Font colors are updated.
-        //  -   A left separator is displayed.
-        //
-        guard let commentBlock: FormattableCommentContent = blockGroup.blockOfKind(.comment) else {
-            assertionFailure("Missing Comment Block for Notification [\(note.notificationId)]")
-            return
-        }
-
-        guard let userBlock: FormattableUserContent = blockGroup.blockOfKind(.user) else {
-            assertionFailure("Missing User Block for Notification [\(note.notificationId)]")
-            return
-        }
-
-        // Merge the Attachments with their ranges: [NSRange: UIImage]
-        let mediaMap = mediaDownloader.imagesForUrls(commentBlock.imageUrls)
-        let mediaRanges = commentBlock.buildRangesToImagesMap(mediaMap)
-
-        let styles = RichTextContentStyles(key: "RichText-\(indexPath)")
-        let text = formatter.render(content: commentBlock, with: styles).stringByEmbeddingImageAttachments(mediaRanges)
-
-        // Setup: Properties
-        cell.name                   = userBlock.text
-        cell.timestamp              = (note.timestampAsDate as NSDate).mediumString()
-        cell.site                   = userBlock.metaTitlesHome ?? userBlock.metaLinksHome?.host
-        cell.attributedCommentText  = text.trimNewlines()
-        cell.isApproved             = commentBlock.isCommentApproved
-
-        // Setup: Callbacks
-        cell.onUserClick = { [weak self] in
-            guard let homeURL = userBlock.metaLinksHome else {
-                return
-            }
-
-            self?.displayURL(homeURL)
-        }
-
-        cell.onUrlClick = { [weak self] url in
-            self?.displayURL(url as URL)
-        }
-
-        cell.onAttachmentClick = { [weak self] attachment in
-            guard let image = attachment.image else {
-                return
-            }
-            self?.router.routeTo(image)
-        }
-
-        cell.onTimeStampLongPress = { [weak self] in
-            guard let urlString = self?.note.url,
-            let url = URL(string: urlString) else {
-                return
-            }
-            UIAlertController.presentAlertAndCopyCommentURLToClipboard(url: url)
-        }
-
-        // Download the Gravatar
-        let mediaURL = userBlock.media.first?.mediaURL
-        cell.downloadGravatarWithURL(mediaURL)
-    }
-
-    func setupActionsCell(_ cell: NoteBlockActionsTableViewCell, blockGroup: FormattableContentGroup) {
-        guard let commentBlock: FormattableCommentContent = blockGroup.blockOfKind(.comment) else {
-            assertionFailure("Missing Comment Block for Notification \(note.notificationId)")
-            return
-        }
-
-        // Setup: Properties
-        // Note: Approve Action is actually a synonym for 'Edit' (Based on Calypso's basecode)
-        //
-        cell.isReplyEnabled = UIDevice.isPad() && commentBlock.isActionOn(id: ReplyToCommentAction.actionIdentifier())
-        cell.isLikeEnabled = commentBlock.isActionEnabled(id: LikeCommentAction.actionIdentifier())
-        cell.isApproveEnabled = commentBlock.isActionEnabled(id: ApproveCommentAction.actionIdentifier())
-        cell.isTrashEnabled = commentBlock.isActionEnabled(id: TrashCommentAction.actionIdentifier())
-        cell.isSpamEnabled = commentBlock.isActionEnabled(id: MarkAsSpamAction.actionIdentifier())
-        cell.isEditEnabled = commentBlock.isActionOn(id: ApproveCommentAction.actionIdentifier())
-        cell.isLikeOn = commentBlock.isActionOn(id: LikeCommentAction.actionIdentifier())
-        cell.isApproveOn = commentBlock.isActionOn(id: ApproveCommentAction.actionIdentifier())
-
-        // Setup: Callbacks
-        cell.onReplyClick = { _ in
-            wpAssertionFailure("no longer used")
-        }
-
-        cell.onLikeClick = { [weak self] _ in
-            self?.likeCommentWithBlock(commentBlock)
-        }
-
-        cell.onUnlikeClick = { [weak self] _ in
-            self?.unlikeCommentWithBlock(commentBlock)
-        }
-
-        cell.onApproveClick = { [weak self] _ in
-            self?.approveCommentWithBlock(commentBlock)
-        }
-
-        cell.onUnapproveClick = { [weak self] _ in
-            self?.unapproveCommentWithBlock(commentBlock)
-        }
-
-        cell.onTrashClick = { [weak self] _ in
-            self?.trashCommentWithBlock(commentBlock)
-        }
-
-        cell.onSpamClick = { [weak self] _ in
-            self?.spamCommentWithBlock(commentBlock)
-        }
-
-        cell.onEditClick = { [weak self] _ in
-            self?.displayCommentEditorWithBlock(commentBlock)
-        }
     }
 
     func setupImageCell(_ cell: NoteBlockImageTableViewCell, blockGroup: FormattableContentGroup) {
@@ -864,165 +736,6 @@ private extension NotificationDetailsViewController {
         actionsService.unfollowSiteWithBlock(block)
         WPAppAnalytics.track(.notificationsSiteUnfollowAction, withBlogID: block.metaSiteID)
     }
-
-    func likeCommentWithBlock(_ block: FormattableCommentContent) {
-        guard let likeAction = block.action(id: LikeCommentAction.actionIdentifier()) else {
-            return
-        }
-        let actionContext = ActionContext(block: block)
-        likeAction.execute(context: actionContext)
-        WPAppAnalytics.track(.notificationsCommentLiked, withBlogID: block.metaSiteID)
-    }
-
-    func unlikeCommentWithBlock(_ block: FormattableCommentContent) {
-        guard let likeAction = block.action(id: LikeCommentAction.actionIdentifier()) else {
-            return
-        }
-        let actionContext = ActionContext(block: block)
-        likeAction.execute(context: actionContext)
-        WPAppAnalytics.track(.notificationsCommentUnliked, withBlogID: block.metaSiteID)
-    }
-
-    func approveCommentWithBlock(_ block: FormattableCommentContent) {
-        guard let approveAction = block.action(id: ApproveCommentAction.actionIdentifier()) else {
-            return
-        }
-
-        let actionContext = ActionContext(block: block)
-        approveAction.execute(context: actionContext)
-        WPAppAnalytics.track(.notificationsCommentApproved, withBlogID: block.metaSiteID)
-    }
-
-    func unapproveCommentWithBlock(_ block: FormattableCommentContent) {
-        guard let approveAction = block.action(id: ApproveCommentAction.actionIdentifier()) else {
-            return
-        }
-
-        let actionContext = ActionContext(block: block)
-        approveAction.execute(context: actionContext)
-        WPAppAnalytics.track(.notificationsCommentUnapproved, withBlogID: block.metaSiteID)
-    }
-
-    func spamCommentWithBlock(_ block: FormattableCommentContent) {
-        guard onDeletionRequestCallback != nil else {
-            // callback probably missing due to state restoration. at least by
-            // not crashing the user can tap the back button and try again
-            return
-        }
-
-        guard let spamAction = block.action(id: MarkAsSpamAction.actionIdentifier()) else {
-            return
-        }
-
-        let actionContext = ActionContext(block: block, completion: { [weak self] (request, success) in
-            WPAppAnalytics.track(.notificationsCommentFlaggedAsSpam, withBlogID: block.metaSiteID)
-            guard let request else {
-                return
-            }
-            self?.onDeletionRequestCallback?(request)
-        })
-
-        spamAction.execute(context: actionContext)
-
-        // We're thru
-        _ = navigationController?.popToRootViewController(animated: true)
-    }
-
-    func trashCommentWithBlock(_ block: FormattableCommentContent) {
-        guard onDeletionRequestCallback != nil else {
-            // callback probably missing due to state restoration. at least by
-            // not crashing the user can tap the back button and try again
-            return
-        }
-
-        guard let trashAction = block.action(id: TrashCommentAction.actionIdentifier()) else {
-            return
-        }
-
-        let actionContext = ActionContext(block: block, completion: { [weak self] (request, success) in
-            WPAppAnalytics.track(.notificationsCommentTrashed, withBlogID: block.metaSiteID)
-            guard let request else {
-                return
-            }
-            self?.onDeletionRequestCallback?(request)
-        })
-
-        trashAction.execute(context: actionContext)
-
-        // We're thru
-        _ = navigationController?.popToRootViewController(animated: true)
-    }
-
-    func updateCommentWithBlock(_ block: FormattableCommentContent, content: String) {
-        guard let editCommentAction = block.action(id: EditCommentAction.actionIdentifier()) else {
-            return
-        }
-
-        let generator = UINotificationFeedbackGenerator()
-        generator.prepare()
-        generator.notificationOccurred(.success)
-
-        let actionContext = ActionContext(block: block, content: content) { [weak self] (request, success) in
-            guard success == false else {
-                CommentAnalytics.trackCommentEdited(block: block)
-                return
-            }
-
-            generator.notificationOccurred(.error)
-            self?.displayCommentUpdateErrorWithBlock(block, content: content)
-        }
-
-        editCommentAction.execute(context: actionContext)
-    }
-}
-
-// MARK: - Editing Comments
-//
-private extension NotificationDetailsViewController {
-
-    func updateComment(with commentContent: FormattableCommentContent, content: String) {
-            self.updateCommentWithBlock(commentContent, content: content)
-    }
-
-    func displayCommentEditorWithBlock(_ block: FormattableCommentContent) {
-        let editViewController = EditCommentViewController.newEdit()
-        editViewController?.content = block.text
-        editViewController?.onCompletion = { (hasNewContent, newContent) in
-            self.dismiss(animated: true, completion: {
-                guard hasNewContent else {
-                    return
-                }
-                let newContent = newContent ?? ""
-                self.updateComment(with: block, content: newContent)
-            })
-        }
-
-        let navController = UINavigationController(rootViewController: editViewController!)
-        navController.modalPresentationStyle = .formSheet
-        navController.modalTransitionStyle = .coverVertical
-
-        CommentAnalytics.trackCommentEditorOpened(block: block)
-        present(navController, animated: true)
-    }
-
-    func displayCommentUpdateErrorWithBlock(_ block: FormattableCommentContent, content: String) {
-        let message     = NSLocalizedString("There has been an unexpected error while updating your comment",
-                                            comment: "Displayed whenever a Comment Update Fails")
-        let cancelTitle = NSLocalizedString("Give Up", comment: "Cancel")
-        let retryTitle  = NSLocalizedString("Try Again", comment: "Retry")
-
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alertController.addCancelActionWithTitle(cancelTitle) { action in
-            block.textOverride = nil
-            self.refreshInterface()
-        }
-        alertController.addDefaultActionWithTitle(retryTitle) { action in
-            self.updateComment(with: block, content: content)
-        }
-
-        // Note: This viewController might not be visible anymore
-        alertController.presentFromRootViewController()
-    }
 }
 
 // MARK: - Milestone notifications
@@ -1142,19 +855,19 @@ private extension NotificationDetailsViewController {
     }
 
     enum ContentMedia {
-        static let richBlockTypes           = Set(arrayLiteral: FormattableContentKind.text, FormattableContentKind.comment)
-        static let duration                 = TimeInterval(0.25)
-        static let delay                    = TimeInterval(0)
+        static let richBlockTypes = Set(arrayLiteral: FormattableContentKind.text, FormattableContentKind.comment)
+        static let duration = TimeInterval(0.25)
+        static let delay = TimeInterval(0)
         static let options: UIView.AnimationOptions = [.overrideInheritedDuration, .beginFromCurrentState]
     }
 
     enum Settings {
-        static let numberOfSections         = 1
-        static let estimatedRowHeight       = CGFloat(44)
+        static let numberOfSections = 1
+        static let estimatedRowHeight = CGFloat(44)
     }
 
     enum Assets {
-        static let confettiBackground       = "notifications-confetti-background"
+        static let confettiBackground = "notifications-confetti-background"
     }
 }
 
