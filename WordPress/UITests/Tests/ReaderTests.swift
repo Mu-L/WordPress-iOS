@@ -25,19 +25,19 @@ class ReaderTests: XCTestCase {
 }
 
 class ReaderTests_01: ReaderTests {
-    func _testViewPost() throws {
+    func testViewPost() throws {
         try openStream(.recent)
             .openLastPost()
             .verifyPostContentEquals(.expectedPostContent)
     }
 
-    func _testViewPostInSafari() throws {
+    func testViewPostInSafari() throws {
         try openStream(.recent)
             .openLastPostInSafari()
             .verifyPostContentEquals(.expectedPostContent)
     }
 
-    func _testDiscover() throws {
+    func testDiscover() throws {
         try openStream(.discover)
             .selectTag()
             .verifyTagLoaded()
