@@ -1,5 +1,3 @@
-import WordPressAuthenticator
-
 // MARK: - Tab Access Tracking
 
 fileprivate extension WPTab {
@@ -18,6 +16,10 @@ fileprivate extension WPTab {
 }
 
 extension WPTabBarController {
+    @objc class func readerLocalizedTitle() -> String {
+        SharedStrings.Reader.title
+    }
+
     func showReader(path: ReaderNavigationPath?) {
         showReaderTab()
         if let path {
@@ -26,7 +28,7 @@ extension WPTabBarController {
     }
 
     @objc public class var wpSigninDidFinishNotification: String {
-        WordPressAuthenticator.WPSigninDidFinishNotification
+        WordPressAuthenticationManager.WPSigninDidFinishNotification
     }
 
     private static let tabIndexToStatMap: [WPTab: WPAnalyticsStat] = [.mySites: .mySitesTabAccessed, .reader: .readerAccessed]

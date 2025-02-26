@@ -1,3 +1,6 @@
+import UIKit
+import AsyncImageKit
+
 class MediaHelper: NSObject {
 
     @objc(updateMedia:withRemoteMedia:)
@@ -79,7 +82,7 @@ extension Media {
             return configuration
         }())
         let authenticator = MediaRequestAuthenticator()
-        let host = MediaHost(with: blog)
+        let host = MediaHost(blog)
         let temporaryDirectory = Media.remoteDataTemporaryDirectoryURL
 
         var output: [URL] = []

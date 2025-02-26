@@ -5,7 +5,6 @@ import Foundation
 
     case createSheetShown
     case createSheetActionTapped
-    case createAnnouncementModalShown
 
     // Media Editor
     case mediaEditorShown
@@ -116,6 +115,8 @@ import Foundation
     case readerCommentTextHighlighted
     case readerCommentTextCopied
     case readerPostContextMenuButtonTapped
+    case readerAddSiteToFavoritesTapped
+    case readerButtonScrollToTopTapped
 
     // Stats - Empty Stats nudges
     case statsPublicizeNudgeShown
@@ -598,7 +599,6 @@ import Foundation
 
     // Reading preferences
     case readingPreferencesOpened
-    case readingPreferencesFeedbackTapped
     case readingPreferencesItemTapped
     case readingPreferencesSaved
     case readingPreferencesClosed
@@ -625,8 +625,6 @@ import Foundation
             return "create_sheet_shown"
         case .createSheetActionTapped:
             return "create_sheet_action_tapped"
-        case .createAnnouncementModalShown:
-            return "create_announcement_modal_shown"
         // Media Editor
         case .mediaEditorShown:
             return "media_editor_shown"
@@ -817,6 +815,10 @@ import Foundation
             return "reader_comment_text_copied"
         case .readerPostContextMenuButtonTapped:
             return "reader_post_context_menu_button_tapped"
+        case .readerAddSiteToFavoritesTapped:
+            return "reader_add_site_to_favorites_tapped"
+        case .readerButtonScrollToTopTapped:
+            return "reader_button_scroll_to_top_tapped"
 
         // Stats - Empty Stats nudges
         case .statsPublicizeNudgeShown:
@@ -1648,8 +1650,6 @@ import Foundation
         // Reading Preferences
         case .readingPreferencesOpened:
             return "reader_reading_preferences_opened"
-        case .readingPreferencesFeedbackTapped:
-            return "reader_reading_preferences_feedback_tapped"
         case .readingPreferencesItemTapped:
             return "reader_reading_preferences_item_tapped"
         case .readingPreferencesSaved:
@@ -1866,7 +1866,7 @@ extension WPAnalytics {
     @objc static func trackSettingsChange(_ page: String, fieldName: String, value: Any?) {
         var properties: [AnyHashable: Any] = ["page": page, "field_name": fieldName]
 
-        if let value = value {
+        if let value {
             let additionalProperties: [AnyHashable: Any] = ["value": value]
             properties.merge(additionalProperties) { (_, new) in new }
         }

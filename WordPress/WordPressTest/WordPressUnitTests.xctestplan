@@ -34,15 +34,15 @@
     {
       "target" : {
         "containerPath" : "container:..\/Modules",
-        "identifier" : "JetpackStatsWidgetsCoreTests",
-        "name" : "JetpackStatsWidgetsCoreTests"
+        "identifier" : "AsyncImageKitTests",
+        "name" : "AsyncImageKitTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:WordPress.xcodeproj",
-        "identifier" : "E16AB92914D978240047A2E5",
-        "name" : "WordPressTest"
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "DesignSystemTests",
+        "name" : "DesignSystemTests"
       }
     },
     {
@@ -54,9 +54,37 @@
     },
     {
       "target" : {
+        "containerPath" : "container:WordPress.xcodeproj",
+        "identifier" : "E16AB92914D978240047A2E5",
+        "name" : "WordPressTest"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:..\/Modules",
-        "identifier" : "DesignSystemTests",
-        "name" : "DesignSystemTests"
+        "identifier" : "WordPressCoreTests",
+        "name" : "WordPressCoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "WordPressUIUnitTests",
+        "name" : "WordPressUIUnitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "WordPressSharedTests",
+        "name" : "WordPressSharedTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "JetpackStatsWidgetsCoreTests",
+        "name" : "JetpackStatsWidgetsCoreTests"
       }
     },
     {
@@ -71,13 +99,6 @@
         "containerPath" : "container:..\/Modules",
         "identifier" : "WordPressSharedObjCTests",
         "name" : "WordPressSharedObjCTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/Modules",
-        "identifier" : "WordPressSharedTests",
-        "name" : "WordPressSharedTests"
       }
     }
   ],

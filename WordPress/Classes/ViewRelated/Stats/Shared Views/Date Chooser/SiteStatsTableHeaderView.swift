@@ -16,8 +16,6 @@ class SiteStatsTableHeaderView: UIView, NibLoadable, Accessible {
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timezoneLabel: UILabel!
-    @IBOutlet weak var backArrow: UIImageView!
-    @IBOutlet weak var forwardArrow: UIImageView!
     @IBOutlet weak var bottomSeparatorLine: UIView! {
         didSet {
             bottomSeparatorLine.isGhostableDisabled = true
@@ -79,8 +77,8 @@ class SiteStatsTableHeaderView: UIView, NibLoadable, Accessible {
                    mostRecentDate: Date? = nil) {
 
         self.date = {
-            if let date = date,
-                let mostRecentDate = mostRecentDate,
+            if let date,
+                let mostRecentDate,
                 mostRecentDate < date {
                 return mostRecentDate
             }
@@ -134,6 +132,9 @@ private extension SiteStatsTableHeaderView {
     func applyStyles() {
         backgroundColor = .secondarySystemGroupedBackground
 
+        backButton.configuration = makeNavigationButtonConfiguraiton(systemImage: "chevron.backward")
+        forwardButton.configuration = makeNavigationButtonConfiguraiton(systemImage: "chevron.forward")
+
         Style.configureLabelAsCellRowTitle(dateLabel)
         dateLabel.font = Metrics.dateLabelFont
         dateLabel.adjustsFontForContentSizeCategory = true
@@ -151,6 +152,14 @@ private extension SiteStatsTableHeaderView {
         bottomSeparatorLine.backgroundColor = .separator
     }
 
+    private func makeNavigationButtonConfiguraiton(systemImage: String) -> UIButton.Configuration {
+        var configuration = UIButton.Configuration.plain()
+        configuration.buttonSize = .small
+        configuration.baseForegroundColor = .label
+        configuration.image = UIImage(systemName: systemImage)
+        return configuration
+    }
+
     func displayDate() -> String? {
         guard let components = displayDateComponents() else {
             return nil
@@ -158,7 +167,7 @@ private extension SiteStatsTableHeaderView {
 
         let (fromDate, toDate) = components
 
-        if let toDate = toDate {
+        if let toDate {
             return "\(fromDate) - \(toDate)"
         } else {
             return "\(fromDate)"
@@ -172,7 +181,7 @@ private extension SiteStatsTableHeaderView {
 
         let (fromDate, toDate) = components
 
-        if let toDate = toDate {
+        if let toDate {
             let format = NSLocalizedString("Current period: %@ to %@", comment: "Week Period Accessibility label. Prefix the current selected period. Ex. Current period: Jan 6 to Jan 12.")
             return .localizedStringWithFormat(format, fromDate, toDate)
         } else {
@@ -183,7 +192,7 @@ private extension SiteStatsTableHeaderView {
 
     /// Returns the formatted dates for the current period.
     func displayDateComponents() -> (fromDate: String, toDate: String?)? {
-        guard let date = date, let period = period else {
+        guard let date, let period else {
             return nil
         }
 
@@ -239,7 +248,7 @@ private extension SiteStatsTableHeaderView {
             return
         }
 
-        guard let date = date, let period = period else {
+        guard let date, let period else {
             return
         }
 
@@ -258,23 +267,16 @@ private extension SiteStatsTableHeaderView {
             return
         }
 
-        guard let date = date, let period = period else {
+        guard let date, let period else {
             forwardButton.isEnabled = false
             backButton.isEnabled = false
-            updateArrowStates()
             return
         }
 
         let helper = StatsPeriodHelper()
         forwardButton.isEnabled = helper.dateAvailableAfterDate(date, period: period, mostRecentDate: mostRecentDate)
         backButton.isEnabled = helper.dateAvailableBeforeDate(date, period: period, backLimit: backLimit, mostRecentDate: mostRecentDate)
-        updateArrowStates()
         prepareForVoiceOver()
-    }
-
-    func updateArrowStates() {
-        forwardArrow.image = Style.imageForGridiconType(.chevronRight, withTint: (forwardButton.isEnabled ? .darkGrey : .grey))
-        backArrow.image = Style.imageForGridiconType(.chevronLeft, withTint: (backButton.isEnabled ? .darkGrey : .grey))
     }
 
     func postAccessibilityPeriodLabel() {
@@ -299,7 +301,7 @@ extension SiteStatsTableHeaderView: StatsBarChartViewDelegate {
     func statsBarChartTabSelected(_ tabIndex: Int) {}
 
     func statsBarChartValueSelected(_ statsBarChartView: StatsBarChartView, entryIndex: Int, entryCount: Int) {
-        guard let period = period, entryCount > 0, entryCount <= SiteStatsTableHeaderView.defaultPeriodCount else {
+        guard let period, entryCount > 0, entryCount <= SiteStatsTableHeaderView.defaultPeriodCount else {
             return
         }
 

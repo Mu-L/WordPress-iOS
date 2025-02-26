@@ -246,7 +246,7 @@ open class FancyAlertViewController: UIViewController {
 
     private func updateViewConfiguration() {
         guard isViewLoaded else { return }
-        guard let configuration = configuration else { return }
+        guard let configuration else { return }
 
         buttonHandlers.removeAll()
 
@@ -349,7 +349,7 @@ open class FancyAlertViewController: UIViewController {
     }
 
     private func update(_ button: UIButton, with buttonConfig: Config.ButtonConfig?) {
-        guard let buttonConfig = buttonConfig else {
+        guard let buttonConfig else {
             button.isHiddenInStackView = true
             return
         }
@@ -361,7 +361,7 @@ open class FancyAlertViewController: UIViewController {
     }
 
     private func updateBottomSwitch(with config: Config.SwitchConfig?) {
-        guard let config = config else {
+        guard let config else {
             alertView.bottomSwitchStackView.isHiddenInStackView = true
             return
         }
@@ -409,7 +409,7 @@ open class FancyAlertViewController: UIViewController {
 
     @objc func fadeAllViews(visible: Bool, alongside animation: ((FancyAlertViewController) -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
         UIView.animate(withDuration: Constants.fadeAnimationDuration, animations: {
-            self.alertView.contentViews.forEach { $0.alpha = (visible) ? UIKitConstants.alphaFull : UIKitConstants.alphaZero }
+            self.alertView.contentViews.forEach { $0.alpha = (visible) ? 1 : 0 }
             animation?(self)
         }, completion: completion)
     }

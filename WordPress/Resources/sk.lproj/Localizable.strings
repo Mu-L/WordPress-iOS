@@ -1,4 +1,4 @@
-/* Translation-Revision-Date: 2024-03-17 10:29:09+0000 */
+/* Translation-Revision-Date: 2025-01-08 15:01:32+0000 */
 /* Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2); */
 /* Generator: GlotPress/4.0.1 */
 /* Language: sk */
@@ -8,9 +8,6 @@
 
 /* Message of Delete Site confirmation alert; substitution is site's host. */
 "\nTo confirm, please re-enter your site's address before deleting.\n\n" = "\nPre potvrdenie vymazania, znovu zadajte adresu vašej webovej stránky\n\n";
-
-/* Title for the lazy load images setting */
-"\"Lazy-load\" images" = "\"Pomaly načítavajúce sa\" obrázky ";
 
 /* Title of a list of buttons used for sharing content to other services. These buttons appear when the user taps a `More` button. */
 "\"More\" Button" = "Tlačidlo \"Viac\"";
@@ -48,9 +45,6 @@
 
 /* Number of posts displayed in Posting Activity when a day is selected. %d will contain the actual number (plural). */
 "%d Posts" = "%d článkov";
-
-/* The number of connected accounts on a third party sharing service connected to the user's blog. The '%d' is a placeholder for the number of accounts. */
-"%d accounts" = "%d pripojených účtov";
 
 /* Age between dates over one day.
    Number of days */
@@ -483,9 +477,7 @@
 /* Alert dismissal title
    Button label that dismisses the qr log in flow and returns the user back to the previous screen
    Button title, cancel fixing all threats
-   Button title. Cancels a pending action.
    Button title. Tapping it cancels the login flow.
-   Cancel a prompt
    Cancel Action
    Cancel action on share extension editor screen.
    Cancel action on the app extension category picker screen.
@@ -494,7 +486,6 @@
    Cancel action on the app extension tags picker screen.
    Cancel action title
    Cancel button
-   Cancel button for alert
    Cancel button label
    Cancel button title for the warning shown to the user when he refuses to re-login when the authToken is missing.
    Cancel button.
@@ -502,7 +493,6 @@
    Cancel copying link to comment button title
    Cancel editing an image
    Cancel Insight management action sheet.
-   Cancel prompt for user information.
    Cancel registering a domain
    Cancel removing a plugin
    Cancel site creation
@@ -512,13 +502,11 @@
    Cancel. Action.
    Cancels an Action
    Cancels an alert.
-   Cancels the mark all as read action.
    Editing GIF alert cancel action button.
    Menus cancel button for deleting a menu.
    Menus cancel button within text bar while editing items.
    Menus: Cancel button title for canceling an edited menu item.
    Option to cancel the email app selection when logging in with magic links
-   The title of a cancel button.
    Title for cancel action. Dismisses the action sheet.
    Title of a button that dismisses the permissions alert
    Title. Title of a cancel button. Tapping disnisses an alert.
@@ -539,9 +527,6 @@
 
 /* Share extension dialog dismiss button label - displayed when user is missing a login token. */
 "Cancel sharing" = "Zdieľanie zrušenia";
-
-/* The action was canceled */
-"Canceled" = "Zrušené";
 
 /* A short message that informs the user the share extension is being canceled. */
 "Canceling..." = "Ruší sa...";
@@ -605,14 +590,8 @@
 /* No comment provided by engineer. */
 "Clear Old Activity Logs" = "Vyčistiť staré záznamy o činnosti";
 
-/* Title of an alert prompt. */
-"Clear Search History" = "Zmazať históriu vyhľadávania";
-
 /* Label for button that clears the spotlight index on device. */
 "Clear Spotlight Index" = "Vyčistiť index Spotlight";
-
-/* Title of a button. */
-"Clear search history" = "Zmazať históriu vyhľadávania";
 
 /* Label for size of media while it's being cleared. */
 "Clearing..." = "Čistí sa...";
@@ -688,9 +667,6 @@
 
 /* Setting: WordPress.com Community */
 "Community" = "Komunita";
-
-/* The action is completed */
-"Completed" = "Dokončené";
 
 /* Section title for the configure table section in the blog details screen */
 "Configure" = "Konfigurovať";
@@ -831,9 +807,6 @@
 /* Error message when tag loading failed */
 "Couldn't load tags. Tap to retry." = "Značky sa nepodarilo načítať. Ťuknutím to zopakujte.";
 
-/* The title for an alert that says to the user that the featured image he selected couldn't be uploaded. */
-"Couldn't upload the featured image" = "Nepodarilo sa nahrať odporúčaný obrázok";
-
 /* Period Stats 'Countries' header */
 "Countries" = "Krajiny";
 
@@ -915,7 +888,6 @@
 /* Delete
    Delete button title for the warning shown to the user when he refuses to re-login when the authToken is missing.
    Title for button that permanently deletes a media item (photo / video)
-   Title of a delete button
    Title of the trash confirmation alert. */
 "Delete" = "Odstrániť";
 
@@ -994,8 +966,7 @@
    Title for the Discussion Settings Screen */
 "Discussion" = "Diskusia";
 
-/* Accessibility label for button to dismiss a bottom sheet
-   Accessibility label for the transparent space above the login dialog which acts as a button to dismiss the dialog.
+/* Accessibility label for the transparent space above the login dialog which acts as a button to dismiss the dialog.
    Accessibility label for the transparent space above the signup dialog which acts as a button to dismiss the dialog.
    Dismiss a view. Verb */
 "Dismiss" = "Zrušiť";
@@ -1016,9 +987,7 @@
    Done button title
    Done editing an image
    Done. Action.
-   Label for confirm feature image of a post
    Label for Done button
-   Label on button to dismiss revisions view
    Menu button title for finishing editing the Menu name.
    Tapping a button with this label allows the user to exit the Site Creation flow
    Title for a Done button.
@@ -1134,7 +1103,6 @@
 "Enter your password instead." = "Vpíšte svoje heslo.";
 
 /* Generic error alert title
-   Generic error.
    Generic popup title for any type of error. */
 "Error" = "Chyba";
 
@@ -1220,8 +1188,7 @@
 /* Section title for the external table section in the blog details screen */
 "External" = "Externý";
 
-/* Status for Media object that is failed upload or export.
-   The action failed */
+/* Status for Media object that is failed upload or export. */
 "Failed" = "Neúspešné";
 
 /* Error message to show to use when media insertion on a post fails */
@@ -1233,12 +1200,8 @@
 /* Header of section in Plugin Directory showing featured plugins */
 "Featured" = "Odporúčané";
 
-/* Label for the Featured Image area in post settings.
-   Title for the Featured Image view */
+/* Label for the Featured Image area in post settings. */
 "Featured Image" = "Ilustračný obrázok";
-
-/* No comment provided by engineer. */
-"Featured Image did not load" = "Ilustračný obrázok sa nenačítal";
 
 /* Text displayed while fetching themes */
 "Fetching Themes..." = "Načítavanie tém...";
@@ -1442,9 +1405,6 @@
 /* Hint for image title on image settings. */
 "Image title" = "Nadpis obrázka";
 
-/* Footer for the Serve images from our servers setting */
-"Improve your site's speed by only loading images visible on the screen. New images will load just before they scroll into view. This prevents viewers from having to download all the images on a page all at once, even ones they can't see." = "Zlepšite rýchlosť webovej stránky jediným načítaním obrázkov viditeľných na obrazovke. Nové obrázky sa načítajú skôr ako sa zobrazia. Vďaka tomuto sa zamedzí sťahovanie všetkých obrázkov naraz, dokonca aj tie, ktoré pozorovatelia nevidia.";
-
 /* Explain what is the purpose of the tagline */
 "In a few words, explain what this site is about." = "Pár slovami povedzte niečo o tejto stránke.";
 
@@ -1596,8 +1556,7 @@
 
 /* A button title.
    Link to cookie policy
-   Menu title to show the prompts feature introduction modal.
-   Read more button title shown in alert announcing new Create Button feature. */
+   Menu title to show the prompts feature introduction modal. */
 "Learn more" = "Zistiť viac";
 
 /* Writing, Date and Time Settings: Learn more about date and time settings footer text */
@@ -1697,9 +1656,6 @@
 /* Messaged displayed when fetching plugins. */
 "Loading plugins..." = "Nahrávanie pluginov ... ";
 
-/* A short message to inform the user the requested stream is being loaded. */
-"Loading stream..." = "Načítava sa vysielanie...";
-
 /* Loading tags
    Loading. Verb
    Suggestions loading message
@@ -1764,9 +1720,7 @@
 "Main Navigation" = "Hlavná navigácia";
 
 /* Button leading to a screen where users can manage their installed plugins
-   Page title for the screen to manage your list of followed sites.
    Screen title, where users can see all their installed plugins.
-   Title for the Reader Manage screen.
    Verb. Text label. Tapping displays a screen where the user can configure 'share' buttons for third-party services.
    Verb. Title of the screen for managing sharing buttons and settings related to sharing. */
 "Manage" = "Spravovať";
@@ -1866,9 +1820,7 @@
 "Months and Years" = "Mesiace a roky";
 
 /* Accessibility label for more button in dashboard quick start card.
-   Accessibility label for the More button in Post List (compact view).
    Accessibility label for the More button on formatting toolbar.
-   Accessibility label for the More button on Reader's post details
    Action button to display more available options */
 "More" = "Viac";
 
@@ -2105,25 +2057,14 @@
 /* Discoverability title for numbered list keyboard shortcut. */
 "Numbered List" = "Očíslovaný zoznam";
 
-/* A button title for closing the dialog.
-   A button title.
-   Accept Action
-   Alert dismissal title
-   Button title. Acknowledges a prompt.
+/* Alert dismissal title
    Button title. An acknowledgement of the message displayed in a prompt.
-   Default action
    Dismisses the alert
-   Marks all notifications as read.
    Menus: button title for finishing editing of a menu item.
-   OK
-   OK button for alert
    Ok button for dismissing alert helping users understand their site address
    OK button title for the warning shown to the user when the app realizes there should be an auth token but there isn't one.
    OK Button title shown in alert informing users about the Reader Save for Later feature.
-   Submit button on prompt for user information.
-   Title of a button that dismisses a prompt
-   Title of an OK button. Pressing the button acknowledges and dismisses a prompt.
-   Title of primary button on alert prompting verify their accounts while attempting to publish */
+   Title of a button that dismisses a prompt */
 "OK" = "OK";
 
 /* Disabled */
@@ -2295,9 +2236,6 @@
 /* Register Domain - Domain contact information validation error message for an input field */
 "Please enter a valid Email" = "Prosím zadajte platný e-mail";
 
-/* Title of a prompt. */
-"Please enter a valid URL" = "Prosím zadajte správnu URL adresu";
-
 /* Register Domain - Domain contact information validation error message for an input field */
 "Please enter a valid address" = "Zadajte platnú e-mailovú adresu";
 
@@ -2318,6 +2256,9 @@
 
 /* No comment provided by engineer. */
 "Please try entering your login details again." = "Skúste zadať vaše prihlasovacie údaje ešte raz.";
+
+/* Asks the user to wait until the currently running fetch request completes. */
+"Please wait until the current fetch completes." = "Počkajte, kým sa dokončí načítavanie.";
 
 /* Link to a plugin's home page */
 "Plugin Homepage" = "Domovská stránka pluginu";
@@ -2373,7 +2314,6 @@
 /* All Time Stats 'Posts' label
    Insights 'Posts' header
    Noun. Title. Links to the blog's Posts screen.
-   Title of a Reader tab showing Posts matching a user's search query
    Title of the screen showing the list of posts for a blog. */
 "Posts" = "Články";
 
@@ -2395,9 +2335,6 @@
 
 /* Title of alert when attempting to delete site with purchases */
 "Premium Upgrades" = "Prémiová aktualizácia";
-
-/* Label to show while converting and/or resizing media to send to server */
-"Preparing..." = "Pripravuje sa...";
 
 /* Displays the Post Preview Interface
    Title for button to preview a selected layout
@@ -2477,10 +2414,7 @@
 
 /* Name of the Reader feature.
    Noun. Name of the Reader feature
-   The accessibility value of the Reader tab.
-   The accessibility value of the reader tab.
-   The default title of the Reader
-   Title of the 'Reader' tab - used for spotlight indexing on iOS. */
+   The accessibility value of the Reader tab. */
 "Reader" = "Čítačka";
 
 /* Title for a list of ssettings for editing a blog's Reblog and Like settings. */
@@ -2520,17 +2454,12 @@
 "Related Posts" = "Súvisiace články";
 
 /* Alert button to confirm a plugin to be removed
-   Label for the Remove Feature Image icon. Tapping will show a confirmation screen for removing the feature image from the post.
-   Remove Action
-   Remove an image/posts/etc */
+   Remove Action */
 "Remove" = "Odstrániť";
 
 /* Remove Person Alert Title
    Remove User. Verb */
 "Remove %@" = "Odstrániť %@";
-
-/* Accessibility  Label for the Remove Feature Image icon. Tapping will show a confirmation screen for removing the feature image from the post. */
-"Remove Featured Image" = "Odstrániť ilustračný obrázok";
 
 /* Label action for removing a link from the editor */
 "Remove Link" = "Odstrániť odkaz";
@@ -2553,14 +2482,8 @@
 /* User action to remove image. */
 "Remove image" = "Odstrániť obrázok";
 
-/* Prompt when removing a featured image from a post */
-"Remove this Featured Image?" = "Odstrániť tento prezentačný obrázok?";
-
 /* User action to remove video. */
 "Remove video" = "Odstrániť video";
-
-/* Label indicating a post has been removed from Saved For Later */
-"Removed" = "Odstránený";
 
 /* VoiceOver accessibility hint, informing the user the button can be used to reply to a comment. */
 "Replies to a comment." = "Odpovedať na komentár.";
@@ -2695,15 +2618,11 @@
    Title of the scheduled filter. This filter shows a list of posts that are scheduled to be published at a future date. */
 "Scheduled" = "Naplánované";
 
-/* Title of Stats section that shows search engine referrer traffic.
-   Title of the Reader's search feature */
+/* Title of Stats section that shows search engine referrer traffic. */
 "Search" = "Hľadať";
 
 /* Period Stats 'Search Terms' header */
 "Search Terms" = "Hľadané termíny";
-
-/* Placeholder text for the Reader search feature. */
-"Search WordPress" = "Prehľadávať WordPress";
 
 /* Menus search bar placeholder text. */
 "Search..." = "Hľadať...";
@@ -2790,12 +2709,7 @@
 /* Message to show when setting save failed */
 "Settings update failed" = "Aktualizácia nastavení zlyhala";
 
-/* Accessibility label for share buttons in nav bars
-   Button label to share a web page
-   Shares the comment URL
-   Spoken accessibility label
-   Title for a button that allows the user to share their answer to the prompt.
-   Verb. Title of a button. Pressing lets the user share a post to others. */
+/* Spoken accessibility label */
 "Share" = "Zdieľať";
 
 /* Informational text for Collect Information setting */
@@ -2837,9 +2751,6 @@
 
 /* Help text when editing web address */
 "Shown publicly when you comment on blogs." = "Zobraziť verejne keď komentujete blogy.";
-
-/* Accessibility hint for the More button on Reader's post details */
-"Shows more options." = "Zobraziť viac možností.";
 
 /* When social login fails, this button offers to let them signup for a new WordPress.com account */
 "Sign up" = "Registrácia";
@@ -2889,8 +2800,7 @@
 /* Label for the slug field. Should be the same as WP core. */
 "Slug" = "Slug";
 
-/* A generic error message
-   Title for a label that appears when the scan failed
+/* Title for a label that appears when the scan failed
    Title for the error view when the scan start has failed */
 "Something went wrong" = "Niečo sa pokazilo";
 
@@ -3144,8 +3054,7 @@
 /* No comment provided by engineer. */
 "That username is not allowed." = "Toto používateľské meno nie je povolené.";
 
-/* Error message shown when a media upload fails because the user isn't connected to the Internet.
-   Message of error prompt shown when a user tries to perform an action without an internet connection. */
+/* Error message shown when a media upload fails because the user isn't connected to the Internet. */
 "The Internet connection appears to be offline." = "Zdá sa, že internetové pripojenie je vypnuté.";
 
 /* Error message describing a problem with a URL. */
@@ -3502,8 +3411,7 @@
    Button title. Reverts a comment moderation action.
    Button title. Reverts the previous notification operation
    Revert an operation
-   Revert enabling notification after successfully subcribing to the comments for the post.
-   Undo action */
+   Revert enabling notification after successfully subcribing to the comments for the post. */
 "Undo" = "Zrušiť";
 
 /* Label for size of media when it's not possible to calculate it. */
@@ -3561,9 +3469,6 @@
 /* System notification displayed to the user when media files have failed to upload. */
 "Upload failed" = "Nahrávanie zlyhalo";
 
-/* Description to show on post setting for a featured image that failed to upload. */
-"Upload failed. Tap for options." = "Nahrávanie zlyhalo. Ťuknite pre možnosti.";
-
 /* Label for the date a media asset (image / video) was uploaded
    Status for Media object that is uploaded and sync with server. */
 "Uploaded" = "Nahraté";
@@ -3590,9 +3495,6 @@
 /* Title for alert when trying to save/exit a post before media upload process is complete. */
 "Uploading media" = "Nahrávanie súborov";
 
-/* Label to show while uploading media to server */
-"Uploading..." = "Nahráva sa...";
-
 /* Use the current image */
 "Use" = "Použiť";
 
@@ -3613,7 +3515,8 @@
 /* No comment provided by engineer. */
 "Username must be at least 4 characters." = "Používateľské meno musí obsahovať najmenej 4 znaky.";
 
-/* Blog Users */
+/* Blog Users
+   Noun. Title. Links to the user management feature. */
 "Users" = "Používatelia";
 
 /* two factor code placeholder */
@@ -3681,9 +3584,6 @@
 
 /* The visibility settings of the post. Should be the same as in core WP. */
 "Visibility" = "Viditeľnosť";
-
-/* An option to visit the site to which a specific post belongs */
-"Visit" = "Návšteva";
 
 /* A call to action to visit the specified blog.  The '%@' characters are a placholder for the blog name. */
 "Visit %@" = "Navštívte %@";
@@ -3849,9 +3749,6 @@
 /* Link to a WordPress.org page for the plugin */
 "WordPress.org Plugin Page" = "WordPress.org Plugin stránka";
 
-/* Asks the user if they would like to clear their search history. */
-"Would you like to clear your search history?" = "Chcete vymazať históriu vyhľadávania?";
-
 /* Second line of Remove user/follower/viewer warning in confirmation dialog. */
 "Would you still like to remove this person?" = "Stále si prajete odstrániť tohto používateľa?";
 
@@ -3865,8 +3762,7 @@
 /* Title for the writing section in site settings screen */
 "Writing" = "Písanie";
 
-/* Button title. Confirms that the user wants to proceed with a pending action.
-   Label for a button that clears all old activity logs
+/* Label for a button that clears all old activity logs
    Yes */
 "Yes" = "Áno";
 

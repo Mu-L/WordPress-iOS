@@ -1,11 +1,14 @@
 import UIKit
+import AsyncImageKit
 import Gutenberg
 import Aztec
 import WordPressFlux
 import WordPressShared
+import WordPressUI
 import React
 import AutomatticTracks
 import Combine
+import ImagePlayground
 
 class GutenbergViewController: UIViewController, PostEditor, FeaturedImageDelegate, PublishingEditor {
     let errorDomain: String = "GutenbergViewController.errorDomain"
@@ -89,7 +92,7 @@ class GutenbergViewController: UIViewController, PostEditor, FeaturedImageDelega
 
     var editorSession: PostEditorAnalyticsSession
 
-    var onClose: ((Bool) -> Void)?
+    var onClose: (() -> Void)?
 
     var postIsReblogged: Bool = false
 
@@ -395,13 +398,13 @@ class GutenbergViewController: UIViewController, PostEditor, FeaturedImageDelega
 
     private func setupKeyboardObservers() {
         keyboardShowObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { [weak self] (notification) in
-            if let self = self, let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            if let self, let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                 self.keyboardFrame = keyboardRect
                 self.updateConstraintsToAvoidKeyboard(frame: keyboardRect)
             }
         }
         keyboardHideObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { [weak self] (notification) in
-            if let self = self, let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            if let self, let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                 self.keyboardFrame = keyboardRect
                 self.updateConstraintsToAvoidKeyboard(frame: keyboardRect)
             }
@@ -409,10 +412,10 @@ class GutenbergViewController: UIViewController, PostEditor, FeaturedImageDelega
     }
 
     private func tearDownKeyboardObservers() {
-        if let keyboardShowObserver = keyboardShowObserver {
+        if let keyboardShowObserver {
             NotificationCenter.default.removeObserver(keyboardShowObserver)
         }
-        if let keyboardHideObserver = keyboardHideObserver {
+        if let keyboardHideObserver {
             NotificationCenter.default.removeObserver(keyboardHideObserver)
         }
     }
@@ -613,6 +616,8 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
             externalMediaPicker.presentStockPhotoPicker(origin: self, post: post, multipleSelection: allowMultipleSelection, callback: callback)
         case .tenor:
             externalMediaPicker.presentTenorPicker(origin: self, post: post, multipleSelection: allowMultipleSelection, callback: callback)
+        case .imagePlayground:
+            externalMediaPicker.presentImagePlayground(origin: self, post: post, callback: callback)
         case .otherApps, .allFiles:
             filesAppMediaPicker.presentPicker(origin: self, filters: filter, allowedTypesOnBlog: post.blog.allowedTypeIdentifiers, multipleSelection: allowMultipleSelection, callback: callback)
         default: break
@@ -813,7 +818,7 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
     func editorHasContent(title: String, content: String) -> Bool {
         let hasTitle = !title.isEmpty
         var hasContent = !content.isEmpty
-        if let contentInfo = contentInfo {
+        if let contentInfo {
             let isEmpty = contentInfo.blockCount == 0
             let isOneEmptyParagraph = (contentInfo.blockCount == 1 && contentInfo.paragraphCount == 1 && contentInfo.characterCount == 0)
             hasContent = !(isEmpty || isOneEmptyParagraph)
@@ -894,19 +899,9 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
     }
 
     func gutenbergDidRequestImagePreview(with fullSizeUrl: URL, thumbUrl: URL?) {
-        navigationController?.definesPresentationContext = true
-
-        let controller: WPImageViewController
-        if let image = AnimatedImageCache.shared.cachedStaticImage(url: fullSizeUrl) {
-            controller = WPImageViewController(image: image)
-        } else {
-            controller = WPImageViewController(externalMediaURL: fullSizeUrl)
-        }
-
-        controller.post = self.post
-        controller.modalTransitionStyle = .crossDissolve
-        controller.modalPresentationStyle = .overCurrentContext
-        self.present(controller, animated: true)
+        let lightboxVC = LightboxViewController(sourceURL: fullSizeUrl, host: MediaHost(post))
+        lightboxVC.configureZoomTransition()
+        present(lightboxVC, animated: true)
     }
 
     func gutenbergDidRequestUnsupportedBlockFallback(for block: Block) {
@@ -937,7 +932,7 @@ extension GutenbergViewController: GutenbergBridgeDelegate {
     func updateConstraintsToAvoidKeyboard(frame: CGRect) {
         keyboardFrame = frame
         let minimumKeyboardHeight = CGFloat(50)
-        guard let suggestionViewBottomConstraint = suggestionViewBottomConstraint else {
+        guard let suggestionViewBottomConstraint else {
             return
         }
 
@@ -1132,10 +1127,11 @@ extension GutenbergViewController: GutenbergBridgeDataSource {
     func gutenbergMediaSources() -> [Gutenberg.MediaSource] {
         post.managedObjectContext?.performAndWait {
             [
+                MediaPickerMenu.isImagePlaygroundAvailable ? .imagePlayground : nil,
                 post.blog.supports(.stockPhotos) ? .stockPhotos : nil,
                 post.blog.supports(.tenor) ? .tenor : nil,
                 .otherApps,
-                .allFiles,
+                .allFiles
             ].compactMap { $0 }
         } ?? []
     }
@@ -1293,6 +1289,7 @@ extension GutenbergViewController: PostEditorNavigationBarManagerDelegate {
 extension Gutenberg.MediaSource {
     static let stockPhotos = Gutenberg.MediaSource(id: "wpios-stock-photo-library", label: .freePhotosLibrary, types: [.image])
     static let otherApps = Gutenberg.MediaSource(id: "wpios-other-files", label: .otherApps, types: [.image, .video, .audio, .other])
+    static let imagePlayground = Gutenberg.MediaSource(id: "wpios-image-playground", label: MediaPickerMenu.imagePlaygroundLocalizedTitle, types: [.image])
     static let allFiles = Gutenberg.MediaSource(id: "wpios-all-files", label: .otherApps, types: [.any])
     static let tenor = Gutenberg.MediaSource(id: "wpios-tenor", label: .tenor, types: [.image])
 }

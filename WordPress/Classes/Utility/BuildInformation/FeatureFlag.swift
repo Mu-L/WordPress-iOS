@@ -9,13 +9,14 @@ enum FeatureFlag: Int, CaseIterable {
     case commentModerationUpdate
     case compliancePopover
     case googleDomainsCard
-    case autoSaveDrafts
     case voiceToContent
     case authenticateUsingApplicationPassword
-    case tipKit
     case newGutenberg
     case newGutenbergThemeStyles
     case newGutenbergPlugins
+    case selfHostedSiteUserManagement
+    case readerGutenbergCommentComposer
+    case pluginManagementOverhaul
 
     /// Returns a boolean indicating if the feature is enabled
     var enabled: Bool {
@@ -38,19 +39,21 @@ enum FeatureFlag: Int, CaseIterable {
             return true
         case .googleDomainsCard:
             return false
-        case .autoSaveDrafts:
-            return false
         case .voiceToContent:
             return AppConfiguration.isJetpack && BuildConfiguration.current ~= [.localDeveloper, .a8cBranchTest]
         case .authenticateUsingApplicationPassword:
             return false
-        case .tipKit:
-            return true
         case .newGutenberg:
             return false
         case .newGutenbergThemeStyles:
             return false
         case .newGutenbergPlugins:
+            return false
+        case .selfHostedSiteUserManagement:
+            return false
+        case .readerGutenbergCommentComposer:
+            return false
+        case .pluginManagementOverhaul:
             return false
         }
     }
@@ -81,13 +84,14 @@ extension FeatureFlag {
         case .commentModerationUpdate: "Comments Moderation Update"
         case .compliancePopover: "Compliance Popover"
         case .googleDomainsCard: "Google Domains Promotional Card"
-        case .autoSaveDrafts: "Autosave Drafts"
         case .voiceToContent: "Voice to Content"
         case .authenticateUsingApplicationPassword: "Application Passwords for self-hosted sites"
-        case .tipKit: "TipKit"
         case .newGutenberg: "Experimental Block Editor"
         case .newGutenbergThemeStyles: "Experimental Block Editor Styles"
         case .newGutenbergPlugins: "Experimental Block Editor Plugins"
+        case .selfHostedSiteUserManagement: "Self-hosted Site User Management"
+        case .pluginManagementOverhaul: "Plugin Management Overhaul"
+        case .readerGutenbergCommentComposer: "Gutenberg Comment Composer"
         }
     }
 }

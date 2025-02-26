@@ -15,7 +15,6 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
 
     /// The navigation controller for the main content when shown using tabs.
     private var mainNavigationController = UINavigationController()
-    private var latestContentVC: UIViewController?
 
     private var viewContext: NSManagedObjectContext {
         ContextManager.shared.mainContext
@@ -37,13 +36,17 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
 
     // TODO: (reader) update to allow seamless transitions between split view and tabs
     @objc func prepareForTabBarPresentation() -> UINavigationController {
+        guard AccountHelper.isDotcomAvailable() else {
+            return UINavigationController(rootViewController: ReaderLoggedOutViewController())
+        }
+
         sidebar.onViewDidLoad = { [weak self] in
             self?.showInitialSelection()
         }
         sidebarViewModel.isCompact = true
         sidebarViewModel.restoreSelection(defaultValue: nil)
-        mainNavigationController.navigationBar.prefersLargeTitles = true
         mainNavigationController = UINavigationController(rootViewController: sidebar) // Loads sidebar lazily
+        mainNavigationController.navigationBar.prefersLargeTitles = true
         sidebar.navigationItem.backButtonDisplayMode = .minimal
         return mainNavigationController
     }
@@ -54,8 +57,8 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
         // -warning: List occasionally sets the selection to `nil` when switching items.
         selectionObserver = sidebarViewModel.$selection.compactMap { $0 }
             .removeDuplicates { [weak self] in
-                guard $0 == $1 else { return false }
-                self?.popMainNavigationController()
+                guard $0 == $1, let self, let splitViewController else { return false }
+                self.popMainNavigationController(in: splitViewController)
                 return true
             }
             .sink { [weak self] in self?.configure(for: $0) }
@@ -76,19 +79,14 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
         case .organization(let objectID):
             show(makeViewController(withTopicID: objectID))
         }
+
+        hideSupplementaryColumnIfNeeded()
     }
 
-    private func popMainNavigationController() {
-        if let splitViewController {
-            let secondaryVC = splitViewController.viewController(for: .secondary)
-            (secondaryVC as? UINavigationController)?.popToRootViewController(animated: true)
-            hideSupplementaryColumnIfNeeded()
-        } else {
-            if let latestContentVC {
-                // Return to the previous view controller preserving its state
-                mainNavigationController.pushViewController(latestContentVC, animated: true)
-            }
-        }
+    private func popMainNavigationController(in splitViewController: UISplitViewController) {
+        let secondaryVC = splitViewController.viewController(for: .secondary)
+        (secondaryVC as? UINavigationController)?.popToRootViewController(animated: true)
+        hideSupplementaryColumnIfNeeded()
     }
 
     private func hideSupplementaryColumnIfNeeded() {
@@ -124,7 +122,7 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
         case .saved:
             return ReaderStreamViewController.controllerForContentType(.saved)
         case .search:
-            return ReaderSearchViewController.controller(withSearchText: "")
+            return ReaderSearchViewController()
         }
     }
 
@@ -176,14 +174,15 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
     /// column (split view) or pushing to the navigation stack.
     private func show(_ viewController: UIViewController, isLargeTitle: Bool = false) {
         if let splitViewController {
+            (viewController as? ReaderStreamViewController)?.isNotificationsBarButtonEnabled = true
+
             let navigationVC = UINavigationController(rootViewController: viewController)
             if isLargeTitle {
                 navigationVC.navigationBar.prefersLargeTitles = true
             }
             splitViewController.setViewController(navigationVC, for: .secondary)
         } else {
-            latestContentVC = viewController
-            mainNavigationController.pushViewController(viewController, animated: true)
+            mainNavigationController.safePushViewController(viewController, animated: true)
         }
     }
 
@@ -193,9 +192,9 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
         if let splitViewController {
             let navigationVC = splitViewController.viewController(for: .secondary) as? UINavigationController
             wpAssert(navigationVC != nil)
-            navigationVC?.pushViewController(viewController, animated: true)
+            navigationVC?.safePushViewController(viewController, animated: true)
         } else {
-            mainNavigationController.pushViewController(viewController, animated: true)
+            mainNavigationController.safePushViewController(viewController, animated: true)
         }
     }
 
@@ -220,11 +219,9 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
         case .subscriptions:
             viewModel.selection = .allSubscriptions
         case let .post(postID, siteID, isFeed):
-            viewModel.selection = nil
-            show(ReaderDetailViewController.controllerWithPostID(NSNumber(value: postID), siteID: NSNumber(value: siteID), isFeed: isFeed))
+            push(ReaderDetailViewController.controllerWithPostID(NSNumber(value: postID), siteID: NSNumber(value: siteID), isFeed: isFeed))
         case let .postURL(url):
-            viewModel.selection = nil
-            show(ReaderDetailViewController.controllerWithPostURL(url))
+            push(ReaderDetailViewController.controllerWithPostURL(url))
         case let .topic(topic):
             viewModel.selection = nil
             show(ReaderStreamViewController.controllerWithTopic(topic))
@@ -240,5 +237,16 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
         if secondary.viewControllers.isEmpty {
             showInitialSelection()
         }
+    }
+}
+
+private extension UINavigationController {
+    // TODO: fix when stack trace becomes available
+    // A workaround for https://a8c.sentry.io/issues/3140539221.
+    func safePushViewController(_ viewController: UIViewController, animated: Bool) {
+        guard !children.contains(viewController) else {
+            return wpAssertionFailure("pushing the same view controller more than once", userInfo: ["viewController": "\(viewController)"])
+        }
+        pushViewController(viewController, animated: animated)
     }
 }

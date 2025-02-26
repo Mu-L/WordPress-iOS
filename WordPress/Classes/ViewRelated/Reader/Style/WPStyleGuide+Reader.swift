@@ -23,27 +23,6 @@ extension WPStyleGuide {
         return Cards.contentTextStyle
     }
 
-    // MARK: - No Followed Sites Error Text Attributes
-    @objc public class func noFollowedSitesErrorTitleAttributes() -> [NSAttributedString.Key: Any] {
-        let paragraphStyle = NSMutableParagraphStyle()
-
-        return [
-            .paragraphStyle: paragraphStyle,
-            .font: UIFont.preferredFont(forTextStyle: .title3).semibold(),
-        ]
-    }
-
-    @objc public class func noFollowedSitesErrorSubtitleAttributes() -> [NSAttributedString.Key: Any] {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-
-        return [
-            .paragraphStyle: paragraphStyle,
-            .font: UIFont.preferredFont(forTextStyle: .callout),
-            .foregroundColor: UIColor.secondaryLabel
-        ]
-    }
-
     // MARK: - Apply Card Styles
 
     public class func applyReaderCardAttributionLabelStyle(_ label: UILabel) {
@@ -55,18 +34,9 @@ extension WPStyleGuide {
 
     // MARK: - Apply Stream Header Styles
 
-    @objc public class func applyReaderStreamHeaderTitleStyle(_ label: UILabel, usesNewStyle: Bool = false) {
-        if usesNewStyle {
-            label.font = WPStyleGuide.fontForTextStyle(.title1, fontWeight: .bold)
-        } else {
-            label.font = WPStyleGuide.serifFontForTextStyle(.title2, fontWeight: .bold)
-        }
+    @objc public class func applyReaderStreamHeaderTitleStyle(_ label: UILabel) {
+        label.font = WPStyleGuide.fontForTextStyle(.title1, fontWeight: .bold)
         label.textColor = .label
-    }
-
-    @objc public class func applyReaderStreamHeaderDetailStyle(_ label: UILabel) {
-        label.font = fontForTextStyle(.subheadline, fontWeight: .regular)
-        label.textColor = .secondaryLabel
     }
 
     // MARK: - Button Styles and Text

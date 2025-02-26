@@ -196,27 +196,6 @@ import WordPressUI
         displayTitleViewOnly = false
     }
 
-    /// No results for local data, skips the network status check
-    func configureForLocalData(title: String,
-                               buttonTitle: String? = nil,
-                               subtitle: String? = nil,
-                               attributedSubtitle: NSAttributedString? = nil,
-                               attributedSubtitleConfiguration: AttributedSubtitleConfiguration? = nil,
-                               image: String,
-                               subtitleImage: String? = nil) {
-
-        titleText = title
-        subtitleText = subtitle
-        attributedSubtitleText = attributedSubtitle
-
-        configureAttributedSubtitle = attributedSubtitleConfiguration
-        buttonText = buttonTitle
-        imageName = image
-        subtitleImageName = subtitleImage
-        displayTitleViewOnly = false
-        accessorySubview = nil
-    }
-
     /// Public method to show the title specifically formatted for no search results.
     /// When the view is configured, it will display just a label with specific constraints.
     ///
@@ -327,24 +306,24 @@ private extension NoResultsViewController {
         titleLabel.text = titleText
         titleLabel.textColor = .label
 
-        if let titleText = titleText {
+        if let titleText {
             titleLabel.attributedText = nil
             titleLabel.text = titleText
         }
 
-        if let attributedTitleText = attributedTitleText {
+        if let attributedTitleText {
             titleLabel.attributedText = attributedTitleText
         }
 
         subtitleTextView.textColor = .secondaryLabel
 
-        if let subtitleText = subtitleText {
+        if let subtitleText {
             subtitleTextView.attributedText = nil
             subtitleTextView.text = subtitleText
             subtitleTextView.isSelectable = false
         }
 
-        if let attributedSubtitleText = attributedSubtitleText {
+        if let attributedSubtitleText {
             subtitleTextView.attributedText = applyMessageStyleTo(attributedString: attributedSubtitleText)
             if let attributedSubtitle = configureAttributedSubtitle?(subtitleTextView.attributedText) {
                 subtitleTextView.attributedText = attributedSubtitle
@@ -360,7 +339,7 @@ private extension NoResultsViewController {
         subtitleImageView.tintColor = titleLabel.textColor
         configureSubtitleView()
 
-        if let buttonText = buttonText {
+        if let buttonText {
             actionButton?.setTitle(buttonText, for: UIControl.State())
             actionButton?.setTitle(buttonText, for: .highlighted)
             actionButton?.titleLabel?.adjustsFontForContentSizeCategory = true
@@ -376,7 +355,7 @@ private extension NoResultsViewController {
             actionButton.isHidden = true
         }
 
-        if let accessorySubview = accessorySubview {
+        if let accessorySubview {
             accessoryView.subviews.forEach { view in
                 stopAnimatingViewIfNeeded(view)
                 view.removeFromSuperview()
@@ -384,11 +363,11 @@ private extension NoResultsViewController {
             accessoryView.addSubview(accessorySubview)
         }
 
-        if let imageName = imageName {
+        if let imageName {
             imageView.image = UIImage(named: imageName)
         }
 
-        if let subtitleImageName = subtitleImageName {
+        if let subtitleImageName {
             subtitleImageView.image = UIImage(named: subtitleImageName)
         }
 
@@ -435,7 +414,7 @@ private extension NoResultsViewController {
 
         titleOnlyLabel = copyTitleLabel()
 
-        guard let titleOnlyLabel = titleOnlyLabel else {
+        guard let titleOnlyLabel else {
             return
         }
 
@@ -451,7 +430,7 @@ private extension NoResultsViewController {
         // Note: unarchivedObjectOfClass:fromData:error: sets secure coding to true
         // We setup our own unarchiver to work around that
         guard
-            let titleLabel = titleLabel,
+            let titleLabel,
             let data = try? NSKeyedArchiver.archivedData(withRootObject: titleLabel, requiringSecureCoding: false),
             let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data)
         else {
@@ -475,17 +454,17 @@ private extension NoResultsViewController {
         let availableWidth = view.frame.width - TitleLabelConstraints.leading + TitleLabelConstraints.trailing
 
         if availableWidth < TitleLabelConstraints.maxWidth {
-            guard let titleLabelLeadingConstraint = titleLabelLeadingConstraint,
-                let titleLabelTrailingConstraint = titleLabelTrailingConstraint,
-                let titleLabelTopConstraint = titleLabelTopConstraint else {
+            guard let titleLabelLeadingConstraint,
+                let titleLabelTrailingConstraint,
+                let titleLabelTopConstraint else {
                     return
             }
 
             NSLayoutConstraint.activate([titleLabelTopConstraint, titleLabelLeadingConstraint, titleLabelTrailingConstraint])
         } else {
-            guard let titleLabelMaxWidthConstraint = titleLabelMaxWidthConstraint,
-                let titleLabelCenterXConstraint = titleLabelCenterXConstraint,
-                let titleLabelTopConstraint = titleLabelTopConstraint else {
+            guard let titleLabelMaxWidthConstraint,
+                let titleLabelCenterXConstraint,
+                let titleLabelTopConstraint else {
                     return
             }
             titleLabelTopConstraint.constant = TitleLabelConstraints.topLandscape
@@ -500,7 +479,7 @@ private extension NoResultsViewController {
         titleLabelMaxWidthConstraint?.isActive = false
         titleLabelCenterXConstraint?.isActive = false
 
-        guard let titleOnlyLabel = titleOnlyLabel else {
+        guard let titleOnlyLabel else {
             return
         }
 
@@ -513,7 +492,7 @@ private extension NoResultsViewController {
 
     func adjustTitleOnlyLabelHeight() {
 
-        guard let titleOnlyLabel = titleOnlyLabel else {
+        guard let titleOnlyLabel else {
             return
         }
 

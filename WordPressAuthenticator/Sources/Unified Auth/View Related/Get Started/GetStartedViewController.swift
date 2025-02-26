@@ -30,7 +30,7 @@ public enum SignInError: Error {
         }
 
         if let restApiError, restApiError.code == .unknown {
-            if let source = source, restApiError.apiErrorCode == "unknown_user" {
+            if let source, restApiError.apiErrorCode == "unknown_user" {
                 self = .invalidWPComEmail(source: source)
             } else {
                 return nil
@@ -87,6 +87,11 @@ class GetStartedViewController: LoginViewController, NUXKeyboardResponder {
     private var shouldChangeVoiceOverFocus: Bool = false
 
     private var passwordCoordinator: PasswordCoordinator?
+
+    private lazy var storedCredentialsAuthenticator = StoredCredentialsAuthenticator(onCancel: { [weak self] in
+        // Since the authenticator has its own flow
+        self?.tracker.resetState()
+    })
 
     /// Sign in with site credentials button will be displayed based on the `screenMode`
     ///
@@ -181,6 +186,21 @@ class GetStartedViewController: LoginViewController, NUXKeyboardResponder {
             registerForKeyboardEvents(keyboardWillShowAction: #selector(handleKeyboardWillShow(_:)),
                                       keyboardWillHideAction: #selector(handleKeyboardWillHide(_:)))
         }
+
+        if screenMode == .signInUsingWordPressComOrSocialAccounts && isMovingToParent {
+            showiCloudKeychainLoginFlow()
+        }
+    }
+
+    /// Starts the iCloud Keychain login flow if the conditions are given.
+    ///
+    private func showiCloudKeychainLoginFlow() {
+        guard WordPressAuthenticator.shared.configuration.enableUnifiedAuth,
+              let navigationController else {
+                  return
+        }
+
+        storedCredentialsAuthenticator.showPicker(from: navigationController)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -524,7 +544,7 @@ private extension GetStartedViewController {
                                       failure: { [weak self] error in
                                         WordPressAuthenticator.track(.loginFailed, error: error)
                                         WPAuthenticatorLogError(error.localizedDescription)
-                                        guard let self = self else {
+                                        guard let self else {
                                             return
                                         }
                                         self.configureViewLoading(false)
@@ -551,7 +571,7 @@ private extension GetStartedViewController {
     /// Show the password or magic link view based on the configuration.
     ///
     func showPasswordOrMagicLinkView() {
-        guard let navigationController = navigationController else {
+        guard let navigationController else {
             return
         }
         configureViewLoading(true)
@@ -562,7 +582,7 @@ private extension GetStartedViewController {
                                               configuration: configuration)
         passwordCoordinator = coordinator
         Task { @MainActor [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             await coordinator.start()
             self.configureViewLoading(false)
         }
@@ -621,7 +641,7 @@ private extension GetStartedViewController {
             }, failure: { [weak self] (error: Error) in
                 WPAuthenticatorLogError("Request for signup link email failed.")
 
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -663,7 +683,7 @@ private extension GetStartedViewController {
                                             self?.configureViewLoading(false)
 
             }, failure: { [weak self] (error: Error) in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -783,7 +803,7 @@ private extension GetStartedViewController {
 private extension GetStartedViewController {
 
     func configureSocialButtons() {
-        guard let buttonViewController = buttonViewController else {
+        guard let buttonViewController else {
             return
         }
 
@@ -805,7 +825,7 @@ private extension GetStartedViewController {
     }
 
     func configureButtonViewControllerForSiteCredentialsMode() {
-        guard let buttonViewController = buttonViewController else {
+        guard let buttonViewController else {
             return
         }
 
@@ -841,7 +861,7 @@ private extension GetStartedViewController {
     }
 
     func configureButtonViewControllerWithoutSocialLogin() {
-        guard let buttonViewController = buttonViewController else {
+        guard let buttonViewController else {
             return
         }
 

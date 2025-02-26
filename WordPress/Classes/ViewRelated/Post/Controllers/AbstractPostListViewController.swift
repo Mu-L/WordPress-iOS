@@ -12,8 +12,7 @@ class AbstractPostListViewController: UIViewController,
                                       NSFetchedResultsControllerDelegate,
                                       UITableViewDelegate,
                                       UITableViewDataSource,
-                                      NetworkAwareUI // This protocol is not in an extension so that subclasses can override noConnectionMessage()
-{
+                                      NetworkAwareUI { // This protocol is not in an extension so that subclasses can override noConnectionMessage()
     typealias SyncPostResult = (posts: [AbstractPost], hasMore: Bool)
 
     private static let httpErrorCodeForbidden = 403
@@ -664,7 +663,7 @@ class AbstractPostListViewController: UIViewController,
         // NOTE: We'll set the title to match the title of the View action button.
         // If the button title changes we should also update the title here.
         controller.navigationItem.title = NSLocalizedString("View", comment: "Verb. The screen title shown when viewing a post inside the app.")
-        let navWrapper = LightNavigationController(rootViewController: controller)
+        let navWrapper = UINavigationController(rootViewController: controller)
         if navigationController?.traitCollection.userInterfaceIdiom == .pad {
             navWrapper.modalPresentationStyle = .fullScreen
         }

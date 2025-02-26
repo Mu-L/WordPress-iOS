@@ -8,8 +8,6 @@ import AutomatticTracks
 extension NSNotification.Name {
     // Sent when a site or a tag is unfollowed via Reader Manage screen.
     static let ReaderTopicUnfollowed = NSNotification.Name(rawValue: "ReaderTopicUnfollowed")
-    // Sent when a site is followed via Reader Manage screen.
-    static let ReaderSiteFollowed = NSNotification.Name(rawValue: "ReaderSiteFollowed")
     // Sent when a post's seen state has been toggled.
     static let ReaderPostSeenToggled = NSNotification.Name(rawValue: "ReaderPostSeenToggled")
     // Sent when a site is blocked.
@@ -198,7 +196,7 @@ struct ReaderNotificationKeys {
             properties[WPAppAnalyticsKeyFeedItemID] = feedItemID
         }
 
-        if let value = value, let key = key {
+        if let value, let key {
             properties[key] = value
         }
 
@@ -264,7 +262,7 @@ struct ReaderNotificationKeys {
 
     // convenience method that returns the topic type
     class func topicType(_ topic: ReaderAbstractTopic?) -> ReaderTopicType {
-        guard let topic = topic else {
+        guard let topic else {
             return .noTopic
         }
         if topicIsDiscover(topic) {

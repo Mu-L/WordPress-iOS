@@ -34,7 +34,7 @@ import MobileCoreServices
         }
 
         CSSearchableIndex.default().indexSearchableItems(items, completionHandler: { (error: Error?) -> Void in
-            guard let error = error else {
+            guard let error else {
                 return
             }
             DDLogError("Could not index post. Error: \(error.localizedDescription)")
@@ -65,7 +65,7 @@ import MobileCoreServices
         }
 
         CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ids, completionHandler: { (error: Error?) -> Void in
-            guard let error = error else {
+            guard let error else {
                 return
             }
             DDLogError("Could not delete CSSearchableItem item. Error: \(error.localizedDescription)")
@@ -92,7 +92,7 @@ import MobileCoreServices
         }
 
         CSSearchableIndex.default().deleteSearchableItems(withDomainIdentifiers: domains, completionHandler: { (error: Error?) -> Void in
-            guard let error = error else {
+            guard let error else {
                 return
             }
             DDLogError("Could not delete CSSearchableItem items for domains: \(domains.joined(separator: ", ")). Error: \(error.localizedDescription)")
@@ -106,7 +106,7 @@ import MobileCoreServices
     ///
     @objc func deleteAllSearchableItems() {
         CSSearchableIndex.default().deleteAllSearchableItems(completionHandler: { (error: Error?) -> Void in
-            guard let error = error else {
+            guard let error else {
                 return
             }
             DDLogError("Could not delete all CSSearchableItem items. Error: \(error.localizedDescription)")
@@ -122,7 +122,7 @@ import MobileCoreServices
     ///
     @discardableResult
     @objc func handle(activity: NSUserActivity?) -> Bool {
-        guard let activity = activity else {
+        guard let activity else {
             return false
         }
 
@@ -458,7 +458,7 @@ fileprivate extension SearchManager {
 
         let controller = PreviewWebKitViewController(post: apost, source: "spotlight_preview_post")
         controller.trackOpenEvent()
-        let navWrapper = LightNavigationController(rootViewController: controller)
+        let navWrapper = UINavigationController(rootViewController: controller)
         let rootViewController = RootViewCoordinator.sharedPresenter.rootViewController
         if rootViewController.traitCollection.userInterfaceIdiom == .pad {
             navWrapper.modalPresentationStyle = .fullScreen

@@ -22,7 +22,7 @@ class EditPostViewController: UIViewController {
     fileprivate var editingExistingPost = false
     fileprivate let blog: Blog
 
-    @objc var onClose: ((_ changesSaved: Bool) -> ())?
+    @objc var onClose: (() -> ())?
     @objc var afterDismiss: (() -> Void)?
 
     override var modalPresentationStyle: UIModalPresentationStyle {
@@ -67,7 +67,7 @@ class EditPostViewController: UIViewController {
     /// - Note: it's preferable to use one of the convenience initializers
     fileprivate init(post: Post?, blog: Blog, prompt: BloggingPrompt? = nil) {
         self.post = post
-        if let post = post {
+        if let post {
             if !post.originalIsDraft() {
                 editingExistingPost = true
             }
@@ -102,7 +102,7 @@ class EditPostViewController: UIViewController {
     }
 
     fileprivate func postToEdit() -> Post {
-        if let post = post {
+        if let post {
             return post
         } else {
             let newPost = blog.createDraftPost()
@@ -126,19 +126,12 @@ class EditPostViewController: UIViewController {
     }
 
     private func showEditor(_ editor: EditorViewController) {
-        editor.onClose = { [weak self, weak editor] changesSaved in
-            guard let strongSelf = self else {
+        editor.onClose = { [weak self, weak editor] in
+            guard let self else {
                 editor?.dismiss(animated: true) {}
                 return
             }
-
-            // NOTE:
-            // We need to grab the latest Post Reference, since it may have changed (ie. revision / user picked a
-            // new blog).
-            if changesSaved {
-                strongSelf.post = editor?.post as? Post
-            }
-            strongSelf.closeEditor(changesSaved)
+            self.closeEditor()
         }
 
         let navController = AztecNavigationController(rootViewController: editor)
@@ -166,8 +159,8 @@ class EditPostViewController: UIViewController {
         }
     }
 
-    @objc func closeEditor(_ changesSaved: Bool = true, from presentingViewController: UIViewController? = nil) {
-        onClose?(changesSaved)
+    @objc func closeEditor(from presentingViewController: UIViewController? = nil) {
+        onClose?()
         dismiss(animated: true) {
             self.closeEditor(animated: false)
         }
@@ -178,11 +171,11 @@ class EditPostViewController: UIViewController {
         let presentingController = self.presentingViewController
         // will dismiss self
         dismiss(animated: animated) { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             self.afterDismiss?()
-            guard let post = self.post,
+            guard let post = self.post?.original(),
                   post.isPublished(),
                   !self.editingExistingPost,
                   let controller = presentingController else {

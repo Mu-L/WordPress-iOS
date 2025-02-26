@@ -2,7 +2,6 @@ import Foundation
 import Combine
 import CoreData
 import WordPressShared
-import WordPressAuthenticator
 import Gridicons
 import UIKit
 import WordPressUI
@@ -116,6 +115,18 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     var isSidebarModeEnabled = false
 
     // MARK: - View Lifecycle
+
+    static func showInPopover(from presentingVC: UIViewController, sourceItem: UIPopoverPresentationControllerSourceItem) {
+        let notificationsVC = UIStoryboard(name: "Notifications", bundle: nil).instantiateInitialViewController() as! NotificationsViewController
+        notificationsVC.isSidebarModeEnabled = true
+
+        let navigationVC = UINavigationController(rootViewController: notificationsVC)
+        navigationVC.modalPresentationStyle = .popover
+        navigationVC.preferredContentSize = CGSize(width: 375, height: 800)
+        navigationVC.popoverPresentationController?.sourceItem = sourceItem
+        navigationVC.popoverPresentationController?.permittedArrowDirections = [.up]
+        presentingVC.present(navigationVC, animated: true)
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -250,7 +261,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         if splitViewControllerIsHorizontallyCompact {
             tableView.deselectSelectedRowWithAnimation(true)
         } else {
-            if let selectedNotification = selectedNotification {
+            if let selectedNotification {
                 selectRow(for: selectedNotification, animated: true, scrollPosition: .middle)
             } else {
                 selectFirstNotificationIfAppropriate()
@@ -765,11 +776,17 @@ extension NotificationsViewController {
         if let postID = note.metaPostID,
             let siteID = note.metaSiteID,
             note.kind == .matcher || note.kind == .newPost {
-            let readerViewController = ReaderDetailViewController.controllerWithPostID(postID, siteID: siteID)
-            readerViewController.navigationItem.largeTitleDisplayMode = .never
-            readerViewController.hidesBottomBarWhenPushed = true
-            readerViewController.coordinator?.notificationID = note.notificationId
-            displayViewController(readerViewController)
+
+            if isSidebarModeEnabled && splitViewController == nil {
+                presentingViewController?.dismiss(animated: true)
+                RootViewCoordinator.sharedPresenter.showReader(path: .post(postID: postID.intValue, siteID: siteID.intValue))
+            } else {
+                let readerViewController = ReaderDetailViewController.controllerWithPostID(postID, siteID: siteID)
+                readerViewController.navigationItem.largeTitleDisplayMode = .never
+                readerViewController.hidesBottomBarWhenPushed = true
+                readerViewController.coordinator?.notificationID = note.notificationId
+                displayViewController(readerViewController)
+            }
             return
         }
 
@@ -787,7 +804,7 @@ extension NotificationsViewController {
         view.isUserInteractionEnabled = false
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             self.view.isUserInteractionEnabled = true
@@ -987,7 +1004,7 @@ private extension NotificationsViewController {
     }
 
     func syncDeletedNotification(_ notification: Notification?) {
-        guard let notification = notification else {
+        guard let notification else {
             return
         }
 
@@ -1002,7 +1019,7 @@ private extension NotificationsViewController {
         // If the currently selected notification is about to be removed, find the next available and select it.
         // This is only necessary for split view to prevent the details from showing for removed notifications.
         if !splitViewControllerIsHorizontallyCompact,
-           let selectedNotification = selectedNotification,
+           let selectedNotification,
            ignoring.contains(selectedNotification) {
 
             guard let notifications = tableViewHandler.resultsController?.fetchedObjects as? [Notification],
@@ -1089,15 +1106,6 @@ private extension NotificationsViewController {
             )
         }
 
-        let cancelTitle = NSLocalizedString(
-            "Cancel",
-            comment: "Cancels the mark all as read action."
-        )
-        let markAllTitle = NSLocalizedString(
-            "OK",
-            comment: "Marks all notifications as read."
-        )
-
         let alertController = UIAlertController(
             title: String.localizedStringWithFormat(title, filter.confirmationMessageTitle),
             message: nil,
@@ -1105,9 +1113,9 @@ private extension NotificationsViewController {
         )
         alertController.view.accessibilityIdentifier = "mark-all-as-read-alert"
 
-        alertController.addCancelActionWithTitle(cancelTitle)
+        alertController.addCancelActionWithTitle(SharedStrings.Button.cancel)
 
-        alertController.addActionWithTitle(markAllTitle, style: .default) { [weak self] _ in
+        alertController.addActionWithTitle(SharedStrings.Button.ok, style: .default) { [weak self] _ in
             self?.markAllAsRead()
         }
 
@@ -1409,7 +1417,7 @@ extension NotificationsViewController: WPTableViewHandlerDelegate {
         // Update NoResults View
         showNoResultsViewIfNeeded()
 
-        if let selectedNotification = selectedNotification {
+        if let selectedNotification {
             selectRow(for: selectedNotification, animated: false, scrollPosition: .none)
         } else {
             selectFirstNotificationIfAppropriate()
@@ -1655,7 +1663,7 @@ private extension NotificationsViewController {
                 return
             }
 
-            guard let note = note else {
+            guard let note else {
                 DDLogError("Error: Couldn't load Notification [\(noteId)]")
                 return
             }

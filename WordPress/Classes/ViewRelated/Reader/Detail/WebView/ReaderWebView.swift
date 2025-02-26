@@ -1,5 +1,6 @@
 import UIKit
 import ColorStudio
+import WordPressReader
 
 /// A WKWebView that renders post content with styles applied
 ///
@@ -15,7 +16,11 @@ class ReaderWebView: WKWebView {
 
     var isP2 = false
 
-    var displaySetting: ReaderDisplaySetting = .standard
+    var displaySetting: ReaderDisplaySettings = .standard
+
+    deinit {
+        print("here")
+    }
 
     /// Make the webview transparent
     ///
@@ -28,7 +33,8 @@ class ReaderWebView: WKWebView {
             isInspectable = true
         }
 
-        configuration.userContentController.add(self, name: "eventHandler")
+        // - warning: It retains the handler. It can't be `self`.
+        configuration.userContentController.add(ReaderWebViewMessageHandler(), name: "eventHandler")
     }
 
     /// Loads a HTML content into the webview and apply styles
@@ -153,6 +159,7 @@ class ReaderWebView: WKWebView {
                 'fb\\\\:post, [class^=fb-]': 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.2',
                 '[class^=tumblr-]': 'https://assets.tumblr.com/post.js',
                 '.embed-reddit': 'https://embed.redditmedia.com/widgets/platform.js',
+                '.embed-tiktok': 'https://www.tiktok.com/embed.js',
             };
 
             Object.keys(embedsToLookFor).forEach((key) => {
@@ -310,8 +317,7 @@ class ReaderWebView: WKWebView {
     }
 }
 
-extension ReaderWebView: WKScriptMessageHandler {
-
+final class ReaderWebViewMessageHandler: NSObject, WKScriptMessageHandler {
     enum EventMessage: String {
         case articleTextHighlighted
         case articleTextCopied
@@ -341,5 +347,4 @@ extension ReaderWebView: WKScriptMessageHandler {
         }
         WPAnalytics.track(event)
     }
-
 }

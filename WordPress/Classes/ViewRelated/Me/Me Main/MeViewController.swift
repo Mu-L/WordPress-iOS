@@ -1,6 +1,5 @@
 import UIKit
 import WordPressShared
-import WordPressAuthenticator
 import AutomatticAbout
 
 class MeViewController: UITableViewController {
@@ -174,36 +173,12 @@ class MeViewController: UITableViewController {
 
                     rows = loggedInRows + rows
                 }
-                return rows + [helpAndSupportIndicator]
-            }()),
-            // middle section
-            ImmuTableSection(rows: {
-                var rows: [ImmuTableRow] = []
-
-                rows.append(ButtonRow(
-                    title: Strings.submitFeedback,
-                    textAlignment: .left,
-                    action: showFeedbackView())
-                )
-
-                rows.append(ButtonRow(
-                    title: ShareAppContentPresenter.RowConstants.buttonTitle,
-                    textAlignment: .left,
-                    isLoading: sharePresenter.isLoading,
-                    action: displayShareFlow())
-                )
-
-                rows.append(ButtonRow(
-                    title: RowTitles.about,
-                    textAlignment: .left,
-                    action: pushAbout(),
-                    accessibilityIdentifier: "About")
-                )
                 return rows
-            }())
+            }()),
+            ImmuTableSection(rows: [helpAndSupportIndicator]),
         ]
 
-        #if IS_JETPACK
+#if IS_JETPACK
         if RemoteFeatureFlag.domainManagement.enabled() && loggedIn && !isSidebarModeEnabled {
             sections.append(.init(rows: [
                 NavigationItemRow(
@@ -220,7 +195,24 @@ class MeViewController: UITableViewController {
             ])
             )
         }
-        #endif
+#endif
+
+        sections.append(
+            ImmuTableSection(rows: [
+                ButtonRow(
+                    title: ShareAppContentPresenter.RowConstants.buttonTitle,
+                    textAlignment: .left,
+                    isLoading: sharePresenter.isLoading,
+                    action: displayShareFlow()
+                ),
+                ButtonRow(
+                    title: RowTitles.about,
+                    textAlignment: .left,
+                    action: pushAbout(),
+                    accessibilityIdentifier: "About"
+                )
+            ])
+        )
 
         // last section
         sections.append(
@@ -280,7 +272,7 @@ class MeViewController: UITableViewController {
 
     private func presentQRLogin() -> ImmuTableAction {
         return { [weak self] row in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -311,15 +303,6 @@ class MeViewController: UITableViewController {
             self.present(controller, animated: true) {
                 self.tableView.deselectSelectedRowWithAnimation(true)
             }
-        }
-    }
-
-    func showFeedbackView() -> ImmuTableAction {
-        return { [weak self] row in
-            defer {
-                self?.tableView.deselectSelectedRowWithAnimation(true)
-            }
-            self?.present(SubmitFeedbackViewController(source: "me_menu"), animated: true)
         }
     }
 
@@ -524,24 +507,8 @@ class MeViewController: UITableViewController {
     /// into a self-hosted site the ability to create a WordPress.com account.
     ///
     fileprivate func promptForLoginOrSignup() {
-        Task { @MainActor in
-            WPAnalytics.track(.wpcomWebSignIn, properties: ["source": "me", "stage": "start"])
-
-            let token: String
-            do {
-                token = try await WordPressDotComAuthenticator().authenticate(from: self)
-            } catch {
-                WPAnalytics.track(.wpcomWebSignIn, properties: ["source": "me", "stage": "error", "error": "\(error)"])
-                return
-            }
-
-            WPAnalytics.track(.wpcomWebSignIn, properties: ["source": "me", "stage": "success"])
-
-            SVProgressHUD.show()
-            let credentials = WordPressComCredentials(authToken: token, isJetpackLogin: false, multifactor: false)
-            WordPressAuthenticator.shared.delegate!.sync(credentials: .init(wpcom: credentials)) {
-                SVProgressHUD.dismiss()
-            }
+        Task {
+            await WordPressDotComAuthenticator().signIn(from: self, context: .default)
         }
     }
 

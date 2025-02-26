@@ -1,7 +1,8 @@
 import UIKit
+import WordPressUI
 
 final class PrepublishingHeaderView: UIView {
-    private let blogImageView = UIImageView()
+    private let blogImageView = SiteIconHostingView()
     private let publishingToLabel = UILabel()
     private let blogTitleLabel = UILabel()
 
@@ -34,9 +35,10 @@ final class PrepublishingHeaderView: UIView {
         WPStyleGuide.applyBorderStyle(separator)
         separator.alpha = 0
 
+        let imageSize = SiteIconViewModel.Size.regular.width
         NSLayoutConstraint.activate([
-            blogImageView.widthAnchor.constraint(equalToConstant: 44),
-            blogImageView.heightAnchor.constraint(equalToConstant: 44),
+            blogImageView.widthAnchor.constraint(equalToConstant: imageSize),
+            blogImageView.heightAnchor.constraint(equalToConstant: imageSize),
         ])
 
         let labelsStackView = UIStackView(arrangedSubviews: [publishingToLabel, blogTitleLabel])
@@ -72,7 +74,7 @@ final class PrepublishingHeaderView: UIView {
     }
 
     func configure(_ blog: Blog) {
-        blogImageView.downloadSiteIcon(for: blog)
+        blogImageView.setIcon(with: .init(blog: blog, size: .regular))
         blogTitleLabel.text = blog.title
     }
 }

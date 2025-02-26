@@ -1,5 +1,3 @@
-import WordPressAuthenticator
-
 protocol JetpackRemoteInstallStateViewDelegate: AnyObject {
     func mainButtonDidTouch()
     func customerSupportButtonDidTouch()
@@ -106,7 +104,7 @@ private extension JetpackRemoteInstallStateView {
         }
     }
 
-    @IBAction func mainButtonAction(_ sender: NUXButton) {
+    @IBAction func mainButtonAction(_ sender: UIButton) {
         delegate?.mainButtonDidTouch()
     }
 
@@ -128,7 +126,7 @@ private extension JetpackRemoteInstallStateView {
         }
 
         struct MainButton {
-            static let normalBackground = UIImage.renderBackgroundImage(fill: UIAppColor.brand)
+            static let normalBackground = UIImage.renderBackgroundImage(fill: UIAppColor.primary)
             static let loadingBackground = UIImage.renderBackgroundImage(fill: UIAppColor.jetpackGreen(.shade70))
             static let titleColor = UIColor.white
             static let font = WPStyleGuide.fontForTextStyle(.body, fontWeight: .semibold)
@@ -136,7 +134,7 @@ private extension JetpackRemoteInstallStateView {
         }
 
         struct SupportButton {
-            static let color = UIAppColor.brand
+            static let color = UIAppColor.primary
             static let font = WPStyleGuide.fontForTextStyle(.body)
             static let text = NSLocalizedString("Contact Support", comment: "Contact Support button title")
         }

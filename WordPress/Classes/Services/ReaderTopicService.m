@@ -243,10 +243,6 @@ static NSString * const ReaderTopicCurrentTopicPathKey = @"ReaderTopicCurrentTop
         [context obtainPermanentIDsForObjects:@[topic] error:nil];
         topicObjectID = topic.objectID;
     } completion:^{
-        // Save / update the search phrase to use it as a suggestion later.
-        ReaderSearchSuggestionService *suggestionService = [[ReaderSearchSuggestionService alloc] initWithCoreDataStack:self.coreDataStack];
-        [suggestionService createOrUpdateSuggestionForPhrase:phrase];
-
         if (completion) {
             completion(topicObjectID);
         }
@@ -739,7 +735,6 @@ static NSString * const ReaderTopicCurrentTopicPathKey = @"ReaderTopicCurrentTop
     topic.organizationID = [siteInfo.organizationID integerValue];
     topic.path = siteInfo.postsEndpoint;
     topic.postCount = siteInfo.postCount;
-    topic.showInMenu = NO;
     topic.siteBlavatar = siteInfo.siteBlavatar;
     topic.siteDescription = siteInfo.siteDescription;
     topic.siteID = siteInfo.siteID;

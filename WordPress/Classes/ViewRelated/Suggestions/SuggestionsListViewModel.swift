@@ -64,6 +64,24 @@ import CoreData
         self.context = context
     }
 
+    static func make(
+        siteID: NSNumber,
+        service: SuggestionService = SuggestionService.shared,
+        context: NSManagedObjectContext = ContextManager.shared.mainContext
+    ) -> SuggestionsListViewModel? {
+        guard let blog = Blog.lookup(withID: siteID, in: context),
+              service.shouldShowSuggestions(for: blog) else {
+            return nil
+        }
+        return SuggestionsListViewModel(blog: blog)
+    }
+
+    /// Returns the a list of prominent suggestions excluding the current user.
+    func enableProminentSuggestions(postAuthorID: NSNumber?, commentAuthorID: NSNumber? = nil) {
+        let defaultAccountID = try? WPAccount.lookupDefaultWordPressComAccount(in: context)?.userID
+        self.prominentSuggestionsIds = [postAuthorID, commentAuthorID].compactMap { $0 != defaultAccountID ? $0 : nil }
+    }
+
     // MARK: - Load Data
 
     @objc func reloadData() {
@@ -72,14 +90,14 @@ import CoreData
         switch suggestionType {
         case .mention:
             self.userSuggestionService.suggestions(for: blog) { [weak self] suggestions in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.suggestions = Suggestions.users(suggestions ?? [])
                 self.isLoading = false
                 self.searchSuggestions(withWord: self.searchText)
             }
         case .xpost:
             self.siteSuggestionService.suggestions(for: blog) { [weak self] suggestions in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.suggestions = Suggestions.sites(suggestions ?? [])
                 self.isLoading = false
                 self.searchSuggestions(withWord: self.searchText)
@@ -180,7 +198,7 @@ import CoreData
     }
 
     private static func sectionsFromSearchResult(_ searchResult: SearchResult?) -> [Section] {
-        guard let searchResult = searchResult else { return [] }
+        guard let searchResult else { return [] }
         switch searchResult {
         case .users(let prominent, let regular):
             let shouldShowSectionTitle = !prominent.isEmpty && !regular.isEmpty

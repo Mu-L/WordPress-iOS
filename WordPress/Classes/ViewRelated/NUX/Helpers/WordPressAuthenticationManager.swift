@@ -7,6 +7,8 @@ import UIKit
 //
 @objc
 class WordPressAuthenticationManager: NSObject {
+    static let WPSigninDidFinishNotification = WordPressAuthenticator.WPSigninDidFinishNotification
+
     static var isPresentingSignIn = false
     private let windowManager: WindowManager
 
@@ -214,10 +216,30 @@ extension WordPressAuthenticationManager {
         }
 
         isPresentingSignIn = true
-        let controller = signinForWPComFixingAuthToken({ (_) in
-            isPresentingSignIn = false
-        })
-        presenter.present(controller, animated: true)
+
+        if WordPressAuthenticator.dotComWebLoginEnabled {
+            let signedInAccount = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)
+            Task { @MainActor in
+                Notice(
+                    title: NSLocalizedString("wpcom.token.fix.signin", value: "Sign in to WordPress.com", comment: "Message title to be displayed when the user needs to re-authenticate their WordPress.com account."),
+                    message: NSLocalizedString("wpcom.token.fix.signin.message", value: "You need to sign in to WordPress.com to access your account.", comment: "Detailed message to be displayed when the user needs to re-authenticate their WordPress.com account.")
+                ).post()
+
+                let _ = await WordPressDotComAuthenticator().signIn(
+                    from: presenter,
+                    context: signedInAccount?.email
+                        .flatMap { .reauthentication(accountEmail: $0) }
+                        ?? .default
+                )
+
+                isPresentingSignIn = false
+            }
+        } else {
+            let controller = signinForWPComFixingAuthToken({ (_) in
+                isPresentingSignIn = false
+            })
+            presenter.present(controller, animated: true)
+        }
     }
 }
 
@@ -324,10 +346,19 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
             return
         }
 
-        let account = try? WPAccount.lookupDefaultWordPressComAccount(in: mainContext)
-        wpAssert(account != nil)
+        presentDefaultAccountPrimarySite(from: navigationController)
 
-        let sites = account?.blogs ?? []
+        onDismiss()
+    }
+
+    func presentDefaultAccountPrimarySite(from navigationController: UINavigationController) {
+        let mainContext = ContextManager.shared.mainContext
+        guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: mainContext) else {
+            wpAssert(false)
+            return
+        }
+
+        let sites = account.blogs ?? []
 
         guard var selectedBlog = sites.first else {
             if windowManager.isShowingFullscreenSignIn {
@@ -338,7 +369,7 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
             return
         }
 
-        if let primarySiteID = account?.primaryBlogID,
+        if let primarySiteID = account.primaryBlogID,
            let site = sites.first(where: { $0.dotComID == primarySiteID }) {
             selectedBlog = site
         }
@@ -347,7 +378,7 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
         ABTest.start()
 
         recentSiteService.touch(blog: selectedBlog)
-        presentEnableNotificationsPrompt(in: navigationController, blog: selectedBlog, onDismiss: onDismiss)
+        presentEnableNotificationsPrompt(in: navigationController, blog: selectedBlog)
     }
 
     /// Presents the Signup Epilogue, in the specified NavigationController.
@@ -536,7 +567,7 @@ private extension WordPressAuthenticationManager {
             /// HACK: An alternative notification to LoginFinished. Observe this instead of `WPSigninDidFinishNotification` for Jetpack logins.
             /// When WPTabViewController no longer destroy's and rebuilds the view hierarchy this alternate notification can be removed.
             ///
-            let notification = isJetpackLogin == true ? .wordpressLoginFinishedJetpackLogin : Foundation.Notification.Name(rawValue: WordPressAuthenticator.WPSigninDidFinishNotification)
+            let notification = isJetpackLogin == true ? .wordpressLoginFinishedJetpackLogin : Foundation.Notification.Name(rawValue: WordPressAuthenticationManager.WPSigninDidFinishNotification)
             NotificationCenter.default.post(name: notification, object: account)
 
             syncGroup.leave()

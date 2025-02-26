@@ -55,7 +55,7 @@ class PostsCardViewModel: NSObject {
     typealias PostsSnapshot = NSDiffableDataSourceSnapshot<Int, NSManagedObjectID>
 
     lazy var diffableDataSource = DataSource(tableView: view!.tableView) { [weak self] (tableView, indexPath, item) -> UITableViewCell? in
-        guard let self = self else {
+        guard let self else {
             return nil
         }
         switch item {
@@ -127,8 +127,7 @@ private extension PostsCardViewModel {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: PostCompactCell.defaultReuseID, for: indexPath) as? PostCompactCell
 
-        cell?.accessoryType = .none
-        cell?.configureForDashboard(with: post)
+        cell?.configure(with: post)
 
         return cell ?? UITableViewCell()
     }

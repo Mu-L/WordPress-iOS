@@ -1,4 +1,5 @@
 import Foundation
+import AsyncImageKit
 
 final class ReaderPostCellViewModel {
     // Header
@@ -9,9 +10,11 @@ final class ReaderPostCellViewModel {
     // Content
     let title: String
     let details: String
+    let isSeen: Bool?
     let imageURL: URL?
 
     // Footer (Buttons)
+    private(set) var isToolbarHidden = false
     let toolbar: ReaderPostToolbarViewModel
 
     weak var viewController: ReaderStreamViewController?
@@ -32,17 +35,22 @@ final class ReaderPostCellViewModel {
         } else {
             self.author = post.blogNameForDisplay() ?? ""
         }
-        self.time = post.dateForDisplay()?.toShortString() ?? "–"
+        self.time = post.dateForDisplay()?.toShortString() ?? ""
         self.title = post.titleForDisplay() ?? ""
         self.details = post.contentPreviewForDisplay() ?? ""
+        self.isSeen = post.isSeenSupported ? post.isSeen : nil
         self.imageURL = post.featuredImageURLForDisplay()
+
         self.toolbar = ReaderPostToolbarViewModel.make(post: post)
+        if isP2 && post.primaryTag == "afk" {
+            self.isToolbarHidden = true
+        }
 
         if isP2 {
             self.avatarURL = post.authorAvatarURL.flatMap(URL.init)
-        } else if let avatarURL = post.siteIconForDisplay(ofSize: Int(ReaderPostCell.avatarSize)) {
+        } else if let avatarURL = post.getSiteIconURL(size: Int(ReaderPostCell.avatarSize)) {
             self.avatarURL = avatarURL
-        } else if let blogURL = post.blogURL.flatMap(URL.init) {
+        } else if let blogURL = post.blogURL.flatMap(URL.init), post.isExternal {
             if let faviconURL = FaviconService.shared.cachedFavicon(forURL: blogURL) {
                 self.avatarURL = faviconURL
             } else {
@@ -58,6 +66,7 @@ final class ReaderPostCellViewModel {
         self.avatarURL = URL(string: "https://picsum.photos/120/120.jpg")
         self.author = "WordPress Mobile Apps"
         self.time = "9d ago"
+        self.isSeen = nil
         self.title = "Discovering the Wonders of the Wild"
         self.details = "Lorem ipsum dolor sit amet. Non omnis quia et natus voluptatum et eligendi voluptate vel iusto fuga sit repellendus molestiae aut voluptatem blanditiis ad neque sapiente. Id galisum distinctio quo enim aperiam non veritatis vitae et ducimus rerum."
         self.imageURL = URL(string: "https://picsum.photos/1260/630.jpg")
@@ -98,7 +107,7 @@ final class ReaderPostCellViewModel {
     }
 
     func toggleLike() {
-        ReaderLikeAction().execute(with: post)
+        ReaderLikeAction().execute(with: post, isFeedbackNeeded: false)
     }
 }
 
@@ -107,8 +116,8 @@ struct ReaderPostToolbarViewModel {
     let isCommentsEnabled: Bool
     let commentCount: Int
     let isLikesEnabled: Bool
-    let likeCount: Int
-    let isLiked: Bool
+    var likeCount: Int
+    var isLiked: Bool
 
     static func make(post: ReaderPost) -> ReaderPostToolbarViewModel {
         ReaderPostToolbarViewModel(

@@ -1,5 +1,4 @@
 import Foundation
-import WordPressAuthenticator
 
 /// This class takes care of managing the App window and its `rootViewController`.
 /// This is mostly intended to handle the UI transitions between authenticated and unauthenticated user sessions.
@@ -69,7 +68,7 @@ class WindowManager: NSObject {
         isShowingFullscreenSignIn = false
         RootViewCoordinator.shared.showAppUI(animated: animated, completion: completion)
 
-        guard let blog = blog else {
+        guard let blog else {
             return
         }
 
@@ -126,7 +125,7 @@ class WindowManager: NSObject {
     /// Removes the temporary overlaying window if it exists. And makes the main window the key window again.
     ///
     func clearOverlayingWindow() {
-        guard let overlayingWindow = overlayingWindow else {
+        guard let overlayingWindow else {
             return
         }
         overlayingWindow.isHidden = true

@@ -497,12 +497,12 @@ extension InvitePersonViewController {
 private extension InvitePersonViewController {
 
     func validateInvitation() {
-        guard let usernameOrEmail = usernameOrEmail, let service = PeopleService(blog: blog, coreDataStack: ContextManager.shared) else {
+        guard let usernameOrEmail, let service = PeopleService(blog: blog, coreDataStack: ContextManager.shared) else {
             sendActionEnabled = false
             return
         }
 
-        guard let role = role else {
+        guard let role else {
             return
         }
 
@@ -545,10 +545,9 @@ private extension InvitePersonViewController {
 
         let message = messageMap[error] ?? messageMap[.unknownError]!
         let title = NSLocalizedString("Sorry!", comment: "Invite Validation Alert")
-        let okTitle = NSLocalizedString("OK", comment: "Alert dismissal title")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        alert.addDefaultActionWithTitle(okTitle)
+        alert.addDefaultActionWithTitle(SharedStrings.Button.ok)
         present(alert, animated: true)
     }
 

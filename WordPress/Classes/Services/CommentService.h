@@ -124,7 +124,7 @@ extern NSUInteger const WPTopLevelHierarchicalCommentsPerPage;
 - (void)updateCommentWithID:(NSNumber *)commentID
                      siteID:(NSNumber *)siteID
                     content:(NSString *)content
-                    success:(void (^ _Nullable)(void))success
+                    success:(void (^ _Nullable)(RemoteComment * _Nullable comment))success
                     failure:(void (^ _Nullable)(NSError * _Nullable error))failure;
 
 // Replies
@@ -200,7 +200,6 @@ extern NSUInteger const WPTopLevelHierarchicalCommentsPerPage;
  @param siteID The ID of the site the remote will be used for.
  */
 - (CommentServiceRemoteREST *_Nullable)restRemoteForSite:(NSNumber *_Nonnull)siteID;
-
 
 @end
 

@@ -124,30 +124,6 @@ platform :ios do
     trainer(path: lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH], fail_build: true)
   end
 
-  # Run tests of given pod in the Pods project
-  #
-  # @option [String] name Shared scheme in the Pods.xcodeproj
-  #
-  # @called_by CI
-  #
-  desc 'Run tests of given pod in the Pods project'
-  lane :test_pod do |options|
-    run_tests(
-      project: 'Pods/Pods.xcodeproj',
-      scheme: options[:name],
-      device: options[:device],
-      deployment_target_version: options[:ios_version],
-      ensure_devices_found: true,
-      output_directory: File.join(PROJECT_ROOT_FOLDER, 'build', 'results'),
-      reset_simulator: true,
-      result_bundle: true,
-      output_types: '',
-      fail_build: false
-    )
-
-    trainer(path: lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH], fail_build: true)
-  end
-
   # Builds the WordPress app and uploads it to TestFlight, for beta-testing or final release
   #
   # @option [Boolean] skip_confirm (default: false) If true, avoids any interactive prompt
@@ -169,7 +145,7 @@ platform :ios do
 
     sentry_check_cli_installed
 
-    appstore_code_signing
+    update_certs_and_profiles_wordpress_app_store
 
     build_app(
       scheme: 'WordPress',
@@ -183,7 +159,8 @@ platform :ios do
 
     upload_build_to_testflight(
       whats_new_path: WORDPRESS_RELEASE_NOTES_PATH,
-      distribution_groups: ['Internal a8c Testers', 'Public Beta Testers']
+      distribution_groups: ['Internal a8c Testers', 'Public Beta Testers'],
+      beta_app_description_path: WORDPRESS_BETA_APP_DESCRIPTION_PATH
     )
 
     sentry_upload_dsym(
@@ -234,7 +211,7 @@ platform :ios do
   lane :build_and_upload_jetpack_for_app_store do
     sentry_check_cli_installed
 
-    jetpack_appstore_code_signing
+    update_certs_and_profiles_jetpack_app_store
 
     build_app(
       scheme: 'Jetpack',
@@ -248,7 +225,8 @@ platform :ios do
 
     upload_build_to_testflight(
       whats_new_path: JETPACK_RELEASE_NOTES_PATH,
-      distribution_groups: ['Beta Testers']
+      distribution_groups: ['Beta Testers'],
+      beta_app_description_path: JETPACK_BETA_APP_DESCRIPTION_PATH
     )
 
     sentry_upload_dsym(
@@ -283,7 +261,7 @@ platform :ios do
   lane :build_and_upload_wordpress_prototype_build do
     sentry_check_cli_installed
 
-    alpha_code_signing
+    update_certs_and_profiles_wordpress_enterprise
 
     build_and_upload_prototype_build(
       scheme: 'WordPress Alpha',
@@ -303,7 +281,7 @@ platform :ios do
   lane :build_and_upload_jetpack_prototype_build do
     sentry_check_cli_installed
 
-    jetpack_alpha_code_signing
+    update_certs_and_profiles_jetpack_enterprise
 
     build_and_upload_prototype_build(
       scheme: 'Jetpack',
@@ -359,7 +337,7 @@ platform :ios do
     configuration = 'Release-Alpha'
 
     # Get the current build version, and update it if needed
-    version_config_path = File.join(PROJECT_ROOT_FOLDER, 'config', 'Version.internal.xcconfig')
+    version_config_path = File.join(PROJECT_ROOT_FOLDER, 'config', 'Version.public.xcconfig')
     versions = Xcodeproj::Config.new(File.new(version_config_path)).to_hash
     build_number = generate_prototype_build_number
     UI.message("Updating build version to #{build_number}")
@@ -462,10 +440,11 @@ platform :ios do
     ENV.fetch('BUILDKITE', false)
   end
 
-  def upload_build_to_testflight(whats_new_path:, distribution_groups:)
+  def upload_build_to_testflight(whats_new_path:, distribution_groups:, beta_app_description_path:)
     upload_to_testflight(
       team_id: get_required_env('FASTLANE_ITC_TEAM_ID'),
       api_key_path: APP_STORE_CONNECT_KEY_PATH,
+      beta_app_description: File.read(beta_app_description_path),
       changelog: File.read(whats_new_path),
       distribute_external: true,
       groups: distribution_groups,
@@ -511,7 +490,7 @@ platform :ios do
   end
 
   def upload_gutenberg_sourcemaps(sentry_project_slug:, release_version:, build_version:, app_identifier:)
-    gutenberg_bundle_source_map_folder = File.join(PROJECT_ROOT_FOLDER, 'Pods', 'Gutenberg', 'react-native-bundle-source-map')
+    gutenberg_bundle_source_map_folder = File.join(PROJECT_ROOT_FOLDER, 'WordPress', 'Frameworks', 'react-native-bundle-source-map')
 
     # To generate the full release version string to attach the source maps, we need to specify:
     # - App identifier

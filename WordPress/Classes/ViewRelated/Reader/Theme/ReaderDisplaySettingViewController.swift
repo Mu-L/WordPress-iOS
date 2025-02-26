@@ -1,5 +1,6 @@
 import SwiftUI
 import DesignSystem
+import WordPressReader
 
 /// The tracking source values for the customization sheet.
 /// The values are kept in sync with Android.
@@ -9,8 +10,8 @@ enum ReaderDisplaySettingViewSource: String {
 }
 
 class ReaderDisplaySettingViewController: UIViewController {
-    private let initialSetting: ReaderDisplaySetting
-    private let completion: ((ReaderDisplaySetting) -> Void)?
+    private let initialSetting: ReaderDisplaySettings
+    private let completion: ((ReaderDisplaySettings) -> Void)?
     private let trackingSource: ReaderDisplaySettingViewSource
     private var viewModel: ReaderDisplaySettingSelectionViewModel? = nil
 
@@ -18,9 +19,9 @@ class ReaderDisplaySettingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(initialSetting: ReaderDisplaySetting,
+    init(initialSetting: ReaderDisplaySettings,
          source: ReaderDisplaySettingViewSource = .unspecified,
-         completion: ((ReaderDisplaySetting) -> Void)?) {
+         completion: ((ReaderDisplaySettings) -> Void)?) {
         self.initialSetting = initialSetting
         self.completion = completion
         self.trackingSource = source
@@ -83,7 +84,7 @@ class ReaderDisplaySettingViewController: UIViewController {
     }
 
     @MainActor
-    private func updateNavigationBar(with setting: ReaderDisplaySetting) {
+    private func updateNavigationBar(with setting: ReaderDisplaySettings) {
         navigationController?.navigationBar.overrideUserInterfaceStyle = setting.hasLightBackground ? .light : .dark
 
         // update the experimental label style
@@ -118,14 +119,14 @@ class ReaderDisplaySettingViewController: UIViewController {
 class ReaderDisplaySettingSelectionViewModel: NSObject, ObservableObject {
     private typealias TrackingKeys = ReaderDisplaySettingSelectionView.TrackingKeys
 
-    @Published var displaySetting: ReaderDisplaySetting
+    @Published var displaySetting: ReaderDisplaySettings
 
     /// Called when the user selects a new option.
     var didSelectItem: (() -> Void)? = nil
 
-    private let completion: ((ReaderDisplaySetting) -> Void)?
+    private let completion: ((ReaderDisplaySettings) -> Void)?
 
-    init(displaySetting: ReaderDisplaySetting, completion: ((ReaderDisplaySetting) -> Void)?) {
+    init(displaySetting: ReaderDisplaySettings, completion: ((ReaderDisplaySettings) -> Void)?) {
         self.displaySetting = displaySetting
         self.completion = completion
     }
@@ -226,18 +227,6 @@ extension ReaderDisplaySettingSelectionView {
                         .font(Font(viewModel.displaySetting.font(with: .callout)))
                         .foregroundStyle(viewModel.foregroundColor)
 
-                    if let feedbackText {
-                        feedbackText
-                            .font(Font(viewModel.displaySetting.font(with: .callout)))
-                            .foregroundStyle(viewModel.foregroundColor)
-                            .tint(Color(linkTintColor))
-                            .accessibilityAddTraits(.isLink)
-                            .environment(\.openURL, OpenURLAction { url in
-                                WPAnalytics.track(.readingPreferencesFeedbackTapped)
-                                return .systemAction
-                            })
-                    }
-
                     tagsView
 
                     Spacer()
@@ -258,30 +247,6 @@ extension ReaderDisplaySettingSelectionView {
             })
             .background(viewModel.backgroundColor)
             .animation(.easeInOut, value: viewModel.displaySetting)
-        }
-
-        var feedbackText: Text? {
-            guard AppConfiguration.isJetpack,
-                  RemoteFeatureFlag.readingPreferencesFeedback.enabled() else {
-                return nil
-            }
-
-            var linkString = "[\(Strings.feedbackLinkCTA)](\(Constants.feedbackLinkString))"
-            if viewModel.displaySetting.color != .system {
-                // for color themes other than the default, we'll mark it bold.
-                linkString = "**\(linkString)**"
-            }
-
-            let string = String(format: Strings.feedbackLineFormat, linkString)
-            guard var attributedString = try? AttributedString(markdown: string) else {
-                return nil
-            }
-
-            if let rangeOfLink = attributedString.range(of: Strings.feedbackLinkCTA) {
-                attributedString[rangeOfLink].underlineStyle = .single
-            }
-
-            return Text(attributedString)
         }
 
         var linkTintColor: UIColor {
@@ -310,7 +275,6 @@ extension ReaderDisplaySettingSelectionView {
 
         private struct Constants {
             static let gradientMaskHeight = 32.0
-            static let feedbackLinkString = "https://automattic.survey.fm/reader-customization-survey"
         }
 
         private struct Strings {
@@ -324,26 +288,6 @@ extension ReaderDisplaySettingSelectionView {
                 "reader.preferences.preview.body.text",
                 value: "Choose your colors, fonts, and sizes. Preview your selection here, and read posts with your styles once you're done.",
                 comment: "Description text for the preview section of Reader Preferences"
-            )
-
-            static let feedbackLineFormat = NSLocalizedString(
-                "reader.preferences.preview.body.feedback.format",
-                value: "This is a new feature still in development. To help us improve it %1$@.",
-                comment: """
-                Text format for the feedback line text, to be displayed in the preview section.
-                %1$@ is a placeholder for a call-to-action that completes the line, which will be filled programmatically.
-                Example: 'This is a new feature still in development. To help us improve it send your feedback.'
-                """
-            )
-
-            static let feedbackLinkCTA = NSLocalizedString(
-                "reader.preferences.preview.body.feedback.link",
-                value: "send your feedback",
-                comment: """
-                A call-to-action text fragment to ask the user provide feedback for the Reading Preferences feature.
-                Note that the lowercase format is intended, as this will be injected to form a full paragraph.
-                Refer to: `reader.preferences.preview.body.feedback.format`
-                """
             )
 
             static let tags = [
@@ -395,7 +339,7 @@ extension ReaderDisplaySettingSelectionView {
         var colorSelectionView: some View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: .DS.Padding.half) {
-                    ForEach(ReaderDisplaySetting.Color.allCases, id: \.rawValue) { color in
+                    ForEach(ReaderDisplaySettings.Color.allCases, id: \.rawValue) { color in
                         Button {
                             viewModel.displaySetting.color = color
                             viewModel.didSelectItem?() // notify the view controller to update.
@@ -431,7 +375,7 @@ extension ReaderDisplaySettingSelectionView {
         var fontSelectionView: some View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: .DS.Padding.half) {
-                    ForEach(ReaderDisplaySetting.Font.allCases, id: \.rawValue) { font in
+                    ForEach(ReaderDisplaySettings.Font.allCases, id: \.rawValue) { font in
                         Button {
                             viewModel.displaySetting.font = font
                             viewModel.didSelectItem?() // notify the view controller to update.
@@ -441,7 +385,7 @@ extension ReaderDisplaySettingSelectionView {
                         } label: {
                             VStack(spacing: .DS.Padding.half) {
                                 Text("Aa")
-                                    .font(Font(ReaderDisplaySetting.font(with: font, textStyle: .largeTitle)).bold())
+                                    .font(Font(ReaderDisplaySettings.font(with: font, textStyle: .largeTitle)).bold())
                                     .foregroundStyle(Color(.label))
                                 Text(font.rawValue.capitalized)
                                     .font(.footnote)
@@ -466,19 +410,19 @@ extension ReaderDisplaySettingSelectionView {
 
         var sizeSelectionView: some View {
             Slider(value: $sliderValue,
-                   in: Double(ReaderDisplaySetting.Size.extraSmall.rawValue)...Double(ReaderDisplaySetting.Size.extraLarge.rawValue),
+                   in: Double(ReaderDisplaySettings.Size.extraSmall.rawValue)...Double(ReaderDisplaySettings.Size.extraLarge.rawValue),
                    step: 1) {
                 Text(Strings.sizeSliderLabel)
             } minimumValueLabel: {
                 Text("A")
-                    .font(Font(ReaderDisplaySetting.font(with: .sans, size: .extraSmall, textStyle: .body)))
+                    .font(Font(ReaderDisplaySettings.font(with: .sans, size: .extraSmall, textStyle: .body)))
                     .accessibilityHidden(true)
             } maximumValueLabel: {
                 Text("A")
-                    .font(Font(ReaderDisplaySetting.font(with: .sans, size: .extraLarge, textStyle: .body)))
+                    .font(Font(ReaderDisplaySettings.font(with: .sans, size: .extraLarge, textStyle: .body)))
                     .accessibilityHidden(true)
             } onEditingChanged: { _ in
-                let size = ReaderDisplaySetting.Size(rawValue: Int(sliderValue)) ?? .normal
+                let size = ReaderDisplaySettings.Size(rawValue: Int(sliderValue)) ?? .normal
                 viewModel.displaySetting.size = size
                 viewModel.didSelectItem?() // notify the view controller to update.
                 WPAnalytics.track(.readingPreferencesItemTapped,

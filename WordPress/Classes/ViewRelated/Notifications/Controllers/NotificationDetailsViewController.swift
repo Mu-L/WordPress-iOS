@@ -50,19 +50,11 @@ class NotificationDetailsViewController: UIViewController, NoResultsViewHost {
 
     /// RelpyTextView
     ///
-    @IBOutlet var replyTextView: ReplyTextView!
-
-    /// Reply Suggestions
-    ///
-    @IBOutlet var suggestionsTableView: SuggestionsTableView?
+    @IBOutlet var replyTextView: CommentLargeButton!
 
     /// Embedded Media Downloader
     ///
     fileprivate var mediaDownloader = NotificationMediaDownloader()
-
-    /// Keyboard Manager: Aids in the Interactive Dismiss Gesture
-    ///
-    fileprivate var keyboardManager: KeyboardDismissHelper?
 
     /// Cached values used for returning the estimated row heights of autosizing cells.
     ///
@@ -148,15 +140,12 @@ class NotificationDetailsViewController: UIViewController, NoResultsViewHost {
         setupTableViewCells()
         setupTableDelegates()
         setupReplyTextView()
-        setupSuggestionsView()
-        setupKeyboardManager()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.deselectSelectedRowWithAnimation(true)
-        keyboardManager?.startListeningToKeyboardNotifications()
 
+        tableView.deselectSelectedRowWithAnimation(true)
         refreshInterface()
         markAsReadIfNeeded()
         setupNotificationListeners()
@@ -164,14 +153,14 @@ class NotificationDetailsViewController: UIViewController, NoResultsViewHost {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         showConfettiIfNeeded()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        keyboardManager?.stopListeningToKeyboardNotifications()
+
         tearDownNotificationListeners()
-        storeNotificationReplyIfNeeded()
         dismissNotice()
     }
 
@@ -213,7 +202,6 @@ class NotificationDetailsViewController: UIViewController, NoResultsViewHost {
         formatter.resetCache()
         tableView.reloadData()
         attachReplyViewIfNeeded()
-        attachSuggestionsViewIfNeeded()
         adjustLayoutConstraintsIfNeeded()
         refreshNavigationBar()
     }
@@ -409,20 +397,14 @@ extension NotificationDetailsViewController {
     }
 
     func setupReplyTextView() {
-        let previousReply = NotificationReplyStore.shared.loadReply(for: note.notificationId)
-        let replyTextView = ReplyTextView(width: view.frame.width)
+        let replyTextView = CommentLargeButton()
 
         replyTextView.placeholder = NSLocalizedString("Write a reply", comment: "Placeholder text for inline compose view")
-        replyTextView.text = previousReply
-        replyTextView.accessibilityIdentifier = .replyTextViewAccessibilityId
         replyTextView.accessibilityLabel = NSLocalizedString("Reply Text", comment: "Notifications Reply Accessibility Identifier")
-        replyTextView.delegate = self
-        replyTextView.onReply = { [weak self] content in
-            let group = self?.note.contentGroup(ofKind: .comment)
-            guard let block: FormattableCommentContent = group?.blockOfKind(.comment) else {
-                return
-            }
-            self?.replyCommentWithBlock(block, content: content)
+
+        replyTextView.onTap = {
+            // TODO: (kean) remove the remaining .comment-related code
+            wpAssertionFailure("Notifications have been using NotificationCommentDetailViewController since 2023")
         }
 
         replyTextView.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -430,44 +412,14 @@ extension NotificationDetailsViewController {
         self.replyTextView = replyTextView
     }
 
-    func setupSuggestionsView() {
-        guard let siteID = note.metaSiteID else {
-            return
-        }
-
-        suggestionsTableView = SuggestionsTableView(siteID: siteID, suggestionType: .mention, delegate: self)
-        suggestionsTableView?.prominentSuggestionsIds = SuggestionsTableView.prominentSuggestions(
-            fromPostAuthorId: nil,
-            commentAuthorId: note.metaCommentAuthorID,
-            defaultAccountId: try? WPAccount.lookupDefaultWordPressComAccount(in: self.mainContext)?.userID
-        )
-
-        suggestionsTableView?.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    func setupKeyboardManager() {
-        precondition(replyTextView != nil)
-        precondition(bottomLayoutConstraint != nil)
-
-        keyboardManager = KeyboardDismissHelper(parentView: view,
-                                                scrollView: tableView,
-                                                dismissableControl: replyTextView,
-                                                bottomLayoutConstraint: bottomLayoutConstraint)
-    }
-
     func setupNotificationListeners() {
         let nc = NotificationCenter.default
-        nc.addObserver(self,
-                       selector: #selector(notificationWasUpdated),
-                       name: .NSManagedObjectContextObjectsDidChange,
-                       object: note.managedObjectContext)
+        nc.addObserver(self, selector: #selector(notificationWasUpdated), name: .NSManagedObjectContextObjectsDidChange, object: note.managedObjectContext)
     }
 
     func tearDownNotificationListeners() {
         let nc = NotificationCenter.default
-        nc.removeObserver(self,
-                          name: .NSManagedObjectContextObjectsDidChange,
-                          object: note.managedObjectContext)
+        nc.removeObserver(self, name: .NSManagedObjectContextObjectsDidChange, object: note.managedObjectContext)
     }
 }
 
@@ -490,42 +442,6 @@ extension NotificationDetailsViewController {
             return false
         }
         return block.action(id: ReplyToCommentAction.actionIdentifier())?.on ?? false
-    }
-
-    func storeNotificationReplyIfNeeded() {
-        guard let reply = replyTextView?.text, let notificationId = note?.notificationId, !reply.isEmpty else {
-            return
-        }
-
-        NotificationReplyStore.shared.store(reply: reply, for: notificationId)
-    }
-}
-
-// MARK: - Suggestions View Helpers
-//
-private extension NotificationDetailsViewController {
-    func attachSuggestionsViewIfNeeded() {
-        guard shouldAttachSuggestionsView, let suggestionsTableView = self.suggestionsTableView else {
-            self.suggestionsTableView?.removeFromSuperview()
-            return
-        }
-
-        view.addSubview(suggestionsTableView)
-
-        NSLayoutConstraint.activate([
-            suggestionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            suggestionsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            suggestionsTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            suggestionsTableView.bottomAnchor.constraint(equalTo: replyTextView.topAnchor)
-        ])
-    }
-
-    var shouldAttachSuggestionsView: Bool {
-        guard let siteID = note.metaSiteID,
-              let blog = Blog.lookup(withID: siteID, in: ContextManager.shared.mainContext) else {
-            return false
-        }
-        return shouldAttachReplyView && SuggestionService.shared.shouldShowSuggestions(for: blog)
     }
 }
 
@@ -755,18 +671,18 @@ private extension NotificationDetailsViewController {
         // Setup: Properties
         // Note: Approve Action is actually a synonym for 'Edit' (Based on Calypso's basecode)
         //
-        cell.isReplyEnabled     = UIDevice.isPad() && commentBlock.isActionOn(id: ReplyToCommentAction.actionIdentifier())
-        cell.isLikeEnabled      = commentBlock.isActionEnabled(id: LikeCommentAction.actionIdentifier())
-        cell.isApproveEnabled   = commentBlock.isActionEnabled(id: ApproveCommentAction.actionIdentifier())
-        cell.isTrashEnabled     = commentBlock.isActionEnabled(id: TrashCommentAction.actionIdentifier())
-        cell.isSpamEnabled      = commentBlock.isActionEnabled(id: MarkAsSpamAction.actionIdentifier())
-        cell.isEditEnabled      = commentBlock.isActionOn(id: ApproveCommentAction.actionIdentifier())
-        cell.isLikeOn           = commentBlock.isActionOn(id: LikeCommentAction.actionIdentifier())
-        cell.isApproveOn        = commentBlock.isActionOn(id: ApproveCommentAction.actionIdentifier())
+        cell.isReplyEnabled = UIDevice.isPad() && commentBlock.isActionOn(id: ReplyToCommentAction.actionIdentifier())
+        cell.isLikeEnabled = commentBlock.isActionEnabled(id: LikeCommentAction.actionIdentifier())
+        cell.isApproveEnabled = commentBlock.isActionEnabled(id: ApproveCommentAction.actionIdentifier())
+        cell.isTrashEnabled = commentBlock.isActionEnabled(id: TrashCommentAction.actionIdentifier())
+        cell.isSpamEnabled = commentBlock.isActionEnabled(id: MarkAsSpamAction.actionIdentifier())
+        cell.isEditEnabled = commentBlock.isActionOn(id: ApproveCommentAction.actionIdentifier())
+        cell.isLikeOn = commentBlock.isActionOn(id: LikeCommentAction.actionIdentifier())
+        cell.isApproveOn = commentBlock.isActionOn(id: ApproveCommentAction.actionIdentifier())
 
         // Setup: Callbacks
-        cell.onReplyClick = { [weak self] _ in
-            self?.focusOnReplyTextViewWithBlock(commentBlock)
+        cell.onReplyClick = { _ in
+            wpAssertionFailure("no longer used")
         }
 
         cell.onLikeClick = { [weak self] _ in
@@ -871,9 +787,9 @@ private extension NotificationDetailsViewController {
 //
 extension NotificationDetailsViewController {
     @objc func notificationWasUpdated(_ notification: Foundation.Notification) {
-        let updated   = notification.userInfo?[NSUpdatedObjectsKey]   as? Set<NSManagedObject> ?? Set()
+        let updated = notification.userInfo?[NSUpdatedObjectsKey]   as? Set<NSManagedObject> ?? Set()
         let refreshed = notification.userInfo?[NSRefreshedObjectsKey] as? Set<NSManagedObject> ?? Set()
-        let deleted   = notification.userInfo?[NSDeletedObjectsKey]   as? Set<NSManagedObject> ?? Set()
+        let deleted = notification.userInfo?[NSDeletedObjectsKey]   as? Set<NSManagedObject> ?? Set()
 
         // Reload the table, if *our* notification got updated + Mark as Read since it's already onscreen!
         if updated.contains(note) || refreshed.contains(note) {
@@ -901,7 +817,7 @@ extension NotificationDetailsViewController {
 private extension NotificationDetailsViewController {
 
     func displayURL(_ url: URL?) {
-        guard let url = url else {
+        guard let url else {
             tableView.deselectSelectedRowWithAnimation(true)
             return
         }
@@ -919,10 +835,11 @@ private extension NotificationDetailsViewController {
     func displayUserProfile(_ user: LikeUser, from indexPath: IndexPath) {
         let userProfileVC = UserProfileSheetViewController(user: user)
         userProfileVC.blogUrlPreviewedSource = "notif_like_list_user_profile"
-        let bottomSheet = BottomSheetViewController(childViewController: userProfileVC)
-
-        let sourceView = tableView.cellForRow(at: indexPath) ?? view
-        bottomSheet.show(from: self, sourceView: sourceView)
+        userProfileVC.modalPresentationStyle = .popover
+        userProfileVC.popoverPresentationController?.sourceView = tableView.cellForRow(at: indexPath) ?? view
+        userProfileVC.popoverPresentationController?.adaptiveSheetPresentationController.prefersGrabberVisible = true
+        userProfileVC.popoverPresentationController?.adaptiveSheetPresentationController.detents = [.medium()]
+        present(userProfileVC, animated: true)
 
         WPAnalytics.track(.userProfileSheetShown, properties: ["source": "like_notification_list"])
     }
@@ -1047,7 +964,7 @@ private extension NotificationDetailsViewController {
 
         let actionContext = ActionContext(block: block, completion: { [weak self] (request, success) in
             WPAppAnalytics.track(.notificationsCommentFlaggedAsSpam, withBlogID: block.metaSiteID)
-            guard let request = request else {
+            guard let request else {
                 return
             }
             self?.onDeletionRequestCallback?(request)
@@ -1072,7 +989,7 @@ private extension NotificationDetailsViewController {
 
         let actionContext = ActionContext(block: block, completion: { [weak self] (request, success) in
             WPAppAnalytics.track(.notificationsCommentTrashed, withBlogID: block.metaSiteID)
-            guard let request = request else {
+            guard let request else {
                 return
             }
             self?.onDeletionRequestCallback?(request)
@@ -1082,29 +999,6 @@ private extension NotificationDetailsViewController {
 
         // We're thru
         _ = navigationController?.popToRootViewController(animated: true)
-    }
-
-    func replyCommentWithBlock(_ block: FormattableCommentContent, content: String) {
-        guard let replyAction = block.action(id: ReplyToCommentAction.actionIdentifier()) else {
-            return
-        }
-
-        let generator = UINotificationFeedbackGenerator()
-        generator.prepare()
-        generator.notificationOccurred(.success)
-
-        let actionContext = ActionContext(block: block, content: content) { [weak self] (request, success) in
-            if success {
-                WPAppAnalytics.track(.notificationsCommentRepliedTo)
-                let message = NSLocalizedString("Reply Sent!", comment: "The app successfully sent a comment")
-                self?.displayNotice(title: message)
-            } else {
-                generator.notificationOccurred(.error)
-                self?.displayReplyError(with: block, content: content)
-            }
-        }
-
-        replyAction.execute(context: actionContext)
     }
 
     func updateCommentWithBlock(_ block: FormattableCommentContent, content: String) {
@@ -1127,19 +1021,6 @@ private extension NotificationDetailsViewController {
         }
 
         editCommentAction.execute(context: actionContext)
-    }
-}
-
-// MARK: - Replying Comments
-//
-private extension NotificationDetailsViewController {
-    func focusOnReplyTextViewWithBlock(_ content: FormattableContent) {
-        let _ = replyTextView.becomeFirstResponder()
-    }
-
-    func displayReplyError(with block: FormattableCommentContent, content: String) {
-        let message = NSLocalizedString("There has been an unexpected error while sending your reply", comment: "Reply Failure Message")
-        displayNotice(title: message)
     }
 }
 
@@ -1189,56 +1070,6 @@ private extension NotificationDetailsViewController {
 
         // Note: This viewController might not be visible anymore
         alertController.presentFromRootViewController()
-    }
-}
-
-// MARK: - UITextViewDelegate
-//
-extension NotificationDetailsViewController: ReplyTextViewDelegate {
-    func textView(_ textView: UITextView, didTypeWord word: String) {
-        suggestionsTableView?.showSuggestions(forWord: word)
-    }
-
-    func replyTextView(_ replyTextView: ReplyTextView, willEnterFullScreen controller: FullScreenCommentReplyViewController) {
-        guard let siteID = note.metaSiteID, let suggestionsTableView = self.suggestionsTableView else {
-            return
-        }
-
-        let lastSearchText = suggestionsTableView.viewModel.searchText
-        suggestionsTableView.hideSuggestions()
-        controller.enableSuggestions(with: siteID, prominentSuggestionsIds: suggestionsTableView.prominentSuggestionsIds, searchText: lastSearchText)
-    }
-
-    func replyTextView(_ replyTextView: ReplyTextView, didExitFullScreen lastSearchText: String?) {
-        guard let lastSearchText = lastSearchText, !lastSearchText.isEmpty else {
-            return
-        }
-        suggestionsTableView?.showSuggestions(forWord: lastSearchText)
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-//
-extension NotificationDetailsViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        keyboardManager?.scrollViewWillBeginDragging(scrollView)
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        keyboardManager?.scrollViewDidScroll(scrollView)
-    }
-
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        keyboardManager?.scrollViewWillEndDragging(scrollView, withVelocity: velocity)
-    }
-}
-
-// MARK: - SuggestionsTableViewDelegate
-//
-extension NotificationDetailsViewController: SuggestionsTableViewDelegate {
-    func suggestionsTableView(_ suggestionsTableView: SuggestionsTableView, didSelectSuggestion suggestion: String?, forSearchText text: String) {
-        replyTextView.replaceTextAtCaret(text as NSString?, withText: suggestion)
-        suggestionsTableView.showSuggestions(forWord: String())
     }
 }
 

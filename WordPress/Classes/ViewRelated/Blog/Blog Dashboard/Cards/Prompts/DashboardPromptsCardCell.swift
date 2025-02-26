@@ -271,7 +271,7 @@ class DashboardPromptsCardCell: UICollectionViewCell, Reusable {
     private lazy var shareButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(Strings.shareButtonTitle, for: .normal)
+        button.setTitle(SharedStrings.Button.share, for: .normal)
         button.setTitleColor(WPStyleGuide.BloggingPrompts.buttonTitleColor, for: .normal)
         button.titleLabel?.font = WPStyleGuide.BloggingPrompts.buttonTitleFont
         button.titleLabel?.adjustsFontForContentSizeCategory = true
@@ -362,7 +362,7 @@ class DashboardPromptsCardCell: UICollectionViewCell, Reusable {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         //  refresh when the appearance style changed so the placeholder images are correctly recolored.
-        if let previousTraitCollection = previousTraitCollection,
+        if let previousTraitCollection,
             previousTraitCollection.userInterfaceStyle != traitCollection.userInterfaceStyle {
             refreshStackView()
         }
@@ -457,7 +457,7 @@ private extension DashboardPromptsCardCell {
     }
 
     @objc func handleObjectsChange(_ notification: Foundation.Notification) {
-        guard let prompt = prompt else {
+        guard let prompt else {
             return
         }
         let updated = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject> ?? Set()
@@ -471,7 +471,7 @@ private extension DashboardPromptsCardCell {
     // MARK: Prompt Fetching
 
     func fetchPrompt() {
-        guard let bloggingPromptsService = bloggingPromptsService else {
+        guard let bloggingPromptsService else {
             didFailLoadingPrompt = true
             DDLogError("Failed creating BloggingPromptsService instance.")
             return
@@ -490,8 +490,8 @@ private extension DashboardPromptsCardCell {
     // MARK: Button actions
 
     @objc func answerButtonTapped() {
-        guard let blog = blog,
-              let prompt = prompt else {
+        guard let blog,
+              let prompt else {
             return
         }
         WPAnalytics.track(.promptsDashboardCardAnswerPrompt)
@@ -505,8 +505,8 @@ private extension DashboardPromptsCardCell {
     // MARK: Context menu actions
 
     func viewMoreMenuTapped() {
-        guard let blog = blog,
-              let presenterViewController = presenterViewController else {
+        guard let blog,
+              let presenterViewController else {
             DDLogError("Failed showing Blogging Prompts from Dashboard card. Missing blog or controller.")
             return
         }
@@ -538,7 +538,7 @@ private extension DashboardPromptsCardCell {
 
     func learnMoreTapped() {
         WPAnalytics.track(.promptsDashboardCardMenuLearnMore)
-        guard let presenterViewController = presenterViewController, let blog else {
+        guard let presenterViewController, let blog else {
             wpAssertionFailure("invalid_state")
             return
         }
@@ -552,7 +552,6 @@ private extension DashboardPromptsCardCell {
         static let cardFrameTitle = NSLocalizedString("Prompts", comment: "Title label for the Prompts card in My Sites tab.")
         static let answerButtonTitle = NSLocalizedString("Answer Prompt", comment: "Title for a call-to-action button on the prompts card.")
         static let answeredLabelTitle = NSLocalizedString("✓ Answered", comment: "Title label that indicates the prompt has been answered.")
-        static let shareButtonTitle = NSLocalizedString("Share", comment: "Title for a button that allows the user to share their answer to the prompt.")
         static let answerInfoSingularFormat = NSLocalizedString("%1$d answer", comment: "Singular format string for displaying the number of users "
                                                                 + "that answered the blogging prompt.")
         static let answerInfoPluralFormat = NSLocalizedString("%1$d answers", comment: "Plural format string for displaying the number of users "
@@ -650,7 +649,7 @@ private extension DashboardPromptsCardCell {
     }
 
     func saveSkippedPromptForSite() {
-        guard let prompt = prompt,
+        guard let prompt,
         let siteID = blog?.dotComID?.stringValue else {
             return
         }

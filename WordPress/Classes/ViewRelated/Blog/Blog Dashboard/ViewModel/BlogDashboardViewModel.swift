@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import CoreData
 import WordPressKit
+import WordPressCore
 
 enum DashboardSection: Int, CaseIterable, Sendable {
     case migrationSuccess
@@ -55,7 +56,7 @@ final class BlogDashboardViewModel {
     }()
 
     private lazy var dataSource: DashboardDataSource? = {
-        guard let viewController = viewController else {
+        guard let viewController else {
             return nil
         }
 
@@ -108,7 +109,7 @@ final class BlogDashboardViewModel {
         var _error: Error?
 
         do {
-            self.wordpressClient = try WordPressClient.for(site: .from(blog: self.blog), in: .shared)
+            self.wordpressClient = try WordPressClient(site: .init(blog: self.blog))
         } catch {
             _error = error
             self.wordpressClient = nil

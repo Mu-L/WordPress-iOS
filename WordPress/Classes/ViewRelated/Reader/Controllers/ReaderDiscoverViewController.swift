@@ -9,9 +9,13 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
     private var selectedChannel: ReaderDiscoverChannel = .recommended
     private let topic: ReaderAbstractTopic
     private var streamVC: ReaderStreamViewController?
+    private weak var selectInterestsVC: ReaderSelectInterestsViewController?
+    private let selectInterestsCoordinator = ReaderSelectInterestsCoordinator()
     private let tags: ManagedObjectsObserver<ReaderTagTopic>
     private let viewContext: NSManagedObjectContext
     private var cancellables: [AnyCancellable] = []
+    private let notificationsButtonViewModel = NotificationsButtonViewModel()
+    private var notificationsButtonCancellable: AnyCancellable?
 
     init(topic: ReaderAbstractTopic) {
         wpAssert(ReaderHelpers.topicIsDiscover(topic))
@@ -36,10 +40,33 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
         setupHeaderView()
 
         configureStream(for: selectedChannel)
+
+        showSelectInterestsIfNeeded()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        setupNotificationsBarButtonItem()
     }
 
     private func setupNavigation() {
         navigationItem.largeTitleDisplayMode = .never
+        setupNotificationsBarButtonItem()
+    }
+
+    private func setupNotificationsBarButtonItem() {
+        notificationsButtonCancellable = nil
+        if traitCollection.horizontalSizeClass == .regular {
+            notificationsButtonCancellable = notificationsButtonViewModel.$image.sink { [weak self] in
+                guard let self else { return }
+                self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: $0, style: .plain, target: self, action: #selector(buttonShowNotificationsTapped))]
+            }
+        }
+    }
+
+    @objc private func buttonShowNotificationsTapped(_ sender: UIBarButtonItem) {
+        NotificationsViewController.showInPopover(from: self, sourceItem: sender)
     }
 
     private func setupHeaderView() {
@@ -93,14 +120,17 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
 
         // Important to set before `viewDidLoad`
         streamVC.isEmbeddedInDiscover = true
-        streamVC.setHeaderView(headerView)
+        streamVC.preferredTableHeaderView = headerView
 
         addChild(streamVC)
         view.addSubview(streamVC.view)
         streamVC.view.pinEdges()
         streamVC.didMove(toParent: self)
 
-        navigationItem.titleView = streamVC.navigationItem.titleView // important
+        streamVC.titleView.detailsLabel.text = selectedChannel.localizedTitle
+        streamVC.titleView.detailsLabel.isHidden = false
+
+        navigationItem.titleView = streamVC.titleView // important
     }
 
     /// TODO: (tech-debt) the app currently stores the responses from the `/discover`
@@ -112,12 +142,50 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
         ReaderCardService.removeAllCards()
     }
 
-    // MARK: - ReaderDiscoverHeaderViewDelegate
+    // MARK: ReaderDiscoverHeaderViewDelegate
 
     func readerDiscoverHeaderView(_ view: ReaderDiscoverHeaderView, didChangeSelection selection: ReaderDiscoverChannel) {
         self.selectedChannel = selection
         configureStream(for: selection)
         WPAnalytics.track(.readerDiscoverChannelSelected, properties: selection.analyticsProperties)
+    }
+
+    // MARK: Select Interests
+
+    private func showSelectInterestsIfNeeded() {
+        guard !UserDefaults.standard.readerDidSelectInterestsKey else {
+            return
+        }
+        selectInterestsCoordinator.isFollowingInterests { [weak self] isFollowing in
+            if !isFollowing {
+                self?.showSelectInterestsScreen()
+            }
+        }
+    }
+
+    private func showSelectInterestsScreen() {
+        guard selectInterestsVC == nil else { return }
+
+        let selectInterestsVC = ReaderSelectInterestsViewController(configuration: .discover)
+        selectInterestsVC.isModalInPresentation = true
+        selectInterestsVC.didSaveInterests = { [weak self] _ in
+            self?.didSaveInterests()
+        }
+        present(selectInterestsVC, animated: true)
+        self.selectInterestsVC = selectInterestsVC
+    }
+
+    private func didSaveInterests() {
+        UserDefaults.standard.readerDidSelectInterestsKey = true
+
+        guard selectInterestsVC != nil else { return }
+        dismiss(animated: true) {
+            if let streamVC = self.streamVC {
+                streamVC.scrollViewToTop()
+                streamVC.displayLoadingStream()
+                streamVC.syncIfAppropriate(forceSync: true)
+            }
+        }
     }
 }
 
@@ -153,8 +221,8 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
         // the superclass might trigger `layoutIfNeeded` from its `viewDidLoad`, and we want to make sure that
         // all the cell types have been registered by that time.
         // see: https://github.com/wordpress-mobile/WordPress-iOS/pull/23368
-        tableView.register(ReaderTopicsCardCell.defaultNib, forCellReuseIdentifier: readerCardTopicsIdentifier)
-        tableView.register(ReaderSitesCardCell.self, forCellReuseIdentifier: readerCardSitesIdentifier)
+        tableView.register(ReaderRecommendedTagsCell.self, forCellReuseIdentifier: readerCardTopicsIdentifier)
+        tableView.register(ReaderRecommendedSitesCell.self, forCellReuseIdentifier: readerCardSitesIdentifier)
     }
 
     required init?(coder: NSCoder) {
@@ -165,11 +233,6 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
         super.viewDidLoad()
 
         addObservers()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        displaySelectInterestsIfNeeded()
     }
 
     // MARK: - UITableView
@@ -195,9 +258,9 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
             return cell(for: post, at: indexPath, showsSeparator: shouldShowSeparator)
 
         case .topics:
-            return cell(for: card.topicsArray)
+            return makeRecommendedTagsCell(for: card.topicsArray)
         case .sites:
-            return cell(for: card.sitesArray)
+            return makeRecommendedSitesCell(for: card.sitesArray)
         case .unknown:
             return UITableViewCell()
         }
@@ -217,24 +280,18 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
         }
     }
 
-    func cell(for interests: [ReaderTagTopic]) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: readerCardTopicsIdentifier) as! ReaderTopicsCardCell
-        cell.configure(interests)
-        cell.delegate = self
+    private func makeRecommendedTagsCell(for interests: [ReaderTagTopic]) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: readerCardTopicsIdentifier) as! ReaderRecommendedTagsCell
+        cell.configure(with: interests, delegate: self)
         hideSeparator(for: cell)
         return cell
     }
 
-    func cell(for sites: [ReaderSiteTopic]) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: readerCardSitesIdentifier) as! ReaderSitesCardCell
-        cell.configure(sites)
-        cell.delegate = self
+    private func makeRecommendedSitesCell(for sites: [ReaderSiteTopic]) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: readerCardSitesIdentifier) as! ReaderRecommendedSitesCell
+        cell.configure(with: sites, delegate: self)
         hideSeparator(for: cell)
         return cell
-    }
-
-    private func isTableViewAtTheTop() -> Bool {
-        return tableView.contentOffset.y == 0
     }
 
     @objc private func reload(_ notification: Foundation.Notification) {
@@ -257,7 +314,7 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
     }
 
     override func loadMoreItems(_ success: ((Bool) -> Void)?, failure: ((NSError) -> Void)?) {
-        footerView.showSpinner(true)
+        footerView.isHidden = false
 
         page += 1
         WPAnalytics.trackReader(.readerDiscoverPaginated, properties: ["page": page])
@@ -265,7 +322,7 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
         cardsService.fetch(isFirstPage: false, success: { _, hasMore in
             success?(hasMore)
         }, failure: { error in
-            guard let error = error else {
+            guard let error else {
                 return
             }
 
@@ -279,7 +336,7 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
 
     override func syncIfAppropriate(forceSync: Bool = false) {
         // Only sync if the tableview is at the top, otherwise this will change tableview's offset
-        if isTableViewAtTheTop() {
+        if tableView.contentOffset.y <= 0 {
             super.syncIfAppropriate(forceSync: forceSync)
         }
     }
@@ -331,25 +388,18 @@ private class ReaderDiscoverStreamViewController: ReaderStreamViewController {
         super.syncIfAppropriate(forceSync: true)
         tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.fade)
     }
-}
 
-// MARK: - Select Interests Display
-private extension ReaderDiscoverStreamViewController {
-    func displaySelectInterestsIfNeeded() {
-        selectInterestsVC.userIsFollowingTopics { [weak self] isFollowing in
-            guard let self else { return }
-            if isFollowing {
-                self.hideSelectInterestsView()
-            } else {
-                self.showSelectInterestsView()
-            }
+    override func getPost(at indexPath: IndexPath) -> ReaderPost? {
+        guard let card: ReaderCard = content.object(at: indexPath) else {
+            return nil
         }
+        return card.post
     }
 }
 
-// MARK: - ReaderTopicsTableCardCellDelegate
+// MARK: - ReaderRecommendationsCellDelegate
 
-extension ReaderDiscoverStreamViewController: ReaderTopicsTableCardCellDelegate {
+extension ReaderDiscoverStreamViewController: ReaderRecommendationsCellDelegate {
     func didSelect(topic: ReaderAbstractTopic) {
         if topic as? ReaderTagTopic != nil {
             WPAnalytics.trackReader(.readerDiscoverTopicTapped)
@@ -363,16 +413,6 @@ extension ReaderDiscoverStreamViewController: ReaderTopicsTableCardCellDelegate 
 
             let topicStreamViewController = ReaderStreamViewController.controllerWithSiteID(siteTopic.siteID, isFeed: false)
             navigationController?.pushViewController(topicStreamViewController, animated: true)
-        }
-    }
-}
-
-// MARK: - ReaderSitesCardCellDelegate
-
-extension ReaderDiscoverStreamViewController: ReaderSitesCardCellDelegate {
-    func handleFollowActionForTopic(_ topic: ReaderAbstractTopic, for cell: ReaderSitesCardCell) {
-        toggleFollowingForTopic(topic) { success in
-            cell.didToggleFollowing(topic, with: success)
         }
     }
 }

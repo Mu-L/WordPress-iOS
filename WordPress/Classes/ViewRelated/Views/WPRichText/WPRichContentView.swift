@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import WordPressShared
+import AsyncImageKit
 
 @objc protocol WPRichContentViewDelegate: UITextViewDelegate {
     func richContentView(_ richContentView: WPRichContentView, didReceiveImageAction image: WPRichTextImage)
@@ -33,13 +34,13 @@ class WPRichContentView: UITextView {
     }
 
     @objc lazy var linkTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
-              let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapRecognized))
-              gestureRecognizer.cancelsTouchesInView = true
-              gestureRecognizer.delaysTouchesBegan = true
-              gestureRecognizer.delaysTouchesEnded = true
-              gestureRecognizer.delegate = self
-              return gestureRecognizer
-          }()
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapRecognized))
+        gestureRecognizer.cancelsTouchesInView = true
+        gestureRecognizer.delaysTouchesBegan = true
+        gestureRecognizer.delaysTouchesEnded = true
+        gestureRecognizer.delegate = self
+        return gestureRecognizer
+    }()
 
     override var textContainerInset: UIEdgeInsets {
         didSet {
@@ -267,7 +268,7 @@ extension WPRichContentView: WPTextAttachmentManagerDelegate {
     ///
     fileprivate func richTextImage(with size: CGSize, _ url: URL, _ attachment: WPTextAttachment) -> WPRichTextImage {
         let image = WPRichTextImage(frame: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
-        image.addTarget(self, action: #selector(type(of: self).handleImageTapped(_:)), for: .touchUpInside)
+        image.addTarget(self, action: #selector(handleImageTapped), for: .touchUpInside)
         image.contentURL = url
         image.linkURL = linkURLForImageAttachment(attachment)
         return image
@@ -408,7 +409,7 @@ extension WPRichContentView: WPTextAttachmentManagerDelegate {
     ///     - sender: The WPRichTextImage that was tapped.
     ///
     @objc func handleImageTapped(_ sender: WPRichTextImage) {
-        guard let delegate = delegate else {
+        guard let delegate else {
             return
         }
         if let url = sender.linkURL,
@@ -463,7 +464,7 @@ private extension WPRichContentView {
     }
 
     func drawBlockquotes(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
-        guard let textStorage = textStorage else {
+        guard let textStorage else {
             return
         }
 
@@ -558,7 +559,7 @@ extension WPRichContentView: UIGestureRecognizerDelegate {
         let point = touch.location(in: self)
         let characterIndex = self.layoutManager.characterIndex(for: point, in: self.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         // handle tap on link
-        if let linkAttribute = self.attributedText?.attribute(.link, at: characterIndex, effectiveRange: nil) {
+        if let attributedText, characterIndex >= 0 && characterIndex < attributedText.length, let linkAttribute = attributedText.attribute(.link, at: characterIndex, effectiveRange: nil) {
             return linkAttribute is URL
         }
 

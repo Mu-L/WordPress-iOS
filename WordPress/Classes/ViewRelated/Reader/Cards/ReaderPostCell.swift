@@ -1,13 +1,17 @@
 import SwiftUI
 import UIKit
 import Combine
+import WordPressUI
+import WordPressShared
+import AsyncImageKit
 
 final class ReaderPostCell: ReaderStreamBaseCell {
     private let view = ReaderPostCellView()
-
     private var contentViewConstraints: [NSLayoutConstraint] = []
 
-    static let avatarSize: CGFloat = 28
+    static let avatarSize: CGFloat = SiteIconViewModel.Size.small.width
+    static let coverAspectRatio: CGFloat = 239.0 / 358.0
+    static let regularCoverWidth: CGFloat = 200
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -18,12 +22,6 @@ final class ReaderPostCell: ReaderStreamBaseCell {
             view.topAnchor.constraint(equalTo: contentView.topAnchor),
             view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).withPriority(999),
         ])
-    }
-
-    static func makeSelectedBackgroundView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = UIColor.opaqueSeparator.withAlphaComponent(0.2)
-        return view
     }
 
     required init?(coder: NSCoder) {
@@ -51,13 +49,20 @@ final class ReaderPostCell: ReaderStreamBaseCell {
 
     override func updateConstraints() {
         NSLayoutConstraint.deactivate(contentViewConstraints)
-        contentViewConstraints = [
-            view.leadingAnchor.constraint(equalTo: isCompact ? contentView.leadingAnchor : contentView.readableContentGuide.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: isCompact ? contentView.trailingAnchor : contentView.readableContentGuide.trailingAnchor)
-        ]
-        NSLayoutConstraint.activate(contentViewConstraints)
-
+        contentViewConstraints = view.pinEdges(.horizontal, to: isCompact ? contentView : contentView.readableContentGuide)
         super.updateConstraints()
+    }
+
+    static func preferredCoverSize(in window: UIWindow, isCompact: Bool) -> ImageSize {
+        var coverWidth = ReaderPostCell.regularCoverWidth
+        if isCompact {
+            coverWidth = min(window.bounds.width, window.bounds.height) - ReaderStreamBaseCell.insets.left * 2
+        }
+        return ImageSize(scaling: CGSize(width: coverWidth, height: coverWidth), in: window)
+    }
+
+    func getViewForZoomTransition() -> UIView {
+        view
     }
 }
 
@@ -66,14 +71,16 @@ private final class ReaderPostCellView: UIView {
     let avatarView = ReaderAvatarView()
     let buttonAuthor = makeAuthorButton()
     let timeLabel = UILabel()
+    let seenCheckmark = UIImageView()
     let buttonMore = makeButton(systemImage: "ellipsis", font: .systemFont(ofSize: 13))
 
     // Content
     let titleLabel = UILabel()
     let detailsLabel = UILabel()
-    let imageView = ImageView()
+    let imageView = AsyncImageView()
 
     // Footer
+    private lazy var toolbarView = UIStackView(buttons.allButtons)
     let buttons = ReaderPostToolbarButtons()
 
     private lazy var postPreview = UIStackView(axis: .vertical, alignment: .leading, spacing: 12, [
@@ -91,8 +98,10 @@ private final class ReaderPostCellView: UIView {
     let insets = ReaderStreamBaseCell.insets
 
     private var viewModel: ReaderPostCellViewModel? // important: has to retain
-    private let coverAspectRatio: CGFloat = 239.0 / 358.0
+
+    private var toolbarViewHeightConstraint: NSLayoutConstraint?
     private var imageViewConstraints: [NSLayoutConstraint] = []
+    private var isSeenCheckmarkConfigured = false
     private var cancellables: [AnyCancellable] = []
 
     override init(frame: CGRect) {
@@ -109,6 +118,11 @@ private final class ReaderPostCellView: UIView {
     }
 
     func prepareForReuse() {
+        if let constraint = toolbarViewHeightConstraint {
+            constraint.isActive = false
+            toolbarView.isHidden = false
+            toolbarViewHeightConstraint = nil
+        }
         cancellables = []
         avatarView.prepareForReuse()
         imageView.prepareForReuse()
@@ -132,7 +146,7 @@ private final class ReaderPostCellView: UIView {
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
 
-        buttonMore.configuration?.baseForegroundColor = UIColor.opaqueSeparator
+        buttonMore.configuration?.baseForegroundColor = UIColor.secondaryLabel.withAlphaComponent(0.5)
         buttonMore.configuration?.contentInsets = .init(top: 12, leading: 8, bottom: 12, trailing: 20)
     }
 
@@ -143,8 +157,8 @@ private final class ReaderPostCellView: UIView {
 
         // These seems to be an issue with `lineBreakMode` in `UIButton.Configuration`
         // and `.firstLineBaseline`, so reserving to `.center`.
-        let headerView = UIStackView(alignment: .center, [buttonAuthor, dot, timeLabel])
-        let toolbarView = UIStackView(buttons.allButtons)
+        let headerView = UIStackView(alignment: .center, [buttonAuthor, dot, timeLabel, seenCheckmark])
+        headerView.setCustomSpacing(4, after: timeLabel)
 
         for view in [avatarView, headerView, postPreview, buttonMore, toolbarView] {
             addSubview(view)
@@ -157,9 +171,9 @@ private final class ReaderPostCellView: UIView {
             avatarView.widthAnchor.constraint(equalToConstant: ReaderPostCell.avatarSize),
             avatarView.heightAnchor.constraint(equalToConstant: ReaderPostCell.avatarSize),
             avatarView.centerYAnchor.constraint(equalTo: timeLabel.centerYAnchor),
-            avatarView.trailingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: -8),
+            avatarView.trailingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: -9),
 
-            headerView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            headerView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             headerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: insets.left),
             headerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -50),
 
@@ -200,14 +214,14 @@ private final class ReaderPostCellView: UIView {
         NSLayoutConstraint.deactivate(imageViewConstraints)
         if isCompact {
             imageViewConstraints = [
-                imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: coverAspectRatio),
+                imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: ReaderPostCell.coverAspectRatio),
                 imageView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, constant: -(insets.left * 2)),
                 imageView.widthAnchor.constraint(equalTo: widthAnchor).withPriority(150)
             ]
         } else {
             imageViewConstraints = [
-                imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: coverAspectRatio),
-                imageView.widthAnchor.constraint(equalToConstant: 200)
+                imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: ReaderPostCell.coverAspectRatio),
+                imageView.widthAnchor.constraint(equalToConstant: ReaderPostCell.regularCoverWidth)
             ]
         }
         NSLayoutConstraint.activate(imageViewConstraints)
@@ -229,6 +243,8 @@ private final class ReaderPostCellView: UIView {
         buttons.reblog.addTarget(self, action: #selector(buttonReblogTapped), for: .primaryActionTriggered)
         buttons.comment.addTarget(self, action: #selector(buttonCommentTapped), for: .primaryActionTriggered)
         buttons.like.addTarget(self, action: #selector(buttonLikeTapped), for: .primaryActionTriggered)
+
+        avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(buttonAuthorTapped)))
     }
 
     @objc private func buttonAuthorTapped() {
@@ -248,7 +264,21 @@ private final class ReaderPostCellView: UIView {
     }
 
     @objc private func buttonLikeTapped() {
-        viewModel?.toggleLike()
+        guard let viewModel else {
+            return wpAssertionFailure("missing ViewModel")
+        }
+        if !viewModel.toolbar.isLiked {
+            var toolbar = viewModel.toolbar
+            toolbar.isLiked = true
+            toolbar.likeCount += 1
+            configureToolbar(with: toolbar)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            buttons.like.imageView?.fadeInWithRotationAnimation { _ in
+                viewModel.toggleLike()
+            }
+        } else {
+            viewModel.toggleLike()
+        }
     }
 
     private func makeMoreMenu() -> [UIMenuElement] {
@@ -276,19 +306,39 @@ private final class ReaderPostCellView: UIView {
         detailsLabel.text = viewModel.details
 
         imageView.isHidden = viewModel.imageURL == nil
+
         if let imageURL = viewModel.imageURL {
-            imageView.setImage(with: imageURL)
+            imageView.setImage(with: imageURL, size: preferredCoverSize)
         }
 
-        configureToolbar(with: viewModel.toolbar)
-        configureToolbarAccessibility(with: viewModel.toolbar)
+        if viewModel.isSeen == true {
+            configureSeenCheckmarkIfNeeded()
+            seenCheckmark.isHidden = false
+        } else {
+            seenCheckmark.isHidden = true
+        }
+
+        if !viewModel.isToolbarHidden {
+            configureToolbar(with: viewModel.toolbar)
+            configureToolbarAccessibility(with: viewModel.toolbar)
+        } else {
+            let constraint = toolbarView.heightAnchor.constraint(equalToConstant: 12)
+            constraint.isActive = true
+            toolbarView.isHidden = true
+            toolbarViewHeightConstraint = constraint
+        }
+    }
+
+    private var preferredCoverSize: ImageSize? {
+        guard let window = window ?? UIApplication.shared.mainWindow else { return nil }
+        return ReaderPostCell.preferredCoverSize(in: window, isCompact: isCompact)
     }
 
     private func configureToolbar(with viewModel: ReaderPostToolbarViewModel) {
         buttons.bookmark.configuration = {
             var configuration = buttons.bookmark.configuration ?? .plain()
             configuration.image = UIImage(systemName: viewModel.isBookmarked ? "bookmark.fill" : "bookmark")
-            configuration.baseForegroundColor = viewModel.isBookmarked ? UIAppColor.brand : .secondaryLabel
+            configuration.baseForegroundColor = viewModel.isBookmarked ? UIAppColor.primary : .secondaryLabel
             return configuration
         }()
 
@@ -310,8 +360,7 @@ private final class ReaderPostCellView: UIView {
 
     private func setAvatar(with viewModel: ReaderPostCellViewModel) {
         avatarView.setPlaceholder(UIImage(named: "post-blavatar-placeholder"))
-        let avatarSize = CGSize(width: ReaderPostCell.avatarSize, height: ReaderPostCell.avatarSize)
-            .scaled(by: UITraitCollection.current.displayScale)
+        let avatarSize = ImageSize(scaling: CGSize(width: ReaderPostCell.avatarSize, height: ReaderPostCell.avatarSize), in: self)
         if let avatarURL = viewModel.avatarURL {
             avatarView.setImage(with: avatarURL, size: avatarSize)
         } else {
@@ -319,6 +368,17 @@ private final class ReaderPostCellView: UIView {
                 self?.avatarView.setImage(with: $0, size: avatarSize)
             }.store(in: &cancellables)
         }
+    }
+
+    private func configureSeenCheckmarkIfNeeded() {
+        guard !isSeenCheckmarkConfigured else { return }
+        isSeenCheckmarkConfigured = true
+
+        seenCheckmark.image = UIImage(
+            systemName: "checkmark",
+            withConfiguration: UIImage.SymbolConfiguration(font: .preferredFont(forTextStyle: .caption1).withWeight(.medium))
+        )
+        seenCheckmark.tintColor = .secondaryLabel
     }
 
     private static let authorAttributes = AttributeContainer([
@@ -353,10 +413,10 @@ private func makeAuthorButton() -> UIButton {
 private func makeButton(systemImage: String, font: UIFont = UIFont.preferredFont(forTextStyle: .footnote)) -> UIButton {
     var configuration = UIButton.Configuration.plain()
     configuration.image = UIImage(systemName: systemImage)
-    configuration.imagePadding = 8
+    configuration.imagePadding = 6
     configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(font: font)
     configuration.baseForegroundColor = .secondaryLabel
-    configuration.contentInsets = .init(top: 16, leading: 12, bottom: 14, trailing: 12)
+    configuration.contentInsets = .init(top: 16, leading: 12, bottom: 16, trailing: 12)
 
     let button = UIButton(configuration: configuration)
     if #available(iOS 17.0, *) {

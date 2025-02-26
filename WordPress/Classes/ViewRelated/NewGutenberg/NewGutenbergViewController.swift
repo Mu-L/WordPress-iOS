@@ -1,4 +1,6 @@
 import UIKit
+import WordPressUI
+import AsyncImageKit
 import AutomatticTracks
 import GutenbergKit
 import SafariServices
@@ -21,6 +23,10 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
         SupportCoordinator(controllerToShowFrom: topmostPresentedViewController, tag: .editorHelp)
     }()
 
+    lazy var mediaPickerHelper: GutenbergMediaPickerHelper = {
+        return GutenbergMediaPickerHelper(context: self, post: post)
+    }()
+
     // MARK: - PostEditor
 
     private(set) lazy var postEditorStateContext: PostEditorStateContext = {
@@ -29,7 +35,7 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
 
     var analyticsEditorSource: String { Analytics.editorSource }
     var editorSession: PostEditorAnalyticsSession
-    var onClose: ((Bool) -> Void)?
+    var onClose: (() -> Void)?
 
     // MARK: - Set content
 
@@ -62,22 +68,12 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
     // MARK: - GutenbergKit
 
     private let editorViewController: GutenbergKit.EditorViewController
-    private weak var autosaveTimer: Timer?
 
-    var editorHasChanges: Bool {
-        var changes = post.changes
-        // TODO: cleanup (+ it doesn't handle scenarios like load from a revision)
-        // - warning: it has to compare two version serialized using the same system
-        if editorViewController.initialContent != post.content {
-            changes.content = post.content
-        } else {
-            changes.content = nil // yes, it needs to be set to .none manually
-        }
-        return !changes.isEmpty
+    lazy var autosaver = Autosaver() {
+        self.performAutoSave()
     }
 
     // TODO: remove (none of these APIs are needed for the new editor)
-    var autosaver = Autosaver(action: {})
     func prepopulateMediaItems(_ media: [Media]) {}
     var debouncer = WordPressShared.Debouncer(delay: 10)
     var replaceEditor: (EditorViewController, EditorViewController) -> ()
@@ -123,10 +119,8 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
         self.post = post
 
         self.replaceEditor = replaceEditor
-        self.editorSession = PostEditorAnalyticsSession(editor: .gutenberg, post: post)
+        self.editorSession = PostEditorAnalyticsSession(editor: .gutenbergKit, post: post)
         self.navigationBarManager = navigationBarManager ?? PostEditorNavigationBarManager()
-
-        let networkClient = NewGutenbergNetworkClient(blog: post.blog)
 
         let selfHostedApiUrl = post.blog.url(withPath: "wp-json/")
         let isSelfHosted = !post.blog.isHostedAtWPcom && !post.blog.isAtomic()
@@ -146,22 +140,23 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
         }
 
         let siteApiNamespace = post.blog.dotComID != nil && !isSelfHosted && applicationPassword == nil ? "sites/\(siteId ?? "")" : ""
-        let postType = post is Page ? "page" : "post"
-        let postId: Int? = post.postID?.intValue != -1 ? post.postID?.intValue : nil
 
-        self.editorViewController = GutenbergKit.EditorViewController(
-            id: postId,
-            type: postType,
+        var conf = EditorConfiguration(
             title: post.postTitle ?? "",
-            content: post.content ?? "",
-            service: GutenbergKit.EditorService(client: networkClient),
-            themeStyles: FeatureFlag.newGutenbergThemeStyles.enabled,
-            plugins: FeatureFlag.newGutenbergPlugins.enabled && isSelfHosted,
-            siteURL: post.blog.url ?? "",
-            siteApiRoot: siteApiRoot!,
-            siteApiNamespace: siteApiNamespace,
-            authHeader: authHeader
+            content: post.content ?? ""
         )
+        conf.postID = post.postID?.intValue != -1 ? post.postID?.intValue : nil
+        conf.postType = post is Page ? "page" : "post"
+
+        conf.siteURL = post.blog.url ?? ""
+        conf.siteApiRoot = siteApiRoot ?? ""
+        conf.siteApiNamespace = siteApiNamespace
+        conf.authHeader = authHeader
+
+        conf.themeStyles = FeatureFlag.newGutenbergThemeStyles.enabled
+        conf.plugins = FeatureFlag.newGutenbergPlugins.enabled && isSelfHosted
+
+        self.editorViewController = GutenbergKit.EditorViewController(configuration: conf)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -171,10 +166,6 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
 
     required init?(coder aDecoder: NSCoder) {
         fatalError()
-    }
-
-    deinit {
-        autosaveTimer?.invalidate()
     }
 
     // MARK: - Lifecycle methods
@@ -238,22 +229,8 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
     }
 
     private func reloadBlogIconView() {
-        let blog = post.blog
-
-//        if blog.hasIcon == true {
-//            let size = CGSize(width: 24, height: 24)
-//            navigationBarManager.siteIconView.imageView.downloadSiteIcon(for: blog, imageSize: size)
-//        } else if blog.isWPForTeams() {
-//            navigationBarManager.siteIconView.imageView.tintColor = UIColor.secondaryLabel
-//            navigationBarManager.siteIconView.imageView.image = UIImage.gridicon(.p2)
-//        } else {
-//            navigationBarManager.siteIconView.imageView.image = UIImage.siteIconPlaceholder
-//        }
-
-        // TODO: implement
-        // Docs: https://wordpress.org/gutenberg-framework/docs/basic-concepts/undo-redo
-        navigationBarManager.undoButton.isHidden = true
-        navigationBarManager.redoButton.isHidden = true
+        let viewModel = SiteIconViewModel(blog: post.blog, size: .small)
+        navigationBarManager.siteIconView.imageView.setIcon(with: viewModel)
     }
 
     // TODO: this should not be called on viewDidLoad
@@ -287,7 +264,6 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
     }
 
     private func getLatestContent() async {
-        // TODO: read title as well
         let startTime = CFAbsoluteTimeGetCurrent()
         let editorData = try? await editorViewController.getTitleAndContent()
         let duration = CFAbsoluteTimeGetCurrent() - startTime
@@ -295,7 +271,7 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
 
         if let title = editorData?.title,
            let content = editorData?.content,
-           title != post.postTitle || content != post.content {
+           editorData?.changed == true {
             post.postTitle = title
             post.content = content
             post.managedObjectContext.map(ContextManager.shared.save)
@@ -308,54 +284,122 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
         guard let url = URL(string: "https://wordpress.com/support/wordpress-editor/") else { return }
         present(SFSafariViewController(url: url), animated: true)
     }
+
+    func showFeedbackView() {
+        self.present(SubmitFeedbackViewController(source: "gutenberg_kit", feedbackPrefix: "Editor"), animated: true)
+    }
+
+    func logException(_ exception: GutenbergJSException, with callback: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            WordPressAppDelegate.crashLogging?.logJavaScriptException(exception, callback: callback)
+        }
+    }
 }
 
 extension NewGutenbergViewController: GutenbergKit.EditorViewControllerDelegate {
+    func editorDidLoad(_ viewContoller: GutenbergKit.EditorViewController) {
+        if !editorSession.started {
+            // Note that this method is also used to track startup performance
+            // It assumes this is being called when the editor has finished loading
+            // If you need to refactor this, please ensure that the startup_time_ms property
+            // is still reflecting the actual startup time of the editor
+            editorSession.start()
+        }
+    }
+
     func editor(_ viewContoller: GutenbergKit.EditorViewController, didDisplayInitialContent content: String) {
         // Do nothing
     }
 
     func editor(_ viewContoller: GutenbergKit.EditorViewController, didEncounterCriticalError error: any Error) {
-        onClose?(false)
+        onClose?()
     }
 
     func editor(_ viewController: GutenbergKit.EditorViewController, didUpdateContentWithState state: GutenbergKit.EditorState) {
         editorContentWasUpdated()
+        autosaver.contentDidChange()
+    }
 
-        // Save the changes on disk (crash protection). Throttle to ensure
-        // it doesn't happen too often.
-        if autosaveTimer == nil {
-            autosaveTimer = .scheduledTimer(withTimeInterval: 7, repeats: false) { [weak self] _ in
-                self?.autosaveTimer = nil
-                self?.performAutoSave()
-            }
+    func editor(_ viewController: GutenbergKit.EditorViewController, didUpdateHistoryState state: GutenbergKit.EditorState) {
+        gutenbergDidRequestToggleRedoButton(!state.hasRedo)
+        gutenbergDidRequestToggleUndoButton(!state.hasUndo)
+    }
+
+    func editor(_ viewController: GutenbergKit.EditorViewController, didLogException error: GutenbergKit.GutenbergJSException) {
+        logException(error) {
+            // Do nothing
         }
     }
 
     func editor(_ viewController: GutenbergKit.EditorViewController, performRequest: GutenbergKit.EditorNetworkRequest) async throws -> GutenbergKit.EditorNetworkResponse {
         throw URLError(.unknown)
     }
-}
 
-private struct NewGutenbergNetworkClient: GutenbergKit.EditorNetworkingClient {
-    private let api: WordPressOrgRestApi?
+    func editor(_ viewController: GutenbergKit.EditorViewController, didRequestMediaFromSiteMediaLibrary config: OpenMediaLibraryAction) {
+        let flags = mediaFilterFlags(using: config.allowedTypes ?? [])
 
-    init(blog: Blog) {
-        self.api = WordPressOrgRestApi(blog: blog)
+        let initialSelectionArray: [Int]
+        switch config.value {
+        case .single(let id):
+            initialSelectionArray = [id]
+        case .multiple(let ids):
+            initialSelectionArray = ids
+        case .none:
+            initialSelectionArray = []
+        }
+
+        mediaPickerHelper.presentSiteMediaPicker(filter: flags, allowMultipleSelection: config.multiple, initialSelection: initialSelectionArray) { [weak self] assets in
+            guard let self, let media = assets as? [Media] else {
+                self?.editorViewController.setMediaUploadAttachment("[]")
+                return
+            }
+            let mediaInfos = media.map { item in
+                var metadata: [String: String] = [:]
+                if let videopressGUID = item.videopressGUID {
+                    metadata["videopressGUID"] = videopressGUID
+                }
+                return MediaInfo(id: item.mediaID?.int32Value, url: item.remoteURL, type: item.mediaTypeString, caption: item.caption, title: item.filename, alt: item.alt, metadata: [:])
+            }
+            if let jsonString = convertMediaInfoArrayToJSONString(mediaInfos) {
+                // Escape the string for JavaScript
+                let escapedJsonString = jsonString.replacingOccurrences(of: "'", with: "\\'")
+                editorViewController.setMediaUploadAttachment(escapedJsonString)
+            }
+        }
     }
 
-    func send(_ request: GutenbergKit.EditorNetworkRequest) async throws -> GutenbergKit.EditorNetworkResponse {
-        guard let api else {
-            throw URLError(.unknown) // Should never happen
+    private func convertMediaInfoArrayToJSONString(_ mediaInfoArray: [MediaInfo]) -> String? {
+        do {
+            let jsonData = try JSONEncoder().encode(mediaInfoArray)
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                return jsonString
+            }
+        } catch {
+            print("Error encoding MediaInfo array: \(error)")
         }
-        // TODO: Add support for other requests
-        var path = request.url.absoluteString
-        guard path.hasPrefix("./wp-json") else {
-            throw URLError(.unknown) // Currently unsupported
-        }
-        path.removePrefix("./wp-json")
+        return nil
+    }
 
-        throw URLError(.unknown) // Should never happen
+    private func mediaFilterFlags(using filterArray: [OpenMediaLibraryAction.MediaType]) -> WPMediaType {
+        var mediaType: Int = 0
+        for filter in filterArray {
+            switch filter {
+            case .image:
+                mediaType = mediaType | WPMediaType.image.rawValue
+            case .video:
+                mediaType = mediaType | WPMediaType.video.rawValue
+            case .audio:
+                mediaType = mediaType | WPMediaType.audio.rawValue
+            case .other:
+                mediaType = mediaType | WPMediaType.other.rawValue
+            case .any:
+                mediaType = mediaType | WPMediaType.all.rawValue
+            @unknown default:
+                fatalError()
+            }
+        }
+
+        return WPMediaType(rawValue: mediaType)
     }
 }
 
@@ -381,19 +425,9 @@ extension NewGutenbergViewController {
 
     // TODO: are we going to show this natively?
     func gutenbergDidRequestImagePreview(with fullSizeUrl: URL, thumbUrl: URL?) {
-        navigationController?.definesPresentationContext = true
-
-        let controller: WPImageViewController
-        if let image = AnimatedImageCache.shared.cachedStaticImage(url: fullSizeUrl) {
-            controller = WPImageViewController(image: image)
-        } else {
-            controller = WPImageViewController(externalMediaURL: fullSizeUrl)
-        }
-
-        controller.post = self.post
-        controller.modalTransitionStyle = .crossDissolve
-        controller.modalPresentationStyle = .overCurrentContext
-        self.present(controller, animated: true)
+        let lightboxVC = LightboxViewController(sourceURL: fullSizeUrl, host: MediaHost(post))
+        lightboxVC.configureZoomTransition()
+        present(lightboxVC, animated: true)
     }
 
     // TODO: reimplement
@@ -538,21 +572,19 @@ extension NewGutenbergViewController: PostEditorNavigationBarManagerDelegate {
     }
 
     func navigationBarManager(_ manager: PostEditorNavigationBarManager, undoWasPressed sender: UIButton) {
-        // TODO: reimplement
-        // self.gutenberg.onUndoPressed()
+        editorViewController.undo()
     }
 
     func navigationBarManager(_ manager: PostEditorNavigationBarManager, redoWasPressed sender: UIButton) {
-        // TODO: reimplement
-        // self.gutenberg.onRedoPressed()
+        editorViewController.redo()
     }
 
     func navigationBarManager(_ manager: PostEditorNavigationBarManager, moreWasPressed sender: UIButton) {
-        fatalError("not supported")
+        // Currently unsupported, do nothing.
     }
 
     func navigationBarManager(_ manager: PostEditorNavigationBarManager, displayCancelMediaUploads sender: UIButton) {
-        fatalError("not supported")
+        // Currently unsupported, do nothing.
     }
 
     func navigationBarManager(_ manager: PostEditorNavigationBarManager, publishButtonWasPressed sender: UIButton) {
@@ -656,6 +688,9 @@ extension NewGutenbergViewController {
         actions.append(UIAction(title: helpTitle, image: UIImage(systemName: "questionmark.circle")) { [weak self] _ in
             self?.showEditorHelp()
         })
+        actions.append(UIAction(title: Strings.sendFeedback, image: UIImage(systemName: "envelope")) { [weak self] _ in
+            self?.showFeedbackView()
+        })
         return actions
     }
 
@@ -695,6 +730,7 @@ private enum Strings {
     static let postSettings = NSLocalizedString("postEditor.moreMenu.postSettings", value: "Post Settings", comment: "Post Editor / Button in the 'More' menu")
     static let helpAndSupport = NSLocalizedString("postEditor.moreMenu.helpAndSupport", value: "Help & Support", comment: "Post Editor / Button in the 'More' menu")
     static let help = NSLocalizedString("postEditor.moreMenu.help", value: "Help", comment: "Post Editor / Button in the 'More' menu")
+    static let sendFeedback = NSLocalizedString("postEditor.moreMenu.sendFeedback", value: "Send Feedback", comment: "Post Editor / Button in the 'More' menu")
     static let saveDraft = NSLocalizedString("postEditor.moreMenu.saveDraft", value: "Save Draft", comment: "Post Editor / Button in the 'More' menu")
     static let contentStructure = NSLocalizedString("postEditor.moreMenu.contentStructure", value: "Blocks: %li, Words: %li, Characters: %li", comment: "Post Editor / 'More' menu details labels with 'Blocks', 'Words' and 'Characters' counts as parameters (in that order)")
 }
@@ -749,3 +785,7 @@ extension NewGutenbergViewController {
         })
     }
 }
+
+// Extend Gutenberg JavaScript exception struct to conform the protocol defined in the Crash Logging service
+extension GutenbergJSException.StacktraceLine: @retroactive AutomatticTracks.JSStacktraceLine {}
+extension GutenbergJSException: @retroactive AutomatticTracks.JSException {}

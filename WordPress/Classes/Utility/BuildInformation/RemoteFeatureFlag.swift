@@ -26,10 +26,9 @@ enum RemoteFeatureFlag: Int, CaseIterable {
     case wordPressSotWCard
     case inAppRating
     case siteMonitoring
-    case readingPreferences
-    case readingPreferencesFeedback
-    case readerAnnouncementCard
     case inAppUpdates
+    case gravatarQuickEditor
+    case dotComWebLogin
 
     var defaultValue: Bool {
         switch self {
@@ -81,13 +80,11 @@ enum RemoteFeatureFlag: Int, CaseIterable {
             return false
         case .siteMonitoring:
             return false
-        case .readingPreferences:
-            return true
-        case .readingPreferencesFeedback:
-            return true
-        case .readerAnnouncementCard:
-            return AppConfiguration.isJetpack
         case .inAppUpdates:
+            return false
+        case .gravatarQuickEditor:
+            return BuildConfiguration.current ~= [.localDeveloper, .a8cBranchTest, .a8cPrereleaseTesting]
+        case .dotComWebLogin:
             return false
         }
     }
@@ -143,14 +140,12 @@ enum RemoteFeatureFlag: Int, CaseIterable {
             return "in_app_rating_and_feedback"
         case .siteMonitoring:
             return "site_monitoring"
-        case .readingPreferences:
-            return "reading_preferences"
-        case .readingPreferencesFeedback:
-            return "reading_preferences_feedback"
-        case .readerAnnouncementCard:
-            return "reader_announcement_card"
         case .inAppUpdates:
             return "in_app_updates"
+        case .gravatarQuickEditor:
+            return "gravatar_quick_editor"
+        case .dotComWebLogin:
+            return "jp_wpcom_web_login"
         }
     }
 
@@ -204,14 +199,12 @@ enum RemoteFeatureFlag: Int, CaseIterable {
             return "In-App Rating and Feedback"
         case .siteMonitoring:
             return "Site Monitoring"
-        case .readingPreferences:
-            return "Reading Preferences"
-        case .readingPreferencesFeedback:
-            return "Reading Preferences Feedback"
-        case .readerAnnouncementCard:
-            return "Reader Announcement Card"
         case .inAppUpdates:
             return "In-App Updates"
+        case .gravatarQuickEditor:
+            return "Gravatar Quick Editor"
+        case .dotComWebLogin:
+            return "Log in to WordPress.com from web browser"
         }
     }
 

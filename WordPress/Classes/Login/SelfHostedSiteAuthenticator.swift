@@ -9,7 +9,7 @@ import WordPressAuthenticator
 final actor SelfHostedSiteAuthenticator {
 
     enum SignInError: Error {
-        case authentication(WordPressLoginClient.Error)
+        case authentication(WordPressLoginClientError)
         case loadingSiteInfoFailure
         case savingSiteFailure
     }
@@ -51,6 +51,18 @@ final actor SelfHostedSiteAuthenticator {
 
     @MainActor
     private func _signIn(site: String, from anchor: ASPresentationAnchor?) async throws(SignInError) -> WordPressOrgCredentials {
+        let success: WpApiApplicationPasswordDetails
+        do {
+            success = try await authentication(site: site, from: anchor)
+        } catch {
+            throw .authentication(error)
+        }
+
+        return try await handleSuccess(success)
+    }
+
+    @MainActor
+    func authentication(site: String, from anchor: ASPresentationAnchor?) async throws(WordPressLoginClientError) -> WpApiApplicationPasswordDetails {
         let appId: WpUuid
         let appName: String
 
@@ -66,22 +78,14 @@ final actor SelfHostedSiteAuthenticator {
         let timestamp = ISO8601DateFormatter.string(from: .now, timeZone: .current, formatOptions: .withInternetDateTime)
         let appNameValue = "\(appName) - \(deviceName) (\(timestamp))"
 
-        let result = await internalClient.login(
+        return try await internalClient.login(
             site: site,
             appName: appNameValue,
-            appId: appId,
-            contextProvider: WebAuthenticationPresentationAnchorProvider(anchor: anchor ?? ASPresentationAnchor())
+            appId: appId
         )
-
-        switch result {
-        case let .failure(error):
-            throw .authentication(error)
-        case let .success(success):
-            return try await handleSuccess(success)
-        }
     }
 
-    func handleSuccess(_ success: WpApiApplicationPasswordDetails) async throws(SignInError) -> WordPressOrgCredentials {
+    private func handleSuccess(_ success: WpApiApplicationPasswordDetails) async throws(SignInError) -> WordPressOrgCredentials {
         let xmlrpc: String
         let blogOptions: [AnyHashable: Any]
         do {

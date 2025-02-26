@@ -70,7 +70,7 @@ class SiteStatsDetailsViewModel: Observable {
             }
             periodReceipt = periodStore.query(periodQuery)
         } else if StatSection.allPostStats.contains(statSection) {
-            guard let postID = postID else {
+            guard let postID else {
                 return
             }
 
@@ -91,7 +91,7 @@ class SiteStatsDetailsViewModel: Observable {
     }
 
     func fetchDataHasFailed() -> Bool {
-        guard let statSection = statSection else {
+        guard let statSection else {
             return true
         }
 
@@ -100,7 +100,7 @@ class SiteStatsDetailsViewModel: Observable {
         } else if let periodQuery = queryForPeriodStatSection(statSection) {
             return periodStore.fetchingFailed(for: periodQuery)
         } else if StatSection.allPostStats.contains(statSection) {
-            guard let postID = postID else {
+            guard let postID else {
                 return true
             }
             return periodStore.fetchingFailed(for: .postStats(postID: postID))
@@ -156,8 +156,8 @@ class SiteStatsDetailsViewModel: Observable {
     // MARK: - Table Model
 
     func tableViewSnapshot() -> ImmuTableDiffableDataSourceSnapshot {
-        guard let statSection = statSection,
-            let detailsDelegate = detailsDelegate else {
+        guard let statSection,
+            let detailsDelegate else {
                 return ImmuTableDiffableDataSourceSnapshot()
         }
 
@@ -341,86 +341,86 @@ class SiteStatsDetailsViewModel: Observable {
     }
 
     func refreshPostsAndPages() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allPostsAndPages(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshSearchTerms() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allSearchTerms(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshVideos() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allVideos(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshClicks() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allClicks(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshAuthors() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allAuthors(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshReferrers() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allReferrers(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshCountries() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allCountries(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshPublished() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allPublished(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshFileDownloads() {
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .allFileDownloads(date: selectedDate, period: selectedPeriod)))
     }
 
     func refreshPostStats() {
-        guard let postID = postID else {
+        guard let postID else {
             return
         }
         ActionDispatcher.dispatch(PeriodAction.refreshPeriod(query: .postStats(postID: postID)))
     }
 
     func refreshEmailsSummary() {
-        subscribersStore.updateEmailsSummary(quantity: 30, sortField: .opens)
+        subscribersStore.updateEmailsSummary(quantity: 30, sortField: .postDate)
     }
 }
 
@@ -447,8 +447,8 @@ private extension SiteStatsDetailsViewModel {
 
     func queryForPeriodStatSection(_ statSection: StatSection) -> PeriodQuery? {
 
-        guard let selectedDate = selectedDate,
-            let selectedPeriod = selectedPeriod else {
+        guard let selectedDate,
+            let selectedPeriod else {
                 return nil
         }
 
@@ -581,7 +581,7 @@ private extension SiteStatsDetailsViewModel {
 
     func annualRowData() -> [StatsTotalRowData] {
 
-        guard let selectedDate = selectedDate else {
+        guard let selectedDate else {
             return []
         }
 
@@ -726,6 +726,9 @@ private extension SiteStatsDetailsViewModel {
                               showDisclosure: true,
                               childRows: $0.posts.map { StatsTotalRowData(name: $0.title,
                                                                           data: $0.viewsCount.abbreviatedString(),
+                                                                          postID: $0.postID,
+                                                                          showDisclosure: true,
+                                                                          disclosureURL: $0.postURL,
                                                                           statSection: .periodAuthors) },
                               statSection: .periodAuthors)
         }

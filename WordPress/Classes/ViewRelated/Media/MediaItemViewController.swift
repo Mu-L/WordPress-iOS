@@ -40,11 +40,15 @@ final class MediaItemViewController: UITableViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.cellLayoutMarginsFollowReadableWidth = true
 
-        ImmuTable.registerRows([TextRow.self, EditableTextRow.self], tableView: tableView)
+        ImmuTable.registerRows([TextRow.self, EditableTextRow.self, TextViewRow.self], tableView: tableView)
 
         updateViewModel()
         updateNavigationItem()
         updateTitle()
+
+        if let mediaID = media.mediaID, mediaID.intValue > 0 {
+            tableView.tableFooterView = EntityMetadataTableFooterView.make(id: mediaID)
+        }
     }
 
     private func updateTitle() {
@@ -90,12 +94,14 @@ final class MediaItemViewController: UITableViewController {
         // constraint doesn't seem to go into effect until after `viewDidLayoutSubviews`.
         headerMaxHeightConstraint.constant = view.bounds.height * 0.75
         tableView.sizeToFitHeaderView()
+        tableView.sizeToFitFooterView()
     }
 
     private var metadataRows: [ImmuTableRow] {
         let presenter = MediaMetadataPresenter(media: media)
 
         var rows = [ImmuTableRow]()
+        rows.append(TextViewRow(title: Strings.url, details: media.remoteURL ?? ""))
         rows.append(TextRow(title: NSLocalizedString("File name", comment: "Label for the file name for a media asset (image / video)"), value: media.filename ?? ""))
         rows.append(TextRow(title: NSLocalizedString("File type", comment: "Label for the file type (.JPG, .PNG, etc) for a media asset (image / video)"), value: presenter.fileType ?? ""))
 
@@ -144,7 +150,7 @@ final class MediaItemViewController: UITableViewController {
                                         style: .plain,
                                         target: self,
                                         action: #selector(shareTapped))
-        shareItem.accessibilityLabel = NSLocalizedString("Share", comment: "Accessibility label for share buttons in nav bars")
+        shareItem.accessibilityLabel = SharedStrings.Button.share
 
         let trashItem = UIBarButtonItem(image: UIImage(systemName: "trash"),
                                         style: .plain,
@@ -173,16 +179,15 @@ final class MediaItemViewController: UITableViewController {
     }
 
     private func presentImageViewControllerForMedia() {
-        let controller = WPImageViewController(media: self.media)
-        controller.modalTransitionStyle = .crossDissolve
-        controller.modalPresentationStyle = .fullScreen
-
-        self.present(controller, animated: true)
+        let controller = LightboxViewController(media: media)
+        controller.thumbnail = headerView.imageView.image
+        controller.configureZoomTransition(sourceView: headerView.imageView)
+        present(controller, animated: true)
     }
 
     private func presentVideoViewControllerForMedia() {
         media.videoAsset { [weak self] asset, error in
-            if let asset = asset,
+            if let asset,
                 let controller = self?.videoViewControllerForAsset(asset) {
 
                 controller.modalTransitionStyle = .crossDissolve
@@ -460,4 +465,8 @@ private struct MediaMetadata {
         media.desc = desc
         media.alt = alt
     }
+}
+
+private enum Strings {
+    static let url = NSLocalizedString("siteMedia.details.url", value: "URL", comment: "Title for the URL field")
 }

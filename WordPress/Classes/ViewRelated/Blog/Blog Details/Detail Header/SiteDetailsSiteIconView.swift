@@ -1,4 +1,5 @@
 import UIKit
+import WordPressUI
 
 final class SiteDetailsSiteIconView: UIView {
 
@@ -52,7 +53,7 @@ final class SiteDetailsSiteIconView: UIView {
                 addInteraction(interaction)
                 dropInteraction = interaction
             } else {
-                if let dropInteraction = dropInteraction {
+                if let dropInteraction {
                     removeInteraction(dropInteraction)
                 }
             }

@@ -1,6 +1,7 @@
 import Foundation
 import WordPressShared
 import WordPressUI
+import AsyncImageKit
 import Gravatar
 
 // MARK: - NoteBlockHeaderTableViewCell
@@ -63,15 +64,14 @@ class NoteBlockHeaderTableViewCell: NoteBlockTableViewCell {
 
         authorAvatarURL = url
 
-        guard let url = url else {
+        guard let url else {
             authorAvatarImageView.image = .gravatarPlaceholderImage
             return
         }
-
         if let gravatar = AvatarURL(url: url) {
             authorAvatarImageView.downloadGravatar(gravatar, placeholder: .gravatarPlaceholderImage, animate: true)
         } else {
-            authorAvatarImageView.downloadSiteIcon(at: url.absoluteString)
+            authorAvatarImageView.wp.setImage(with: url, size: ImageSize(scaling: SiteIconViewModel.Size.regular.size, in: self))
         }
     }
 

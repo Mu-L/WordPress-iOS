@@ -42,7 +42,6 @@ protocol ZendeskUtilsProtocol {
 /// as well as displaying views for the Help Center, new tickets, and ticket list.
 ///
 @objc class ZendeskUtils: NSObject, ZendeskUtilsProtocol {
-
     // MARK: - Public Properties
 
     static var sharedInstance: ZendeskUtils = ZendeskUtils(contextManager: ContextManager.shared)
@@ -63,7 +62,15 @@ protocol ZendeskUtilsProtocol {
     private var sourceTag: WordPressSupportSourceTag?
 
     private var userName: String?
-    private var userEmail: String?
+    private var userEmail: String? {
+        set {
+            _userEmail = newValue.map(ZendeskUtils.a8cTestEmail(_:))
+        }
+        get {
+            _userEmail
+        }
+    }
+    private var _userEmail: String?
     private var userNameConfirmed = false
 
     private var deviceID: String?
@@ -223,7 +230,7 @@ protocol ZendeskUtilsProtocol {
             var tags = ZendeskUtils.getTags()
             switch result {
             case .success(let metadata):
-                guard let metadata = metadata else {
+                guard let metadata else {
                     break
                 }
 
@@ -580,7 +587,7 @@ private extension ZendeskUtils {
         }
 
         ZDKPushProvider(zendesk: zendeskInstance).register(deviceIdentifier: deviceID, locale: appLanguage) { (pushResponse, error) in
-            if let error = error {
+            if let error {
                 DDLogInfo("Zendesk couldn't register device: \(deviceID). Error: \(error)")
             } else {
                 ZendeskUtils.sharedInstance.deviceID = nil
@@ -625,7 +632,7 @@ private extension ZendeskUtils {
         }
 
         service.fetchProfile { userProfile in
-            guard let userProfile = userProfile else {
+            guard let userProfile else {
                 completion()
                 return
             }
@@ -816,7 +823,7 @@ private extension ZendeskUtils {
     }
 
     func trackSourceEvent(_ event: WPAnalyticsStat) {
-        guard let sourceTag = sourceTag else {
+        guard let sourceTag else {
             WPAnalytics.track(event)
             return
         }
@@ -1134,8 +1141,6 @@ private extension ZendeskUtils {
     struct LocalizedText {
         static let alertMessageWithName = NSLocalizedString("To continue please enter your email address and name.", comment: "Instructions for alert asking for email and name.")
         static let alertMessage = NSLocalizedString("Please enter your email address.", comment: "Instructions for alert asking for email.")
-        static let alertSubmit = NSLocalizedString("OK", comment: "Submit button on prompt for user information.")
-        static let alertCancel = NSLocalizedString("Cancel", comment: "Cancel prompt for user information.")
         static let emailPlaceholder = NSLocalizedString("Email", comment: "Email address text field placeholder")
         static let emailAccessibilityLabel = NSLocalizedString("Email", comment: "Accessibility label for the Email text field.")
         static let namePlaceholder = NSLocalizedString("Name", comment: "Name text field placeholder")
@@ -1185,8 +1190,8 @@ extension ZendeskUtils {
                 optionalIdentity: false,
                 includesName: true,
                 message: LocalizedText.alertMessageWithName,
-                submit: LocalizedText.alertSubmit,
-                cancel: LocalizedText.alertCancel
+                submit: SharedStrings.Button.ok,
+                cancel: SharedStrings.Button.cancel
             )
         }
 
@@ -1195,9 +1200,32 @@ extension ZendeskUtils {
                 optionalIdentity: false,
                 includesName: false,
                 message: LocalizedText.alertMessage,
-                submit: LocalizedText.alertSubmit,
-                cancel: LocalizedText.alertCancel
+                submit: SharedStrings.Button.ok,
+                cancel: SharedStrings.Button.cancel
             )
         }
+    }
+}
+
+extension ZendeskUtils {
+    static var automatticEmails = ["@automattic.com", "@a8c.com"]
+
+    /// Insert "+testing" to Automattic email address.
+    /// - SeeAlso: https://github.com/wordpress-mobile/WordPress-iOS/issues/23794
+    static func a8cTestEmail(_ email: String) -> String {
+        guard let suffix = ZendeskUtils.automatticEmails.first(where: { email.lowercased().hasSuffix($0) }) else {
+            return email
+        }
+
+        let atSymbolIndex = email.index(email.endIndex, offsetBy: -suffix.count)
+
+        // Do nothing if the email is already an "alias email".
+        if email[email.startIndex..<atSymbolIndex].contains("+") {
+            return email
+        }
+
+        var newEmail = email
+        newEmail.insert(contentsOf: "+testing", at: atSymbolIndex)
+        return newEmail
     }
 }

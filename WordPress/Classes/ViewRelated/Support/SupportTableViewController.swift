@@ -264,7 +264,7 @@ private extension SupportTableViewController {
 
     func contactUsSelected() -> ImmuTableAction {
         return { [weak self] row in
-            guard let self = self else { return }
+            guard let self else { return }
             self.tableView.deselectSelectedRowWithAnimation(true)
 
             self.coordinator.showSupport(onIdentityUpdated: {  [weak self] in
@@ -275,7 +275,7 @@ private extension SupportTableViewController {
 
     func myTicketsSelected() -> ImmuTableAction {
         return { [weak self] row in
-            guard let self = self else { return }
+            guard let self else { return }
             showTicketView()
         }
     }
@@ -314,14 +314,14 @@ private extension SupportTableViewController {
 
     func visitForumsSelected() -> ImmuTableAction {
         return { [weak self] row in
-            guard let self = self else { return }
+            guard let self else { return }
             self.tableView.deselectSelectedRowWithAnimation(true)
             self.launchForum(url: Constants.forumsURL)
         }
     }
 
     private func launchForum(url: URL?) {
-        guard let url = url else {
+        guard let url else {
             return
         }
         WPAnalytics.track(.supportOpenMobileForumTapped)
@@ -333,7 +333,7 @@ private extension SupportTableViewController {
     ///
     func checkForAutomatticEmail() {
         guard let email = ZendeskUtils.userSupportEmail(),
-            (Constants.automatticEmails.first { email.contains($0) }) != nil else {
+              (ZendeskUtils.automatticEmails.first { email.contains($0) }) != nil else {
                 return
         }
 
@@ -526,7 +526,6 @@ private extension SupportTableViewController {
         static let jetpackMigrationFAQURL = URL(string: "https://jetpack.com/support/switch-to-the-jetpack-app/")
 
         static let forumsURL = URL(string: "https://wordpress.org/support/forum/mobile/")
-        static let automatticEmails = ["@automattic.com", "@a8c.com"]
     }
 }
 

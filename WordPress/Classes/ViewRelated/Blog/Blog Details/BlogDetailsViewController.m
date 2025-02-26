@@ -511,6 +511,12 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
                                             animated:NO
                                       scrollPosition:[self optimumScrollPositionForIndexPath:indexPath]];
                 [self showPeople];
+            } else if ([self.blog selfHostedSiteRestApi]) {
+                self.restorableSelectedIndexPath = indexPath;
+                [self.tableView selectRowAtIndexPath:indexPath
+                                            animated:NO
+                                      scrollPosition:[self optimumScrollPositionForIndexPath:indexPath]];
+                [self showUsers];
             }
             break;
         case BlogDetailsSubsectionPlugins:
@@ -833,6 +839,18 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     return row;
 }
 
+- (BlogDetailsRow *)usersRow
+{
+    __weak __typeof(self) weakSelf = self;
+    BlogDetailsRow *row = [[BlogDetailsRow alloc] initWithTitle:NSLocalizedString(@"Users", @"Noun. Title. Links to the user management feature.")
+                                        accessibilityIdentifier:@"User Row"
+                                                          image:[UIImage imageNamed:@"site-menu-people"]
+                                                       callback:^{
+        [weakSelf showUsers];
+    }];
+    return row;
+}
+
 - (BlogDetailsRow *)pluginsRow
 {
     __weak __typeof(self) weakSelf = self;
@@ -906,16 +924,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     accessoryView.tintColor = [WPStyleGuide cellGridiconAccessoryColor]; // Match disclosure icon color.
     row.accessoryView = accessoryView;
     row.showsSelectionState = NO;
-    return row;
-}
-
-- (BlogDetailsRow *)applicationPasswordManagementRow
-{
-    __weak __typeof(self) weakSelf = self;
-    NSString *title = NSLocalizedString(@"Application Passwords", @"Noun. Title. Links to the application password management feature.");
-    BlogDetailsRow *row = [[BlogDetailsRow alloc] initWithTitle:title
-                                                          image:[UIImage systemImageNamed:@"lock"]
-                                                       callback:^{ [weakSelf showApplicationPasswordManagement]; }];
     return row;
 }
 
@@ -1106,6 +1114,9 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     if ([self shouldAddPeopleRow]) {
         [secondSectionRows addObject:[self peopleRow]];
     }
+    if ([self shouldAddUsersRow]) {
+        [secondSectionRows addObject:[self usersRow]];
+    }
     if ([self shouldAddPluginsRow]) {
         [secondSectionRows addObject:[self pluginsRow]];
     }
@@ -1117,9 +1128,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     }
     if ([self shouldAddDomainRegistrationRow]) {
         [secondSectionRows addObject:[self domainsRow]];
-    }
-    if ([self shouldShowApplicationPasswordRow]) {
-        [secondSectionRows addObject:[self applicationPasswordManagementRow]];
     }
     [secondSectionRows addObject:[self siteSettingsRow]];
 
@@ -1329,7 +1337,7 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
                                      callback:^{
                                          [weakSelf showMe];
                                      }];
-        [self downloadGravatarImageFor:row];
+        [self downloadGravatarImageFor:row forceRefresh: NO];
         self.meRow = row;
         [rows addObject:row];
     }
@@ -1352,16 +1360,16 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
                                                      }]];
     }
 
+    if ([self shouldAddUsersRow]) {
+        [rows addObject:[self usersRow]];
+    }
+
     if ([self shouldAddPluginsRow]) {
         [rows addObject:[[BlogDetailsRow alloc] initWithTitle:NSLocalizedString(@"Plugins", @"Noun. Title. Links to the plugin management feature.")
                                                         image:[UIImage imageNamed:@"site-menu-plugins"]
                                                      callback:^{
                                                          [weakSelf showPlugins];
                                                      }]];
-    }
-
-    if ([self shouldShowApplicationPasswordRow]) {
-        [rows addObject:[self applicationPasswordManagementRow]];
     }
 
     BlogDetailsRow *row = [[BlogDetailsRow alloc] initWithTitle:NSLocalizedString(@"Site Settings", @"Noun. Title. Links to the blog's Settings screen.")
@@ -1769,6 +1777,12 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
 - (void)showPlugins
 {
     [WPAppAnalytics track:WPAnalyticsStatOpenedPluginDirectory withBlog:self.blog];
+
+    if ([Feature enabled:FeatureFlagPluginManagementOverhaul]) {
+        [self showManagePluginsScreen];
+        return;
+    }
+
     PluginDirectoryViewController *controller = [self makePluginDirectoryViewControllerWithBlog:self.blog];
     controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     [self.presentationDelegate presentBlogDetailsViewController:controller];
@@ -1931,7 +1945,7 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
                                                                                source:@"my_site_view_site"
                                                                       withDeviceModes:true
                                                                               onClose:nil];
-    LightNavigationController *navController = [[LightNavigationController alloc] initWithRootViewController:webViewController];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
     if (self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         navController.modalPresentationStyle = UIModalPresentationFullScreen;
     }
@@ -1943,11 +1957,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
 
 - (void)showViewAdmin
 {
-    if (![ReachabilityUtils isInternetReachable]) {
-        [ReachabilityUtils showAlertNoInternetConnection];
-        return;
-    }
-
     [WPAppAnalytics track:WPAnalyticsStatOpenedViewAdmin withBlog:self.blog];
 
     NSString *dashboardUrl;

@@ -120,3 +120,15 @@ extension StringRankedSearch {
         .map(\.0)
     }
 }
+
+public extension Sequence {
+
+    func search(_ query: String, minScore: Double = 0.7, using transformer: (Element) -> String) -> [Element] {
+        StringRankedSearch(searchTerm: query).search(in: self, minScore: minScore, input: transformer)
+    }
+
+    func search(_ query: String, minScore: Double = 0.7) -> [Element] where Element == String {
+        search(query, minScore: minScore, using: \.self)
+    }
+
+}

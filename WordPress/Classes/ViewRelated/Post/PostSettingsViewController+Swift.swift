@@ -28,9 +28,16 @@ extension PostSettingsViewController {
         apost.original().isStatus(in: [.draft, .pending])
     }
 
-    @objc func setupStandaloneEditor() {
-        guard isStandalone else { return }
+    @objc func onViewDidLoad() {
+        if isStandalone {
+            setupStandaloneEditor()
+        }
+        if let postID = apost.postID, postID.intValue > 0 {
+            tableView.tableFooterView = EntityMetadataTableFooterView.make(id: postID)
+        }
+    }
 
+    private func setupStandaloneEditor() {
         wpAssert(navigationController?.presentationController != nil)
         navigationController?.presentationController?.delegate = self
 
@@ -170,7 +177,7 @@ extension PostSettingsViewController {
 
     private func showWarningPostWillBePublishedAlert() {
         let alert = UIAlertController(title: nil, message: Strings.warningPostWillBePublishedAlertMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("postSettings.ok", value: "OK", comment: "Button OK"), style: .default))
+        alert.addAction(UIAlertAction(title: SharedStrings.Button.ok, style: .default))
         present(alert, animated: true)
     }
 }
@@ -241,6 +248,32 @@ extension PostSettingsViewController {
             return nil
         }
         return parent.titleForDisplay()
+    }
+}
+
+// MARK: - PostSettingsViewController (Featued Image)
+
+extension PostSettingsViewController {
+    @objc func configureFeaturedImageCell(cell: UITableViewCell, viewModel: PostSettingsFeaturedImageViewModel) {
+        var configuration = UIHostingConfiguration {
+            PostSettingsFeaturedImageCell(post: apost, viewModel: viewModel) { [weak self] in
+                self?.showFeaturedImageSelector(cell: cell)
+            }
+            .environment(\.presentingViewController, self)
+        }
+        if apost.featuredImage != nil {
+            configuration = configuration.margins(.all, 0)
+        }
+        cell.contentConfiguration = configuration
+        cell.selectionStyle = .none
+        cell.accessibilityIdentifier = "post_settings_featured_image_cell"
+    }
+
+    private func showFeaturedImageSelector(cell: UITableViewCell) {
+        guard let featuredImage = apost.featuredImage else { return }
+        let lightboxVC = LightboxViewController(media: featuredImage)
+        lightboxVC.configureZoomTransition(sourceView: cell.contentView)
+        present(lightboxVC, animated: true)
     }
 }
 

@@ -1,7 +1,8 @@
 import UIKit
+import AsyncImageKit
 
 final class ReaderAvatarView: UIView {
-    private let asyncImageView = ImageView()
+    private let asyncImageView = AsyncImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -12,7 +13,7 @@ final class ReaderAvatarView: UIView {
         layer.borderWidth = 0.5
         layer.borderColor = UIColor.opaqueSeparator.withAlphaComponent(0.5).cgColor
 
-        asyncImageView.isErrorViewEnabled = false
+        asyncImageView.configuration.isErrorViewEnabled = false
 
         addSubview(asyncImageView)
     }
@@ -33,16 +34,16 @@ final class ReaderAvatarView: UIView {
     }
 
     func setStaticIcon(_ image: UIImage?, tintColor: UIColor) {
-        asyncImageView.imageView.tintColor = .secondaryLabel
-        asyncImageView.imageView.contentMode = .center
-        asyncImageView.imageView.image = image
+        asyncImageView.configuration.tintColor = .secondaryLabel
+        asyncImageView.configuration.contentMode = .center
+        asyncImageView.image = image
     }
 
     func setPlaceholder(_ image: UIImage?) {
-        asyncImageView.imageView.image = image
+        asyncImageView.image = image
     }
 
-    func setImage(with imageURL: URL, size: CGSize? = nil) {
+    func setImage(with imageURL: URL, size: ImageSize? = nil) {
         asyncImageView.setImage(with: imageURL, size: size)
     }
 }

@@ -70,7 +70,7 @@ public protocol ThemePresenter: AnyObject {
     }
 
     fileprivate func shouldInvalidateForNewBounds(_ newBounds: CGRect) -> Bool {
-        guard let collectionView = collectionView else { return false }
+        guard let collectionView else { return false }
 
         return (newBounds.width != collectionView.bounds.width || newBounds.height != collectionView.bounds.height)
     }
@@ -458,15 +458,15 @@ public protocol ThemePresenter: AnyObject {
             page: themesSyncingPage,
             sync: page == 1,
             success: {[weak self](themes: [Theme]?, hasMore: Bool, themeCount: NSInteger) in
-                if let success = success {
+                if let success {
                     success(hasMore)
                 }
                 self?.totalThemeCount = themeCount
             },
             failure: { (error) in
                 DDLogError("Error syncing themes: \(String(describing: error?.localizedDescription))")
-                if let failure = failure,
-                    let error = error {
+                if let failure,
+                    let error {
                     failure(error as NSError)
                 }
             })
@@ -476,15 +476,15 @@ public protocol ThemePresenter: AnyObject {
         _ = themeService.getCustomThemes(for: blog,
             sync: true,
             success: {[weak self](themes: [Theme]?, hasMore: Bool, themeCount: NSInteger) in
-                if let success = success {
+                if let success {
                     success(hasMore)
                 }
                 self?.totalCustomThemeCount = themeCount
             },
             failure: { (error) in
                 DDLogError("Error syncing themes: \(String(describing: error?.localizedDescription))")
-                if let failure = failure,
-                    let error = error {
+                if let failure,
+                    let error {
                     failure(error as NSError)
                 }
             })
@@ -765,7 +765,7 @@ public protocol ThemePresenter: AnyObject {
     @objc var onWebkitViewControllerClose: (() -> Void)?
 
     @objc open func activateTheme(_ theme: Theme?) {
-        guard let theme = theme, !theme.isCurrentTheme() else {
+        guard let theme, !theme.isCurrentTheme() else {
             return
         }
 
@@ -782,7 +782,6 @@ public protocol ThemePresenter: AnyObject {
                 let successFormat = NSLocalizedString("Thanks for choosing %@ by %@", comment: "Message of alert when theme activation succeeds")
                 let successMessage = String(format: successFormat, theme?.name ?? "", theme?.author ?? "")
                 let manageTitle = NSLocalizedString("Manage site", comment: "Return to blog screen action when theme activation succeeds")
-                let okTitle = NSLocalizedString("OK", comment: "Alert dismissal title")
 
                 self?.updateActivateButton(isLoading: false)
 
@@ -794,14 +793,13 @@ public protocol ThemePresenter: AnyObject {
                     handler: { [weak self] (action: UIAlertAction) in
                         _ = self?.navigationController?.popViewController(animated: true)
                     })
-                alertController.addDefaultActionWithTitle(okTitle, handler: nil)
+            alertController.addDefaultActionWithTitle(SharedStrings.Button.ok, handler: nil)
                 alertController.presentFromRootViewController()
             },
             failure: { [weak self] (error) in
                 DDLogError("Error activating theme \(String(describing: theme.themeId)): \(String(describing: error?.localizedDescription))")
 
                 let errorTitle = NSLocalizedString("Activation Error", comment: "Title of alert when theme activation fails")
-                let okTitle = NSLocalizedString("OK", comment: "Alert dismissal title")
 
                 self?.activityIndicator.stopAnimating()
                 self?.activateButton?.customView = nil
@@ -809,7 +807,7 @@ public protocol ThemePresenter: AnyObject {
                 let alertController = UIAlertController(title: errorTitle,
                     message: error?.localizedDescription,
                     preferredStyle: .alert)
-                alertController.addDefaultActionWithTitle(okTitle, handler: nil)
+            alertController.addDefaultActionWithTitle(SharedStrings.Button.ok, handler: nil)
                 alertController.presentFromRootViewController()
         })
     }
@@ -830,7 +828,7 @@ public protocol ThemePresenter: AnyObject {
     @objc open func presentPreviewForTheme(_ theme: Theme?) {
         WPAppAnalytics.track(.themesPreviewedSite, with: self.blog)
         // In order to Try & Customize a theme we first need to install it (Jetpack sites)
-        if let theme = theme, self.blog.supports(.customThemes) && !theme.custom {
+        if let theme, self.blog.supports(.customThemes) && !theme.custom {
             installThemeAndPresentCustomizer(theme)
         } else {
             presentUrlForTheme(theme, url: theme?.customizeUrl(), activeButton: !(theme?.isCurrentTheme() ?? true))
@@ -852,8 +850,14 @@ public protocol ThemePresenter: AnyObject {
         presentUrlForTheme(theme, url: theme?.viewUrl(), onClose: onWebkitViewControllerClose)
     }
 
-    @objc open func presentUrlForTheme(_ theme: Theme?, url: String?, activeButton: Bool = true, modalStyle: UIModalPresentationStyle = .pageSheet, onClose: (() -> Void)? = nil) {
-        guard let theme = theme, let url = url.flatMap(URL.init(string:)) else {
+    @objc open func presentUrlForTheme(
+        _ theme: Theme?,
+        url: String?,
+        activeButton: Bool = true,
+        modalStyle: UIModalPresentationStyle = .pageSheet,
+        onClose: (() -> Void)? = nil
+    ) {
+        guard let theme, let url = url.flatMap(URL.init(string:)) else {
             return
         }
 
@@ -872,8 +876,14 @@ public protocol ThemePresenter: AnyObject {
 
         let webViewController = WebViewControllerFactory.controller(configuration: configuration, source: "theme_browser")
         webViewController.navigationItem.rightBarButtonItem = activateButton
+
         let navigation = UINavigationController(rootViewController: webViewController)
         navigation.modalPresentationStyle = modalStyle
+        if #available(iOS 18, *), let indexPath = collectionView.indexPathsForSelectedItems?.first {
+            navigation.preferredTransition = .zoom(sourceViewProvider: { [weak self] _ in
+                self?.collectionView.cellForItem(at: indexPath)?.contentView
+            })
+        }
 
         if searchController != nil && searchController.isActive {
             searchController.dismiss(animated: true, completion: {
@@ -913,7 +923,7 @@ private extension ThemeBrowserViewController {
             noResultsViewController = NoResultsViewController.controller()
         }
 
-        guard let noResultsViewController = noResultsViewController else {
+        guard let noResultsViewController else {
             return
         }
 

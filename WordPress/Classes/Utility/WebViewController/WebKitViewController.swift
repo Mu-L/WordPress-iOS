@@ -1,5 +1,3 @@
-import Foundation
-import Gridicons
 import UIKit
 @preconcurrency import WebKit
 import WordPressShared
@@ -16,7 +14,7 @@ extension WebKitAuthenticatable {
     }
 
     func authenticatedRequest(for url: URL, with cookieJar: CookieJar, completion: @escaping (URLRequest) -> Void) {
-        guard let authenticator = authenticator else {
+        guard let authenticator else {
             return completion(URLRequest(url: url))
         }
 
@@ -39,7 +37,7 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
     let analyticsSource: String?
 
     @objc lazy var backButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage.gridicon(.chevronLeft).imageFlippedForRightToLeftLayoutDirection(),
+        let button = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
                                style: .plain,
                                target: self,
                                action: #selector(goBack))
@@ -47,7 +45,7 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
         return button
     }()
     @objc lazy var forwardButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: .gridicon(.chevronRight),
+        let button = UIBarButtonItem(image: UIImage(systemName: "chevron.forward"),
                                style: .plain,
                                target: self,
                                action: #selector(goForward))
@@ -55,15 +53,15 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
         return button
     }()
     @objc lazy var shareButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: .gridicon(.shareiOS),
+        let button = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"),
                                style: .plain,
                                target: self,
                                action: #selector(share))
-        button.title = NSLocalizedString("Share", comment: "Button label to share a web page")
+        button.title = NSLocalizedString("webKit.button.share", value: "Share", comment: "Button label to share a web page")
         return button
     }()
     @objc lazy var safariButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: .gridicon(.globe),
+        let button = UIBarButtonItem(image: UIImage(systemName: "safari"),
                                style: .plain,
                                target: self,
                                action: #selector(openInSafari))
@@ -72,12 +70,12 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
         return button
     }()
     @objc lazy var refreshButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: .gridicon(.refresh), style: .plain, target: self, action: #selector(WebKitViewController.refresh))
+        let button = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"), style: .plain, target: self, action: #selector(WebKitViewController.refresh))
         button.title = NSLocalizedString("Refresh", comment: "Button label to refres a web page")
         return button
     }()
     @objc lazy var closeButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: .gridicon(.cross), style: .plain, target: self, action: #selector(WebKitViewController.close))
+        let button = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(WebKitViewController.close))
         button.title = NSLocalizedString("webKit.button.dismiss", value: "Dismiss", comment: "Verb. Dismiss the web view screen.")
         return button
     }()
@@ -178,7 +176,7 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
         let stackView = UIStackView(arrangedSubviews: [
             progressView,
             webView
-            ])
+        ])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
@@ -240,7 +238,7 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
         if ReachabilityUtils.alertIsShowing() {
             dismiss(animated: false)
         }
-        guard let url = url else {
+        guard let url else {
             return
         }
 
@@ -279,7 +277,7 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
     }
 
     private func setupRefreshButton() {
-        if let customOptionsButton = customOptionsButton {
+        if let customOptionsButton {
             navigationItem.rightBarButtonItems = [refreshButton, customOptionsButton]
         } else if !secureInteraction {
             navigationItem.rightBarButtonItem = refreshButton
@@ -329,6 +327,9 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
             space,
             safariButton
         ]
+        for item in items {
+            item.tintColor = UIAppColor.tint
+        }
         setToolbarItems(items, animated: false)
     }
 
@@ -336,9 +337,9 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
     /// - Parameter width: The width value to set the webView to
     /// - Parameter viewWidth: The view width the webView must fit within, used to manage view transitions, e.g. orientation change
     func setWidth(_ width: CGFloat?, viewWidth: CGFloat? = nil) {
-        if let width = width {
+        if let width {
             let horizontalViewBound: CGFloat
-            if let viewWidth = viewWidth {
+            if let viewWidth {
                 horizontalViewBound = viewWidth
             } else if let superViewWidth = view.superview?.frame.width {
                 horizontalViewBound = superViewWidth
@@ -362,7 +363,7 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
     }
 
     private func stopWaitingForConnectionRestored() {
-        guard let reachabilityObserver = reachabilityObserver else {
+        guard let reachabilityObserver else {
             return
         }
 
@@ -434,7 +435,7 @@ class WebKitViewController: UIViewController, WebKitAuthenticatable {
 
         guard let object = object as? WKWebView,
             object == webView,
-            let keyPath = keyPath else {
+            let keyPath else {
                 return
         }
 
@@ -533,7 +534,7 @@ extension WebKitViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        guard navigationResponse.isForMainFrame, let authenticator = authenticator, !hasAttemptedAuthRecovery else {
+        guard navigationResponse.isForMainFrame, let authenticator, !hasAttemptedAuthRecovery else {
             decisionHandler(.allow)
             return
         }

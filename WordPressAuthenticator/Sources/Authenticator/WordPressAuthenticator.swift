@@ -23,7 +23,7 @@ import WordPressKit
     /// Shared Instance.
     ///
     @objc public static var shared: WordPressAuthenticator {
-        guard let privateInstance = privateInstance else {
+        guard let privateInstance else {
             fatalError("WordPressAuthenticator wasn't initialized")
         }
 
@@ -165,7 +165,7 @@ import WordPressKit
     ///   - restrictToWPCom: Whether only WordPress.com login is enabled.
     ///   - onLoginButtonTapped: Called when the login button on the prologue screen is tapped.
     /// - Returns: The root view controller for the login flow.
-    public class func loginUI(showCancel: Bool = false, restrictToWPCom: Bool = false, onLoginButtonTapped: (() -> Void)? = nil) -> UIViewController? {
+    public class func loginUI(showCancel: Bool = false, restrictToWPCom: Bool = false, onLoginButtonTapped: (() -> Void)? = nil, continueWithDotCom: ((UIViewController) -> Bool)? = nil) -> UIViewController? {
         let storyboard = Storyboard.login.instance
         guard let controller = storyboard.instantiateInitialViewController() else {
             assertionFailure("Cannot instantiate initial login controller from Login.storyboard")
@@ -174,6 +174,7 @@ import WordPressKit
 
         if let loginNavController = controller as? LoginNavigationController, let loginPrologueViewController = loginNavController.viewControllers.first as? LoginPrologueViewController {
             loginPrologueViewController.showCancel = showCancel
+            loginPrologueViewController.continueWithDotComOverwrite = continueWithDotCom
         }
 
         controller.modalPresentationStyle = .fullScreen
@@ -229,7 +230,7 @@ import WordPressKit
         let controller = SiteCredentialsViewController.instantiate(from: .siteAddress) { coder in
             SiteCredentialsViewController(coder: coder, isDismissible: true, onCompletion: onCompletion)
         }
-        guard let controller = controller else {
+        guard let controller else {
             WPAuthenticatorLogError("Failed to navigate from GetStartedViewController to SiteCredentialsViewController")
             return
         }
@@ -271,7 +272,7 @@ import WordPressKit
         controller.loginFields.restrictToWPCom = true
         controller.loginFields.username = connectedEmail ?? String()
         controller.loginFields.meta.jetpackLogin = jetpackLogin
-        if let siteURL = siteURL {
+        if let siteURL {
             controller.loginFields.siteAddress = siteURL
         }
 
@@ -289,7 +290,7 @@ import WordPressKit
 
         controller.loginFields.restrictToWPCom = true
         controller.loginFields.meta.jetpackLogin = jetpackLogin
-        if let siteURL = siteURL {
+        if let siteURL {
             controller.loginFields.siteAddress = siteURL
         }
 
@@ -525,24 +526,8 @@ import WordPressKit
         UIApplication.shared.open(forgotPasswordURL)
     }
 
-    /// Returns the WordPressAuthenticator Bundle
-    /// If installed via CocoaPods, this will be WordPressAuthenticator.bundle,
-    /// otherwise it will be the framework bundle.
-    ///
     public class var bundle: Bundle {
-        let defaultBundle = Bundle(for: WordPressAuthenticator.self)
-
-        #if COCOAPODS
-        // If installed with CocoaPods, resources will be in WordPressAuthenticator.bundle
-        if let bundleURL = defaultBundle.resourceURL,
-           // TODO: Update bundle lookup
-            let resourceBundle = Bundle(url: bundleURL.appendingPathComponent("WordPressAuthenticatorResources.bundle")) {
-            return resourceBundle
-        }
-        #endif
-
-        // Otherwise, the default bundle is used for resources
-        return defaultBundle
+        Bundle(for: WordPressAuthenticator.self)
     }
 }
 

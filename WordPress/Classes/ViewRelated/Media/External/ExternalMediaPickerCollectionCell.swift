@@ -1,7 +1,8 @@
 import UIKit
+import AsyncImageKit
 
 final class ExternalMediaPickerCollectionCell: UICollectionViewCell {
-    private let imageView = ImageView()
+    private let imageView = AsyncImageView()
     private var selectionView: SiteMediaCollectionCellSelectionOverlayView?
 
     override init(frame: CGRect) {
@@ -22,7 +23,7 @@ final class ExternalMediaPickerCollectionCell: UICollectionViewCell {
         imageView.prepareForReuse()
     }
 
-    func configure(imageURL: URL, size: CGSize) {
+    func configure(imageURL: URL, size: ImageSize) {
         imageView.setImage(with: imageURL, size: size)
     }
 

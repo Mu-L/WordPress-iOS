@@ -6,6 +6,7 @@ import Gridicons
 import WordPressShared
 import MobileCoreServices
 import WordPressEditor
+import AsyncImageKit
 import AVKit
 import AutomatticTracks
 import MediaEditor
@@ -22,7 +23,7 @@ class AztecPostViewController: UIViewController, PostEditor {
 
     /// Closure to be executed when the editor gets closed.
     ///
-    var onClose: ((_ changesSaved: Bool) -> ())?
+    var onClose: (() -> ())?
 
     /// Verification Prompt Helper
     ///
@@ -1219,7 +1220,7 @@ private extension AztecPostViewController {
 //
 extension AztecPostViewController: PostEditorStateContextDelegate {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        guard let keyPath = keyPath else {
+        guard let keyPath else {
             return
         }
 
@@ -1859,11 +1860,11 @@ extension AztecPostViewController {
     fileprivate func trackFormatBarAnalytics(stat: WPAnalyticsStat, action: String? = nil, headingStyle: String? = nil) {
         var properties = [WPAppAnalyticsKeyEditorSource: Analytics.editorSource]
 
-        if let action = action {
+        if let action {
             properties["action"] = action
         }
 
-        if let headingStyle = headingStyle {
+        if let headingStyle {
             properties["heading_style"] = headingStyle
         }
         WPAppAnalytics.track(stat, withProperties: properties, with: post)
@@ -2185,7 +2186,7 @@ extension AztecPostViewController {
             case .image:
                 attachment = insertImageAttachment()
 
-                if let attachment = attachment {
+                if let attachment {
                     setGifBadgeIfNecessary(for: attachment, asset: exportableAsset, source: source)
                 }
             case .video:
@@ -2247,7 +2248,7 @@ extension AztecPostViewController {
         if url.isGif {
             attachment.badgeTitle = Constants.mediaGIFBadgeTitle
         }
-        if let caption = caption {
+        if let caption {
             richTextView.replaceCaption(for: attachment, with: NSAttributedString(string: caption))
         }
         return attachment
@@ -2358,7 +2359,7 @@ extension AztecPostViewController {
             let remoteURL = URL(string: remoteURLStr) {
             attachment = richTextView.replaceWithVideo(at: richTextView.selectedRange, sourceURL: remoteURL, posterURL: media.absoluteThumbnailLocalURL, placeHolderImage: Assets.defaultMissingImage)
         }
-        if let attachment = attachment {
+        if let attachment {
             attachment.uploadID = media.uploadID
             let info = MediaAnalyticsInfo(origin: .editor(.wpMediaLibrary), selectionMethod: mediaSelectionMethod)
             mediaCoordinator.addMedia(media, to: post, analyticsInfo: info)
@@ -2695,7 +2696,7 @@ extension AztecPostViewController {
                 attachment.alt = alt
             }
 
-            if let caption = caption, caption.length > 0 {
+            if let caption, caption.length > 0 {
                 self.richTextView.replaceCaption(for: attachment, with: caption)
             } else {
                 self.richTextView.removeCaption(for: attachment)
@@ -2774,7 +2775,7 @@ extension AztecPostViewController {
 
     func displayUnableToPlayVideoAlert() {
         let alertController = UIAlertController(title: MediaUnableToPlayVideoAlert.title, message: MediaUnableToPlayVideoAlert.message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
+        alertController.addAction(UIAlertAction(title: SharedStrings.Button.ok, style: .default, handler: nil))
         present(alertController, animated: true)
         return
     }
@@ -3087,10 +3088,10 @@ extension AztecPostViewController {
     }
 
     struct Assets {
-        static let closeButtonModalImage    = UIImage.gridicon(.cross)
-        static let closeButtonRegularImage  = UIImage(named: "icon-posts-editor-chevron")
-        static let defaultMissingImage      = UIImage.gridicon(.image)
-        static let linkPlaceholderImage     = UIImage.gridicon(.pages)
+        static let closeButtonModalImage = UIImage.gridicon(.cross)
+        static let closeButtonRegularImage = UIImage(systemName: "chevron.backward")
+        static let defaultMissingImage = UIImage.gridicon(.image)
+        static let linkPlaceholderImage = UIImage.gridicon(.pages)
     }
 
     struct Constants {

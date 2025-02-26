@@ -5,6 +5,7 @@ import AutomatticTracks
 import AutomatticEncryptedLogs
 import WordPressAuthenticator
 import WordPressShared
+import AsyncImageKit
 import AutomatticAbout
 import UIDeviceIdentifier
 import WordPressUI
@@ -20,7 +21,7 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
     @objc
     lazy var windowManager: WindowManager = {
-        guard let window = window else {
+        guard let window else {
             fatalError("The App cannot run without a window.")
         }
 
@@ -157,7 +158,7 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
 
-        if let bgTask = bgTask {
+        if let bgTask {
             DDLogInfo("BackgroundTask: beginBackgroundTask for bgTask = \(bgTask.rawValue)")
         }
     }
@@ -374,7 +375,7 @@ extension WordPressAppDelegate {
         internetReachability = Reachability.forInternetConnection()
 
         let reachabilityBlock: NetworkReachable = { [weak self] reachability in
-            guard let reachability = reachability else {
+            guard let reachability else {
                 return
             }
 
@@ -399,11 +400,6 @@ extension WordPressAppDelegate {
     }
 
     func configureSelfHostedChallengeHandler() {
-        /// Note:
-        /// WordPressKit, now imported via CocoaPods, has the `AppExtension Safe API Only` flag set to *true*. Meaning that
-        /// the host app is, effectively as of now, responsible for presenting any alert onscreen (whenever a HTTP Challenge is
-        /// received). Capicci?
-        ///
         WordPressOrgXMLRPCApi.onChallenge = { (challenge, completionHandler) in
             guard let alertController = HTTPAuthenticationAlertController.controller(for: challenge, handler: completionHandler) else {
                 completionHandler(.performDefaultHandling, nil)
@@ -422,6 +418,10 @@ extension WordPressAppDelegate {
 
         WordPressAuthenticator.shared.delegate = authManager
         self.authManager = authManager
+    }
+
+    func presentDefaultAccountPrimarySite(from navigationController: UINavigationController) {
+        self.authManager?.presentDefaultAccountPrimarySite(from: navigationController)
     }
 
     func handleWebActivity(_ activity: NSUserActivity) {
@@ -536,6 +536,11 @@ extension WordPressAppDelegate {
     /// Updates the remote feature flags using an authenticated remote if a token is provided or an account exists
     /// Otherwise an anonymous remote will be used
     func updateFeatureFlags(authToken: String? = nil, completion: (() -> Void)? = nil) {
+        // Enable certain feature flags on test builds.
+        if BuildConfiguration.current ~= [.a8cPrereleaseTesting, .a8cBranchTest, .localDeveloper] {
+            FeatureFlagOverrideStore().override(RemoteFeatureFlag.dotComWebLogin, withValue: true)
+        }
+
         var api: WordPressComRestApi
         if let authToken {
             api = WordPressComRestApi.defaultV2Api(authToken: authToken)
@@ -701,7 +706,10 @@ extension WordPressAppDelegate {
         ReaderPostService(coreDataStack: ContextManager.shared).clearInUseFlags()
         ReaderTopicService(coreDataStack: ContextManager.shared).clearInUseFlags()
         ReaderPostService(coreDataStack: ContextManager.shared).clearSavedPostFlags()
-        ReaderSearchSuggestionService(coreDataStack: ContextManager.sharedInstance()).deleteAllSuggestions()
+        UserDefaults.standard.isReaderSelected = false
+        UserDefaults.standard.readerSidebarSelection = nil
+        UserDefaults.standard.readerSearchHistory = []
+        UserDefaults.standard.readerDidSelectInterestsKey = false
     }
 }
 
@@ -812,7 +820,7 @@ extension WordPressAppDelegate {
             default:
                 // An error exists only for the notFound state.
                 // notFound is a valid state when logging in with an Apple account for the first time.
-                if let error = error {
+                if let error {
                     DDLogDebug("checkAppleIDCredentialState: Apple ID state not found: \(error.localizedDescription)")
                 }
                 break

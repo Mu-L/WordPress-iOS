@@ -855,7 +855,7 @@ private extension StatsPeriodStore {
 
     private func fetchPostStats(postID: Int?) {
         guard
-            let postID = postID,
+            let postID,
             let statsRemote = statsRemote() else {
                 return
         }
@@ -895,12 +895,24 @@ private extension StatsPeriodStore {
         }
     }
 
-    private func receivedPostsAndPages(_ postsAndPages: StatsTopPostsTimeIntervalData?, _ error: Error?) {
+    private func receivedPostsAndPages(_ data: StatsTopPostsTimeIntervalData?, _ error: Error?) {
         transaction { state in
             state.topPostsAndPagesStatus = error != nil ? .error : .success
 
-            if postsAndPages != nil {
-                state.topPostsAndPages = postsAndPages
+            if let data {
+                let sortedTopPosts = data.topPosts.sorted { lhs, rhs in
+                    if lhs.viewsCount == rhs.viewsCount {
+                        return lhs.title.localizedCaseInsensitiveCompare(rhs.title) == .orderedAscending
+                    }
+                    return lhs.viewsCount > rhs.viewsCount
+                }
+                state.topPostsAndPages = StatsTopPostsTimeIntervalData(
+                    period: data.period,
+                    periodEndDate: data.periodEndDate,
+                    topPosts: sortedTopPosts,
+                    totalViewsCount: data.totalViewsCount,
+                    otherViewsCount: data.otherViewsCount
+                )
             }
         }
     }
@@ -1142,14 +1154,14 @@ extension StatsPeriodStore {
     }
 
     func getPostStats(for postId: Int?) -> StatsPostDetails? {
-        guard let postId = postId else {
+        guard let postId else {
             return nil
         }
         return state.postStats[postId] ?? nil
     }
 
     func getMostRecentDate(forPost postId: Int?) -> Date? {
-        guard let postId = postId,
+        guard let postId,
             let postStats = state.postStats[postId],
             let mostRecentDay = postStats?.recentWeeks.last?.endDay else {
                 return nil
@@ -1287,14 +1299,14 @@ extension StatsPeriodStore {
     }
 
     func isFetchingPostStats(for postId: Int?) -> Bool {
-        guard let postId = postId else {
+        guard let postId else {
             return false
         }
         return state.postStatsFetchingStatuses[postId] == .loading
     }
 
     func postStatsFetchingStatuses(for postId: Int?) -> StoreFetchingStatus {
-        guard let postId = postId,
+        guard let postId,
             let status = state.postStatsFetchingStatuses[postId] else {
             return .idle
         }
@@ -1354,7 +1366,7 @@ private extension StatsPeriodStore {
                          hasChildren: Bool,
                          completion: @escaping (Result<Void, Error>) -> Void) {
         statsServiceRemote?.toggleSpamState(for: referrerDomain, currentValue: currentValue, success: { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             self.state.topReferrers?.referrers[referrerIndex].isSpam.toggle()

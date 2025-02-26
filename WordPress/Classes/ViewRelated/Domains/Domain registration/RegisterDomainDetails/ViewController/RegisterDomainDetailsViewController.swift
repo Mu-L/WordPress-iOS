@@ -1,5 +1,4 @@
 import UIKit
-import WordPressAuthenticator
 import WordPressEditor
 
 class RegisterDomainDetailsViewController: UITableViewController {
@@ -117,16 +116,12 @@ class RegisterDomainDetailsViewController: UITableViewController {
     }
 
     private func showAlert(title: String? = nil, message: String) {
-        let alertCancel = NSLocalizedString(
-            "OK",
-            comment: "Title of an OK button. Pressing the button acknowledges and dismisses a prompt."
-        )
         let alertController = UIAlertController(
             title: title,
             message: message,
             preferredStyle: .alert
         )
-        alertController.addCancelActionWithTitle(alertCancel, handler: nil)
+        alertController.addCancelActionWithTitle(SharedStrings.Button.ok, handler: nil)
         present(alertController, animated: true, completion: nil)
     }
 

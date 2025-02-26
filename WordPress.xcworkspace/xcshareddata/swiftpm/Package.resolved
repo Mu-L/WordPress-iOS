@@ -1,4 +1,5 @@
 {
+  "originHash" : "aeb249d45bcd791840c72bfdc053ebf3548e3e32b7ea494abf9af14b4fd96a3c",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -10,21 +11,12 @@
       }
     },
     {
-      "identity" : "alamofireimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/AlamofireImage",
-      "state" : {
-        "revision" : "1eaf3b6c6882bed10f6e7b119665599dd2329aa1",
-        "version" : "4.3.0"
-      }
-    },
-    {
       "identity" : "automattic-tracks-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/Automattic-Tracks-iOS",
       "state" : {
-        "revision" : "948c7642009237c74ef30dad59f03835416873eb",
-        "version" : "3.4.2"
+        "revision" : "437f586a62c07c6ceec9baf043237b2afe7ea1ac",
+        "version" : "3.5.2"
       }
     },
     {
@@ -32,8 +24,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/AutomatticAbout-swift",
       "state" : {
-        "revision" : "31045d654bcc1f2b56c85dd658f160fad5b50a29",
-        "version" : "1.1.4"
+        "revision" : "606384a7492faa1139d489080dd961b0b57f9fd9",
+        "version" : "1.1.5"
+      }
+    },
+    {
+      "identity" : "azteceditor-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wordpress-mobile/AztecEditor-iOS",
+      "state" : {
+        "revision" : "f20f4102aab2dd9a14dffe5d42af069dcb08538f",
+        "version" : "1.20.0"
       }
     },
     {
@@ -131,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/Gravatar-SDK-iOS",
       "state" : {
-        "revision" : "a18e984092a9a4d651c783a1bb60aaa1f6f53e2a",
-        "version" : "3.0.0"
+        "revision" : "693616b9fb95432ac25ebb1fc3194767c1bd3904",
+        "version" : "3.2.0"
       }
     },
     {
@@ -149,7 +150,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wordpress-mobile/GutenbergKit",
       "state" : {
-        "revision" : "849118af582068f75807bc0f1265edeee4bf1b5e"
+        "revision" : "947c5315198eea96e3e8c32fcc6afa59ef242638"
       }
     },
     {
@@ -255,8 +256,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/ScreenObject",
       "state" : {
-        "revision" : "328db56c62aab91440ec5e07cc9f7eef6e26a26e",
-        "version" : "0.2.3"
+        "revision" : "5a62548524a0ad65d8e2e5d4f665981c48066253",
+        "version" : "0.3.0"
       }
     },
     {
@@ -273,8 +274,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa",
       "state" : {
-        "revision" : "08862789e1cbba7a9561bed69832a9306f339cd3",
-        "version" : "8.29.1"
+        "revision" : "f45e9c62d7a4d9258ac3cf35a3acf9dbab4481d1",
+        "version" : "8.43.0"
       }
     },
     {
@@ -311,6 +312,15 @@
       "state" : {
         "revision" : "c33f7c775ba7feea6047a1fc3257f2e5863b44f7",
         "version" : "2.3.1"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections",
+      "state" : {
+        "revision" : "671108c96644956dddcd89dd59c203dcdb36cec7",
+        "version" : "1.1.4"
       }
     },
     {
@@ -372,8 +382,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/wordpress-rs",
       "state" : {
-        "branch" : "alpha-swift-20240813",
-        "revision" : "b51c560d83a61917eb3361441e65779b71fb96ce"
+        "branch" : "alpha-20250127",
+        "revision" : "1b4eeb2c3209d522805a859c8fff3e7c77e73665"
       }
     },
     {
@@ -381,17 +391,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/wordpress-mobile/WordPressKit-iOS",
       "state" : {
-        "branch" : "task/reader-discover",
-        "revision" : "a5dfe35cd92e4df8bdd971edd162ecf02b7d0a29"
-      }
-    },
-    {
-      "identity" : "xcuitesthelpers",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Automattic/XCUITestHelpers",
-      "state" : {
-        "revision" : "5179cb69d58b90761cc713bdee7740c4889d3295",
-        "version" : "0.4.0"
+        "branch" : "task/add-remote-comment-update-comment",
+        "revision" : "d46b5be685c9921e235d3135d03a7f51fb5fb4c1"
       }
     },
     {
@@ -404,5 +405,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

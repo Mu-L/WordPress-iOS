@@ -194,7 +194,7 @@ class ReaderDetailCoordinatorTests: CoreDataTestCase {
 
         coordinator.handle(URL(string: "https://wordpress.com/image.png")!)
 
-        expect(viewMock.didCallPresentWith).to(beAKindOf(WPImageViewController.self))
+        expect(viewMock.didCallPresentWith).to(beAKindOf(LightboxViewController.self))
     }
 
     /// Present an URL in a new Reader Detail screen
@@ -285,7 +285,7 @@ private class ReaderPostServiceMock: ReaderPostService {
             return
         }
 
-        guard let returnPost = returnPost else {
+        guard let returnPost else {
             return
         }
 
@@ -343,9 +343,7 @@ private class ReaderDetailViewMock: UIViewController, ReaderDetailView {
 
     func updateHeader() { }
 
-    func updateLikes(with avatarURLStrings: [String], totalLikes: Int) { }
-
-    func updateSelfLike(with avatarURLString: String?) { }
+    func updateLikesView(with viewModel: ReaderDetailLikesViewModel) {}
 
     func updateComments(_ comments: [Comment], totalComments: Int) { }
 

@@ -21,9 +21,6 @@ platform :ios do
     # Checks if internal dependencies are on a stable version
     check_pods_references
 
-    # Make sure that Gutenberg is configured as expected for a successful code freeze
-    gutenberg_dep_check
-
     release_branch_name = compute_release_branch_name(options: options, version: release_version_next)
     ensure_branch_does_not_exist!(release_branch_name)
 
@@ -35,9 +32,6 @@ platform :ios do
 
       • Current release version and build code: #{release_version_current} (#{build_code_current}).
       • New release version and build code: #{release_version_next} (#{build_code_code_freeze}).
-
-      • Current internal release version and build code: #{release_version_current_internal} (#{build_code_current_internal})
-      • New internal release version and build code: #{release_version_next} (#{build_code_code_freeze_internal})
     MESSAGE
 
     UI.important(message)
@@ -57,16 +51,6 @@ platform :ios do
       version_long: build_code_code_freeze
     )
     UI.success "Done! New Release Version: #{release_version_current}. New Build Code: #{build_code_current}"
-
-    # Bump the internal release version and build code and write it to the `xcconfig` file
-    UI.message 'Bumping internal release version and build code...'
-    INTERNAL_VERSION_FILE.write(
-      # The external and internal release versions are always the same. Because the external release version was
-      # already bumped, we want to just use the `release_version_current`
-      version_short: release_version_current,
-      version_long: build_code_code_freeze_internal
-    )
-    UI.success "Done! New Internal Release Version: #{release_version_current_internal}. New Internal Build Code: #{build_code_current_internal}"
 
     commit_version_and_build_files
 
@@ -220,9 +204,6 @@ platform :ios do
     message = <<~MESSAGE
       • Current build code: #{build_code_current}
       • New build code: #{build_code_next}
-
-      • Current internal build code: #{build_code_current_internal}
-      • New internal build code: #{build_code_next_internal}
     MESSAGE
 
     UI.important(message)
@@ -235,7 +216,7 @@ platform :ios do
     download_localized_strings_and_metadata
     lint_localizations(allow_retry: skip_user_confirmation == false)
 
-    bump_build_codes
+    bump_build_code
 
     unless skip_user_confirmation || UI.confirm('Ready to push changes to remote and trigger the beta build?')
       UI.message("Terminating as requested. Don't forget to run the remainder of this automation manually.")
@@ -293,7 +274,6 @@ platform :ios do
 
     new_version = options[:version] || UI.input('Version number for the new hotfix?')
     build_code_hotfix = build_code_hotfix(release_version: new_version)
-    build_code_hotfix_internal = build_code_hotfix_internal(release_version: new_version)
 
     # Parse the provided version into an AppVersion object
     parsed_version = VERSION_FORMATTER.parse(new_version)
@@ -305,9 +285,6 @@ platform :ios do
 
       • Current release version and build code: #{release_version_current} (#{build_code_current}).
       • New release version and build code: #{new_version} (#{build_code_hotfix}).
-
-      • Current internal release version and build code: #{release_version_current_internal} (#{build_code_current_internal}).
-      • New internal release version and build code: #{new_version} (#{build_code_hotfix_internal}).
 
       Branching from tag: #{previous_version}
     MESSAGE
@@ -331,14 +308,6 @@ platform :ios do
       version_long: build_code_hotfix
     )
     UI.success "Done! New Release Version: #{release_version_current}. New Build Code: #{build_code_current}"
-
-    # Bump the internal hotfix version and build code and write it to the `xcconfig` file
-    UI.message 'Bumping internal hotfix version and build code...'
-    INTERNAL_VERSION_FILE.write(
-      version_short: new_version,
-      version_long: build_code_hotfix_internal
-    )
-    UI.success "Done! New Internal Release Version: #{release_version_current_internal}. New Internal Build Code: #{build_code_current_internal}"
 
     commit_version_and_build_files
 
@@ -405,7 +374,7 @@ platform :ios do
     download_localized_strings_and_metadata
     lint_localizations(allow_retry: skip_confirm == false)
 
-    bump_build_codes
+    bump_build_code
 
     unless skip_confirm || UI.confirm('Ready to push changes to remote and trigger the release build?')
       UI.user_error!("Terminating as requested. Don't forget to run the remainder of this automation manually.")
@@ -432,7 +401,13 @@ platform :ios do
     end
   end
 
-  # This lane publishes a release on GitHub and creates a PR to backmerge the current release branch into the next release/ branch
+  # This lane publishes a release on GitHub and cleans up the release branch
+  #
+  # Note: We deliberately don't create backmerge PRs in this lane, unlike other apps.
+  # This is because:
+  # - Backmerge PRs can be problematic when the repo uses squash-merge
+  # - Release branch changes should already be in the default branch at this point
+  # For last-minute changes (e.g. due to app rejections), please create eventual backmerge PRs manually.
   #
   # @param [Boolean] skip_confirm (default: false) If set, will skip the confirmation prompt before running the rest of the lane
   #
@@ -444,16 +419,12 @@ platform :ios do
     ensure_git_branch_is_release_branch!
 
     version_number = release_version_current
-
     current_branch = release_branch_name(version: version_number)
-    next_release_branch = release_branch_name(version: release_version_next)
 
     UI.important <<~PROMPT
       Publish the #{version_number} release. This will:
       - Publish the existing draft `#{version_number}` release on GitHub
       - Which will also have GitHub create the associated git tag, pointing to the tip of the branch
-      - If the release branch for the next version `#{next_release_branch}` already exists, backmerge `#{current_branch}` into it
-      - If needed, backmerge `#{current_branch}` back into `#{DEFAULT_BRANCH}`
       - Delete the `#{current_branch}` branch
     PROMPT
     unless skip_confirm || UI.confirm('Do you want to continue?')
@@ -467,11 +438,7 @@ platform :ios do
       name: version_number
     )
 
-    create_backmerge_pr
-
-    # At this point, an intermediate branch has been created by creating a backmerge PR to a hotfix or the next version release branch.
-    # This allows us to safely delete the `release/*` branch.
-    # Note that if a hotfix or new release branches haven't been created, the backmerge PR won't be created as well.
+    # The `publish_github_release` call should also create a tag, allowing us to safely delete the `release/*` branch.
     delete_remote_git_branch!(current_branch)
   end
 
@@ -504,41 +471,28 @@ end
 # @param [Boolean] beta Indicate if we should build a beta or regular release
 #
 def trigger_buildkite_release_build(branch:, beta:)
-  build_url = buildkite_trigger_build(
-    buildkite_organization: BUILDKITE_ORGANIZATION,
-    buildkite_pipeline: BUILDKITE_PIPELINE,
-    branch: branch,
-    environment: { BETA_RELEASE: beta },
-    pipeline_file: 'release-builds.yml',
-    message: beta ? 'Beta Builds' : 'Release Builds'
-  )
+  environment = {
+    IS_BETA_RELEASE: beta,
+    RELEASE_VERSION: release_version_current
+  }
 
-  return unless is_ci
-
-  message = "This build triggered a build on `#{branch}`:\n\n- #{build_url}"
-  buildkite_annotate(style: 'info', context: 'trigger-release-build', message: message)
-end
-
-# Checks that the Gutenberg pod is reference by a tag and not a commit
-#
-desc 'Verifies that Gutenberg is referenced by release version and not by commit'
-lane :gutenberg_dep_check do
-  source = gutenberg_config![:ref]
-
-  UI.user_error!('Gutenberg config does not contain expected key :ref') if source.nil?
-
-  case [source[:tag], source[:commit]]
-  when [nil, nil]
-    UI.user_error!('Could not find any Gutenberg version reference.')
-  when [nil, commit = source[:commit]]
-    if UI.confirm("Gutenberg referenced by commit (#{commit}) instead than by tag. Do you want to continue anyway?")
-      UI.message("Gutenberg version: #{commit}")
-    else
-      UI.user_error!('Aborting...')
-    end
+  # If we're running on CI, we can directly start the release pipeline jobs within the same build
+  if is_ci
+    buildkite_pipeline_upload(
+      pipeline_file: BUILDKITE_RELEASE_PIPELINE,
+      environment: environment
+    )
   else
-    # If a tag is present, the commit value is ignored
-    UI.message("Gutenberg version: #{source[:tag]}")
+    build_url = buildkite_trigger_build(
+      buildkite_organization: BUILDKITE_ORGANIZATION,
+      buildkite_pipeline: BUILDKITE_PIPELINE,
+      branch: branch,
+      environment: environment,
+      pipeline_file: BUILDKITE_RELEASE_PIPELINE,
+      message: beta ? 'Beta Builds' : 'Release Builds'
+    )
+
+    UI.success("Release build triggered on #{branch}: #{build_url}")
   end
 end
 
@@ -588,9 +542,8 @@ def prompt_for_confirmation(message:, bypass:)
   UI.confirm(message)
 end
 
-def bump_build_codes
+def bump_build_code
   bump_production_build_code
-  bump_internal_build_code
   commit_version_and_build_files
 end
 
@@ -600,26 +553,19 @@ def bump_production_build_code
   UI.success "Done. New Build Code: #{build_code_current}"
 end
 
-def bump_internal_build_code
-  UI.message 'Bumping internal build code...'
-  INTERNAL_VERSION_FILE.write(version_long: build_code_next_internal)
-  UI.success "Done. New Internal Build Code: #{build_code_current_internal}"
-end
-
 def commit_version_and_build_files
   git_commit(
-    path: [PUBLIC_CONFIG_FILE, INTERNAL_CONFIG_FILE],
+    path: PUBLIC_CONFIG_FILE,
     message: 'Bump version number',
     allow_nothing_to_commit: false
   )
 end
 
-def create_backmerge_pr
-  version = release_version_current
-
+def create_backmerge_pr(source_branch: release_branch_name, target_branch: nil)
   pr_url = create_release_backmerge_pull_request(
     repository: GITHUB_REPO,
-    source_branch: release_branch_name(version: version),
+    source_branch: source_branch,
+    target_branches: Array(target_branch),
     labels: ['Releases'],
     milestone_title: release_version_next
   )
@@ -629,8 +575,8 @@ rescue StandardError => e
 
     #{e.message}
 
-    If this is not the first time you are running the release task, the backmerge PR for the version `#{version}` might have already been previously created.
-    Please close any previous backmerge PR for `#{version}`, delete the previous merge branch, then run the release task again.
+    If this is not the first time you are running the automation that creates a backmerge, the backmerge PR for the `#{source_branch}` branch might have already been previously created.
+    Please close any previous backmerge PR for the `#{source_branch}` branch, delete the previous merge branch, then run the release task again.
   MESSAGE
 
   buildkite_annotate(style: 'error', context: 'error-creating-backmerge', message: error_message) if is_ci

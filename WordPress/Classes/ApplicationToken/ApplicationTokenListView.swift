@@ -5,34 +5,39 @@ import WordPressAPI
 
 struct ApplicationTokenListView: View {
 
-    @ObservedObject
+    @StateObject
     private var viewModel: ApplicationTokenListViewModel
 
     fileprivate init(tokens: [ApplicationTokenItem]) {
         let dataProvider = StaticTokenProvider(tokens: .success(tokens))
-        self.init(viewModel: ApplicationTokenListViewModel(dataProvider: dataProvider))
+        self.init(dataProvider: dataProvider)
     }
 
     fileprivate init(error: Error) {
         let dataProvider = StaticTokenProvider(tokens: .failure(error))
-        self.init(viewModel: ApplicationTokenListViewModel(dataProvider: dataProvider))
+        self.init(dataProvider: dataProvider)
     }
 
-    init(viewModel: ApplicationTokenListViewModel) {
-        self.viewModel = viewModel
+    init(dataProvider: ApplicationTokenListDataProvider) {
+        _viewModel = .init(wrappedValue: ApplicationTokenListViewModel(dataProvider: dataProvider))
     }
 
     var body: some View {
-        VStack {
-            if viewModel.isLoadingData {
-                ProgressView()
-            } else if let error = viewModel.errorMessage {
-                EmptyStateView(Self.errorTitle, systemImage: "exclamationmark.triangle", description: error)
-            } else {
-                List(viewModel.applicationTokens) { token in
-                    ApplicationTokenListItemView(item: token)
+        ZStack {
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+
+            VStack {
+                if viewModel.isLoadingData {
+                    ProgressView()
+                } else if let error = viewModel.errorMessage {
+                    EmptyStateView(Self.errorTitle, systemImage: "exclamationmark.triangle", description: error)
+                } else {
+                    List(viewModel.applicationTokens) { token in
+                        ApplicationTokenListItemView(item: token)
+                    }
+                    .listStyle(.insetGrouped)
                 }
-                .listStyle(.plain)
             }
         }
         .navigationTitle(Self.title)
@@ -47,6 +52,7 @@ struct ApplicationTokenListView: View {
     }
 }
 
+@MainActor
 class ApplicationTokenListViewModel: ObservableObject {
 
     @Published
@@ -58,14 +64,13 @@ class ApplicationTokenListViewModel: ObservableObject {
     @Published
     private(set) var applicationTokens: [ApplicationTokenItem]
 
-    private let dataProvider: ApplicationTokenListDataProvider!
+    let dataProvider: ApplicationTokenListDataProvider
 
     init(dataProvider: ApplicationTokenListDataProvider) {
         self.dataProvider = dataProvider
         self.applicationTokens = []
     }
 
-    @MainActor
     func fetchTokens() async {
         isLoadingData = true
         defer {
@@ -87,22 +92,6 @@ class ApplicationTokenListViewModel: ObservableObject {
     }
 }
 
-private extension WpApiError {
-    var errorMessage: String {
-        switch self {
-        case .InvalidHttpStatusCode, .SiteUrlParsingError, .UnknownError:
-            return NSLocalizedString("Something went wrong", comment: "A generic error message")
-        case let .RequestExecutionFailed(_, reason):
-            return reason
-        case .ResponseParsingError:
-            return NSLocalizedString("generic.error.unparsableResponse", value: "Your site sent a response that the app could not parse", comment: "Error message when failing to parse API responses")
-        case let .WpError(_, errorMessage, _, _):
-            let format = NSLocalizedString("generic.error.rest-api-error", value: "Your site sent an error response: %@", comment: "Error message format when REST API returns an error response. The first argument is error message.")
-            return String(format: format, errorMessage)
-        }
-    }
-}
-
 // MARK: - Localization
 
 extension ApplicationTokenListView {
@@ -113,7 +102,7 @@ extension ApplicationTokenListView {
 
 // MARK: - SwiftUI Preview
 
-private class StaticTokenProvider: ApplicationTokenListDataProvider {
+class StaticTokenProvider: ApplicationTokenListDataProvider {
 
     private let result: Result<[ApplicationTokenItem], Error>
 

@@ -178,7 +178,7 @@ extension HomeSiteHeaderViewController {
         controller.displaysNavigationButtons = true
 
         controller.onValueChanged = { [weak self] value in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             self.saveSiteTitleSettings(value, for: self.blog)
@@ -255,7 +255,7 @@ extension HomeSiteHeaderViewController {
             onClose: nil
         )
 
-        let navigationController = LightNavigationController(rootViewController: webViewController)
+        let navigationController = UINavigationController(rootViewController: webViewController)
 
         if traitCollection.userInterfaceIdiom == .pad {
             navigationController.modalPresentationStyle = .fullScreen

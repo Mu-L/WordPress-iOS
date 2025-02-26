@@ -1,6 +1,7 @@
 import UIKit
 import MobileCoreServices
 import UniformTypeIdentifiers
+import AsyncImageKit
 
 @objc
 public extension NSAttributedString {
@@ -32,8 +33,7 @@ public extension NSAttributedString {
             if
                 displayAnimatedGifs,
                 let animatedImage = image as? AnimatedImage,
-                animatedImage.gifData != nil
-            {
+                animatedImage.gifData != nil {
                 imageAttachment.contents = animatedImage.gifData
                 imageAttachment.fileType = gifType
                 imageAttachment.bounds   = CGRect(origin: CGPoint.zero, size: animatedImage.targetSize ?? image.size)

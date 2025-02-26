@@ -46,10 +46,19 @@ final class ReaderSidebarViewController: UIHostingController<AnyView> {
     }
 }
 
+extension ReaderSidebarViewController: ScrollableViewController {
+    func scrollViewToTop() {
+        if let scrollView = contentScrollView(for: .top) {
+            scrollView.scrollToTop(animated: true)
+        }
+    }
+}
+
 private struct ReaderSidebarView: View {
     @ObservedObject var viewModel: ReaderSidebarViewModel
 
     @AppStorage("reader_sidebar_organization_expanded") var isSectionOrganizationExpanded = true
+    @AppStorage("reader_sidebar_favorites_expanded") var isSectionFavoritesExpanded = true
     @AppStorage("reader_sidebar_subscriptions_expanded") var isSectionSubscriptionsExpanded = true
     @AppStorage("reader_sidebar_lists_expanded") var isSectionListsExpanded = true
     @AppStorage("reader_sidebar_tags_expanded") var isSectionTagsExpanded = true
@@ -57,12 +66,21 @@ private struct ReaderSidebarView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.title, order: .forward)])
     private var teams: FetchedResults<ReaderTeamTopic>
 
+    @FetchRequest(
+        sortDescriptors: [SortDescriptor(\.title, order: .forward)],
+        predicate: NSPredicate(format: "following = YES AND showInMenu = YES")
+    )
+    private var favorites: FetchedResults<ReaderSiteTopic>
+
+    @State private var searchText = ""
+
     @Environment(\.editMode) var editMode
 
     var isEditing: Bool { editMode?.wrappedValue.isEditing == true }
 
     var body: some View {
         list
+            .searchable(text: $searchText)
             .toolbar {
                 EditButton()
             }
@@ -90,6 +108,15 @@ private struct ReaderSidebarView: View {
 
     @ViewBuilder
     private var content: some View {
+        if !searchText.isEmpty {
+            ReaderSidebarSearchResultsView(searchText: searchText)
+        } else {
+            regularContent
+        }
+    }
+
+    @ViewBuilder
+    private var regularContent: some View {
         Section {
             let screens = ReaderStaticScreen.allCases
             ForEach(ReaderStaticScreen.allCases) {
@@ -100,7 +127,13 @@ private struct ReaderSidebarView: View {
                     .withDisabledSelection(isEditing)
             }
         }
-
+        if !favorites.isEmpty || isEditing {
+            makeSection(Strings.favorites, isExpanded: $isSectionFavoritesExpanded) {
+                ForEach(favorites, id: \.self) {
+                    ReaderSidebarSubscriptionCell(site: $0)
+                }
+            }
+        }
         if !teams.isEmpty {
             makeSection(Strings.organization, isExpanded: $isSectionOrganizationExpanded) {
                 ReaderSidebarOrganizationSection(viewModel: viewModel, teams: teams)
@@ -109,14 +142,14 @@ private struct ReaderSidebarView: View {
         makeSection(Strings.subscriptions, isExpanded: $isSectionSubscriptionsExpanded) {
             Label(Strings.subscriptions, systemImage: "checkmark.rectangle.stack")
                 .tag(ReaderSidebarItem.allSubscriptions)
-                .listItemTint(AppColor.brand)
+                .listItemTint(AppColor.primary)
                 .withDisabledSelection(isEditing)
 
             ReaderSidebarSubscriptionsSection(viewModel: viewModel)
+                .environment(\.siteIconBackgroundColor, Color(viewModel.isCompact ? .secondarySystemBackground : .systemBackground))
         }
         makeSection(Strings.lists, isExpanded: $isSectionListsExpanded) {
             ReaderSidebarListsSection(viewModel: viewModel)
-                .environment(\.siteIconBackgroundColor, Color(viewModel.isCompact ? .secondarySystemBackground : .systemBackground))
         }
         makeSection(Strings.tags, isExpanded: $isSectionTagsExpanded) {
             ReaderSidebarTagsSection(viewModel: viewModel)
@@ -125,15 +158,22 @@ private struct ReaderSidebarView: View {
 
     private func makePrimaryNavigationItem(_ title: String, systemImage: String) -> some View {
         HStack {
-            Label(title, systemImage: systemImage)
-                .lineLimit(1)
+            Label {
+                Text(title)
+                    .font(.headline).fontWeight(.medium)
+            } icon: {
+                Image(systemName: systemImage)
+            }
+            .lineLimit(1)
             if viewModel.isCompact {
                 Spacer()
-                Image(systemName: "chevron.right")
+                Image(systemName: "chevron.forward")
                     .font(.system(size: 14).weight(.medium))
                     .foregroundStyle(.secondary.opacity(0.8))
             }
         }
+        .accessibilityElement()
+        .accessibilityLabel(title)
     }
 
     private var preferredTintColor: Color {
@@ -169,9 +209,10 @@ private struct ReaderSidebarSection<Content: View>: View {
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                    Image(systemName: isExpanded ? "chevron.down" : "chevron.forward")
                         .font(.system(size: 14).weight(.semibold))
-                        .foregroundStyle(AppColor.brand)
+                        .foregroundStyle(AppColor.primary)
+                        .frame(width: 14)
                 }
                 .contentShape(Rectangle())
             }
@@ -205,8 +246,9 @@ private extension View {
 }
 
 private struct Strings {
-    static let reader = NSLocalizedString("reader.sidebar.navigationTitle", value: "Reader", comment: "Reader sidebar title")
+    static let reader = SharedStrings.Reader.title
     static let subscriptions = NSLocalizedString("reader.sidebar.section.subscriptions.title", value: "Subscriptions", comment: "Reader sidebar section title")
+    static let favorites = NSLocalizedString("reader.sidebar.section.favorites.title", value: "Favorites", comment: "Reader sidebar section title")
     static let lists = NSLocalizedString("reader.sidebar.section.lists.title", value: "Lists", comment: "Reader sidebar section title")
     static let tags = NSLocalizedString("reader.sidebar.section.tags.title", value: "Tags", comment: "Reader sidebar section title")
     static let organization = NSLocalizedString("reader.sidebar.section.organization.title", value: "Organization", comment: "Reader sidebar section title")

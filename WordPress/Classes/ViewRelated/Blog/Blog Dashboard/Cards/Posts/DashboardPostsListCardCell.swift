@@ -23,8 +23,7 @@ class DashboardPostsListCardCell: UICollectionViewCell, Reusable {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = false
         tableView.backgroundColor = nil
-        let postCompactCellNib = PostCompactCell.defaultNib
-        tableView.register(postCompactCellNib, forCellReuseIdentifier: PostCompactCell.defaultReuseID)
+        tableView.register(PostCompactCell.self, forCellReuseIdentifier: PostCompactCell.defaultReuseID)
         let ghostCellNib = BlogDashboardPostCardGhostCell.defaultNib
         tableView.register(ghostCellNib, forCellReuseIdentifier: BlogDashboardPostCardGhostCell.defaultReuseID)
         tableView.register(DashboardPostListErrorCell.self, forCellReuseIdentifier: DashboardPostListErrorCell.defaultReuseID)
@@ -156,7 +155,7 @@ extension DashboardPostsListCardCell {
     }
 
     private func presentPostList(with status: BasePost.Status) {
-        guard let blog = blog, let viewController = viewController else {
+        guard let blog, let viewController else {
             return
         }
 
@@ -170,7 +169,7 @@ extension DashboardPostsListCardCell {
 extension DashboardPostsListCardCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let post = viewModel?.postAt(indexPath),
-              let viewController = viewController else {
+              let viewController else {
             return
         }
 

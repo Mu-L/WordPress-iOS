@@ -126,29 +126,32 @@ private struct SidebarView: View {
     @ViewBuilder
     private var more: some View {
 #if IS_JETPACK
-        Label {
-            Text(Strings.notifications)
-        } icon: {
-            if notificationsButtonViewModel.counter > 0 {
-                Image(systemName: "bell.badge")
-                    .foregroundStyle(.red, Color(UIAppColor.brand))
-            } else {
-                Image(systemName: "bell")
+        if AccountHelper.isDotcomAvailable() {
+            Label {
+                Text(Strings.notifications)
+            } icon: {
+                if notificationsButtonViewModel.counter > 0 {
+                    Image(systemName: "bell.badge")
+                        .foregroundStyle(.red, .primary)
+                } else {
+                    Image(systemName: "bell")
+                }
+            }
+            .accessibilityIdentifier("sidebar_notifications")
+            .tag(SidebarSelection.notifications)
+
+            Label(Strings.reader, systemImage: "eyeglasses")
+                .tag(SidebarSelection.reader)
+                .accessibilityIdentifier("sidebar_reader")
+
+            if RemoteFeatureFlag.domainManagement.enabled() {
+                Button(action: { viewModel.navigate(.domains) }) {
+                    Label(Strings.domains, systemImage: "network")
+                }
+                .accessibilityIdentifier("sidebar_domains")
             }
         }
-        .accessibilityIdentifier("sidebar_notifications")
-        .tag(SidebarSelection.notifications)
 
-        Label(Strings.reader, systemImage: "eyeglasses")
-            .tag(SidebarSelection.reader)
-            .accessibilityIdentifier("sidebar_reader")
-
-        if RemoteFeatureFlag.domainManagement.enabled() {
-            Button(action: { viewModel.navigate(.domains) }) {
-                Label(Strings.domains, systemImage: "network")
-            }
-            .accessibilityIdentifier("sidebar_domains")
-        }
         Button(action: { viewModel.navigate(.help) }) {
             Label(Strings.help, systemImage: "questionmark.circle")
         }
@@ -200,7 +203,7 @@ private struct SidebarProfileContainerView: View {
                             }
                         }
                     }
-                    .tint(Color(UIAppColor.brand))
+                    .tint(Color(UIAppColor.primary))
                 }
 
                 Spacer()
@@ -244,7 +247,7 @@ struct SidebarAddButtonLabel: View {
             Text(title)
         } icon: {
             Image(systemName: "plus.square.fill")
-                .foregroundStyle(AppColor.brand, Color(.secondarySystemFill))
+                .foregroundStyle(AppColor.primary, Color(.secondarySystemFill))
                 .font(.title2)
         }
     }
@@ -257,7 +260,7 @@ private enum Strings {
     static let addSite = NSLocalizedString("sidebar.addSite", value: "Add Site", comment: "Sidebar button title on iPad")
     static let createSite = NSLocalizedString("sidebar.createSite", value: "Create Site", comment: "Sidebar button title on iPad")
     static let notifications = NSLocalizedString("sidebar.notifications", value: "Notifications", comment: "Sidebar item on iPad")
-    static let reader = NSLocalizedString("sidebar.reader", value: "Reader", comment: "Sidebar item on iPad")
+    static let reader = SharedStrings.Reader.title
     static let domains = NSLocalizedString("sidebar.domains", value: "Domains", comment: "Sidebar item on iPad")
     static let help = NSLocalizedString("sidebar.help", value: "Help & Support", comment: "Sidebar item on iPad")
     static let me = NSLocalizedString("sidebar.me", value: "Me", comment: "Sidebar item on iPad")

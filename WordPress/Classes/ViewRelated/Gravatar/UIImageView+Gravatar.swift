@@ -1,4 +1,5 @@
 import Foundation
+import AsyncImageKit
 import GravatarUI
 import WordPressUI
 
@@ -34,17 +35,19 @@ extension UIImageView {
     ///   - email: The user's email
     ///   - gravatarRating: Expected image rating
     ///   - placeholderImage: Image to be used as Placeholder
+    ///   - forceRefresh: Skip the cache and fetch the latest version of the avatar.
     public func downloadGravatar(
         for email: String,
         gravatarRating: Rating = .general,
-        placeholderImage: UIImage = .gravatarPlaceholderImage
+        placeholderImage: UIImage = .gravatarPlaceholderImage,
+        forceRefresh: Bool = false
     ) {
         let avatarURL = AvatarURL.url(for: email, preferredSize: .pixels(gravatarDefaultSize()), gravatarRating: gravatarRating)
-        downloadGravatar(fullURL: avatarURL, placeholder: placeholderImage, animate: false)
+        downloadGravatar(fullURL: avatarURL, placeholder: placeholderImage, animate: false, forceRefresh: forceRefresh)
     }
 
-    public func downloadGravatar(_ gravatar: AvatarURL?, placeholder: UIImage, animate: Bool) {
-        guard let gravatar = gravatar else {
+    public func downloadGravatar(_ gravatar: AvatarURL?, placeholder: UIImage, animate: Bool, forceRefresh: Bool = false) {
+        guard let gravatar else {
             self.image = placeholder
             return
         }
@@ -56,14 +59,31 @@ extension UIImageView {
         layoutIfNeeded()
 
         let size = Int(ceil(frame.width * min(2, UIScreen.main.scale)))
-        let url = gravatar.replacing(options: .init(preferredSize: .pixels(size)))?.url
-        downloadGravatar(fullURL: url, placeholder: placeholder, animate: animate)
+        guard let url = gravatar.replacing(options: .init(preferredSize: .pixels(size)))?.url else { return }
+        downloadGravatar(fullURL: url, placeholder: placeholder, animate: animate, forceRefresh: forceRefresh)
     }
 
-    private func downloadGravatar(fullURL: URL?, placeholder: UIImage, animate: Bool) {
+    private func downloadGravatar(fullURL: URL?, placeholder: UIImage, animate: Bool, forceRefresh: Bool = false) {
         wp.prepareForReuse()
         if let fullURL {
-            wp.setImage(with: fullURL)
+            var urlToDownload = fullURL
+            if forceRefresh {
+                urlToDownload = fullURL.appendingGravatarCacheBusterParam()
+            }
+
+            wp.setImage(with: urlToDownload)
+
+            if forceRefresh {
+                // If this is a `forceRefresh`, the cache for the original URL should be updated too.
+                // Because the cache buster parameter modifies the download URL.
+                Task {
+                    await wp.controller.task?.value // Wait until setting the new image is done.
+                    if let image {
+                        ImageCache.shared.setImage(image, forKey: fullURL.absoluteString) // Update the cache for the original URL
+                    }
+                }
+            }
+
             if image == nil { // If image wasn't found synchronously in memory cache
                 image = placeholder
             }
@@ -95,10 +115,12 @@ fileprivate struct GravatarDefaults {
 
 extension AvatarURL {
 
-    public static func url(for email: String,
-                           preferredSize: ImageSize? = nil,
-                           gravatarRating: Rating? = nil,
-                           defaultAvatarOption: DefaultAvatarOption? = .status404) -> URL? {
+    public static func url(
+        for email: String,
+        preferredSize: Gravatar.ImageSize? = nil,
+        gravatarRating: Rating? = nil,
+        defaultAvatarOption: DefaultAvatarOption? = .status404
+    ) -> URL? {
         AvatarURL(
             with: .email(email),
             // Passing GravatarDefaults.imageSize to keep the previous default.

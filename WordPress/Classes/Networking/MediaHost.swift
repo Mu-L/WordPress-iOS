@@ -1,21 +1,22 @@
 import Foundation
+import AsyncImageKit
 
 /// Defines a media host for request authentication purposes.
 ///
-enum MediaHost: Equatable, Sendable {
+public enum MediaHost: Equatable, Sendable, MediaHostProtocol {
     case publicSite
     case publicWPComSite
     case privateSelfHostedSite
     case privateWPComSite(authToken: String)
     case privateAtomicWPComSite(siteID: Int, username: String, authToken: String)
 
-    enum Error: Swift.Error {
+    public enum Error: Swift.Error {
         case wpComWithoutSiteID
         case wpComPrivateSiteWithoutAuthToken
         case wpComPrivateSiteWithoutUsername
     }
 
-    init(
+    public init(
         isAccessibleThroughWPCom: Bool,
         isPrivate: Bool,
         isAtomic: Bool,
@@ -58,7 +59,7 @@ enum MediaHost: Equatable, Sendable {
             return
         }
 
-        guard let username = username else {
+        guard let username else {
             // This should actually not be possible.  We have no good way to
             // handle this.
             failure(Error.wpComPrivateSiteWithoutUsername)
@@ -73,7 +74,7 @@ enum MediaHost: Equatable, Sendable {
             return
         }
 
-        guard let siteID = siteID else {
+        guard let siteID else {
             // This should actually not be possible.  We have no good way to
             // handle this.
             failure(Error.wpComWithoutSiteID)
@@ -89,5 +90,11 @@ enum MediaHost: Equatable, Sendable {
         }
 
         self = .privateAtomicWPComSite(siteID: siteID, username: username, authToken: authToken)
+    }
+
+    // MARK: - MediaHostProtocol
+
+    public func authenticatedRequest(for url: URL) async throws -> URLRequest {
+        try await MediaRequestAuthenticator().authenticatedRequest(for: url, host: self)
     }
 }

@@ -97,9 +97,7 @@
 /* Alert dismissal title
    Button label that dismisses the qr log in flow and returns the user back to the previous screen
    Button title, cancel fixing all threats
-   Button title. Cancels a pending action.
    Button title. Tapping it cancels the login flow.
-   Cancel a prompt
    Cancel Action
    Cancel action on share extension editor screen.
    Cancel action on the app extension category picker screen.
@@ -108,7 +106,6 @@
    Cancel action on the app extension tags picker screen.
    Cancel action title
    Cancel button
-   Cancel button for alert
    Cancel button label
    Cancel button title for the warning shown to the user when he refuses to re-login when the authToken is missing.
    Cancel button.
@@ -116,7 +113,6 @@
    Cancel copying link to comment button title
    Cancel editing an image
    Cancel Insight management action sheet.
-   Cancel prompt for user information.
    Cancel registering a domain
    Cancel removing a plugin
    Cancel site creation
@@ -126,13 +122,11 @@
    Cancel. Action.
    Cancels an Action
    Cancels an alert.
-   Cancels the mark all as read action.
    Editing GIF alert cancel action button.
    Menus cancel button for deleting a menu.
    Menus cancel button within text bar while editing items.
    Menus: Cancel button title for canceling an edited menu item.
    Option to cancel the email app selection when logging in with magic links
-   The title of a cancel button.
    Title for cancel action. Dismisses the action sheet.
    Title of a button that dismisses the permissions alert
    Title. Title of a cancel button. Tapping disnisses an alert.
@@ -145,9 +139,6 @@
 
 /* Dialog box title for when the user is canceling an upload. */
 "Cancel media uploads" = "Annuller overførsel af medier";
-
-/* The action was canceled */
-"Canceled" = "Annulleret";
 
 /* Image caption field label (for editing)
    Noun. Label for the caption for a media asset (image / video) */
@@ -200,9 +191,6 @@
 
 /* Sentence fragment. The full phrase is 'Comments on' followed by the title of a post on a separate line. */
 "Comments on" = "Kommentarer til";
-
-/* The action is completed */
-"Completed" = "Færdig";
 
 /* Section title for the configure table section in the blog details screen */
 "Configure" = "Konfigurer";
@@ -273,7 +261,6 @@
 /* Delete
    Delete button title for the warning shown to the user when he refuses to re-login when the authToken is missing.
    Title for button that permanently deletes a media item (photo / video)
-   Title of a delete button
    Title of the trash confirmation alert. */
 "Delete" = "Slet";
 
@@ -316,8 +303,7 @@
 /* Disconnect from WordPress.com button */
 "Disconnect from WordPress.com" = "Afbryd forbindelse til WordPress.com";
 
-/* Accessibility label for button to dismiss a bottom sheet
-   Accessibility label for the transparent space above the login dialog which acts as a button to dismiss the dialog.
+/* Accessibility label for the transparent space above the login dialog which acts as a button to dismiss the dialog.
    Accessibility label for the transparent space above the signup dialog which acts as a button to dismiss the dialog.
    Dismiss a view. Verb */
 "Dismiss" = "Afvis";
@@ -327,9 +313,7 @@
    Done button title
    Done editing an image
    Done. Action.
-   Label for confirm feature image of a post
    Label for Done button
-   Label on button to dismiss revisions view
    Menu button title for finishing editing the Menu name.
    Tapping a button with this label allows the user to exit the Site Creation flow
    Title for a Done button.
@@ -390,7 +374,6 @@
 "Enter username" = "Indtast brugernavn";
 
 /* Generic error alert title
-   Generic error.
    Generic popup title for any type of error. */
 "Error" = "Fejl";
 
@@ -403,12 +386,10 @@
 /* Label for the excerpt field. Should be the same as WP core. */
 "Excerpt" = "Uddrag";
 
-/* Status for Media object that is failed upload or export.
-   The action failed */
+/* Status for Media object that is failed upload or export. */
 "Failed" = "Mislykkedes";
 
-/* Label for the Featured Image area in post settings.
-   Title for the Featured Image view */
+/* Label for the Featured Image area in post settings. */
 "Featured Image" = "Fremhævet billede";
 
 /* A brief prompt shown when the comment list is empty, letting the user know the app is currently fetching new comments. */
@@ -526,8 +507,7 @@
 
 /* A button title.
    Link to cookie policy
-   Menu title to show the prompts feature introduction modal.
-   Read more button title shown in alert announcing new Create Button feature. */
+   Menu title to show the prompts feature introduction modal. */
 "Learn more" = "Lær mere";
 
 /* Left alignment for an image. Should be the same as in core WP. */
@@ -601,9 +581,7 @@
 "Main Navigation" = "Hovednavigation";
 
 /* Button leading to a screen where users can manage their installed plugins
-   Page title for the screen to manage your list of followed sites.
    Screen title, where users can see all their installed plugins.
-   Title for the Reader Manage screen.
    Verb. Text label. Tapping displays a screen where the user can configure 'share' buttons for third-party services.
    Verb. Title of the screen for managing sharing buttons and settings related to sharing. */
 "Manage" = "Administrer";
@@ -637,9 +615,7 @@
 "Months and Years" = "Måneder og år";
 
 /* Accessibility label for more button in dashboard quick start card.
-   Accessibility label for the More button in Post List (compact view).
    Accessibility label for the More button on formatting toolbar.
-   Accessibility label for the More button on Reader's post details
    Action button to display more available options */
 "More" = "Mere";
 
@@ -720,25 +696,14 @@
    Title of the 'Notifications' tab - used for spotlight indexing on iOS. */
 "Notifications" = "Notifikationer";
 
-/* A button title for closing the dialog.
-   A button title.
-   Accept Action
-   Alert dismissal title
-   Button title. Acknowledges a prompt.
+/* Alert dismissal title
    Button title. An acknowledgement of the message displayed in a prompt.
-   Default action
    Dismisses the alert
-   Marks all notifications as read.
    Menus: button title for finishing editing of a menu item.
-   OK
-   OK button for alert
    Ok button for dismissing alert helping users understand their site address
    OK button title for the warning shown to the user when the app realizes there should be an auth token but there isn't one.
    OK Button title shown in alert informing users about the Reader Save for Later feature.
-   Submit button on prompt for user information.
-   Title of a button that dismisses a prompt
-   Title of an OK button. Pressing the button acknowledges and dismisses a prompt.
-   Title of primary button on alert prompting verify their accounts while attempting to publish */
+   Title of a button that dismisses a prompt */
 "OK" = "OK";
 
 /* Disabled */
@@ -854,12 +819,8 @@
 /* All Time Stats 'Posts' label
    Insights 'Posts' header
    Noun. Title. Links to the blog's Posts screen.
-   Title of a Reader tab showing Posts matching a user's search query
    Title of the screen showing the list of posts for a blog. */
 "Posts" = "Indlæg";
-
-/* Label to show while converting and/or resizing media to send to server */
-"Preparing..." = "Forbereder...";
 
 /* Displays the Post Preview Interface
    Title for button to preview a selected layout
@@ -898,10 +859,7 @@
 
 /* Name of the Reader feature.
    Noun. Name of the Reader feature
-   The accessibility value of the Reader tab.
-   The accessibility value of the reader tab.
-   The default title of the Reader
-   Title of the 'Reader' tab - used for spotlight indexing on iOS. */
+   The accessibility value of the Reader tab. */
 "Reader" = "Læser";
 
 /* Text for the 'Reblog' button. */
@@ -918,13 +876,8 @@
 "Refresh" = "Genindlæs";
 
 /* Alert button to confirm a plugin to be removed
-   Label for the Remove Feature Image icon. Tapping will show a confirmation screen for removing the feature image from the post.
-   Remove Action
-   Remove an image/posts/etc */
+   Remove Action */
 "Remove" = "Fjern";
-
-/* Accessibility  Label for the Remove Feature Image icon. Tapping will show a confirmation screen for removing the feature image from the post. */
-"Remove Featured Image" = "Fjern fremhævede billede";
 
 /* Label action for removing a link from the editor */
 "Remove Link" = "Fjern link";
@@ -934,9 +887,6 @@
 
 /* User action to remove image. */
 "Remove image" = "Fjern billede";
-
-/* Prompt when removing a featured image from a post */
-"Remove this Featured Image?" = "Fjern dette fremhævede billede?";
 
 /* User action to remove video. */
 "Remove video" = "Fjern video";
@@ -1004,8 +954,7 @@
    Title of the scheduled filter. This filter shows a list of posts that are scheduled to be published at a future date. */
 "Scheduled" = "Planlagt";
 
-/* Title of Stats section that shows search engine referrer traffic.
-   Title of the Reader's search feature */
+/* Title of Stats section that shows search engine referrer traffic. */
 "Search" = "Søg";
 
 /* Period Stats 'Search Terms' header */
@@ -1020,12 +969,7 @@
    Title for the Jetpack Security Settings Screen */
 "Settings" = "Indstillinger";
 
-/* Accessibility label for share buttons in nav bars
-   Button label to share a web page
-   Shares the comment URL
-   Spoken accessibility label
-   Title for a button that allows the user to share their answer to the prompt.
-   Verb. Title of a button. Pressing lets the user share a post to others. */
+/* Spoken accessibility label */
 "Share" = "Del";
 
 /* When social login fails, this button offers to let them signup for a new WordPress.com account */
@@ -1149,8 +1093,7 @@
 /* No comment provided by engineer. */
 "That username is not allowed." = "Det brugernavn er ikke tilladt.";
 
-/* Error message shown when a media upload fails because the user isn't connected to the Internet.
-   Message of error prompt shown when a user tries to perform an action without an internet connection. */
+/* Error message shown when a media upload fails because the user isn't connected to the Internet. */
 "The Internet connection appears to be offline." = "Internetforbindelsen ser ud til at være nede.";
 
 /* Example post title used in the login prologue screens. This is a post about football fans. */
@@ -1252,9 +1195,6 @@
    Status for Media object that is being uploaded. */
 "Uploading" = "Uploader";
 
-/* Label to show while uploading media to server */
-"Uploading..." = "Uploader...";
-
 /* No comment provided by engineer. */
 "Uploading…" = "Overfører...";
 
@@ -1304,9 +1244,6 @@
 /* The visibility settings of the post. Should be the same as in core WP. */
 "Visibility" = "Synlighed";
 
-/* An option to visit the site to which a specific post belongs */
-"Visit" = "Besøg";
-
 /* Accessibility label used for distinguishing Views and Visitors in the Stats → Views bar chart.
    All Time Stats 'Visitors' label
    Label for Period Overview visitors
@@ -1339,8 +1276,7 @@
 /* Placeholder text for inline compose view */
 "Write a reply…" = "Skriv et svar...";
 
-/* Button title. Confirms that the user wants to proceed with a pending action.
-   Label for a button that clears all old activity logs
+/* Label for a button that clears all old activity logs
    Yes */
 "Yes" = "Ja";
 

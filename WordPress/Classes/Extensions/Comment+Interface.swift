@@ -10,7 +10,7 @@ extension Comment {
     /// as well!
     ///
     @objc func relativeDateSectionIdentifier() -> String? {
-        guard let dateCreated = dateCreated else {
+        guard let dateCreated else {
             return nil
         }
 
@@ -74,6 +74,22 @@ extension Comment {
             case .Today:
                 return NSLocalizedString("Today", comment: "Comments Today Section Header")
             }
+        }
+    }
+
+    // MARK: Helpers
+
+    /// Returns an associated site ID.
+    ///
+    /// - note: The `Comment` class can be used in two different contexts:
+    /// Reader and Site, and this property works accordingly.
+    var associatedSiteID: NSNumber? {
+        if let post = post as? ReaderPost {
+            return post.siteID
+        } else if let blogID = blog?.dotComID {
+            return blogID
+        } else {
+            return nil
         }
     }
 }

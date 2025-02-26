@@ -33,7 +33,7 @@ final class SiteStatsPeriodViewModel: Observable {
     private var mostRecentChartData: StatsSummaryTimeIntervalData? {
         didSet {
             if oldValue == nil {
-                guard let mostRecentChartData = mostRecentChartData else {
+                guard let mostRecentChartData else {
                     return
                 }
 
@@ -316,11 +316,11 @@ private extension SiteStatsPeriodViewModel {
 
         if mostRecentChartData == nil {
             mostRecentChartData = periodSummary
-        } else if let mostRecentChartData = mostRecentChartData,
-            let periodSummary = periodSummary,
+        } else if let mostRecentChartData,
+            let periodSummary,
             mostRecentChartData.periodEndDate == periodSummary.periodEndDate {
             self.mostRecentChartData = periodSummary
-        } else if let periodSummary = periodSummary,   // when there is API data that has more recent API period date
+        } else if let periodSummary,   // when there is API data that has more recent API period date
                   let chartData = mostRecentChartData, // than our local chartData
                   periodSummary.periodEndDate > chartData.periodEndDate {
 
@@ -502,27 +502,19 @@ private extension SiteStatsPeriodViewModel {
         let referrers = store.getTopReferrers()?.referrers.prefix(10) ?? []
 
         func rowDataFromReferrer(referrer: StatsReferrer) -> StatsTotalRowData {
-            var icon: UIImage? = nil
-            var iconURL: URL? = nil
-
-            switch referrer.iconURL?.lastPathComponent {
-            case "search-engine.png":
-                icon = Style.imageForGridiconType(.search)
-            case nil:
-                icon = Style.imageForGridiconType(.globe)
-            default:
-                iconURL = referrer.iconURL
-            }
-
-            return StatsTotalRowData(name: referrer.title,
-                                     data: referrer.viewsCount.abbreviatedString(),
-                                     icon: icon,
-                                     socialIconURL: iconURL,
-                                     showDisclosure: true,
-                                     disclosureURL: referrer.url,
-                                     childRows: referrer.children.map { rowDataFromReferrer(referrer: $0) },
-                                     statSection: .periodReferrers,
-                                     isReferrerSpam: referrer.isSpam)
+            return StatsTotalRowData(
+                name: referrer.title,
+                data: referrer.viewsCount.abbreviatedString(),
+                icon: nil,
+                socialIconURL: nil,
+                showDisclosure: true,
+                disclosureURL: referrer.url,
+                childRows: referrer.children.map {
+                    rowDataFromReferrer(referrer: $0)
+                },
+                statSection: .periodReferrers,
+                isReferrerSpam: referrer.isSpam
+            )
         }
 
         return referrers.map { rowDataFromReferrer(referrer: $0) }

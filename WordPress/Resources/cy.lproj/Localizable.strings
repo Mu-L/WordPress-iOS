@@ -25,9 +25,6 @@
 /* Let's the user know that a third party sharing service was reconnected. The %@ is a placeholder for the service name. */
 "%@ was reconnected." = "Cafodd %@ ei ailgysylltu.";
 
-/* The number of connected accounts on a third party sharing service connected to the user's blog. The '%d' is a placeholder for the number of accounts. */
-"%d accounts" = "%d cyfrif";
-
 /* Age between dates over one day.
    Number of days */
 "%d days" = "%d diwrnod";
@@ -286,9 +283,7 @@
 /* Alert dismissal title
    Button label that dismisses the qr log in flow and returns the user back to the previous screen
    Button title, cancel fixing all threats
-   Button title. Cancels a pending action.
    Button title. Tapping it cancels the login flow.
-   Cancel a prompt
    Cancel Action
    Cancel action on share extension editor screen.
    Cancel action on the app extension category picker screen.
@@ -297,7 +292,6 @@
    Cancel action on the app extension tags picker screen.
    Cancel action title
    Cancel button
-   Cancel button for alert
    Cancel button label
    Cancel button title for the warning shown to the user when he refuses to re-login when the authToken is missing.
    Cancel button.
@@ -305,7 +299,6 @@
    Cancel copying link to comment button title
    Cancel editing an image
    Cancel Insight management action sheet.
-   Cancel prompt for user information.
    Cancel registering a domain
    Cancel removing a plugin
    Cancel site creation
@@ -315,13 +308,11 @@
    Cancel. Action.
    Cancels an Action
    Cancels an alert.
-   Cancels the mark all as read action.
    Editing GIF alert cancel action button.
    Menus cancel button for deleting a menu.
    Menus cancel button within text bar while editing items.
    Menus: Cancel button title for canceling an edited menu item.
    Option to cancel the email app selection when logging in with magic links
-   The title of a cancel button.
    Title for cancel action. Dismisses the action sheet.
    Title of a button that dismisses the permissions alert
    Title. Title of a cancel button. Tapping disnisses an alert.
@@ -375,12 +366,6 @@
 
 /* No comment provided by engineer. */
 "Clear Old Activity Logs" = "Clirio'r Hen Gofnodion Gweithgaredd";
-
-/* Title of an alert prompt. */
-"Clear Search History" = "Clirio Hanes Chwilio";
-
-/* Title of a button. */
-"Clear search history" = "Clirio Hanes Chwilio";
 
 /* Label for number of clicks.
    Period Stats 'Clicks' header */
@@ -444,9 +429,6 @@
 
 /* Setting: WordPress.com Community */
 "Community" = "Cymuned";
-
-/* The action is completed */
-"Completed" = "Cwblhawyd";
 
 /* Section title for the configure table section in the blog details screen */
 "Configure" = "Ffurfweddu";
@@ -589,7 +571,6 @@
 /* Delete
    Delete button title for the warning shown to the user when he refuses to re-login when the authToken is missing.
    Title for button that permanently deletes a media item (photo / video)
-   Title of a delete button
    Title of the trash confirmation alert. */
 "Delete" = "Dileu";
 
@@ -651,8 +632,7 @@
    Title for the Discussion Settings Screen */
 "Discussion" = "Trafodaeth";
 
-/* Accessibility label for button to dismiss a bottom sheet
-   Accessibility label for the transparent space above the login dialog which acts as a button to dismiss the dialog.
+/* Accessibility label for the transparent space above the login dialog which acts as a button to dismiss the dialog.
    Accessibility label for the transparent space above the signup dialog which acts as a button to dismiss the dialog.
    Dismiss a view. Verb */
 "Dismiss" = "Cau";
@@ -670,9 +650,7 @@
    Done button title
    Done editing an image
    Done. Action.
-   Label for confirm feature image of a post
    Label for Done button
-   Label on button to dismiss revisions view
    Menu button title for finishing editing the Menu name.
    Tapping a button with this label allows the user to exit the Site Creation flow
    Title for a Done button.
@@ -739,7 +717,6 @@
 "Enter username" = "Rhowch enw defnyddiwr";
 
 /* Generic error alert title
-   Generic error.
    Generic popup title for any type of error. */
 "Error" = "Gwall";
 
@@ -768,19 +745,14 @@
 /* Overlay message displayed while starting content export */
 "Exporting content…" = "Allforio cynnwys...";
 
-/* Status for Media object that is failed upload or export.
-   The action failed */
+/* Status for Media object that is failed upload or export. */
 "Failed" = "Methwyd";
 
 /* Error message to show when wrong URL format is used to access the REST API */
 "Failed to serialize request to the REST API." = "Methwyd cyfresu cais i'r API REST.";
 
-/* Label for the Featured Image area in post settings.
-   Title for the Featured Image view */
+/* Label for the Featured Image area in post settings. */
 "Featured Image" = "Delwedd Enghreifftiol";
-
-/* No comment provided by engineer. */
-"Featured Image did not load" = "Nid yw'r ddelwedd hon wedi llwytho";
 
 /* Text displayed while fetching themes */
 "Fetching Themes..." = "Estyn Themâu...";
@@ -959,8 +931,7 @@
 
 /* A button title.
    Link to cookie policy
-   Menu title to show the prompts feature introduction modal.
-   Read more button title shown in alert announcing new Create Button feature. */
+   Menu title to show the prompts feature introduction modal. */
 "Learn more" = "Dysgu rhagor";
 
 /* Left alignment for an image. Should be the same as in core WP. */
@@ -1024,9 +995,6 @@
 /* Menus label text displayed when a menu is loading. */
 "Loading menu..." = "Llwytho dewislen...";
 
-/* A short message to inform the user the requested stream is being loaded. */
-"Loading stream..." = "Llwytho llif...";
-
 /* Loading tags
    Loading. Verb
    Suggestions loading message
@@ -1072,9 +1040,7 @@
 "Main Navigation" = "Llywio";
 
 /* Button leading to a screen where users can manage their installed plugins
-   Page title for the screen to manage your list of followed sites.
    Screen title, where users can see all their installed plugins.
-   Title for the Reader Manage screen.
    Verb. Text label. Tapping displays a screen where the user can configure 'share' buttons for third-party services.
    Verb. Title of the screen for managing sharing buttons and settings related to sharing. */
 "Manage" = "Rheoli";
@@ -1126,9 +1092,7 @@
 "Months and Years" = "Misoedd a Blynyddoedd";
 
 /* Accessibility label for more button in dashboard quick start card.
-   Accessibility label for the More button in Post List (compact view).
    Accessibility label for the More button on formatting toolbar.
-   Accessibility label for the More button on Reader's post details
    Action button to display more available options */
 "More" = "Rhagor";
 
@@ -1259,25 +1223,14 @@
 /* Discoverability title for numbered list keyboard shortcut. */
 "Numbered List" = "Rhestr wedi'i Rhifo";
 
-/* A button title for closing the dialog.
-   A button title.
-   Accept Action
-   Alert dismissal title
-   Button title. Acknowledges a prompt.
+/* Alert dismissal title
    Button title. An acknowledgement of the message displayed in a prompt.
-   Default action
    Dismisses the alert
-   Marks all notifications as read.
    Menus: button title for finishing editing of a menu item.
-   OK
-   OK button for alert
    Ok button for dismissing alert helping users understand their site address
    OK button title for the warning shown to the user when the app realizes there should be an auth token but there isn't one.
    OK Button title shown in alert informing users about the Reader Save for Later feature.
-   Submit button on prompt for user information.
-   Title of a button that dismisses a prompt
-   Title of an OK button. Pressing the button acknowledges and dismisses a prompt.
-   Title of primary button on alert prompting verify their accounts while attempting to publish */
+   Title of a button that dismisses a prompt */
 "OK" = "Iawn";
 
 /* Disabled */
@@ -1415,9 +1368,6 @@
 /* No comment provided by engineer. */
 "Please enter a username." = "Rhowch enw defnyddiwr.";
 
-/* Title of a prompt. */
-"Please enter a valid URL" = "Rhowch URL dilys";
-
 /* Error message displayed when the user attempts use an invalid email address. */
 "Please enter a valid email address." = "Rhowch gyfeiriad e-bost dilys.";
 
@@ -1455,7 +1405,6 @@
 /* All Time Stats 'Posts' label
    Insights 'Posts' header
    Noun. Title. Links to the blog's Posts screen.
-   Title of a Reader tab showing Posts matching a user's search query
    Title of the screen showing the list of posts for a blog. */
 "Posts" = "Cofnodion";
 
@@ -1467,9 +1416,6 @@
 
 /* Title of alert when attempting to delete site with purchases */
 "Premium Upgrades" = "Uwchraddiadau Premiwm";
-
-/* Label to show while converting and/or resizing media to send to server */
-"Preparing..." = "Paratoi...";
 
 /* Displays the Post Preview Interface
    Title for button to preview a selected layout
@@ -1524,10 +1470,7 @@
 
 /* Name of the Reader feature.
    Noun. Name of the Reader feature
-   The accessibility value of the Reader tab.
-   The accessibility value of the reader tab.
-   The default title of the Reader
-   Title of the 'Reader' tab - used for spotlight indexing on iOS. */
+   The accessibility value of the Reader tab. */
 "Reader" = "Darllennydd";
 
 /* Text for the 'Reblog' button. */
@@ -1568,13 +1511,8 @@
 "Related Posts" = "Cofnodion sy'n Perthyn";
 
 /* Alert button to confirm a plugin to be removed
-   Label for the Remove Feature Image icon. Tapping will show a confirmation screen for removing the feature image from the post.
-   Remove Action
-   Remove an image/posts/etc */
+   Remove Action */
 "Remove" = "Tynnu";
-
-/* Accessibility  Label for the Remove Feature Image icon. Tapping will show a confirmation screen for removing the feature image from the post. */
-"Remove Featured Image" = "Tynnu'r Ddelwedd Nodwedd";
 
 /* Label action for removing a link from the editor */
 "Remove Link" = "Tynnu dolen";
@@ -1584,9 +1522,6 @@
 
 /* Button to remove a site from the app */
 "Remove Site" = "TynnuGwefan";
-
-/* Prompt when removing a featured image from a post */
-"Remove this Featured Image?" = "Tynnu'r Ddelwedd Nodwedd?";
 
 /* Setting: indicates if Replies to Comments will be notified */
 "Replies to your comments" = "Atebion i'ch sylwadau";
@@ -1679,8 +1614,7 @@
    Title of the scheduled filter. This filter shows a list of posts that are scheduled to be published at a future date. */
 "Scheduled" = "Amserlenwyd";
 
-/* Title of Stats section that shows search engine referrer traffic.
-   Title of the Reader's search feature */
+/* Title of Stats section that shows search engine referrer traffic. */
 "Search" = "Chwilio";
 
 /* Period Stats 'Search Terms' header */
@@ -1725,12 +1659,7 @@
 /* Message to show when setting save failed */
 "Settings update failed" = "Methodd diweddaru'r gosodiadau";
 
-/* Accessibility label for share buttons in nav bars
-   Button label to share a web page
-   Shares the comment URL
-   Spoken accessibility label
-   Title for a button that allows the user to share their answer to the prompt.
-   Verb. Title of a button. Pressing lets the user share a post to others. */
+/* Spoken accessibility label */
 "Share" = "Rhannu";
 
 /* Aztec's Text Placeholder
@@ -1936,8 +1865,7 @@
 /* No comment provided by engineer. */
 "That username is not allowed." = "Nid yw'r enw defnyddiwr yna'n cael ei ganiatáu.";
 
-/* Error message shown when a media upload fails because the user isn't connected to the Internet.
-   Message of error prompt shown when a user tries to perform an action without an internet connection. */
+/* Error message shown when a media upload fails because the user isn't connected to the Internet. */
 "The Internet connection appears to be offline." = "Mae'n ymddangos bod y cysylltiad Rhyngrwyd all-lein.";
 
 /* Error message describing a problem with a URL. */
@@ -2135,8 +2063,7 @@
    Button title. Reverts a comment moderation action.
    Button title. Reverts the previous notification operation
    Revert an operation
-   Revert enabling notification after successfully subcribing to the comments for the post.
-   Undo action */
+   Revert enabling notification after successfully subcribing to the comments for the post. */
 "Undo" = "Dadwneud";
 
 /* Label for size of media when it's not possible to calculate it. */
@@ -2186,9 +2113,6 @@
 /* Title for alert when trying to save/exit a post before media upload process is complete. */
 "Uploading media" = "Llwytho cyfryngau";
 
-/* Label to show while uploading media to server */
-"Uploading..." = "Llwytho...";
-
 /* Use the current image */
 "Use" = "Defnydd";
 
@@ -2209,7 +2133,8 @@
 /* No comment provided by engineer. */
 "Username must be at least 4 characters." = "Rhaid i enw defnyddiwr fod o leiaf yn 4 nod o hyd.";
 
-/* Blog Users */
+/* Blog Users
+   Noun. Title. Links to the user management feature. */
 "Users" = "Defnyddwyr";
 
 /* two factor code placeholder */
@@ -2252,9 +2177,6 @@
 
 /* The visibility settings of the post. Should be the same as in core WP. */
 "Visibility" = "Gwelededd";
-
-/* An option to visit the site to which a specific post belongs */
-"Visit" = "Ymweld â";
 
 /* A call to action to visit the specified blog.  The '%@' characters are a placholder for the blog name. */
 "Visit %@" = "Ewch i %@";
@@ -2328,17 +2250,13 @@
 /* WordPress.com Notification Settings Title */
 "WordPress.com Updates" = "Diweddariadau WordPress.com";
 
-/* Asks the user if they would like to clear their search history. */
-"Would you like to clear your search history?" = "Hoffech chi glirio eich hanes chwilio?";
-
 /* Placeholder text for inline compose view */
 "Write a reply…" = "Ysgrifennu ateb…";
 
 /* Title for the writing section in site settings screen */
 "Writing" = "Ysgrifennu";
 
-/* Button title. Confirms that the user wants to proceed with a pending action.
-   Label for a button that clears all old activity logs
+/* Label for a button that clears all old activity logs
    Yes */
 "Yes" = "Iawn";
 

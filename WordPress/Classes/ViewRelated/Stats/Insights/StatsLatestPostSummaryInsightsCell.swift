@@ -1,6 +1,7 @@
 import UIKit
 import Gridicons
 import DesignSystem
+import AsyncImageKit
 
 protocol LatestPostSummaryConfigurable {
     func configure(withInsightData lastPostInsight: StatsLastPostInsight?, andDelegate delegate: SiteStatsInsightsDelegate?)
@@ -18,14 +19,10 @@ class StatsLatestPostSummaryInsightsCell: StatsBaseCell, LatestPostSummaryConfig
     private let viewCountLabel = UILabel()
     private let likeCountLabel = UILabel()
     private let commentCountLabel = UILabel()
-    private let postImageView = CachedAnimatedImageView()
+    private let postImageView = AsyncImageView()
 
     private let noDataLabel = UILabel()
     private let createPostButton = UIButton(type: .system)
-
-    lazy var imageLoader: ImageLoader = {
-        return ImageLoader(imageView: postImageView, gifStrategy: .mediumGIFs)
-    }()
 
     // MARK: - Initialization
 
@@ -194,7 +191,7 @@ class StatsLatestPostSummaryInsightsCell: StatsBaseCell, LatestPostSummaryConfig
         siteStatsInsightsDelegate = delegate
         statSection = .insightsLatestPostSummary
 
-        guard let lastPostInsight = lastPostInsight else {
+        guard let lastPostInsight else {
             toggleNoData(show: true)
             return
         }
@@ -229,16 +226,14 @@ class StatsLatestPostSummaryInsightsCell: StatsBaseCell, LatestPostSummaryConfig
     }
 
     private func configureFeaturedImage(url: URL?) {
-        if let url = url,
+        if let url,
            let siteID = SiteStatsInformation.sharedInstance.siteID?.intValue,
            let blog = try? Blog.lookup(withID: siteID, in: ContextManager.shared.mainContext) {
             postImageView.isHidden = false
 
-            let host = MediaHost(with: blog, failure: { error in
-                DDLogError("Failed to create media host: \(error.localizedDescription)")
-            })
-
-            imageLoader.loadImage(with: url, from: host, preferredSize: CGSize(width: Metrics.thumbnailSize, height: Metrics.thumbnailSize))
+            let host = MediaHost(blog)
+            let targetSize = CGSize(width: Metrics.thumbnailSize, height: Metrics.thumbnailSize)
+            postImageView.setImage(with: url, host: host, size: ImageSize(scaling: targetSize, in: self))
         } else {
             postImageView.isHidden = true
         }

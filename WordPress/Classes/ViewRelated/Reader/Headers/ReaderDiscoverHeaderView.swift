@@ -1,13 +1,16 @@
 import UIKit
+import WordPressUI
 
 protocol ReaderDiscoverHeaderViewDelegate: AnyObject {
     func readerDiscoverHeaderView(_ view: ReaderDiscoverHeaderView, didChangeSelection selection: ReaderDiscoverChannel)
 }
 
-final class ReaderDiscoverHeaderView: UIView, UITextViewDelegate {
-    private let titleView = ReaderStreamTitleView(insets: nil)
+final class ReaderDiscoverHeaderView: ReaderBaseHeaderView, UITextViewDelegate {
+    private let titleView = ReaderTitleView()
     private let channelsStackView = UIStackView(spacing: 8, [])
+    private let scrollView = UIScrollView()
     private var channelViews: [ReaderDiscoverChannelView] = []
+    private var previousWidth: CGFloat?
 
     private var selectedChannel: ReaderDiscoverChannel?
 
@@ -16,16 +19,24 @@ final class ReaderDiscoverHeaderView: UIView, UITextViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let scrollView = UIScrollView()
         scrollView.addSubview(channelsStackView)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.clipsToBounds = false
+        scrollView.decelerationRate = .fast
+
         channelsStackView.pinEdges()
         scrollView.heightAnchor.constraint(equalTo: channelsStackView.heightAnchor).isActive = true
 
-        let stackView = UIStackView(axis: .vertical, spacing: 8, [titleView, scrollView])
-        addSubview(stackView)
-        stackView.pinEdges(insets: ReaderStreamTitleView.preferredInsets)
+        contentView.addSubview(titleView)
+        addSubview(scrollView) // Gets added directly to the header to enable interactions when scrolled
+
+        NSLayoutConstraint.activate([
+            titleView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 8),
+            scrollView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+        titleView.pinEdges(.horizontal)
+        scrollView.pinEdges(.horizontal)
 
         titleView.titleLabel.text = SharedStrings.Reader.discover
         titleView.detailsTextView.attributedText = {
@@ -45,6 +56,21 @@ final class ReaderDiscoverHeaderView: UIView, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if previousWidth != bounds.width {
+            previousWidth = bounds.width
+            updateScrollViewInsets()
+        }
+    }
+
+    private func updateScrollViewInsets() {
+        scrollView.contentInset.left = contentView.frame.minX - (isCompact ? 0 : 10)
+        scrollView.contentInset.right = frame.maxX - contentView.frame.maxX + 10
+        scrollView.contentOffset = CGPoint(x: -scrollView.contentInset.left, y: 0)
+    }
+
     func configure(channels: [ReaderDiscoverChannel]) {
         for view in channelViews {
             view.removeFromSuperview()
@@ -59,6 +85,13 @@ final class ReaderDiscoverHeaderView: UIView, UITextViewDelegate {
         selectedChannel = channel
         refreshChannelViews()
     }
+
+    override func didUpdateIsCompact(_ isCompact: Bool) {
+        super.didUpdateIsCompact(isCompact)
+        updateScrollViewInsets()
+    }
+
+    // MARK: Channels
 
     private func makeChannelView(_ channel: ReaderDiscoverChannel) -> ReaderDiscoverChannelView {
         let view = ReaderDiscoverChannelView(channel: channel)
@@ -119,6 +152,8 @@ private final class ReaderDiscoverChannelView: UIView {
 
         textLabel.font = UIFont.preferredFont(forTextStyle: .subheadline).withWeight(.medium)
         textLabel.text = channel.localizedTitle
+        textLabel.adjustsFontForContentSizeCategory = true
+        textLabel.maximumContentSizeCategory = .accessibilityMedium
 
         backgroundView.clipsToBounds = true
 
@@ -138,7 +173,7 @@ private final class ReaderDiscoverChannelView: UIView {
             backgroundView.backgroundColor = UIColor.label
             textLabel.textColor = UIColor.systemBackground
         } else {
-            backgroundView.backgroundColor = UIColor.opaqueSeparator.withAlphaComponent(0.33)
+            backgroundView.backgroundColor = UIColor(light: UIColor.opaqueSeparator.withAlphaComponent(0.33), dark: UIColor.opaqueSeparator)
             textLabel.textColor = UIColor.label
         }
     }
@@ -180,7 +215,7 @@ enum ReaderDiscoverChannel: Hashable {
         case .dailyPrompts:
             NSLocalizedString("reader.discover.channel.dailyPrompts", value: "Daily Prompts", comment: "Header view channel (filter)")
         case .tag(let tag):
-            tag.title.localizedCapitalized
+            tag.formattedTitle
         }
     }
 

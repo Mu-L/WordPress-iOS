@@ -4,6 +4,9 @@
 # Constants
 #################################################
 
+# See WordPress/Makefile
+GUTENBERG_TAG = 'v1.121.0'
+
 # URL of the GlotPress project containing the app's strings
 GLOTPRESS_APP_STRINGS_PROJECT_URL = 'https://translate.wordpress.org/projects/apps/ios/dev/'
 
@@ -112,7 +115,8 @@ UPLOAD_TO_APP_STORE_COMMON_PARAMS = {
   phased_release: true,
   precheck_include_in_app_purchases: false,
   api_key_path: APP_STORE_CONNECT_KEY_PATH,
-  app_rating_config_path: File.join(PROJECT_ROOT_FOLDER, 'fastlane', 'metadata', 'ratings_config.json')
+  app_rating_config_path: File.join(PROJECT_ROOT_FOLDER, 'fastlane', 'metadata', 'ratings_config.json'),
+  copyright: "© #{Time.now.year} Automattic, Inc."
 }.freeze
 
 WORDPRESS_EN_LPROJ = File.join('WordPress', 'Resources', 'en.lproj')
@@ -129,12 +133,9 @@ platform :ios do
   # @called_by complete_code_freeze
   #
   lane :generate_strings_file_for_glotpress do |skip_commit: false, derived_data_path: DERIVED_DATA_PATH, gutenberg_absolute_path: nil|
-    # Fetch fresh pods to read the latest localizations from them.
-    # In CI, we expect the pods to be already available and up to date.
-    cocoapods unless is_ci
-
-    # For the same reason, fetch fresh packages.
-    # However, notice we currently need to do this in CI as well.
+    # Fetch fresh packages to read the latest localizations from them.
+    #
+    # Notice we currently need to do this in CI as well as locally.
     # That's because we haven't yet implemented a method to share the derived data folder explicitly between the CI SPM caching logic and this lane.
     #
     # See also:
@@ -154,39 +155,21 @@ platform :ios do
       UI.message("Using Gutenberg from #{gutenberg_absolute_path} instead of cloning it...")
       generate_strings_file(gutenberg_path: gutenberg_absolute_path, derived_data_path: derived_data_path)
     else
-      # On top of fetching the latest Pods, we also need to fetch the source for the Gutenberg code.
+      # On top of fetching the latest dependencies, we also need to fetch the source for the Gutenberg code.
       # To get it, we need to manually clone the repo, since Gutenberg is distributed via XCFramework.
       # XCFrameworks are binary targets and cannot extract strings via genstrings from there.
-      config = gutenberg_config!
-
-      ref_node = config[:ref]
-      UI.user_error!('Could not find Gutenberg ref to clone the repository in order to access its strings.') if ref_node.nil?
-
-      ref = ref_node[:tag] || ref_node[:commit]
-      UI.user_error!('The ref to clone Gutenberg in order to access its strings has neither tag nor commit values.') if ref.nil?
-
-      github_org = config[:github_org]
-      UI.user_error!('Could not find GitHub organization name to clone Gutenberg in order to access its strings.') if github_org.nil?
-
-      repo_name = config[:repo_name]
-      UI.user_error!('Could not find GitHub repository name to clone Gutenberg in order to access its strings.') if repo_name.nil?
 
       # Create a temporary directory to clone Gutenberg into.
       Dir.mktmpdir do |tempdir|
         gutenberg_clone_name = 'Gutenberg-Strings-Clone'
         gutenberg_path = File.join(tempdir, gutenberg_clone_name)
-        repo_url = "https://github.com/#{github_org}/#{repo_name}"
+        repo_url = 'https://github.com/wordpress-mobile/gutenberg-mobile'
         UI.message("Cloning Gutenberg from #{repo_url} into #{gutenberg_clone_name}. This might take a few minutes…")
         sh('git', 'clone', '--depth', '1', repo_url, gutenberg_path)
 
         Dir.chdir(gutenberg_path) do
-          if ref_node[:tag]
-            sh('git', 'fetch', 'origin', "refs/tags/#{ref}:refs/tags/#{ref}")
-            sh('git', 'checkout', "refs/tags/#{ref}")
-          else
-            sh('git', 'fetch', 'origin', ref)
-            sh('git', 'checkout', ref)
-          end
+          sh('git', 'fetch', 'origin', "refs/tags/#{GUTENBERG_TAG}:refs/tags/#{GUTENBERG_TAG}")
+          sh('git', 'checkout', "refs/tags/#{GUTENBERG_TAG}")
         end
 
         generate_strings_file(gutenberg_path: gutenberg_path, derived_data_path: derived_data_path)
@@ -207,7 +190,6 @@ platform :ios do
     ios_generate_strings_file_from_code(
       paths: [
         'WordPress/',
-        'Pods/WordPress*/',
         'Modules/Sources/',
         'WordPressAuthenticator/Sources/',
         gutenberg_path,
@@ -222,15 +204,16 @@ platform :ios do
   # Updates the `AppStoreStrings.po` files (WP+JP) with the latest content from the `release_notes.txt` files and the other text sources
   #
   # @option [String] version The current `x.y` version of the app. Optional. Used to derive the `release_notes_xxy` key to use in the `.po` file.
+  # @option [Boolean] skip_confirm (default: false) If true, avoids any interactive prompt
   #
   desc 'Updates the AppStoreStrings.po file with the latest data'
   lane :update_appstore_strings do |options|
     ensure_git_status_clean
 
-    release_version = release_version_current
+    version = options.fetch(:version, release_version_current)
 
-    unless Fastlane::Helper::GitHelper.checkout_and_pull(editorial_branch_name(version: release_version))
-      UI.user_error!("Editorialization branch for version #{release_version} doesn't exist.")
+    unless Fastlane::Helper::GitHelper.checkout_and_pull(editorial_branch_name(version: version))
+      UI.user_error!("Editorialization branch for version #{version} doesn't exist.")
     end
 
     update_wordpress_appstore_strings(options)
@@ -243,7 +226,7 @@ platform :ios do
 
     push_to_git_remote(tags: false)
 
-    pr_url = create_backmerge_pr
+    pr_url = create_backmerge_pr(source_branch: git_branch, target_branch: release_branch_name(version: version))
 
     message = <<~MESSAGE
       Release notes and metadata localization sources successfully generated. Next, review and merge the [integration PR](#{pr_url}).

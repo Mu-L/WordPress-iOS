@@ -1,4 +1,5 @@
 import Foundation
+import AsyncImageKit
 
 fileprivate let photonHost = "i0.wp.com"
 fileprivate let secureHttpScheme = "https"
@@ -17,8 +18,7 @@ extension URL {
 ///
 /// This also includes regular and photon URLs.
 ///
-class MediaRequestAuthenticator {
-
+struct MediaRequestAuthenticator {
     /// Errors conditions that this class can find.
     ///
     enum Error: Swift.Error {

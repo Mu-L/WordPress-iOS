@@ -1,5 +1,6 @@
 import Foundation
 import MediaEditor
+import AsyncImageKit
 
 /**
  This is a struct to be given to MediaEditor that represent the image.
@@ -31,7 +32,7 @@ class GutenbergMediaEditorImage: AsyncImage {
     init(url: URL, post: AbstractPost) {
         originalURL = url
         self.post = post
-        thumb = AnimatedImageCache.shared.cachedStaticImage(url: originalURL)
+        thumb = ImageDownloader.shared.cachedImage(for: originalURL)
     }
 
     /**
@@ -39,7 +40,7 @@ class GutenbergMediaEditorImage: AsyncImage {
      */
     func thumbnail(finishedRetrievingThumbnail: @escaping (UIImage?) -> ()) {
         let task = ImageDownloader.shared.downloadImage(at: originalURL, completion: { image, error in
-            guard let image = image else {
+            guard let image else {
                 finishedRetrievingThumbnail(nil)
                 return
             }

@@ -26,8 +26,9 @@ extension HomeSiteHeaderViewController {
         var actions = [
             mediaMenu.makePhotosAction(delegate: presenter),
             mediaMenu.makeCameraAction(delegate: presenter),
+            mediaMenu.makeImagePlaygroundAction(delegate: presenter),
             mediaMenu.makeSiteMediaAction(blog: blog, delegate: presenter)
-        ]
+        ].compactMap { $0 }
         if FeatureFlag.siteIconCreator.enabled {
             actions.append(UIAction(
                 title: SiteIconAlertStrings.Actions.createWithEmoji,
@@ -51,7 +52,7 @@ extension HomeSiteHeaderViewController {
         presenter.onCompletion = { [ weak self] media, error in
             if error != nil {
                 self?.showErrorForSiteIconUpdate()
-            } else if let media = media {
+            } else if let media {
                 self?.updateBlogIconWithMedia(media)
             } else {
                 // If no media and no error the picker was canceled
@@ -104,7 +105,7 @@ extension HomeSiteHeaderViewController {
 
     func updateBlogSettingsAndRefreshIcon() {
         blogService.updateSettings(for: blog, success: { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             self.blogService.syncBlog(self.blog, success: {
@@ -126,7 +127,7 @@ extension HomeSiteHeaderViewController {
             receiveUpdate: nil,
             thumbnailCallback: nil,
             completion: {  [weak self] media, error in
-                guard let media = media, error == nil else {
+                guard let media, error == nil else {
                     return
                 }
 
@@ -146,7 +147,7 @@ extension HomeSiteHeaderViewController {
     }
 
     func presentCropViewControllerForDroppedSiteIcon(_ image: UIImage?) {
-        guard let image = image else {
+        guard let image else {
             return
         }
 

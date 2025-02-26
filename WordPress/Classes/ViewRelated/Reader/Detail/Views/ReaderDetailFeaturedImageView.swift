@@ -1,25 +1,26 @@
 import UIKit
+import AsyncImageKit
+import WordPressUI
+import WordPressReader
 
 protocol ReaderDetailFeaturedImageViewDelegate: AnyObject {
-    func didTapFeaturedImage(_ sender: CachedAnimatedImageView)
+    func didTapFeaturedImage(_ sender: AsyncImageView)
 }
 
 protocol UpdatableStatusBarStyle: UIViewController {
     func updateStatusBarStyle(to style: UIStatusBarStyle)
 }
 
-class ReaderDetailFeaturedImageView: UIView, NibLoadable {
+final class ReaderDetailFeaturedImageView: UIView {
 
     // MARK: - Constants
 
     struct Constants {
-        struct multipliers {
+        struct Multipliers {
             static let maxPortaitHeight: CGFloat = 0.70
             static let maxPadPortaitHeight: CGFloat = 0.50
             static let maxLandscapeHeight: CGFloat = 0.30
         }
-
-        static let imageLoadingTimeout: TimeInterval = 4
     }
 
     struct Style {
@@ -31,17 +32,16 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
             self.endTintColor = endTintColor
         }
 
-        init(displaySetting: ReaderDisplaySetting) {
+        init(displaySetting: ReaderDisplaySettings) {
             self.init(endTintColor: displaySetting.color.foreground)
         }
     }
 
     // MARK: - Private: IBOutlets
 
-    @IBOutlet private weak var imageView: CachedAnimatedImageView!
-    @IBOutlet private weak var gradientView: UIView!
-    @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var loadingView: UIView!
+    private let imageView = AsyncImageView()
+    private let gradientView = LinearGradientView()
+    private lazy var heightConstraint = heightAnchor.constraint(equalToConstant: 230)
 
     // MARK: - Public: Properties
 
@@ -61,7 +61,7 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
         }
     }
 
-    var displaySetting: ReaderDisplaySetting = .standard {
+    var displaySetting: ReaderDisplaySettings = .standard {
         didSet {
             style = .init(displaySetting: displaySetting)
 
@@ -92,13 +92,6 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
 
     // MARK: - Private: Properties
 
-    /// Image loader for the featured image
-    ///
-    private lazy var imageLoader: ImageLoader = {
-        // Allow for large GIFs to animate on the detail page
-        return ImageLoader(imageView: imageView, gifStrategy: .largeGIFs)
-    }()
-
     /// The reader post that the toolbar interacts with
     private var post: ReaderPost?
 
@@ -128,7 +121,6 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
     }
 
     private var imageSize: CGSize?
-    private var timeoutTimer: Timer?
 
     // MARK: - View Methods
 
@@ -136,13 +128,33 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
         scrollViewObserver?.invalidate()
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
-        loadingView.backgroundColor = .placeholderText
+        translatesAutoresizingMaskIntoConstraints = false
+        heightConstraint.isActive = true
+
+        gradientView.backgroundColor = UIColor.clear
+        gradientView.startColor = UIColor.black.withAlphaComponent(0.66)
+        gradientView.endColor = UIColor.clear
+
+        addSubview(imageView)
+        imageView.pinEdges()
+
+        addSubview(gradientView)
+        gradientView.pinEdges([.top, .horizontal])
+        NSLayoutConstraint.activate([
+            gradientView.heightAnchor.constraint(equalToConstant: 120).withPriority(999),
+            gradientView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor) // Make sure it collapses
+        ])
+
         isUserInteractionEnabled = false
 
         reset()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func viewWillDisappear() {
@@ -177,7 +189,7 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
 
         // Re-apply the styles after a potential orientation change.
         // This fixes a case where the navbar tint would revert after changing orientation.
-        if ReaderDisplaySetting.customizationEnabled {
+        if ReaderDisplaySettings.customizationEnabled {
             resetNavigationBarTintColor()
             resetStatusBarStyle()
         }
@@ -201,23 +213,16 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
             return
         }
 
-        loadingView.isHidden = false
-
         isLoading = true
         isLoaded = true
 
-        var timedOut = false
-
         let completionHandler: (CGSize) -> Void = { [weak self] size in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            self.timeoutTimer?.invalidate()
-            self.timeoutTimer = nil
-
             self.imageSize = size
-            self.didFinishLoading(timedOut: timedOut)
+            self.didFinishLoading()
             self.isLoading = false
 
             completion()
@@ -229,30 +234,29 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
             completion()
         }
 
-        // Times out if the loading is taking too long
-        // this prevents the user from being stuck on the loading view for too long
-        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Constants.imageLoadingTimeout, repeats: false, block: { _ in
-            timedOut = true
-            failureHandler()
-        })
-
-        self.imageLoader.imageDimensionsHandler = { _, size in
-            completionHandler(size)
+        // TODO: refactor.
+        // This code replaced ImageDimensionsFetcher. It pretends that the image
+        // the app is about the download perfectly matches the standard expectefd
+        // aspect ratio. `DispatchQueue.main.async` is required for now.
+        DispatchQueue.main.async {
+            completionHandler(CGSize(width: 1000, height: 1000 * ReaderPostCell.coverAspectRatio))
         }
 
-        self.imageLoader.loadImage(with: imageURL, from: post, placeholder: nil, success: { [weak self] in
-            // If we haven't loaded the image size yet
-            // trigger the handler to update the height, etc.
-            if self?.imageSize == nil {
-                if let size = self?.imageView.image?.size {
-                    self?.imageSize = size
-                    completionHandler(size)
+        imageView.setImage(with: ImageRequest(url: imageURL, host: MediaHost(post))) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                // If we haven't loaded the image size yet
+                // trigger the handler to update the height, etc.
+                if self.imageSize == nil {
+                    if let size = self.imageView.image?.size {
+                        self.imageSize = size
+                        completionHandler(size)
+                    }
                 }
+            case .failure:
+                failureHandler()
             }
-
-            self?.hideLoading()
-        }) { _ in
-            failureHandler()
         }
     }
 
@@ -291,11 +295,11 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
     // MARK: - Private: Tap Gesture
 
     private func addTapGesture() {
-        guard let scrollView = scrollView else {
+        guard let scrollView else {
             return
         }
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         scrollView.addGestureRecognizer(tapGesture)
@@ -325,19 +329,8 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
             return
         }
 
-        let offsetY = scrollView.contentOffset.y
-
-        updateFeaturedImageHeight(with: offsetY)
-        updateNavigationBar(with: offsetY)
-    }
-
-    private func hideLoading() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.loadingView.alpha = 0.0
-        }) { (_) in
-            self.loadingView.isHidden = true
-            self.loadingView.alpha = 1.0
-        }
+        updateFeaturedImageHeight(with: scrollView.contentOffset.y)
+        updateNavigationBar(in: scrollView)
     }
 
     private func scrollViewDidScroll() {
@@ -356,7 +349,7 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
         heightConstraint.constant = max(y, 0)
     }
 
-    private func updateNavigationBar(with offset: CGFloat) {
+    private func updateNavigationBar(in scrollView: UIScrollView) {
         /// Navigation bar is only updated in light color themes, so that the tint color can be reverted
         /// to the original color after scrolling past the featured image.
         ///
@@ -364,16 +357,12 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
         guard usesAdaptiveNavigationBar else {
             return
         }
-
-        let fullProgress = (offset / heightConstraint.constant)
-        let progress = fullProgress.clamp(min: 0, max: 1)
-
-        let tintColor = UIColor.interpolate(from: style.startTintColor,
-                                            to: style.endTintColor,
-                                            with: progress)
-
-        currentStatusBarStyle = fullProgress >= 2.5 ? .darkContent : .lightContent
-        navBarTintColor = tintColor
+        let isScrolledTop = scrollView.contentInset.top + scrollView.contentOffset.y > 5.0
+        let barStyle: UIStatusBarStyle = isScrolledTop ? .darkContent : .lightContent
+        if currentStatusBarStyle != barStyle {
+            currentStatusBarStyle = barStyle
+            navBarTintColor = barStyle == .darkContent ? style.endTintColor : style.startTintColor
+        }
     }
 
     private func applyTransparentNavigationBarAppearance() {
@@ -388,10 +377,8 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
 
     // MARK: - Private: Network Helpers
 
-    private func didFinishLoading(timedOut: Bool = false) {
-        // Don't reset the scroll position if we timed out to prevent a jump
-        // if the user has started reading / scrolling
-        updateInitialHeight(resetContentOffset: !timedOut)
+    private func didFinishLoading() {
+        updateInitialHeight(resetContentOffset: true)
         update()
 
         isHidden = false
@@ -418,8 +405,6 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
         resetStatusBarStyle()
         heightConstraint.constant = 0
         isHidden = true
-
-        loadingView.isHidden = true
     }
 
     private func resetStatusBarStyle() {
@@ -440,10 +425,7 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
     // MARK: - Private: Calculations
 
     private func featuredImageHeight() -> CGFloat {
-        guard
-            let imageSize = self.imageSize,
-            let superview = self.superview
-        else {
+        guard let imageSize, let superview else {
             return 0
         }
 
@@ -451,7 +433,7 @@ class ReaderDetailFeaturedImageView: UIView, NibLoadable {
         let height = bounds.width / aspectRatio
 
         let isLandscape = UIDevice.current.orientation.isLandscape
-        let maxHeightMultiplier: CGFloat = isLandscape ? Constants.multipliers.maxLandscapeHeight : UIDevice.isPad() ? Constants.multipliers.maxPadPortaitHeight : Constants.multipliers.maxPortaitHeight
+        let maxHeightMultiplier: CGFloat = isLandscape ? Constants.Multipliers.maxLandscapeHeight : UIDevice.isPad() ? Constants.Multipliers.maxPadPortaitHeight : Constants.Multipliers.maxPortaitHeight
 
         let result = min(height, superview.bounds.height * maxHeightMultiplier)
 

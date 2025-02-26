@@ -10,7 +10,7 @@ class WordPressComBlogService {
     private var anonymousAPI: WordPressComRestApi {
         let userAgent = WordPressAuthenticator.shared.configuration.userAgent
         let baseUrl = WordPressAuthenticator.shared.configuration.wpcomAPIBaseURL
-        return WordPressComRestApi(oAuthToken: nil, userAgent: userAgent, baseURL: baseUrl)
+        return WordPressComRestApi(oAuthToken: nil, userAgent: userAgent, baseURL: baseUrl, useEphemeralSession: true)
     }
 
     /// Retrieves the WordPressComSiteInfo instance associated to a WordPress.com Site Address.
@@ -19,7 +19,7 @@ class WordPressComBlogService {
         let remote = BlogServiceRemoteREST(wordPressComRestApi: anonymousAPI, siteID: 0)
 
         remote.fetchSiteInfo(forAddress: address, success: { response in
-            guard let response = response else {
+            guard let response else {
                 failure(ServiceError.unknown)
                 return
             }
@@ -36,7 +36,7 @@ class WordPressComBlogService {
      func fetchUnauthenticatedSiteInfoForAddress(for address: String, success: @escaping (WordPressComSiteInfo) -> Void, failure: @escaping (Error) -> Void) {
         let remote = BlogServiceRemoteREST(wordPressComRestApi: anonymousAPI, siteID: 0)
         remote.fetchUnauthenticatedSiteInfo(forAddress: address, success: { response in
-            guard let response = response else {
+            guard let response else {
                 failure(ServiceError.unknown)
                 return
             }

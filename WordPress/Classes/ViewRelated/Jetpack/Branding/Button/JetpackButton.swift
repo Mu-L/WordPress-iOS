@@ -78,7 +78,6 @@ class JetpackButton: CircularImageButton {
         imageEdgeInsets = Appearance.iconInsets
         contentEdgeInsets = Appearance.contentInsets
         imageView?.contentMode = .scaleAspectFit
-        flipInsetsForRightToLeftLayoutDirection()
         setImageBackgroundColor(imageBackgroundColor)
     }
 
@@ -128,7 +127,7 @@ extension JetpackButton {
             badge.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding),
             badge.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomPadding)
         ])
-        if let target = target, let selector = selector {
+        if let target, let selector {
             badge.addTarget(target, action: selector, for: .touchUpInside)
         }
         return view

@@ -1,4 +1,5 @@
 import UIKit
+import AsyncImageKit
 
 struct StatsTotalRowData: Equatable {
     var id: UUID?
@@ -284,7 +285,7 @@ private extension StatsTotalRow {
     }
 
     func configureDisclosureButton() {
-        guard let rowData = rowData else {
+        guard let rowData else {
             disclosureButton.isEnabled = false
             return
         }
@@ -334,7 +335,7 @@ private extension StatsTotalRow {
     }
 
     func configureIcon() {
-        guard let rowData = rowData else {
+        guard let rowData else {
             return
         }
 
@@ -342,7 +343,7 @@ private extension StatsTotalRow {
 
         // If the parent row has an icon and this row does not,
         // show the image view to make this row appear "indented" by the icon width.
-        if let parentRow = parentRow, parentRow.hasIcon, !hasIcon {
+        if let parentRow, parentRow.hasIcon, !hasIcon {
             imageView.isHidden = false
             imageWidthConstraint.constant = parentRow.imageWidthConstraint.constant
             imageHeightConstraint.constant = 1

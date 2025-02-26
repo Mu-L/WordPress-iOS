@@ -1,4 +1,5 @@
 import SwiftUI
+import WordPressUI
 
 struct ReaderSubscriptionCell: View {
     let site: ReaderSiteTopic
@@ -20,10 +21,8 @@ struct ReaderSubscriptionCell: View {
     var body: some View {
         HStack(spacing: 0) {
             HStack(spacing: 16) {
-                let size = SiteIconViewModel.Size.regular
-                SiteIconView(viewModel: .init(readerSiteTopic: site, size: size))
-                    .frame(width: size.width, height: size.width)
-                    .padding(.leading, 4)
+                ReaderSiteIconView(site: site, size: .regular)
+                    .padding(.leading, horizontalSizeClass == .compact ? 0 : 4)
 
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
@@ -39,11 +38,19 @@ struct ReaderSubscriptionCell: View {
 
             Spacer()
 
-            if let status = ReaderSubscriptionNotificationsStatus(site: site) {
-                makeButtonNotificationSettings(with: status)
+            HStack(spacing: 0) {
+                if let status = ReaderSubscriptionNotificationsStatus(site: site) {
+                    makeButtonNotificationSettings(with: status)
+                }
+                buttonMore
             }
-            buttonMore
+            .padding(.trailing, -16)
         }
+        .contextMenu(menuItems: {
+            ReaderSubscriptionContextMenu(site: site, isShowingSettings: $isShowingSettings)
+        }, preview: {
+            ReaderTopicPreviewView(topic: site)
+        })
     }
 
     private func makeButtonNotificationSettings(with status: ReaderSubscriptionNotificationsStatus) -> some View {
@@ -54,10 +61,10 @@ struct ReaderSubscriptionCell: View {
                 switch status {
                 case .all:
                     Image(systemName: "bell.and.waves.left.and.right")
-                        .foregroundStyle(AppColor.brand)
+                        .foregroundStyle(AppColor.primary)
                 case .personalized:
                     Image(systemName: "bell")
-                        .foregroundStyle(AppColor.brand)
+                        .foregroundStyle(AppColor.primary)
                 case .none:
                     Image(systemName: "bell.slash")
                         .foregroundStyle(.secondary)
@@ -66,36 +73,24 @@ struct ReaderSubscriptionCell: View {
             }
             .font(.subheadline)
             .frame(width: 34, alignment: .center)
-            .padding(.trailing, 6)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .popover(isPresented: $isShowingSettings) { settings }
-    }
-
-    @ViewBuilder
-    private var settings: some View {
-        if horizontalSizeClass == .compact {
-            ReaderSubscriptionNotificationSettingsView(siteID: site.siteID.intValue, isCompact: true)
-                .presentationDetents([.medium, .large])
-                .edgesIgnoringSafeArea(.all)
-        } else {
+        .sheet(isPresented: $isShowingSettings) {
             ReaderSubscriptionNotificationSettingsView(siteID: site.siteID.intValue)
+                .presentationDetents([.medium, .large])
+                .edgesIgnoringSafeArea(.bottom)
         }
     }
 
     private var buttonMore: some View {
         Menu {
-            if let siteURL = URL(string: site.siteURL) {
-                ShareLink(item: siteURL)
-            }
-            Button(role: .destructive) {
-                onDelete(site)
-            } label: {
-                Label(SharedStrings.Reader.unfollow, systemImage: "trash")
-            }
+            ReaderSubscriptionContextMenu(site: site, isShowingSettings: $isShowingSettings)
         } label: {
             Image(systemName: "ellipsis")
                 .foregroundStyle(.secondary)
+                .frame(width: 40, height: 40)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }

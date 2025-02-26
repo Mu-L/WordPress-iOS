@@ -38,7 +38,7 @@ class PrivacySettingsViewController: UITableViewController {
             PaddedInfoRow.self,
             SwitchRow.self,
             PaddedLinkRow.self
-            ], tableView: self.tableView)
+        ], tableView: self.tableView)
 
         handler = ImmuTableViewHandler(takeOver: self)
         reloadViewModel()
@@ -214,7 +214,7 @@ private class InfoCell: WPTableViewCellDefault {
     override func layoutSubviews() {
         super.layoutSubviews()
         guard var imageFrame = imageView?.frame,
-            let textLabel = textLabel,
+            let textLabel,
             let textLabelFont = textLabel.font,
             let text = textLabel.text else {
                 return

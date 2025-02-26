@@ -1,5 +1,6 @@
 import Aztec
 import Gridicons
+import AsyncImageKit
 
 class RevisionPreviewTextViewManager: NSObject {
     var post: AbstractPost?
@@ -58,7 +59,7 @@ private extension RevisionPreviewTextViewManager {
     }
 
     private func downloadImage(from url: URL, success: @escaping (UIImage) -> Void, onFailure failure: @escaping () -> Void) {
-        guard let post = post else {
+        guard let post else {
             return
         }
 

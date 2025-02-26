@@ -1,4 +1,5 @@
 import UIKit
+import AsyncImageKit
 
 final class BlazeCampaignTableViewCell: UITableViewCell, Reusable {
 
@@ -67,28 +68,21 @@ final class BlazeCampaignTableViewCell: UITableViewCell, Reusable {
         return stackView
     }()
 
-    private lazy var featuredImageView: CachedAnimatedImageView = {
-        let imageView = CachedAnimatedImageView()
+    private lazy var featuredImageView: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = Metrics.featuredImageCornerRadius
         return imageView
     }()
 
     private lazy var chevronView: UIImageView = {
-        let image = UIImage(systemName: "chevron.right")?.imageFlippedForRightToLeftLayoutDirection()
+        let image = UIImage(systemName: "chevron.forward")
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.tintColor = .separator
         imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return imageView
-    }()
-
-    // MARK: - Properties
-
-    private lazy var imageLoader: ImageLoader = {
-        return ImageLoader(imageView: featuredImageView, gifStrategy: .mediumGIFs)
     }()
 
     // MARK: - Initializers
@@ -110,15 +104,12 @@ final class BlazeCampaignTableViewCell: UITableViewCell, Reusable {
 
         titleLabel.text = viewModel.title
 
-        imageLoader.prepareForReuse()
+        featuredImageView.prepareForReuse()
         featuredImageView.isHidden = viewModel.imageURL == nil
         if let imageURL = viewModel.imageURL {
-            let host = MediaHost(with: blog, failure: { error in
-                WordPressAppDelegate.crashLogging?.logError(error)
-            })
-
-            let preferredSize = CGSize(width: Metrics.featuredImageSize, height: Metrics.featuredImageSize)
-            imageLoader.loadImage(with: imageURL, from: host, preferredSize: preferredSize)
+            let host = MediaHost(blog)
+            let preferredSize = ImageSize(scaling: CGSize(width: Metrics.featuredImageSize, height: Metrics.featuredImageSize), in: self)
+            featuredImageView.setImage(with: imageURL, host: host, size: preferredSize)
         }
 
         statsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -131,11 +122,6 @@ final class BlazeCampaignTableViewCell: UITableViewCell, Reusable {
 
     private func commonInit() {
         setupViews()
-        applyStyle()
-    }
-
-    private func applyStyle() {
-        backgroundColor = .systemGroupedBackground
     }
 
     private func setupViews() {
