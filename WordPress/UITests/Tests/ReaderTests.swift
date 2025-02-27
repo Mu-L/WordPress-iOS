@@ -48,7 +48,7 @@ class ReaderTests_01: ReaderTests {
 }
 
 class ReaderTests_02: ReaderTests {
-    func _testAddCommentToPost() throws {
+    func testAddCommentToPost() throws {
         try openStream(.recent)
             .openLastPostComments()
             .verifyCommentsListEmpty()
