@@ -56,7 +56,7 @@ class ReaderTests_02: ReaderTests {
             .verifyCommentSent(.commentContent)
     }
 
-    func _testSavePost() throws {
+    func testSavePost() throws {
         // Get saved post label
         let (updatedReaderScreen, savedPostLabel) = try openStream(.saved)
             .verifySavedPosts(state: .withoutPosts)
@@ -69,7 +69,7 @@ class ReaderTests_02: ReaderTests {
             .verifySavedPosts(state: .withPosts, postLabel: savedPostLabel)
     }
 
-    func _testLikePost() throws {
+    func testLikePost() throws {
         try openStream(.likes)
             .verifyLikedPosts(state: .withoutPosts)
             .switchToStream(.recent)

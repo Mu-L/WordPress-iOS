@@ -9,7 +9,6 @@ public class ReaderScreen: ScreenObject {
     var followingButton: XCUIElement { app.buttons["Following"] }
     var subscriptionsMenuButton: XCUIElement { app.buttons["Subscriptions"] }
     var likesTabButton: XCUIElement { app.buttons["Likes"] }
-    var noResultsView: XCUIElement { app.staticTexts["no-results-label-stack-view"].firstMatch }
     var readerButton: XCUIElement { app.buttons["Reader"] }
     var readerTable: XCUIElement { app.tables["reader_table_view"] }
     var savedButton: XCUIElement { app.buttons["Saved"] }
@@ -213,7 +212,6 @@ public class ReaderScreen: ScreenObject {
     }
 
     private func verifyEmptyPostList(file: StaticString = #file, line: UInt = #line) {
-        XCTAssertTrue(noResultsView.waitForExistence(timeout: 5), file: file, line: line)
         XCTAssertTrue(readerTable.label == .emptyListLabel, file: file, line: line)
     }
 }
