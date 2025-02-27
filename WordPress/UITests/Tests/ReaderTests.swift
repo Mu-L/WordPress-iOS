@@ -37,7 +37,8 @@ class ReaderTests_01: ReaderTests {
             .verifyPostContentEquals(.expectedPostContent)
     }
 
-    func testDiscover() throws {
+    // Blocked by https://github.com/wordpress-mobile/WordPress-iOS/issues/24115
+    func _testDiscover() throws {
         try openStream(.discover)
             .selectTag()
             .verifyTagLoaded()
