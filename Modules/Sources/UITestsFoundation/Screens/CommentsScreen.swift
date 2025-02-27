@@ -27,12 +27,9 @@ public class CommentsScreen: ScreenObject {
         $0.otherElements["notice_title_and_message"]
     }
 
-
     private let sendButtonGetter: (XCUIApplication) -> XCUIElement = {
         $0.buttons["button_send_comment"]
     }
-
-
 
     var addCommentButton: XCUIElement { addCommentButtonGetter(app) }
     var backButton: XCUIElement { backButtonGetter(app) }
