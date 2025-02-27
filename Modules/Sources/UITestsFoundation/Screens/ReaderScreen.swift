@@ -13,7 +13,7 @@ public class ReaderScreen: ScreenObject {
     var readerButton: XCUIElement { app.buttons["Reader"] }
     var readerTable: XCUIElement { app.tables["reader_table_view"] }
     var savedButton: XCUIElement { app.buttons["Saved"] }
-    var tagCellButton: XCUIElement { app.cells["topics-card-cell-button"] }
+    var tagCellButton: XCUIElement { app.cells["topics-card-cell"].firstMatch.buttons.firstMatch }
     var visitButton: XCUIElement { app.buttons["Visit"] }
     var ghostLoading: XCUIElement { app.tables["Reader Ghost Loading"] }
 
