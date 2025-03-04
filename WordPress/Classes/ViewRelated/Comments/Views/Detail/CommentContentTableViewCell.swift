@@ -431,7 +431,8 @@ private extension CommentContentTableViewCell {
         // - warning: It's important to set height to the minimum supported
         // value because `WKWebView` can only increase the content height and
         // never decreases it when the content changes.
-        contentContainerHeightConstraint?.constant = helper.getCachedContentHeight(for: content) ?? 20
+        let contentHeight = helper.getCachedContentHeight(for: content) ?? 20
+        contentContainerHeightConstraint?.constant = contentHeight
 
         let contentView = renderer.view
         if contentContainerView.subviews.first != contentView {

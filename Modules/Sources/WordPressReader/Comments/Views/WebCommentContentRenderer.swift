@@ -1,6 +1,7 @@
 import WebKit
 import WordPressShared
 import WordPressUI
+import Combine
 
 /// Renders the comment body with a web view. Provides the best visual experience but has the highest performance cost.
 @MainActor
@@ -36,7 +37,15 @@ public final class WebCommentContentRenderer: NSObject, CommentContentRenderer {
     private var lastReloadDate: Date?
     private var isReloadNeeded = false
 
-    /// A shared web view context with resources that can be reused across
+    private var renderID: UUID?
+    private var previousWebViewContentSize: CGSize?
+    private var previousReportedContentHeight: CGFloat?
+    private var isHeightUpdateNeeded = false
+    private var isUpdatingHeight = false
+
+    private var cancellables: [AnyCancellable] = []
+
+        /// A shared web view context with resources that can be reused across
     /// mutliple web view instances.
     @MainActor
     public final class Context {
@@ -72,7 +81,14 @@ public final class WebCommentContentRenderer: NSObject, CommentContentRenderer {
 
     public func render(comment: String) {
         self.comment = comment
+
         actuallyRender(comment: comment)
+        let renderID = UUID()
+        self.renderID = renderID
+
+        webView.scrollView.publisher(for: \.contentSize, options: [.new]).sink { [weak self] in
+            self?.didChangeContentSize($0, renderID: renderID)
+        }.store(in: &cancellables)
     }
 
     private func actuallyRender(comment: String) {
@@ -80,7 +96,13 @@ public final class WebCommentContentRenderer: NSObject, CommentContentRenderer {
     }
 
     public func prepareForReuse() {
+        renderID = nil // Make sure previous callbacks are not calls/executed
         comment = nil
+        isUpdatingHeight = false
+        isHeightUpdateNeeded = false
+        previousWebViewContentSize = nil
+        previousReportedContentHeight = nil
+        cancellables = []
         webView.stopLoading()
     }
 
@@ -96,36 +118,56 @@ public final class WebCommentContentRenderer: NSObject, CommentContentRenderer {
         lastReloadDate = Date()
         actuallyRender(comment: comment)
     }
+
+    // MARK: - Content Size
+
+    private func didChangeContentSize(_ size: CGSize, renderID: UUID) {
+        guard renderID == self.renderID else { return } // Was reused
+
+        guard previousWebViewContentSize != size else { return }
+        previousWebViewContentSize = size
+        setNeedsHeightUpdate()
+    }
+
+    private func setNeedsHeightUpdate() {
+        isHeightUpdateNeeded = true
+        updateHeightIfNeeded()
+    }
+
+    private func updateHeightIfNeeded() {
+        guard let renderID else { return }
+
+        guard isHeightUpdateNeeded && !isUpdatingHeight else { return }
+        isUpdatingHeight = true
+        isHeightUpdateNeeded = false
+
+        // This is more accurate than WKWebView that has a minimum preferred height
+        // settings that is sometimes larger than the actual `s`crollHeight.
+        webView.evaluateJavaScript("document.body.scrollHeight") { [weak self] height, _ in
+            guard let height = height as? CGFloat else { return }
+            self?.didUpdateHeight(height, for: renderID)
+        }
+    }
+
+    private func didUpdateHeight(_ height: CGFloat, for renderID: UUID) { // for current comment
+        guard renderID == self.renderID, let comment else { return }  // Was reused
+
+        isUpdatingHeight = false
+        if previousReportedContentHeight != height {
+            previousReportedContentHeight = height
+            delegate?.renderer(self, asyncRenderCompletedWithHeight: height, comment: comment)
+        }
+        updateHeightIfNeeded()
+    }
 }
 
 // MARK: - WKNavigationDelegate
 
 extension WebCommentContentRenderer: WKNavigationDelegate {
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        guard let comment else {
-            return
-        }
-        // Wait until the HTML document finished loading.
-        // This also waits for all of resources within the HTML (images, video thumbnail images) to be fully loaded.
-        webView.evaluateJavaScript("document.readyState") { complete, _ in
-            guard complete != nil, self.comment == comment else {
-                return
-            }
-
-            // To capture the content height, the methods to use is either `document.body.scrollHeight` or `document.documentElement.scrollHeight`.
-            // `document.body` does not capture margins on <body> tag, so we'll use `document.documentElement` instead.
-            webView.evaluateJavaScript("document.documentElement.scrollHeight") { [weak self] height, _ in
-                guard let self, let height = height as? CGFloat else {
-                    return
-                }
-
-                /// The display setting's custom size is applied through the HTML's initial-scale property
-                /// in the meta tag. The `scrollHeight` value seems to return the height as if it's at 1.0 scale,
-                /// so we'll need to add the custom scale into account.
-                let actualHeight = round(height * self.displaySetting.size.scale)
-                self.delegate?.renderer(self, asyncRenderCompletedWithHeight: actualHeight, comment: comment)
-            }
-        }
+        guard renderID != nil else { return }
+        setNeedsHeightUpdate()
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
