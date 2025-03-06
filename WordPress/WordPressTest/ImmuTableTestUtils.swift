@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 @testable import WordPress
 
 class MockImmuTablePresenter: ImmuTablePresenter {

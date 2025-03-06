@@ -1,5 +1,5 @@
 public struct AnyHashableImmuTableRow: Hashable {
-    let immuTableRow: any (ImmuTableRow & Hashable)
+    public let immuTableRow: any (ImmuTableRow & Hashable)
 
     public init(immuTableRow: any (ImmuTableRow & Hashable)) {
       self.immuTableRow = immuTableRow
