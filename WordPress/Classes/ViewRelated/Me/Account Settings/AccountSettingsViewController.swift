@@ -1,6 +1,7 @@
 import Foundation
-import UIKit
+import ImmuTable
 import SwiftUI
+import UIKit
 import WordPressShared
 import WordPressFlux
 

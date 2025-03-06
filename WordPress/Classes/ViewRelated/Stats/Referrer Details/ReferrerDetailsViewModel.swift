@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 
 protocol ReferrerDetailsViewModelDelegate: AnyObject {
     func displayWebViewWithURL(_ url: URL)

@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 import WordPressShared
 
 struct PlanDetailViewModel {

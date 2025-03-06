@@ -1,6 +1,7 @@
+import AutomatticAbout
+import ImmuTable
 import UIKit
 import WordPressShared
-import AutomatticAbout
 
 class MeViewController: UITableViewController {
     var handler: ImmuTableViewHandler!

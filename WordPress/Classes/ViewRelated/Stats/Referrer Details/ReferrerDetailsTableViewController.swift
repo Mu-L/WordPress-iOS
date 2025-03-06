@@ -1,3 +1,4 @@
+import ImmuTable
 import UIKit
 
 final class ReferrerDetailsTableViewController: UITableViewController {

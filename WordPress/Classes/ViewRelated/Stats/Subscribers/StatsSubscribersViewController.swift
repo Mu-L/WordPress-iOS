@@ -1,5 +1,6 @@
-import Foundation
 import Combine
+import Foundation
+import ImmuTable
 
 final class StatsSubscribersViewController: SiteStatsBaseTableViewController {
     private let viewModel: StatsSubscribersViewModel

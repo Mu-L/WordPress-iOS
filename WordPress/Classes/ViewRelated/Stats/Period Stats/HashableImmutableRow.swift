@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 
 protocol HashableImmutableRow: ImmuTableRow, Hashable {}
 

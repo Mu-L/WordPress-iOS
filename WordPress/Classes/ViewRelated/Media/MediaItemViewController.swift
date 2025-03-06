@@ -1,8 +1,9 @@
 import AVKit
 import Combine
-import UIKit
 import Gridicons
+import ImmuTable
 import SVProgressHUD
+import UIKit
 import WordPressShared
 
 /// Displays an image preview and metadata for a single Media asset.

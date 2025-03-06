@@ -1,3 +1,4 @@
+import ImmuTable
 import WordPressFlux
 
 struct TimeZoneSelectorViewModel: Observable {

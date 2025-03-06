@@ -1,3 +1,4 @@
+import ImmuTable
 import WordPressKit
 import WordPressFlux
 

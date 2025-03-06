@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 
 extension ImmuTableSection {
     /// Initializes a ImmuTableSection with the given rows (skipping nil ones)
