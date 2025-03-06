@@ -1,6 +1,7 @@
-import Foundation
-import WordPressFlux
 import Combine
+import Foundation
+import ImmuTable
+import WordPressFlux
 
 /// The view model used by SiteStatsDetailTableViewController to show
 /// all data for a selected stat.

@@ -1,14 +1,4 @@
-import ImmuTable
 import UIKit
-
-extension ImmuTable {
-    /// Alias for an ImmuTable with no sections
-    static var Empty: ImmuTable {
-        return ImmuTable(sections: [])
-    }
-}
-
-// MARK: -
 
 /// ImmuTableViewHandler is a helper to facilitate integration of ImmuTable in your
 /// table view controllers.
@@ -20,7 +10,6 @@ extension ImmuTable {
 ///         reference to the handler from your view controller.
 ///
 open class ImmuTableViewHandler: NSObject, UITableViewDataSource, UITableViewDelegate {
-    typealias UIViewControllerWithTableView = TableViewContainer & UITableViewDataSource & UITableViewDelegate & UIViewController
 
     @objc unowned let target: UIViewControllerWithTableView
     private weak var passthroughScrollViewDelegate: UIScrollViewDelegate?
@@ -28,7 +17,7 @@ open class ImmuTableViewHandler: NSObject, UITableViewDataSource, UITableViewDel
     /// Initializes the handler with a target table view controller.
     /// - postcondition: After initialization, it becomse the data source and
     ///   delegate for the the target's table view.
-    @objc init(takeOver target: UIViewControllerWithTableView, with passthroughScrollViewDelegate: UIScrollViewDelegate? = nil) {
+    @objc public init(takeOver target: UIViewControllerWithTableView, with passthroughScrollViewDelegate: UIScrollViewDelegate? = nil) {
         self.target = target
         self.passthroughScrollViewDelegate = passthroughScrollViewDelegate
 
@@ -48,10 +37,10 @@ open class ImmuTableViewHandler: NSObject, UITableViewDataSource, UITableViewDel
     }
 
     /// Configure the handler to automatically deselect any cell after tapping it.
-    @objc var automaticallyDeselectCells = false
+    @objc public var automaticallyDeselectCells = false
 
     /// Automatically reload table view when view model changes
-    @objc var automaticallyReloadTableView = true
+    @objc public var automaticallyReloadTableView = true
 
     // MARK: UITableViewDataSource
 
@@ -245,78 +234,5 @@ open class ImmuTableViewHandler: NSObject, UITableViewDataSource, UITableViewDel
 
     open func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
         passthroughScrollViewDelegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
-    }
-}
-
-// MARK: - UITableViewController conformance
-
-@objc public protocol TableViewContainer: AnyObject {
-    var tableView: UITableView! { get }
-}
-
-extension UITableViewController: TableViewContainer {}
-
-// MARK: - Diffable
-
-// This conformance was added during the Xcode 16 migration to silence the
-// dozens of false-positive warnings (any @unchecked conformance is tech debt).
-extension AnyHashable: @retroactive @unchecked Sendable {}
-
-typealias ImmuTableDiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashableImmuTableRow>
-typealias ImmuTableDiffableDataSource = UITableViewDiffableDataSource<AnyHashable, AnyHashableImmuTableRow>
-
-struct AnyHashableImmuTableRow: Hashable {
-    let immuTableRow: any (ImmuTableRow & Hashable)
-
-    static func == (lhs: AnyHashableImmuTableRow, rhs: AnyHashableImmuTableRow) -> Bool {
-        return AnyHashable(lhs.immuTableRow) == AnyHashable(rhs.immuTableRow)
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(AnyHashable(immuTableRow))
-    }
-}
-
-class ImmuTableDiffableViewHandler: ImmuTableViewHandler {
-    lazy var diffableDataSource: ImmuTableDiffableDataSource = {
-        return ImmuTableDiffableDataSource(tableView: target.tableView) { tableView, indexPath, item in
-            let row = item.immuTableRow
-            let cell = tableView.dequeueReusableCell(withIdentifier: row.reusableIdentifier, for: indexPath)
-            row.configureCell(cell)
-            return cell
-        }
-    }()
-
-    override init(takeOver target: ImmuTableViewHandler.UIViewControllerWithTableView, with passthroughScrollViewDelegate: UIScrollViewDelegate? = nil) {
-        super.init(takeOver: target, with: passthroughScrollViewDelegate)
-
-        self.target.tableView.dataSource = diffableDataSource
-        self.automaticallyReloadTableView = false
-    }
-
-    func item(for indexPath: IndexPath) -> ImmuTableRow? {
-        guard let diffableDataSource = target.tableView.dataSource as? UITableViewDiffableDataSource<AnyHashable, AnyHashableImmuTableRow> else {
-            return nil
-        }
-
-        return diffableDataSource.itemIdentifier(for: indexPath)?.immuTableRow
-    }
-
-    open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if target.responds(to: #selector(UITableViewDelegate.tableView(_:didSelectRowAt:))) {
-            target.tableView?(tableView, didSelectRowAt: indexPath)
-        } else if let item = item(for: indexPath) {
-            item.action?(item)
-        }
-        if automaticallyDeselectCells {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-    }
-
-    open override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let item = item(for: indexPath), let customHeight = type(of: item).customHeight {
-            return CGFloat(customHeight)
-        }
-        return tableView.rowHeight
     }
 }

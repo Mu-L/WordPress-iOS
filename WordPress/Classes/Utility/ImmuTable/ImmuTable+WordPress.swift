@@ -1,3 +1,4 @@
+import ImmuTable
 import WordPressShared
 
 /// This lives as an extension on a separate file because it's specific to our UI

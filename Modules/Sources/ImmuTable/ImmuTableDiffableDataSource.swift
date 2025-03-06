@@ -1,0 +1,3 @@
+import UIKit
+
+public typealias ImmuTableDiffableDataSource = UITableViewDiffableDataSource<AnyHashable, AnyHashableImmuTableRow>

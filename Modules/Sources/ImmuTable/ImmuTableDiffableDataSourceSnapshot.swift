@@ -1,0 +1,3 @@
+import UIKit
+
+public typealias ImmuTableDiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashableImmuTableRow>

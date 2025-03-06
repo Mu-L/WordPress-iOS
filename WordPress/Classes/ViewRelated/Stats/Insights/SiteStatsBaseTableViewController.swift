@@ -1,5 +1,6 @@
-import UIKit
 import DesignSystem
+import ImmuTable
+import UIKit
 
 /// Base class for site stats table view controllers
 ///

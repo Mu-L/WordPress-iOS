@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 import WordPressFlux
 
 /// The view model used by PostStatsTableViewController to show
