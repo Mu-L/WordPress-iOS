@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 
 class MediaCacheSettingsViewController: UITableViewController {
     fileprivate var handler: ImmuTableViewHandler?

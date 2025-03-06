@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 import WordPressFlux
 
 class PluginViewController: UITableViewController {

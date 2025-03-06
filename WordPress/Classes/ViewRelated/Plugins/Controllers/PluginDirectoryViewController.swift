@@ -1,6 +1,7 @@
+import Gridicons
+import ImmuTable
 import UIKit
 import WordPressFlux
-import Gridicons
 
 class PluginDirectoryViewController: UITableViewController {
 

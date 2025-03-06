@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 import SVProgressHUD
 import WordPressShared
 import WordPressFlux
