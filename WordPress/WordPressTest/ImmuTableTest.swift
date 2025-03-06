@@ -1,3 +1,5 @@
+// FIXME: Move to ImmuTable package tests
+import ImmuTable
 import XCTest
 @testable import WordPress
 

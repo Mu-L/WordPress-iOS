@@ -1,3 +1,4 @@
+import ImmuTable
 
 struct ActivityListRow: ImmuTableRow {
     typealias CellType = ActivityTableViewCell

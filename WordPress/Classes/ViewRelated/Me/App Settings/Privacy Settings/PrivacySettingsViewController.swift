@@ -1,6 +1,7 @@
-import Gridicons
-import UIKit
 import AutomatticTracks
+import Gridicons
+import ImmuTable
+import UIKit
 
 class PrivacySettingsViewController: UITableViewController {
     fileprivate var handler: ImmuTableViewHandler!

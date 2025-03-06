@@ -1,6 +1,7 @@
-import Foundation
-import WordPressShared
 import DesignSystem
+import Foundation
+import ImmuTable
+import WordPressShared
 
 struct GravatarInfoRow: ImmuTableRow {
 

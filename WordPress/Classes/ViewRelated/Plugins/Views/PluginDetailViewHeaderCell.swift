@@ -1,6 +1,7 @@
+import Gridicons
+import ImmuTable
 import UIKit
 import WordPressShared
-import Gridicons
 
 class PluginDetailViewHeaderCell: UITableViewCell {
 

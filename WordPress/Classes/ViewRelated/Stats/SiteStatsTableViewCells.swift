@@ -1,6 +1,7 @@
-import UIKit
-import Gridicons
 import DGCharts
+import Gridicons
+import ImmuTable
+import UIKit
 
 // MARK: - Shared Rows
 

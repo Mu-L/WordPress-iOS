@@ -1,11 +1,12 @@
-import Foundation
-import UIKit
-import SwiftUI
-import Gridicons
-import WordPressShared
-import SVProgressHUD
-import WordPressFlux
 import DesignSystem
+import Foundation
+import Gridicons
+import ImmuTable
+import SVProgressHUD
+import SwiftUI
+import UIKit
+import WordPressFlux
+import WordPressShared
 import WordPressUI
 
 class AppSettingsViewController: UITableViewController {

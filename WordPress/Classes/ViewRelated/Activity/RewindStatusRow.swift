@@ -1,3 +1,4 @@
+import ImmuTable
 
 struct RewindStatusRow: ImmuTableRow {
 

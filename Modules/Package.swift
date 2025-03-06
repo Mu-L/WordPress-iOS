@@ -10,6 +10,7 @@ let package = Package(
     products: XcodeSupport.products + [
         .library(name: "AsyncImageKit", targets: ["AsyncImageKit"]),
         .library(name: "DesignSystem", targets: ["DesignSystem"]),
+        .library(name: "ImmuTable", targets: ["ImmuTable"]),
         .library(name: "JetpackStatsWidgetsCore", targets: ["JetpackStatsWidgetsCore"]),
         .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
@@ -58,6 +59,7 @@ let package = Package(
             .product(name: "Gifu", package: "Gifu"),
         ]),
         .target(name: "DesignSystem", swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "ImmuTable", swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "JetpackStatsWidgetsCore", swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "UITestsFoundation", dependencies: [
             .product(name: "ScreenObject", package: "ScreenObject"),
@@ -158,6 +160,7 @@ enum XcodeSupport {
         return [
             .xcodeTarget("XcodeTarget_App", dependencies: [
                 "DesignSystem",
+                "ImmuTable",
                 "JetpackStatsWidgetsCore",
                 "WordPressFlux",
                 "WordPressShared",

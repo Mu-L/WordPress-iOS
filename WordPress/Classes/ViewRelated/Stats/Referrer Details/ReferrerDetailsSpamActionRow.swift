@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 
 struct ReferrerDetailsSpamActionRow: ImmuTableRow {
     private typealias CellType = ReferrerDetailsSpamActionCell

@@ -1,4 +1,5 @@
 import Gridicons
+import ImmuTable
 
 struct PluginListRow: ImmuTableRow {
     static let cell: ImmuTableCell = {

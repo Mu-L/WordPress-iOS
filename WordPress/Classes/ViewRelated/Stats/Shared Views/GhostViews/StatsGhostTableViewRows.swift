@@ -1,3 +1,4 @@
+import ImmuTable
 import WordPressUI
 
 protocol StatsRowGhostable: StatsHashableImmuTableRow {

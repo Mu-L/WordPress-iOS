@@ -1,4 +1,5 @@
 import Foundation
+import ImmuTable
 
 struct ReferrerDetailsHeaderRow: ImmuTableRow {
     private typealias CellType = ReferrerDetailsHeaderCell
