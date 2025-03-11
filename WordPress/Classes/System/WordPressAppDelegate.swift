@@ -14,7 +14,7 @@ import ZendeskCoreSDK
 
 open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    open var window: UIWindow?
 
     let backgroundTasksCoordinator = BackgroundTasksCoordinator(tasks: [
         WeeklyRoundupBackgroundTask()
@@ -73,7 +73,7 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Application lifecycle
 
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+    open func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         BuildSettings.register(makeBuildSettings())
 
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -115,7 +115,7 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+    open func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         DDLogInfo("didFinishLaunchingWithOptions state: \(application.applicationState)")
 
         ABTest.start()
@@ -145,11 +145,11 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillTerminate(_ application: UIApplication) {
+    open func applicationWillTerminate(_ application: UIApplication) {
         DDLogInfo("\(self) \(#function)")
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    open func applicationDidEnterBackground(_ application: UIApplication) {
         DDLogInfo("\(self) \(#function)")
 
         let app = UIApplication.shared
@@ -175,7 +175,7 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    open func applicationWillEnterForeground(_ application: UIApplication) {
         DDLogInfo("\(self) \(#function)")
 
         updateFeatureFlags()
@@ -189,11 +189,11 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 #endif
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
+    open func applicationWillResignActive(_ application: UIApplication) {
         DDLogInfo("\(self) \(#function)")
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    open func applicationDidBecomeActive(_ application: UIApplication) {
         DDLogInfo("\(self) \(#function)")
 
         // This is done here so the check is done on app launch and app switching.
@@ -202,12 +202,12 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         GutenbergSettings().performGutenbergPhase2MigrationIfNeeded()
     }
 
-    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+    open func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let handler = WP3DTouchShortcutHandler()
         completionHandler(handler.handleShortcutItem(shortcutItem))
     }
 
-    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+    open func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         // 21-Oct-2017: We are only handling background URLSessions initiated by the share extension so there
         // is no need to inspect the identifier beyond the simple check here.
         if identifier.contains(WPAppGroupName) {
@@ -217,7 +217,7 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    open func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
             handleWebActivity(userActivity)
         } else {
@@ -230,7 +230,7 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
     // Note that this method only appears to be called for iPhone devices, not iPad.
     // This allows individual view controllers to cancel rotation if they need to.
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+    open func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         if let vc = window?.topmostPresentedViewController,
            vc is OrientationLimited {
             return vc.supportedInterfaceOrientations
@@ -343,15 +343,15 @@ extension Foundation.Notification.Name {
 // MARK: - Push Notification Delegate
 
 extension WordPressAppDelegate {
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         PushNotificationsManager.shared.registerDeviceToken(deviceToken)
     }
 
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    open func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         PushNotificationsManager.shared.registrationDidFail(error as NSError)
     }
 
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    open func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         DDLogInfo("\(self) \(#function)")
         PushNotificationsManager.shared.application(
             application,
