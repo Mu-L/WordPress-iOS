@@ -40,42 +40,33 @@ private struct VerifyEmailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                if case .sent = viewModel.state {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(Color.accentColor)
-                    Text(Strings.verificationSent)
-                        .foregroundStyle(Color.accentColor)
-                } else {
-                    Image(systemName: "envelope.circle.fill")
-                    Text(Strings.verifyEmailTitle)
-                        .foregroundStyle(.primary)
-                }
+                Image(systemName: "envelope.circle.fill")
+                Text(Strings.verifyEmailTitle)
             }
+            .foregroundStyle(Color(uiColor: #colorLiteral(red: 0.8392476439, green: 0.2103677094, blue: 0.2182099223, alpha: 1)))
             .font(.subheadline.weight(.semibold))
 
             Text(viewModel.state.message)
                 .font(.callout)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.primary)
 
-            if case .sent = viewModel.state {
-                EmptyView()
-            } else {
-                Button {
-                    viewModel.sendVerificationEmail()
-                } label: {
-                    HStack {
-                        if viewModel.state.showsActivityIndicator {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle())
-                        }
+            Spacer()
 
-                        Text(viewModel.state.buttonTitle)
-                            .font(.callout)
+            Button {
+                viewModel.sendVerificationEmail()
+            } label: {
+                HStack {
+                    if viewModel.state.showsActivityIndicator {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
                     }
+
+                    Text(viewModel.state.buttonTitle)
+                        .font(.callout)
                 }
-                .buttonStyle(.borderless)
-                .disabled(!viewModel.state.isButtonEnabled)
             }
+            .buttonStyle(.borderless)
+            .disabled(!viewModel.state.isButtonEnabled)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -98,20 +89,12 @@ private class VerifyEmailViewModel: ObservableObject {
             let email = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)?.email ?? ""
 
             switch self {
-            case .needsVerification, .sending:
+            case .needsVerification, .sending, .sent:
                 if let email, !email.isEmpty {
-                    return String(format: Strings.verifyMessage, email)
+                    return String(format: Strings.verifyMessage, email, Strings.sendButton)
                 } else {
-                    return Strings.verifyMessageNoEmail
+                    return String(format: Strings.verifyMessageNoEmail, Strings.sendButton)
                 }
-
-            case .sent:
-                if let email, !email.isEmpty {
-                    return String(format: Strings.sentMessage, email)
-                } else {
-                    return Strings.sentMessageNoEmail
-                }
-
             case .error(let error):
                 return error.localizedDescription
             }
@@ -194,13 +177,10 @@ private class VerifyEmailViewModel: ObservableObject {
 
 private enum Strings {
     static let verifyEmailTitle = NSLocalizedString("me.verifyEmail.title", value: "Verify Your Email", comment: "Title for email verification card")
-    static let verifyMessage = NSLocalizedString("me.verifyEmail.message.withEmail", value: "Please verify your email address (%@) to unlock all features.", comment: "Message for email verification card with email address")
-    static let verifyMessageNoEmail = NSLocalizedString("me.verifyEmail.message.noEmail", value: "Please verify your email address to unlock all features.", comment: "Message for email verification card")
-    static let sentMessage = NSLocalizedString("me.verifyEmail.sent.message.withEmail", value: "We've sent a verification link to %@. Please check your inbox and click the link.", comment: "Message shown after verification link is sent with email address")
-    static let sentMessageNoEmail = NSLocalizedString("me.verifyEmail.sent.message.noEmail", value: "We've sent a verification link to your email address. Please check your inbox and click the link.", comment: "Message shown after verification link is sent")
-    static let sendButton = NSLocalizedString("me.verifyEmail.button.send", value: "Send Verification Link", comment: "Button title to send verification link")
+    static let verifyMessage = NSLocalizedString("me.verifyEmail.message.withEmail", value: "Verify you email to secure your account and access more features.\nCheck your inbox at %@ for the confirmation email, or click '%@' to get a new one.", comment: "Message for email verification card with email address")
+    static let verifyMessageNoEmail = NSLocalizedString("me.verifyEmail.message.noEmail", value: "Verify you email to secure your account and access more features.\nCheck your inbox for the confirmation email, or click '%@' to get a new one..", comment: "Message for email verification card")
+    static let sendButton = NSLocalizedString("me.verifyEmail.button.send", value: "Resend email", comment: "Button title to send verification link")
     static let sendingButton = NSLocalizedString("me.verifyEmail.button.sending", value: "Sending...", comment: "Button title while verification link is being sent")
-    static let sentButton = NSLocalizedString("me.verifyEmail.button.sent", value: "Link Sent!", comment: "Button title after verification link is sent")
+    static let sentButton = NSLocalizedString("me.verifyEmail.button.sent", value: "Email sent", comment: "Button title after verification link is sent")
     static let retryButton = NSLocalizedString("me.verifyEmail.button.retry", value: "Try Again", comment: "Button title when verification link sending failed")
-    static let verificationSent = NSLocalizedString("me.verifyEmail.status.sent", value: "Verification link sent", comment: "Message shown when verification link has been sent")
 }
