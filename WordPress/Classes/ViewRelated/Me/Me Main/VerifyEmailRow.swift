@@ -61,8 +61,6 @@ private struct VerifyEmailView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             } else {
                 HStack {
-                    Spacer()
-
                     Button {
                         viewModel.sendVerificationEmail()
                     } label: {
@@ -84,9 +82,8 @@ private struct VerifyEmailView: View {
                     }
                     .buttonStyle(.plain)
                     .disabled(!viewModel.state.isButtonEnabled)
-
-                    Spacer()
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
         .padding(16)
