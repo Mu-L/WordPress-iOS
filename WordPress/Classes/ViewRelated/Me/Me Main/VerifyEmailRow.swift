@@ -31,20 +31,12 @@ final class VerifyEmailCell: UITableViewCell {
         backgroundColor = .systemRed.withAlphaComponent(0.9)
 
         contentView.addSubview(hostingView)
-        hostingView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            hostingView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            hostingView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            hostingView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            hostingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+        hostingView.pinEdges(to: contentView)
     }
-
 }
 
 private struct VerifyEmailView: View {
-    @StateObject var viewModel: VerifyEmailViewModel = .init()
+    @StateObject private var viewModel = VerifyEmailViewModel()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -201,7 +193,7 @@ private class VerifyEmailViewModel: ObservableObject {
 
         state = .sending
 
-        let accountService = AccountService(coreDataStack: ContextManager.sharedInstance())
+        let accountService = AccountService(coreDataStack: ContextManager.shared)
         accountService.requestVerificationEmail({ [weak self] in
             Task { @MainActor [weak self] in
                 guard let self else { return }
