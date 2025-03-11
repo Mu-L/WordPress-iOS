@@ -337,6 +337,6 @@ class AppRatingUtility: NSObject {
     }
 
     private enum Constants {
-        static let defaultAppReviewURL = URL(string: "https://itunes.apple.com/app/id\(AppConstants.itunesAppID)?mt=8&action=write-review")!
+        static let defaultAppReviewURL = URL(string: "https://itunes.apple.com/app/id\(BuildSettings.current.itunesAppID)?mt=8&action=write-review")!
     }
 }

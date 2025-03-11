@@ -37,10 +37,6 @@ NSString *const WPAppKeychainAccessGroup                            = @"3TMU3BH3
 NSString *const WPAppleIDKeychainUsernameKey                        = @"Username";
 NSString *const WPAppleIDKeychainServiceName                        = @"AppleID";
 
-/// iTunes Constants
-///
-NSString *const WPiTunesAppId                                       = @"335703880";
-
 /// Scheme Constants
 ///
 NSString *const WPComScheme                                         = WPCOM_SCHEME;

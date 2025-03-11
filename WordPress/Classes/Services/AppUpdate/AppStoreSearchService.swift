@@ -29,7 +29,7 @@ protocol AppStoreSearchProtocol {
 final class AppStoreSearchService: AppStoreSearchProtocol {
     private(set) var appID: String
 
-    init(appID: String = AppConstants.itunesAppID) {
+    init(appID: String = BuildSettings.current.itunesAppID) {
         self.appID = appID
     }
 

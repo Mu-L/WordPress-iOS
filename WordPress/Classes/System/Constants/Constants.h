@@ -17,10 +17,6 @@ extern NSString *const WPGithubMainURL;
 extern NSString *const WPComReferrerURL;
 extern NSString *const WPComDomain;
 
-/// Notifications Constants
-///
-extern NSString *const WPPushNotificationAppId;
-
 /// Keychain + User Defaults Constants
 ///
 extern NSString *const WPAppGroupName;
@@ -30,10 +26,6 @@ extern NSString *const WPAppKeychainAccessGroup;
 ///
 extern NSString *const WPAppleIDKeychainUsernameKey;
 extern NSString *const WPAppleIDKeychainServiceName;
-
-/// iTunes Constants
-///
-extern NSString *const WPiTunesAppId;
 
 /// Scheme Constants
 ///

@@ -142,10 +142,12 @@ class NotificationSettingsService {
             return
         }
 
-        notificationsServiceRemote?.registerDeviceForPushNotifications(token,
-                                                                       pushNotificationAppId: AppConstants.pushNotificationAppId,
-                                                                       success: success,
-                                                                       failure: failure)
+        notificationsServiceRemote?.registerDeviceForPushNotifications(
+            token,
+            pushNotificationAppId: BuildSettings.current.pushNotificationAppID,
+            success: success,
+            failure: failure
+        )
     }
 
     /// Unregisters the given deviceID for Push Notification Events.

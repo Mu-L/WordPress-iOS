@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BuildSettings {
+public struct BuildSettings: Sendable {
     public var itunesAppID: String
     public var pushNotificationAppID: String
 
