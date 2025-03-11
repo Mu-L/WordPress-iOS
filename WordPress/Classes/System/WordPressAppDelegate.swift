@@ -67,8 +67,6 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Hooks
 
-    static let settings: BuildSettings
-
     func makeBuildSettings() -> BuildSettings {
         fatalError("Must be implemented by a subclass")
     }
@@ -76,6 +74,8 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Application lifecycle
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        BuildSettings.register(makeBuildSettings())
+
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
 
