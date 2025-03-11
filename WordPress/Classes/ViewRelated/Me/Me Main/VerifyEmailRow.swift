@@ -47,7 +47,7 @@ private struct VerifyEmailView: View {
                         .foregroundStyle(Color.accentColor)
                 } else {
                     Image(systemName: "envelope.circle.fill")
-                    Text(viewModel.state.title)
+                    Text(Strings.verifyEmailTitle)
                         .foregroundStyle(.primary)
                 }
             }
@@ -93,10 +93,6 @@ private class VerifyEmailViewModel: ObservableObject {
         case sending
         case sent(Date)
         case error(Error)
-
-        var title: String {
-            Strings.title
-        }
 
         var message: String {
             let email = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)?.email ?? ""
@@ -197,7 +193,7 @@ private class VerifyEmailViewModel: ObservableObject {
 }
 
 private enum Strings {
-    static let title = NSLocalizedString("me.verifyEmail.title", value: "Verify Your Email", comment: "Title for email verification card")
+    static let verifyEmailTitle = NSLocalizedString("me.verifyEmail.title", value: "Verify Your Email", comment: "Title for email verification card")
     static let verifyMessage = NSLocalizedString("me.verifyEmail.message.withEmail", value: "Please verify your email address (%@) to unlock all features.", comment: "Message for email verification card with email address")
     static let verifyMessageNoEmail = NSLocalizedString("me.verifyEmail.message.noEmail", value: "Please verify your email address to unlock all features.", comment: "Message for email verification card")
     static let sentMessage = NSLocalizedString("me.verifyEmail.sent.message.withEmail", value: "We've sent a verification link to %@. Please check your inbox and click the link.", comment: "Message shown after verification link is sent with email address")
