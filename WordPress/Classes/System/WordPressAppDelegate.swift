@@ -42,7 +42,7 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
     private var noticePresenter: NoticePresenter?
     private var bgTask: UIBackgroundTaskIdentifier? = nil
     private let remoteFeatureFlagStore = RemoteFeatureFlagStore()
-    private let remoteConfigStore = RemoteConfigStore()
+    private var remoteConfigStore: RemoteConfigStore!
 
     private var mainContext: NSManagedObjectContext {
         return ContextManager.shared.mainContext
@@ -81,6 +81,7 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
         UITestConfigurator.prepareApplicationForUITests(in: application, window: window)
 
+        remoteConfigStore = RemoteConfigStore()
         AppAppearance.overrideAppearance()
         MemoryCache.shared.register()
         MediaImageService.migrateCacheIfNeeded()

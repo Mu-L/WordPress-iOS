@@ -10,7 +10,6 @@ class AppDelegate: WordPressAppDelegate {
     }
 }
 
-/// - warning: This must be  the only place with conditional compilation.
 private enum XcodeBuildConfiguration {
     case debug
     case `internal`
