@@ -28,7 +28,6 @@ final class VerifyEmailCell: UITableViewCell {
 
     private func setupView() {
         selectionStyle = .none
-        backgroundColor = .systemRed.withAlphaComponent(0.9)
 
         contentView.addSubview(hostingView)
         hostingView.pinEdges(to: contentView)
@@ -39,54 +38,46 @@ private struct VerifyEmailView: View {
     @StateObject private var viewModel = VerifyEmailViewModel()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(viewModel.state.title)
-                .font(.subheadline.weight(.semibold))
-                .foregroundColor(.white)
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                if case .sent = viewModel.state {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(Color.accentColor)
+                    Text(Strings.verificationSent)
+                        .foregroundStyle(Color.accentColor)
+                } else {
+                    Image(systemName: "envelope.circle.fill")
+                    Text(viewModel.state.title)
+                        .foregroundStyle(.primary)
+                }
+            }
+            .font(.subheadline.weight(.semibold))
 
             Text(viewModel.state.message)
                 .font(.callout)
-                .foregroundColor(.white)
-
-            Spacer()
+                .foregroundStyle(.secondary)
 
             if case .sent = viewModel.state {
-                HStack(spacing: 4) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.white)
-                    Text(Strings.verificationSent)
-                        .font(.callout)
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
+                EmptyView()
             } else {
-                HStack {
-                    Button {
-                        viewModel.sendVerificationEmail()
-                    } label: {
-                        HStack {
-                            if viewModel.state.showsActivityIndicator {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle())
-                            }
-
-                            Text(viewModel.state.buttonTitle)
-                                .foregroundColor(.black)
+                Button {
+                    viewModel.sendVerificationEmail()
+                } label: {
+                    HStack {
+                        if viewModel.state.showsActivityIndicator {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(.white)
-                        )
+
+                        Text(viewModel.state.buttonTitle)
+                            .font(.callout)
                     }
-                    .buttonStyle(.plain)
-                    .disabled(!viewModel.state.isButtonEnabled)
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
+                .buttonStyle(.borderless)
+                .disabled(!viewModel.state.isButtonEnabled)
             }
         }
-        .padding(16)
+        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
