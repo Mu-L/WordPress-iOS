@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 let isRunningTests = NSClassFromString("XCTestCase") != nil
-let appDelegateClass = isRunningTests ? "TestingAppDelegate" : NSStringFromClass(WordPressAppDelegate.self)
+let appDelegateClass = isRunningTests ? "TestingAppDelegate" : NSStringFromClass(AppDelegate.self)
 
 UIApplicationMain(
     CommandLine.argc,

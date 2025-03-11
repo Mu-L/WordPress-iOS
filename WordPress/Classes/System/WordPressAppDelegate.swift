@@ -12,7 +12,7 @@ import UIDeviceIdentifier
 import WordPressUI
 import ZendeskCoreSDK
 
-class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
+open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
@@ -63,6 +63,14 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
     @objc class var shared: WordPressAppDelegate? {
         assert(Thread.isMainThread, "WordPressAppDelegate.shared can only be accessed from the main thread")
         return UIApplication.shared.delegate as? WordPressAppDelegate
+    }
+
+    // MARK: - Hooks
+
+    static let settings: BuildSettings
+
+    func makeBuildSettings() -> BuildSettings {
+        fatalError("Must be implemented by a subclass")
     }
 
     // MARK: - Application lifecycle
