@@ -11,6 +11,7 @@ let package = Package(
         .library(name: "AsyncImageKit", targets: ["AsyncImageKit"]),
         .library(name: "DesignSystem", targets: ["DesignSystem"]),
         .library(name: "JetpackStatsWidgetsCore", targets: ["JetpackStatsWidgetsCore"]),
+        .library(name: "SFHFKeychainUtils", targets: ["SFHFKeychainUtils"]),
         .library(name: "WordPressFlux", targets: ["WordPressFlux"]),
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
         .library(name: "WordPressUI", targets: ["WordPressUI"]),
@@ -59,6 +60,12 @@ let package = Package(
         ]),
         .target(name: "DesignSystem", swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "JetpackStatsWidgetsCore", swiftSettings: [.swiftLanguageMode(.v5)]),
+        // SFHFKeychainUtils is an old Objective-C keychain wrapper.
+        // The implementatoin predates ARC, hence the dedicated target with ARC disabled, for the time being.
+        .target(
+            name: "SFHFKeychainUtils",
+            cSettings: [.unsafeFlags(["-fno-objc-arc"])]
+        ),
         .target(name: "UITestsFoundation", dependencies: [
             .product(name: "ScreenObject", package: "ScreenObject"),
             .product(name: "XCUITestHelpers", package: "ScreenObject"),
@@ -138,6 +145,7 @@ enum XcodeSupport {
         ]
 
         let shareAndDraftExtensionsDependencies: [Target.Dependency] = [
+            "SFHFKeychainUtils",
             "WordPressShared",
             "WordPressUI",
             .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
@@ -160,6 +168,7 @@ enum XcodeSupport {
             .xcodeTarget("XcodeTarget_App", dependencies: [
                 "DesignSystem",
                 "JetpackStatsWidgetsCore",
+                "SFHFKeychainUtils",
                 "WordPressFlux",
                 "WordPressShared",
                 "WordPressReader",
@@ -197,6 +206,7 @@ enum XcodeSupport {
                 .product(name: "WordPressEditor", package: "AztecEditor-iOS"),
             ]),
             .xcodeTarget("XcodeTarget_WordPressTests", dependencies: testDependencies + [
+                "SFHFKeychainUtils",
                 "WordPressShared",
                 .product(name: "Gravatar", package: "Gravatar-SDK-iOS"),
                 .product(name: "Nimble", package: "Nimble"),
@@ -211,10 +221,12 @@ enum XcodeSupport {
             .xcodeTarget("XcodeTarget_ShareExtension", dependencies: shareAndDraftExtensionsDependencies),
             .xcodeTarget("XcodeTarget_DraftActionExtension", dependencies: shareAndDraftExtensionsDependencies),
             .xcodeTarget("XcodeTarget_NotificationServiceExtension", dependencies: [
+                "SFHFKeychainUtils",
                 "WordPressShared",
             ]),
             .xcodeTarget("XcodeTarget_StatsWidget", dependencies: [
                 "JetpackStatsWidgetsCore",
+                "SFHFKeychainUtils",
                 "WordPressShared",
                 "WordPressUI",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
