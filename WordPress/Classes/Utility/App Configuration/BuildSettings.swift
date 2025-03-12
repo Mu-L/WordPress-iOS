@@ -12,19 +12,19 @@ public struct BuildSettings: Sendable {
         self.pushNotificationAppID = pushNotificationAppID
     }
 
-    static var current: BuildSettings {
-        guard let value = _current else {
+    static var shared: BuildSettings {
+        guard let value = _shared else {
             fatalError("configuration not registered")
         }
         return value
     }
 
-    private static var _current: BuildSettings?
+    private static var _shared: BuildSettings?
 
     static func register(_ settings: BuildSettings) {
-        guard _current == nil else {
+        guard _shared == nil else {
             fatalError("already registered")
         }
-        _current = settings
+        _shared = settings
     }
 }

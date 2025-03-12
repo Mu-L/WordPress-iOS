@@ -144,7 +144,7 @@ class NotificationSettingsService {
 
         notificationsServiceRemote?.registerDeviceForPushNotifications(
             token,
-            pushNotificationAppId: BuildSettings.current.pushNotificationAppID,
+            pushNotificationAppId: BuildSettings.shared.pushNotificationAppID,
             success: success,
             failure: failure
         )
