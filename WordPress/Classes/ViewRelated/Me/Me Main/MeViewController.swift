@@ -452,7 +452,7 @@ class MeViewController: UITableViewController {
             return
         }
 
-        let accountService = AccountService(coreDataStack: ContextManager.sharedInstance())
+        let accountService = AccountService(coreDataStack: ContextManager.shared)
         let accountSettingsService = AccountSettingsService(userID: account.userID.intValue, api: api)
 
         Task {
@@ -491,7 +491,7 @@ class MeViewController: UITableViewController {
     // MARK: - LogOut
 
     private func displayLogOutAlert() {
-        let alert  = UIAlertController(title: logOutAlertTitle, message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: logOutAlertTitle, message: nil, preferredStyle: .alert)
         alert.addActionWithTitle(LogoutAlert.cancelAction, style: .cancel)
         alert.addActionWithTitle(LogoutAlert.logoutAction, style: .destructive) { [weak self] _ in
             self?.dismiss(animated: true) {
@@ -503,7 +503,7 @@ class MeViewController: UITableViewController {
     }
 
     private var logOutAlertTitle: String {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         let count = AbstractPost.countLocalPosts(in: context)
 
         guard count > 0 else {

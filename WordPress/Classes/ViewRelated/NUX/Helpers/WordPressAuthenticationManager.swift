@@ -1,4 +1,5 @@
 import Foundation
+import SFHFKeychainUtils
 import WordPressAuthenticator
 import Gridicons
 import UIKit
@@ -44,7 +45,7 @@ extension WordPressAuthenticationManager {
     ///
     func initializeWordPressAuthenticator() {
         let displayStrings = WordPressAuthenticatorDisplayStrings(
-            continueWithWPButtonTitle: AppConstants.Login.continueButtonTitle
+            continueWithWPButtonTitle: NSLocalizedString("Continue With WordPress.com", comment: "Button title. Takes the user to the login with WordPress.com flow.")
         )
 
         WordPressAuthenticator.initialize(configuration: authenticatorConfiguation(),
@@ -195,7 +196,7 @@ extension WordPressAuthenticationManager {
     ///
     @objc
     class func signinForWPComFixingAuthToken(_ onDismissed: ((_ cancelled: Bool) -> Void)? = nil) -> UIViewController {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context)
 
         return WordPressAuthenticator.signinForWPCom(dotcomEmailAddress: account?.email, dotcomUsername: account?.username, onDismissed: onDismissed)
@@ -265,7 +266,7 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
     /// default wpcom account, or at least one self-hosted blog.
     ///
     var dismissActionEnabled: Bool {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         return AccountHelper.isDotcomAvailable() || Blog.count(in: context) > 0
     }
@@ -430,8 +431,8 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
     /// the new DefaultWordPressComAccount.
     ///
     func createdWordPressComAccount(username: String, authToken: String) {
-        let service = AccountService(coreDataStack: ContextManager.sharedInstance())
-        let context = ContextManager.sharedInstance().mainContext
+        let service = AccountService(coreDataStack: ContextManager.shared)
+        let context = ContextManager.shared.mainContext
         let accountID = service.createOrUpdateAccount(withUsername: username, authToken: authToken)
         guard let account = try? context.existingObject(with: accountID) as? WPAccount else {
             DDLogError("Failed to find the account")
@@ -502,7 +503,7 @@ extension WordPressAuthenticationManager: WordPressAuthenticatorDelegate {
 // MARK: - Blog Count Helpers
 private extension WordPressAuthenticationManager {
     private func numberOfBlogs() -> Int {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         let numberOfBlogs = (try? WPAccount.lookupDefaultWordPressComAccount(in: context))?.blogs?.count ?? 0
 
         return numberOfBlogs
