@@ -1,4 +1,15 @@
-@import WordPressDataObjC;
+#import "WPAppAnalytics.h"
+
+@import WordPressData;
+#import "WPAnalyticsTrackerWPCom.h"
+#import "WPAnalyticsTrackerAutomatticTracks.h"
+#import "WPTabBarController.h"
+#import "AccountService.h"
+#import "BlogService.h"
+#import "Blog.h"
+#import "AbstractPost.h"
+#import "WordPress-Swift.h"
+
 @import NSObject_SafeExpectations;
 
 #import "WPAppAnalytics.h"

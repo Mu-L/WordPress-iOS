@@ -1,7 +1,7 @@
 #import "WPAuthTokenIssueSolver.h"
 #import "AccountService.h"
 #import "BlogService.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "WPAccount.h"
 #import "WordPress-Swift.h"
 

@@ -1,5 +1,5 @@
 #import "WPAnalyticsTrackerAutomatticTracks.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "AccountService.h"
 #import "BlogService.h"
 #import "WPAccount.h"

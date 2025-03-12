@@ -1,6 +1,6 @@
 #import "AbstractPost.h"
 #import "Media.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "WordPress-Swift.h"
 #import "BasePost.h"
 

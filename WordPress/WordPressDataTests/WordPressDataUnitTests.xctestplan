@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "49ADC4AB-D8FB-4D29-9357-5609A4C5A761",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:WordPress.xcodeproj",
+        "identifier" : "3F2AA3E92D81457F002A4E94",
+        "name" : "WordPressDataTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,7 +1,7 @@
 #import "Blog.h"
 #import "WPAccount.h"
 #import "AccountService.h"
-@import WordPressDataObjC;
+@import WordPressData;
 @import WordPressShared;
 #import "WordPress-Swift.h"
 @import SFHFKeychainUtils;
@@ -151,7 +151,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (NSNumber *)organizationID {
     NSNumber *organizationID = [self primitiveValueForKey:@"organizationID"];
-    
+
     if (organizationID == nil) {
         return @0;
     } else {
@@ -184,7 +184,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         DDLogInfo(@"Blog display URL is nil");
         return nil;
     }
-    
+
     NSError *error = nil;
     NSRegularExpression *protocol = [NSRegularExpression regularExpressionWithPattern:@"http(s?)://" options:NSRegularExpressionCaseInsensitive error:&error];
     NSString *result = [NSString stringWithFormat:@"%@", [protocol stringByReplacingMatchesInString:self.url options:0 range:NSMakeRange(0, [self.url length]) withTemplate:@""]];
@@ -302,7 +302,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 }
 
 - (NSArray *)sortedPostFormatNames
-{    
+{
     return [[self sortedPostFormats] wp_map:^id(NSString *key) {
         return self.postFormats[key];
     }];
@@ -800,7 +800,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     if (!allowedFileTypes || allowedFileTypes.count == 0) {
         return nil;
     }
-    
+
     return [NSSet setWithArray:allowedFileTypes];
 }
 
@@ -823,7 +823,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 - (NSString *)supportDescription
 {
     // Gather information
-    
+
     NSString *blogType = [NSString stringWithFormat:@"Type: (%@)", [self stateDescription]];
     NSString *urlType = [self wordPressComRestApi] ? @"REST" : @"Self-hosted";
     NSString *url = [NSString stringWithFormat:@"URL: %@", self.url];
@@ -835,14 +835,14 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     } else {
         username = [self.jetpack connectedUsername];
     }
-    
+
     NSString *jetpackVersion;
     if ([self.jetpack isInstalled]) {
         jetpackVersion = [NSString stringWithFormat:@"Jetpack-version: %@", [self.jetpack version]];
     }
-    
+
     // Add information to array in the order we want to display it.
-    
+
     NSMutableArray *blogInformation = [[NSMutableArray alloc] init];
     [blogInformation addObject:blogType];
     if (username) {
@@ -856,7 +856,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     if (jetpackVersion) {
         [blogInformation addObject:jetpackVersion];
     }
-    
+
     // Combine and return.
     return [NSString stringWithFormat:@"<%@>", [blogInformation componentsJoinedByString:@" "]];
 }
@@ -866,16 +866,16 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     if (self.account) {
         return @"wpcom";
     }
-    
+
     if ([self.jetpack isConnected]) {
         NSString *apiType = [self wordPressComRestApi] ? @"REST" : @"XML-RPC";
         return [NSString stringWithFormat:@"jetpack_connected - %@", apiType];
     }
-    
+
     if ([self.jetpack isInstalled]) {
         return @"self-hosted - jetpack_installed";
     }
-    
+
     return @"self_hosted";
 }
 

@@ -1,5 +1,5 @@
 #import "BlogSyncFacade.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "BlogService.h"
 #import "AccountService.h"
 #import "Blog.h"
