@@ -1,7 +1,7 @@
 #import "Blog.h"
 #import "WPAccount.h"
 #import "AccountService.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "WPUserAgent.h"
 #import "WordPress-Swift.h"
 

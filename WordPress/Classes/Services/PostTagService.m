@@ -1,7 +1,7 @@
 #import "PostTagService.h"
 #import "Blog.h"
 #import "PostTag.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "WordPress-Swift.h"
 @import WordPressKit;
 

@@ -1,6 +1,6 @@
 #import "Theme.h"
 #import "Blog.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "WPAccount.h"
 #import "AccountService.h"
 #import "WordPress-Swift.h"

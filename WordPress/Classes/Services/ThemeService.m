@@ -3,7 +3,7 @@
 #import "Blog.h"
 #import "Theme.h"
 #import "WPAccount.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "WordPress-Swift.h"
 @import WordPressKit;
 

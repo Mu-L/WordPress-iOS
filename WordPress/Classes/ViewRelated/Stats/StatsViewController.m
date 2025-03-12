@@ -1,7 +1,7 @@
 #import "StatsViewController.h"
 #import "Blog.h"
 #import "WPAccount.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "BlogService.h"
 #import "WordPress-Swift.h"
 #import "WPAppAnalytics.h"

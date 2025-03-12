@@ -1,4 +1,4 @@
-@import WordPressDataObjC;
+@import WordPressData;
 
 @class Blog;
 @class Theme;
