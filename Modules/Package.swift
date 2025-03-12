@@ -59,6 +59,7 @@ let package = Package(
             .product(name: "Collections", package: "swift-collections"),
             .product(name: "Gifu", package: "Gifu"),
         ]),
+        .target(name: "BuildSettings"),
         .target(name: "DesignSystem", swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "JetpackStatsWidgetsCore", swiftSettings: [.swiftLanguageMode(.v5)]),
         // SFHFKeychainUtils is an old Objective-C keychain wrapper.
@@ -176,6 +177,7 @@ enum XcodeSupport {
 
         return [
             .xcodeTarget("XcodeTarget_App", dependencies: [
+                "BuildSettings",
                 "DesignSystem",
                 "JetpackStatsWidgetsCore",
                 "SFHFKeychainUtils",
