@@ -295,6 +295,8 @@ enum XcodeSupport {
                   "SFHFKeychainUtils",
                   "WordPressShared",
                   .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
+                  .product(name: "WordPressKit", package: "WordPressKit-iOS"),
+
                 ]
             ),
             .xcodeTarget("XcodeTarget_ShareExtension", dependencies: shareAndDraftExtensionsDependencies),
