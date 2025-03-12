@@ -1,3 +1,4 @@
+import WordPressData
 import XCTest
 
 @testable import WordPress
