@@ -1,7 +1,7 @@
 #import "CommentService.h"
 #import "AccountService.h"
 #import "Blog.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "ReaderPost.h"
 #import "WPAccount.h"
 #import "PostService.h"

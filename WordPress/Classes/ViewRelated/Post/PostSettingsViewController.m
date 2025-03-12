@@ -3,7 +3,7 @@
 #import "Media.h"
 #import "SettingsSelectionViewController.h"
 #import "SharingDetailViewController.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "MediaService.h"
 #import "WordPress-Swift.h"
 

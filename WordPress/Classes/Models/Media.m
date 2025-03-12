@@ -1,5 +1,5 @@
 #import "Media.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "WordPress-Swift.h"
 
 @implementation Media

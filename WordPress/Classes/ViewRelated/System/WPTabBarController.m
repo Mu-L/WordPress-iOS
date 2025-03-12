@@ -1,7 +1,7 @@
 #import "WPTabBarController.h"
 
 #import "AccountService.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "BlogService.h"
 #import "Blog.h"
 

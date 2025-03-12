@@ -4,7 +4,7 @@
 #import "Menu.h"
 #import "MenuItem.h"
 #import "MenuLocation.h"
-@import WordPressDataObjC;
+@import WordPressData;
 #import "PostService.h"
 #import "WordPress-Swift.h"
 @import WordPressKit;
