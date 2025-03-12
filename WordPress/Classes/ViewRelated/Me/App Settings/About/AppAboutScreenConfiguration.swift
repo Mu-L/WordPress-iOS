@@ -38,7 +38,7 @@ class AppAboutScreenConfiguration: AboutScreenConfiguration {
                     WPAnalytics.track(.appReviewsRatedApp)
                     self?.tracker.buttonPressed(.rateUs)
                     AppRatingUtility.shared.ratedCurrentVersion()
-                    UIApplication.shared.open(AppRatingUtility.shared.appReviewUrl)
+                    UIApplication.shared.open(AppRatingUtility.makeAppReviewURL())
                 }),
                 AboutItem(title: TextContent.share, action: { [weak self] context in
                     self?.tracker.buttonPressed(.share)

@@ -13,11 +13,6 @@ class AppRatingUtility: NSObject {
     ///
     @objc var systemWideSignificantEventCountRequiredForPrompt: Int = 1
 
-    /// The App Review URL that we send off to UIApplication to open up the app
-    /// store review page.
-    ///
-    @objc let appReviewUrl: URL = Constants.defaultAppReviewURL
-
     /// Sets the number of days that have to pass between AppReview prompts
     /// Apple only allows 3 prompts per year. We're trying to be a bit more conservative and are doing
     /// up to 2 times a year (183 = round(365/2)).
@@ -336,7 +331,7 @@ class AppRatingUtility: NSObject {
         static let lastPromptToRateDate = "AppRatingLastPromptToRateDate"
     }
 
-    private enum Constants {
-        static let defaultAppReviewURL = URL(string: "https://itunes.apple.com/app/id\(BuildSettings.shared.itunesAppID)?mt=8&action=write-review")!
+    static func makeAppReviewURL(itunesAppID: String = BuildSettings.shared.itunesAppID) -> URL {
+        URL(string: "https://itunes.apple.com/app/id\(itunesAppID)?mt=8&action=write-review")!
     }
 }
