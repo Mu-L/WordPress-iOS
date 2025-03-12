@@ -84,11 +84,24 @@ struct WordPressDotComAuthenticator {
     @MainActor
     func attemptSignIn(from viewController: UIViewController, context: SignInContext) async throws(SignInError) -> TaggedManagedObjectID<WPAccount> {
         let defaultAccount = try? WPAccount.lookupDefaultWordPressComAccount(in: coreDataStack.mainContext)
-        let hasAlreadySignedIn = defaultAccount != nil
 
         let token: String
         do {
-            token = try await authenticate(from: viewController, prefersEphemeralWebBrowserSession: hasAlreadySignedIn, accountEmail: context.accountEmail(in: coreDataStack.mainContext))
+            token = try await authenticate(
+                from: viewController,
+                // Always ask users to type username and password to login, instead of reusing the logged in user in Safari.
+                // We opt-in for ephemeral session under these assumptions:
+                // 1) Many users have multiple WP.com accounts (personal, business, etc).
+                // 2) The "Log in with a different account" button is not very discoverable.
+                //    If user can't find this button, they won't be able to log in to a different account than Safari.
+                // 3) Tapping "Log in with a different account" button signs out the logged in user in Safari. It is
+                //    not reasonable to force user signing out of Safari to log in to the app. They may want to use
+                //    different accounts in Safari and the app.
+                //
+                // Note: Set this value to `false` to speed up local development if needed.
+                prefersEphemeralWebBrowserSession: true,
+                accountEmail: context.accountEmail(in: coreDataStack.mainContext)
+            )
         } catch {
             throw .authentication(error)
         }
