@@ -3279,20 +3279,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0C62E2312D80C08D009F7E28 /* Exceptions for "Targets" folder in "WordPress" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Jetpack/Sources/AppDelegate+Jetpack.swift",
-			);
-			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
-		};
-		0C62E2332D80C091009F7E28 /* Exceptions for "Targets" folder in "Jetpack" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Jetpack/Sources/AppDelegate+Jetpack.swift",
-			);
-			target = FABB1F8F2602FC2C00C8785C /* Jetpack */;
-		};
 		24CE68AE2CD3375300C7B37D /* Exceptions for "Classes" folder in "WordPress" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -3542,14 +3528,16 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0C62E22A2D80BF00009F7E28 /* Targets */ = {
+		0C6216BF2D81B8AE009F7E28 /* Jetpack */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0C62E2312D80C08D009F7E28 /* Exceptions for "Targets" folder in "WordPress" target */,
-				0C62E2332D80C091009F7E28 /* Exceptions for "Targets" folder in "Jetpack" target */,
-			);
-			name = Targets;
-			path = ../Targets;
+			name = Jetpack;
+			path = ../Targets/Jetpack;
+			sourceTree = SOURCE_ROOT;
+		};
+		0C6216C32D81B8B8009F7E28 /* WordPress */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			name = WordPress;
+			path = ../Targets/WordPress;
 			sourceTree = SOURCE_ROOT;
 		};
 		24CE57C42CD3375200C7B37D /* Classes */ = {
@@ -3927,6 +3915,15 @@
 			name = Media;
 			sourceTree = "<group>";
 		};
+		0C6216BC2D81B89A009F7E28 /* Targets */ = {
+			isa = PBXGroup;
+			children = (
+				0C6216C32D81B8B8009F7E28 /* WordPress */,
+				0C6216BF2D81B8AE009F7E28 /* Jetpack */,
+			);
+			path = Targets;
+			sourceTree = "<group>";
+		};
 		0C77A5AE2CDE5668005BC0DA /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -4237,7 +4234,7 @@
 			children = (
 				F14B5F6F208E648200439554 /* config */,
 				E1B34C091CCDFFCE00889709 /* Credentials */,
-				0C62E22A2D80BF00009F7E28 /* Targets */,
+				0C6216BC2D81B89A009F7E28 /* Targets */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -7492,7 +7489,7 @@
 				4AD953C62C21451700D0EEFA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0C62E22A2D80BF00009F7E28 /* Targets */,
+				0C6216C32D81B8B8009F7E28 /* WordPress */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 			);
 			name = WordPress;
@@ -7763,6 +7760,7 @@
 				4AD9555D2C21716A00D0EEFA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				0C6216BF2D81B8AE009F7E28 /* Jetpack */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 			);
 			name = Jetpack;
