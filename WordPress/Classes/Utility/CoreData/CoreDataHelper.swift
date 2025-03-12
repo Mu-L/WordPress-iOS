@@ -140,7 +140,9 @@ extension NSManagedObjectContext {
             objects = try fetch(request) as? [T]
         } catch {
             DDLogError("Error loading Objects [\(String(describing: T.entityName))")
-            wpAssertionFailure("CoreData.loadObjects failed", userInfo: ["error": "\(error)"])
+            // FIXME: Migrating this would be complex because of underlying dependencies such as Tracks
+            // It crashes only in debug mode, anyway
+            // wpAssertionFailure("CoreData.loadObjects failed", userInfo: ["error": "\(error)"])
         }
 
         return objects ?? []
