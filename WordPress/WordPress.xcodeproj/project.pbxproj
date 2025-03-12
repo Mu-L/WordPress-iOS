@@ -1008,6 +1008,13 @@
 			remoteGlobalIDString = FFA8E22A1F94E3DE0002170F;
 			remoteInfo = SwiftLint;
 		};
+		3FFC8EEE2D818E4D00C2F712 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3F2AA3E22D81457F002A4E94;
+			remoteInfo = WordPressData;
+		};
 		4AD953BD2C21451700D0EEFA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -5415,6 +5422,7 @@
 				8096219028E55F8600940A5D /* PBXTargetDependency */,
 				80F6D05F28EE88FC00953C1A /* PBXTargetDependency */,
 				4AD9555D2C21716A00D0EEFA /* PBXTargetDependency */,
+				3FFC8EEF2D818E4D00C2F712 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				0C1C18F32D95DA6D00494A8C /* Icons */,
@@ -6990,6 +6998,11 @@
 			isa = PBXTargetDependency;
 			target = FFA8E22A1F94E3DE0002170F /* SwiftLint */;
 			targetProxy = 3FCFFAFF2994AB25002840C9 /* PBXContainerItemProxy */;
+		};
+		3FFC8EEF2D818E4D00C2F712 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3F2AA3E22D81457F002A4E94 /* WordPressData */;
+			targetProxy = 3FFC8EEE2D818E4D00C2F712 /* PBXContainerItemProxy */;
 		};
 		4AD953BE2C21451700D0EEFA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
