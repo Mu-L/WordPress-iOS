@@ -12,7 +12,7 @@ import UIDeviceIdentifier
 import WordPressUI
 import ZendeskCoreSDK
 
-open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
+class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
     open var window: UIWindow?
 
@@ -65,17 +65,9 @@ open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as? WordPressAppDelegate
     }
 
-    // MARK: - Hooks
-
-    func makeBuildSettings() -> BuildSettings {
-        fatalError("Must be implemented by a subclass")
-    }
-
     // MARK: - Application lifecycle
 
     open func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        BuildSettings.register(makeBuildSettings())
-
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
 
