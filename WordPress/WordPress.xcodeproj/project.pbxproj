@@ -2415,6 +2415,7 @@
 			publicHeaders = (
 				include/CoreDataService.h,
 				include/CoreDataStack.h,
+				include/PostContentProvider.h,
 				WordPressData.h,
 			);
 			target = 3F2AA3E22D81457F002A4E94 /* WordPressData */;
