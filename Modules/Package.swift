@@ -291,7 +291,10 @@ enum XcodeSupport {
             .xcodeTarget("XcodeTarget_WordPressAuthentificatorTests", dependencies: wordPresAuthentificatorDependencies + testDependencies),
             .xcodeTarget(
                 "XcodeTarget_WordPressData",
-                dependencies: ["WordPressShared"]
+                dependencies: [
+                  "WordPressShared",
+                  .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
+                ]
             ),
             .xcodeTarget("XcodeTarget_ShareExtension", dependencies: shareAndDraftExtensionsDependencies),
             .xcodeTarget("XcodeTarget_DraftActionExtension", dependencies: shareAndDraftExtensionsDependencies),
