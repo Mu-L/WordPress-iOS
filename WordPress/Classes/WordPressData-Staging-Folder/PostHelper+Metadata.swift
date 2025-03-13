@@ -16,7 +16,8 @@ extension PostHelper {
     @objc(createOrUpdateCategoryForRemoteCategory:blog:context:)
     class func createOrUpdateCategory(for remoteCategory: RemotePostCategory, in blog: Blog, in context: NSManagedObjectContext) -> PostCategory? {
         guard let categoryID = remoteCategory.categoryID else {
-            wpAssertionFailure("remote category missing categoryID")
+            // FIXME: Delaying wpAssert migration because of underlying dependencies
+            // wpAssertionFailure("remote category missing categoryID")
             return nil
         }
         if let category = try? PostCategory.lookup(withBlogID: blog.objectID, categoryID: categoryID, in: context) {

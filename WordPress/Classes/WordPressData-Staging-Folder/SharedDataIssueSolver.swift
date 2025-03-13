@@ -28,20 +28,20 @@ final class SharedDataIssueSolver: NSObject {
         return SharedDataIssueSolver()
     }
 
-    func migrateAuthKey() {
+    func migrateAuthKey(isJetpack: Bool) {
         guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: contextManager.mainContext),
               let username = account.username else {
             return
         }
-        migrateAuthKey(for: username)
+        migrateAuthKey(for: username, isJetpack: isJetpack)
     }
 
     /// Resolve shared data issue by splitting the keys used to store authentication token and supporting data.
     /// To be safe, the method only "migrates" the data when the user is logged in, and there's a good chance that
     /// both apps are logged in with the same account.
     ///
-    func migrateAuthKey(for username: String) {
-        guard AppConfiguration.isJetpack,
+    func migrateAuthKey(for username: String, isJetpack: Bool) {
+        guard isJetpack,
               let token = try? keychainUtils.getPassword(for: username, serviceName: WPAccountConstants.authToken.rawValue) else {
             return
         }
