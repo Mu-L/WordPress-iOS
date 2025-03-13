@@ -3523,18 +3523,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0C6216BF2D81B8AE009F7E28 /* Jetpack */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			name = Jetpack;
-			path = ../Targets/Jetpack;
-			sourceTree = SOURCE_ROOT;
-		};
-		0C6216C32D81B8B8009F7E28 /* WordPress */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			name = WordPress;
-			path = ../Targets/WordPress;
-			sourceTree = SOURCE_ROOT;
-		};
 		24CE57C42CD3375200C7B37D /* Classes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -3910,15 +3898,6 @@
 			name = Media;
 			sourceTree = "<group>";
 		};
-		0C6216BC2D81B89A009F7E28 /* Targets */ = {
-			isa = PBXGroup;
-			children = (
-				0C6216C32D81B8B8009F7E28 /* WordPress */,
-				0C6216BF2D81B8AE009F7E28 /* Jetpack */,
-			);
-			path = Targets;
-			sourceTree = "<group>";
-		};
 		0C77A5AE2CDE5668005BC0DA /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -4229,7 +4208,6 @@
 			children = (
 				F14B5F6F208E648200439554 /* config */,
 				E1B34C091CCDFFCE00889709 /* Credentials */,
-				0C6216BC2D81B89A009F7E28 /* Targets */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -7485,7 +7463,6 @@
 				4AD953C62C21451700D0EEFA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0C6216C32D81B8B8009F7E28 /* WordPress */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 			);
 			name = WordPress;
@@ -7757,7 +7734,6 @@
 				4AD9555D2C21716A00D0EEFA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0C6216BF2D81B8AE009F7E28 /* Jetpack */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 			);
 			name = Jetpack;
