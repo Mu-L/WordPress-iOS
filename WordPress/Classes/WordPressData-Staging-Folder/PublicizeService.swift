@@ -28,7 +28,7 @@ open class PublicizeService: NSManagedObject {
 
 // MARK: - Convenience Methods
 
-extension PublicizeService {
+public extension PublicizeService {
 
     /// A convenient value-type representation for the destination sharing service.
     enum ServiceName: String {
@@ -40,11 +40,6 @@ extension PublicizeService {
         case mastodon
         case threads
         case unknown
-
-        /// Returns the local image for the icon representing the social network.
-        var localIconImage: UIImage {
-            WPStyleGuide.socialIcon(for: rawValue as NSString)
-        }
 
         /// A string describing the service in a human-readable format.
         var description: String {
