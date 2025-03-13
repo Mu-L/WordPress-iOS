@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import BuildSettings
 
 BuildSettings.register(.make())
 

@@ -1,4 +1,5 @@
 import Foundation
+import BuildSettings
 
 struct AppStoreLookupResponse: Decodable {
     let results: [AppStoreInfo]

@@ -17,6 +17,7 @@ let package = Package(
         .library(name: "WordPressShared", targets: ["WordPressShared"]),
         .library(name: "WordPressUI", targets: ["WordPressUI"]),
         .library(name: "WordPressReader", targets: ["WordPressReader"]),
+        .plugin(name: "BuildSettingsGenPlugin", targets: ["BuildSettingsGenPlugin"]),
     ],
     dependencies: [
         .package(url: "https://github.com/airbnb/lottie-ios", from: "4.4.0"),
@@ -53,6 +54,7 @@ let package = Package(
         .package(url: "https://github.com/wordpress-mobile/GutenbergKit", revision: "947c5315198eea96e3e8c32fcc6afa59ef242638"),
         .package(url: "https://github.com/Automattic/color-studio", branch: "trunk"),
         .package(url: "https://github.com/wordpress-mobile/AztecEditor-iOS", from: "1.20.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0")
     ],
     targets: XcodeSupport.targets + [
         .target(name: "AsyncImageKit", dependencies: [
@@ -109,6 +111,18 @@ let package = Package(
         .testTarget(name: "WordPressSharedObjCTests", dependencies: [.target(name: "WordPressShared"), .target(name: "WordPressTesting")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .testTarget(name: "WordPressUIUnitTests", dependencies: [.target(name: "WordPressUI")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .testTarget(name: "WordPressCoreTests", dependencies: [.target(name: "WordPressCore")]),
+        .executableTarget(
+            name: "BuildSettingsGen",
+            dependencies: [
+                "BuildSettings",
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
+            ]
+        ),
+        .plugin(
+            name: "BuildSettingsGenPlugin",
+            capability: .buildTool(),
+            dependencies: ["BuildSettingsGen"]
+        ),
     ]
 )
 

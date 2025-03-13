@@ -1,4 +1,5 @@
 import Foundation
+import BuildSettings
 
 /// This class will help track whether or not a user should be prompted for an
 /// app review.  This class is loosely based on

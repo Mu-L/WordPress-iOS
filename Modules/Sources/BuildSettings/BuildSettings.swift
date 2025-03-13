@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BuildSettings: Sendable {
+public struct BuildSettings: Sendable, Codable {
     public var itunesAppID: String
     public var pushNotificationAppID: String
 
@@ -12,19 +12,21 @@ public struct BuildSettings: Sendable {
         self.pushNotificationAppID = pushNotificationAppID
     }
 
-    static var shared: BuildSettings {
-        guard let value = _shared else {
-            fatalError("configuration not registered")
-        }
-        return value
+    // TODO: (kean)
+    public static var shared: BuildSettings {
+        fatalError()
+//        guard let value = _shared else {
+//            fatalError("configuration not registered")
+//        }
+//        return value
     }
 
-    private static var _shared: BuildSettings?
+//    private static var _shared: BuildSettings?
 
-    static func register(_ settings: BuildSettings) {
-        guard _shared == nil else {
-            fatalError("already registered")
-        }
-        _shared = settings
+    public static func register(_ settings: BuildSettings) {
+//        guard _shared == nil else {
+//            fatalError("already registered")
+//        }
+//        _shared = settings
     }
 }

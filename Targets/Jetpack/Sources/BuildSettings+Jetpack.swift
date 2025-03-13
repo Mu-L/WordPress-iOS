@@ -1,4 +1,5 @@
 import UIKit
+import BuildSettings
 
 extension BuildSettings {
     static func make(configuration: BuildConfiguration = .current) -> BuildSettings {
