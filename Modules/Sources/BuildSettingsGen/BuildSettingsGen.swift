@@ -23,24 +23,21 @@ struct BuildSettingsGen: ParsableCommand {
 
         let target: BuildTarget = try {
             let target = try getEnvironmentValue(named: "TARGET_NAME")
-            if target.hasPrefix("Jetpack") {
-                return .jetpack
+            switch target {
+            case "JetpackBuildSettingsGen": return .jetpack
+            case "WordPressBuildSettingsGen": return .wordpress
+            default: throw BuildSettingsGenError.invalidTarget(target)
             }
-            if target.hasPrefix("WordPress") {
-                return .wordpress
-            }
-            throw BuildSettingsGenError.invalidTarget(target)
         }()
 
         // jpdebug, jetpack jpalpha (User-Defined WPCOM_SCHEME environment variable)
-        let scheme = environment["WPCOM_SCHEME"]!
+        // let scheme = environment["WPCOM_SCHEME"]!
 
         // Path to Info.plist. Example: /Users/kean/Developer/WordPress-iOS/WordPress/Jetpack/Info.plist
-        let plistPath = environment["PRODUCT_SETTINGS_PATH"]!
+        // let plistPath = environment["PRODUCT_SETTINGS_PATH"]!
 
         // "CONFIGURATION_BUILD_DIR": "/Users/kean/Library/Developer/Xcode/DerivedData/WordPress-cbrxooevkpbmkqcydpgqdjklzpvn/Build/Products/Debug-iphonesimulator"
-        let buildDir = environment["CONFIGURATION_BUILD_DIR"]!
-
+        // let buildDir = environment["CONFIGURATION_BUILD_DIR"]!
 
         // TODO: (kean) configuration missing
         let settings = makeConfiguration(target: target, configuration: .localDeveloper)

@@ -18,6 +18,19 @@
 			name = GenerateCredentials;
 			productName = GenerateCredentials;
 		};
+		0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 0C6910C82D83523E009ED775 /* Build configuration list for PBXAggregateTarget "JetpackBuildSettingsGen" */;
+			buildPhases = (
+			);
+			dependencies = (
+				0C6910CA2D835244009ED775 /* PBXTargetDependency */,
+			);
+			name = JetpackBuildSettingsGen;
+			packageProductDependencies = (
+			);
+			productName = JetpackBuildSettingsGen;
+		};
 		3F47AC482A7206BE00208F0D /* ConfigureSimulatorForUITesting */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3F47AC4D2A7206C000208F0D /* Build configuration list for PBXAggregateTarget "ConfigureSimulatorForUITesting" */;
@@ -1567,6 +1580,13 @@
 			remoteGlobalIDString = 096A92F526E29FFF00448C68;
 			remoteInfo = GenerateCredentials;
 		};
+		0C6910CB2D835327009ED775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C6910C42D83523E009ED775;
+			remoteInfo = JetpackBuildSettingsGen;
+		};
 		3F47AC4F2A72074300208F0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1994,8 +2014,8 @@
 		0C391E632A312DB20040EA91 /* BlazeCampaignViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlazeCampaignViewModelTests.swift; sourceTree = "<group>"; };
 		0C43FF802C3601770084B698 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		0C63266E2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutenbergFilesAppMediaSourceTests.swift; sourceTree = "<group>"; };
-		0C6940532D8336A8009ED775 /* BuildSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = BuildSettings.plist; path = ../../../SourcePackages/plugins/WordPress.output/Jetpack/BuildSettingsGenPlugin/BuildSettings.plist; sourceTree = BUILT_PRODUCTS_DIR; };
-		0C69C2B12D834FB0009ED775 /* BuildSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = BuildSettings.plist; path = ../../../SourcePackages/plugins/WordPress.output/WordPress/BuildSettingsGenPlugin/BuildSettings.plist; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C6940532D8336A8009ED775 /* BuildSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = BuildSettings.plist; path = ../../../SourcePackages/plugins/WordPress.output/JetpackBuildSettingsGen/BuildSettingsGenPlugin/BuildSettings.plist; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C69C2B12D834FB0009ED775 /* BuildSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = BuildSettings.plist; path = ../../../SourcePackages/plugins/WordPress.output/WordPressBuildSettingsGen/BuildSettingsGenPlugin/BuildSettings.plist; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C6C4CCF2A4F0A000049E762 /* BlazeCampaignsStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlazeCampaignsStreamTests.swift; sourceTree = "<group>"; };
 		0C6C4CD32A4F0AD80049E762 /* blaze-search-page-1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "blaze-search-page-1.json"; sourceTree = "<group>"; };
 		0C6C4CD52A4F0AEE0049E762 /* blaze-search-page-2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "blaze-search-page-2.json"; sourceTree = "<group>"; };
@@ -7728,7 +7748,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				0C69262C2D82FBF8009ED775 /* PBXTargetDependency */,
+				0C6910CC2D835327009ED775 /* PBXTargetDependency */,
 				3FCFFB002994AB25002840C9 /* PBXTargetDependency */,
 				0107E15728FEA03800DE87DB /* PBXTargetDependency */,
 				0107E0ED28F97E6100DE87DB /* PBXTargetDependency */,
@@ -7801,6 +7821,9 @@
 				TargetAttributes = {
 					096A92F526E29FFF00448C68 = {
 						CreatedOnToolsVersion = 12.5;
+					};
+					0C6910C42D83523E009ED775 = {
+						CreatedOnToolsVersion = 16.1;
 					};
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = PZYM8XX95Q;
@@ -7967,6 +7990,7 @@
 				80F6D01F28EE866A00953C1A /* JetpackNotificationServiceExtension */,
 				0107E0B128F97D5000DE87DB /* JetpackStatsWidgets */,
 				0107E13828FE9DB200DE87DB /* JetpackIntents */,
+				0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */,
 				EA14532229AD874C001F3143 /* JetpackUITests */,
 				3F47AC482A7206BE00208F0D /* ConfigureSimulatorForUITesting */,
 				4AD953B32C21451700D0EEFA /* WordPressAuthenticator */,
@@ -9888,9 +9912,14 @@
 			target = 096A92F526E29FFF00448C68 /* GenerateCredentials */;
 			targetProxy = 096A92FC26E2A0AE00448C68 /* PBXContainerItemProxy */;
 		};
-		0C69262C2D82FBF8009ED775 /* PBXTargetDependency */ = {
+		0C6910CA2D835244009ED775 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 0C69262B2D82FBF8009ED775 /* BuildSettingsGenPlugin */;
+			productRef = 0C6910C92D835244009ED775 /* BuildSettingsGenPlugin */;
+		};
+		0C6910CC2D835327009ED775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */;
+			targetProxy = 0C6910CB2D835327009ED775 /* PBXContainerItemProxy */;
 		};
 		0C69C2B02D834F56009ED775 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10481,6 +10510,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release-Alpha";
+		};
+		0C6910C52D83523E009ED775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0C6910C62D83523E009ED775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		0C6910C72D83523E009ED775 /* Release-Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -13085,6 +13138,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		0C6910C82D83523E009ED775 /* Build configuration list for PBXAggregateTarget "JetpackBuildSettingsGen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C6910C52D83523E009ED775 /* Debug */,
+				0C6910C62D83523E009ED775 /* Release */,
+				0C6910C72D83523E009ED775 /* Release-Alpha */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WordPress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -13297,7 +13360,7 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = XcodeTarget_WordPressTests;
 		};
-		0C69262B2D82FBF8009ED775 /* BuildSettingsGenPlugin */ = {
+		0C6910C92D835244009ED775 /* BuildSettingsGenPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0C69262A2D82FB3F009ED775 /* XCLocalSwiftPackageReference "../Modules" */;
 			productName = "plugin:BuildSettingsGenPlugin";
