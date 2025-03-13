@@ -2448,6 +2448,8 @@
 				"WordPressData-Staging-Folder/JetpackState.swift",
 				"WordPressData-Staging-Folder/LocalCoreDataService.h",
 				"WordPressData-Staging-Folder/LocalCoreDataService.m",
+				"WordPressData-Staging-Folder/ManagedAccountSettings.swift",
+				"WordPressData-Staging-Folder/ManagedAccountSettings+CoreDataProperties.swift",
 				"WordPressData-Staging-Folder/Media.h",
 				"WordPressData-Staging-Folder/Media.m",
 				"WordPressData-Staging-Folder/Media.swift",
@@ -2469,10 +2471,13 @@
 				"WordPressData-Staging-Folder/PublicizeConnection.swift",
 				"WordPressData-Staging-Folder/PublicizeService.swift",
 				"WordPressData-Staging-Folder/RemotePostParameters+Utils.swift",
+				"WordPressData-Staging-Folder/SharedDataIssueSolver.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableActivityConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableItemConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchIdentifierGenerator.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchManager.swift",
+				"WordPressData-Staging-Folder/WPAccount.h",
+				"WordPressData-Staging-Folder/WPAccount.m",
 			);
 			publicHeaders = (
 				"WordPressData-Staging-Folder/AbstractPost.h",
@@ -2481,6 +2486,7 @@
 				"WordPressData-Staging-Folder/Media.h",
 				"WordPressData-Staging-Folder/PostCategory.h",
 				"WordPressData-Staging-Folder/PostHelper.h",
+				"WordPressData-Staging-Folder/WPAccount.h",
 			);
 			target = 3F2AA3E22D81457F002A4E94 /* WordPressData */;
 		};
@@ -2508,6 +2514,8 @@
 				"WordPressData-Staging-Folder/CoreDataIterativeMigrator.swift",
 				"WordPressData-Staging-Folder/JetpackState.swift",
 				"WordPressData-Staging-Folder/LocalCoreDataService.m",
+				"WordPressData-Staging-Folder/ManagedAccountSettings.swift",
+				"WordPressData-Staging-Folder/ManagedAccountSettings+CoreDataProperties.swift",
 				"WordPressData-Staging-Folder/Media.m",
 				"WordPressData-Staging-Folder/Media.swift",
 				"WordPressData-Staging-Folder/MediaFileManager.swift",
@@ -2524,10 +2532,12 @@
 				"WordPressData-Staging-Folder/PublicizeConnection.swift",
 				"WordPressData-Staging-Folder/PublicizeService.swift",
 				"WordPressData-Staging-Folder/RemotePostParameters+Utils.swift",
+				"WordPressData-Staging-Folder/SharedDataIssueSolver.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableActivityConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableItemConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchIdentifierGenerator.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchManager.swift",
+				"WordPressData-Staging-Folder/WPAccount.m",
 			);
 			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
 		};
@@ -2555,6 +2565,8 @@
 				"WordPressData-Staging-Folder/CoreDataIterativeMigrator.swift",
 				"WordPressData-Staging-Folder/JetpackState.swift",
 				"WordPressData-Staging-Folder/LocalCoreDataService.m",
+				"WordPressData-Staging-Folder/ManagedAccountSettings.swift",
+				"WordPressData-Staging-Folder/ManagedAccountSettings+CoreDataProperties.swift",
 				"WordPressData-Staging-Folder/Media.m",
 				"WordPressData-Staging-Folder/Media.swift",
 				"WordPressData-Staging-Folder/MediaFileManager.swift",
@@ -2571,10 +2583,12 @@
 				"WordPressData-Staging-Folder/PublicizeConnection.swift",
 				"WordPressData-Staging-Folder/PublicizeService.swift",
 				"WordPressData-Staging-Folder/RemotePostParameters+Utils.swift",
+				"WordPressData-Staging-Folder/SharedDataIssueSolver.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableActivityConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableItemConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchIdentifierGenerator.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchManager.swift",
+				"WordPressData-Staging-Folder/WPAccount.m",
 			);
 			target = FABB1F8F2602FC2C00C8785C /* Jetpack */;
 		};
