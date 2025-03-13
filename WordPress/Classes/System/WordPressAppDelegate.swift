@@ -66,12 +66,6 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as? WordPressAppDelegate
     }
 
-    // MARK: - Hooks
-
-    func makeBuildSettings() -> BuildSettings {
-        fatalError("Must be implemented by a subclass")
-    }
-
     // MARK: - Application lifecycle
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {

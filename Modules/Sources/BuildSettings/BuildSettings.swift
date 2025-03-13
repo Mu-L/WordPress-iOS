@@ -34,12 +34,4 @@ public struct BuildSettings: Sendable, Codable {
             fatalError("BuildSettings.plist invalid: \(error)")
         }
     }
-
-    // TODO: (kean) remove
-    public static func register(_ settings: BuildSettings) {
-//        guard _shared == nil else {
-//            fatalError("already registered")
-//        }
-//        _shared = settings
-    }
 }
