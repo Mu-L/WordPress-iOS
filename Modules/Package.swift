@@ -292,12 +292,12 @@ enum XcodeSupport {
             .xcodeTarget(
                 "XcodeTarget_WordPressData",
                 dependencies: [
-                  "SFHFKeychainUtils",
-                  "WordPressShared",
-                  .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
-                  .product(name: "NSObject-SafeExpectations", package: "NSObject-SafeExpectations"),
-                  .product(name: "WordPressKit", package: "WordPressKit-iOS"),
-
+                    "BuildSettingsKit",
+                    "SFHFKeychainUtils",
+                    "WordPressShared",
+                    .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
+                    .product(name: "NSObject-SafeExpectations", package: "NSObject-SafeExpectations"),
+                    .product(name: "WordPressKit", package: "WordPressKit-iOS"),
                 ]
             ),
             .xcodeTarget("XcodeTarget_ShareExtension", dependencies: shareAndDraftExtensionsDependencies),

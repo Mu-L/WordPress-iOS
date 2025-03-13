@@ -2339,8 +2339,10 @@
 				"WordPressData-Staging-Folder/Post+CoreDataProperties.swift",
 				"WordPressData-Staging-Folder/PostCategory.h",
 				"WordPressData-Staging-Folder/PostCategory.m",
+				"WordPressData-Staging-Folder/PostCategory+Lookup.swift",
 				"WordPressData-Staging-Folder/PostHelper.h",
 				"WordPressData-Staging-Folder/PostHelper.m",
+				"WordPressData-Staging-Folder/PostHelper+Metadata.swift",
 				"WordPressData-Staging-Folder/PostService.h",
 				"WordPressData-Staging-Folder/PostService.m",
 				"WordPressData-Staging-Folder/PostServiceOptions.h",
@@ -2352,9 +2354,10 @@
 				"WordPressData-Staging-Folder/Spotlight/SearchableActivityConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableItemConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchIdentifierGenerator.swift",
-				"WordPressData-Staging-Folder/Spotlight/SearchManager.swift",
+				"WordPressData-Staging-Folder/UserSettings.swift",
 				"WordPressData-Staging-Folder/WPAccount.h",
 				"WordPressData-Staging-Folder/WPAccount.m",
+				"WordPressData-Staging-Folder/WPAccount+Lookup.swift",
 			);
 			publicHeaders = (
 				"WordPressData-Staging-Folder/AbstractPost.h",
@@ -2403,7 +2406,9 @@
 				"WordPressData-Staging-Folder/Post.swift",
 				"WordPressData-Staging-Folder/Post+CoreDataProperties.swift",
 				"WordPressData-Staging-Folder/PostCategory.m",
+				"WordPressData-Staging-Folder/PostCategory+Lookup.swift",
 				"WordPressData-Staging-Folder/PostHelper.m",
+				"WordPressData-Staging-Folder/PostHelper+Metadata.swift",
 				"WordPressData-Staging-Folder/PostService.m",
 				"WordPressData-Staging-Folder/PostServiceOptions.m",
 				"WordPressData-Staging-Folder/PublicizeConnection.swift",
@@ -2413,8 +2418,9 @@
 				"WordPressData-Staging-Folder/Spotlight/SearchableActivityConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableItemConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchIdentifierGenerator.swift",
-				"WordPressData-Staging-Folder/Spotlight/SearchManager.swift",
+				"WordPressData-Staging-Folder/UserSettings.swift",
 				"WordPressData-Staging-Folder/WPAccount.m",
+				"WordPressData-Staging-Folder/WPAccount+Lookup.swift",
 			);
 			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
 		};
@@ -2454,7 +2460,9 @@
 				"WordPressData-Staging-Folder/Post.swift",
 				"WordPressData-Staging-Folder/Post+CoreDataProperties.swift",
 				"WordPressData-Staging-Folder/PostCategory.m",
+				"WordPressData-Staging-Folder/PostCategory+Lookup.swift",
 				"WordPressData-Staging-Folder/PostHelper.m",
+				"WordPressData-Staging-Folder/PostHelper+Metadata.swift",
 				"WordPressData-Staging-Folder/PostService.m",
 				"WordPressData-Staging-Folder/PostServiceOptions.m",
 				"WordPressData-Staging-Folder/PublicizeConnection.swift",
@@ -2464,8 +2472,9 @@
 				"WordPressData-Staging-Folder/Spotlight/SearchableActivityConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchableItemConvertable.swift",
 				"WordPressData-Staging-Folder/Spotlight/SearchIdentifierGenerator.swift",
-				"WordPressData-Staging-Folder/Spotlight/SearchManager.swift",
+				"WordPressData-Staging-Folder/UserSettings.swift",
 				"WordPressData-Staging-Folder/WPAccount.m",
+				"WordPressData-Staging-Folder/WPAccount+Lookup.swift",
 			);
 			target = FABB1F8F2602FC2C00C8785C /* Jetpack */;
 		};
