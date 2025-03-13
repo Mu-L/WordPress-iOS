@@ -1,4 +1,3 @@
-import Foundation
 import WordPressKit
 import WordPressShared
 
@@ -32,9 +31,10 @@ extension RemotePostCreateParameters {
             }
             metadata = Set(PostHelper.remoteMetadata(for: post).compactMap { value -> RemotePostMetadataItem? in
                 guard let dictionary = value as? [String: Any] else {
-                    wpAssertionFailure("Unexpected value", userInfo: [
-                        "value": value
-                    ])
+                    // FIXME: Delaying wpAssert migration because of underlying dependencies
+                    // wpAssertionFailure("Unexpected value", userInfo: [
+                    //     "value": value
+                    // ])
                     return nil
                 }
                 return PostHelper.mapDictionaryToMetadataItems(dictionary)
@@ -54,6 +54,7 @@ private func makeTags(from tags: String) -> [String] {
 }
 
 extension RemotePostUpdateParameters {
+
     var isEmpty: Bool {
         self == RemotePostUpdateParameters()
     }
