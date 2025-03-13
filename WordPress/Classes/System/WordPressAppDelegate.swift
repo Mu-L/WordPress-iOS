@@ -11,8 +11,9 @@ import AutomatticAbout
 import UIDeviceIdentifier
 import WordPressUI
 import ZendeskCoreSDK
+import BuildSettings
 
-open class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
+class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
