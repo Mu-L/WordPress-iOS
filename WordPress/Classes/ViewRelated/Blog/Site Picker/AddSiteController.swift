@@ -71,12 +71,17 @@ struct AddSiteMenuViewModel {
     }
 
     struct Action: Identifiable {
-        let id = UUID()
+        var id: Selection {
+            selection
+        }
+
+        let selection: Selection
         let title: String
+        let isEnabled: Bool
         let handler: () -> Void
 
         var uiAction: UIAction {
-            UIAction(title: title, handler: { _ in handler() })
+            UIAction(title: title, attributes: isEnabled ? [] : .disabled, handler: { _ in handler() })
         }
     }
 
@@ -85,14 +90,14 @@ struct AddSiteMenuViewModel {
         let canAddSelfHostedSite = AppConfiguration.showAddSelfHostedSiteButton
 
         var actions: [Action] = []
-        if defaultAccount != nil {
-            actions.append(Action(title: Strings.createDotComSite) {
+        if let defaultAccount {
+            actions.append(Action(selection: .dotCom, title: Strings.createDotComSite, isEnabled: !defaultAccount.needsEmailVerification) {
                 onSelection(.dotCom)
             })
         }
 
         if canAddSelfHostedSite {
-            actions.append(Action(title: Strings.addSelfHostedSite) {
+            actions.append(Action(selection: .selfHosted, title: Strings.addSelfHostedSite, isEnabled: true) {
                 onSelection(.selfHosted)
             })
         }

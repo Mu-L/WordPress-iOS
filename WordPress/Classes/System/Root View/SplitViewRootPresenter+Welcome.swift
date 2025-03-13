@@ -9,12 +9,15 @@ class WelcomeSplitViewContent: SplitViewDisplayable {
     init(addSite: @escaping (AddSiteMenuViewModel.Selection) -> Void) {
         supplementary = UINavigationController(rootViewController: UnifiedPrologueViewController())
 
-        let addSiteViewModel = AddSiteMenuViewModel(context: .shared, onSelection: addSite)
-        let noSitesViewModel = NoSitesViewModel(appUIType: JetpackFeaturesRemovalCoordinator.currentAppUIType, account: nil)
-        let noSiteView = NoSitesView(addSiteViewModel: addSiteViewModel, viewModel: noSitesViewModel)
-        let noSitesVC = UIHostingController(rootView: noSiteView)
-        noSitesVC.view.backgroundColor = .systemBackground
-        secondary = UINavigationController(rootViewController: noSitesVC)
+        if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext) {
+            let noSiteView = NoSitesView(account: account, appUIType: JetpackFeaturesRemovalCoordinator.currentAppUIType, onSelection: addSite)
+            let noSitesVC = UIHostingController(rootView: noSiteView)
+            noSitesVC.view.backgroundColor = .systemBackground
+            secondary = UINavigationController(rootViewController: noSitesVC)
+        } else {
+            // This branch should never execute, because we only show the "Welcome" screen when the WP.com account does not have any sites.
+            secondary = UINavigationController()
+        }
     }
 
     func displayed(in splitVC: UISplitViewController) {

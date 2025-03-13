@@ -14,7 +14,7 @@ final class VerifyEmailRow: ImmuTableRow {
 }
 
 final class VerifyEmailCell: UITableViewCell {
-    private let hostingView: UIHostingView<VerifyEmailView>
+    private let hostingView: UIHostingView<VerifyEmailViewCellAdapter>
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         hostingView = .init(view: .init())
@@ -34,7 +34,15 @@ final class VerifyEmailCell: UITableViewCell {
     }
 }
 
-private struct VerifyEmailView: View {
+private struct VerifyEmailViewCellAdapter: View {
+    var body: some View {
+        VerifyEmailView(fillVerticalSpace: true)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+}
+
+struct VerifyEmailView: View {
+    let fillVerticalSpace: Bool
     @StateObject private var viewModel = VerifyEmailViewModel()
 
     var body: some View {
@@ -50,7 +58,9 @@ private struct VerifyEmailView: View {
                 .font(.callout)
                 .foregroundStyle(.primary)
 
-            Spacer()
+            if fillVerticalSpace {
+                Spacer()
+            }
 
             Button {
                 viewModel.sendVerificationEmail()
@@ -69,7 +79,6 @@ private struct VerifyEmailView: View {
             .disabled(!viewModel.state.isButtonEnabled)
         }
         .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 

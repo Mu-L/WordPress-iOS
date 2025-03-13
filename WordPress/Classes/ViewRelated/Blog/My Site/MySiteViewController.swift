@@ -131,25 +131,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
     private var noSitesScrollView: UIScrollView?
     private var noSitesRefreshControl: UIRefreshControl?
 
-    private lazy var noSitesViewController: UIHostingController = {
-        let addSiteViewModel = AddSiteMenuViewModel { [weak self] in
-            switch $0 {
-            case .dotCom:
-                self?.launchSiteCreationFromNoSites()
-                RootViewCoordinator.shared.isSiteCreationActive = true
-            case .selfHosted:
-                self?.launchLoginForSelfHostedSite()
-            }
-        }
-        let noSitesViewModel = NoSitesViewModel(
-            appUIType: JetpackFeaturesRemovalCoordinator.currentAppUIType,
-            account: self.viewModel.defaultAccount
-        )
-        let noSiteView = NoSitesView(addSiteViewModel: addSiteViewModel, viewModel: noSitesViewModel)
-        let hostingVC = UIHostingController(rootView: noSiteView)
-        hostingVC.view.backgroundColor = .clear
-        return hostingVC
-    }()
+    private var noSitesViewController: UIHostingController<NoSitesView>?
 
     private var isNavigationBarHidden = false
 
@@ -178,6 +160,10 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
         }
 
         configureNavBarAppearance(animated: animated)
+
+        if let account = self.viewModel.defaultAccount {
+            AccountService(coreDataStack: ContextManager.shared).updateUserDetails(for: account, success: nil, failure: nil)
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -228,7 +214,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
 
     private func subscribeToWillEnterForeground() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(displayOverlayIfNeeded),
+                                               selector: #selector(willEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
@@ -460,6 +446,8 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
     // MARK: - No Sites UI logic
 
     private func hideNoSites() {
+        guard let noSitesViewController else { return }
+
         // Only track if the no sites view is currently visible
         if noSitesViewController.view.superview != nil {
             WPAnalytics.track(.mySiteNoSitesViewHidden)
@@ -473,23 +461,45 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
     }
 
     private func showNoSites() {
-        guard AccountHelper.isLoggedIn else {
+        guard let account = self.viewModel.defaultAccount else {
             WordPressAppDelegate.shared?.windowManager.showFullscreenSignIn()
             return
         }
 
-        guard noSitesViewController.view.superview == nil else {
+        if let noSitesViewController, noSitesViewController.rootView.account.objectID != self.viewModel.defaultAccount?.objectID {
+            self.hideNoSites()
+        }
+
+        let viewController: UIHostingController<NoSitesView>
+        if let noSitesViewController, noSitesViewController.rootView.account == self.viewModel.defaultAccount?.objectID {
+            viewController = noSitesViewController
+        } else {
+            let view = NoSitesView(account: account, appUIType: JetpackFeaturesRemovalCoordinator.currentAppUIType) { [weak self] in
+                switch $0 {
+                case .dotCom:
+                    self?.launchSiteCreationFromNoSites()
+                    RootViewCoordinator.shared.isSiteCreationActive = true
+                case .selfHosted:
+                    self?.launchLoginForSelfHostedSite()
+                }
+            }
+            viewController = UIHostingController(rootView: view)
+            viewController.view.backgroundColor = .clear
+            self.noSitesViewController = viewController
+        }
+
+        guard viewController.view.superview == nil else {
             return
         }
 
         makeNoSitesScrollView()
-        configureNoSitesView()
-        addNoSitesViewAndConfigureConstraints()
+        configureNoSitesView(viewController)
+        addNoSitesViewAndConfigureConstraints(viewController)
         createButtonCoordinator?.removeCreateButton()
     }
 
     private func trackNoSitesVisibleIfNeeded() {
-        guard noSitesViewController.view.superview != nil else {
+        guard let noSitesViewController, noSitesViewController.view.superview != nil else {
             return
         }
 
@@ -512,11 +522,11 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
         noSitesScrollView = scrollView
     }
 
-    private func configureNoSitesView() {
+    private func configureNoSitesView(_ noSitesViewController: UIHostingController<NoSitesView>) {
         noSitesViewController.rootView.delegate = self
     }
 
-    private func addNoSitesViewAndConfigureConstraints() {
+    private func addNoSitesViewAndConfigureConstraints(_ noSitesViewController: UIHostingController<NoSitesView>) {
         guard let scrollView = noSitesScrollView else {
             return
         }
@@ -560,6 +570,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
                                     bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor)
 
         if let blog,
+           let noSitesViewController,
            noSitesViewController.view.superview == nil {
             createButtonCoordinator?.showCreateButton(for: blog)
         }
@@ -880,6 +891,14 @@ extension MySiteViewController: BlogDetailsPresentationDelegate {
 // MARK: Jetpack Features Removal
 
 private extension MySiteViewController {
+    @objc func willEnterForeground() {
+        displayOverlayIfNeeded()
+
+        if let account = self.viewModel.defaultAccount {
+            AccountService(coreDataStack: ContextManager.shared).updateUserDetails(for: account, success: nil, failure: nil)
+        }
+    }
+
     @objc func displayOverlayIfNeeded() {
         if isViewOnScreen() && !RootViewCoordinator.shared.isSiteCreationActive {
             let didReloadUI = RootViewCoordinator.shared.reloadUIIfNeeded(blog: self.blog)

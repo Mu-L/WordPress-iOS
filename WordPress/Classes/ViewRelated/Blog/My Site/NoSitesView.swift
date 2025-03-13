@@ -7,8 +7,10 @@ protocol NoSitesViewDelegate: AnyObject {
 }
 
 struct NoSitesView: View {
-    let addSiteViewModel: AddSiteMenuViewModel
-    let viewModel: NoSitesViewModel
+    @ObservedObject var account: WPAccount
+
+    let appUIType: RootViewCoordinator.AppUIType?
+    let onSelection: (AddSiteMenuViewModel.Selection) -> Void
     weak var delegate: NoSitesViewDelegate?
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -19,8 +21,22 @@ struct NoSitesView: View {
                 emptyStateView
                     .frame(maxHeight: .infinity, alignment: .center)
 
+                if account.verificationStatus != .verified {
+                    Group {
+                        VerifyEmailView(fillVerticalSpace: false)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(.white)
+                            )
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal, .DS.Padding.medium)
+                    .padding(.bottom, .DS.Padding.medium)
+                }
+
+                let viewModel = NoSitesViewModel(appUIType: appUIType, account: account)
                 if viewModel.isShowingAccountAndSettings, horizontalSizeClass == .compact {
-                    accountAndSettingsButton
+                    accountAndSettingsButton(viewModel: viewModel)
                         .padding(.horizontal, .DS.Padding.large)
                         .padding(.bottom, .DS.Padding.medium)
                 }
@@ -36,12 +52,14 @@ struct NoSitesView: View {
             Text(Strings.description)
         } actions: {
             VStack(spacing: 20) {
-                ForEach(addSiteViewModel.actions) { action in
+                let actions = AddSiteMenuViewModel(onSelection: onSelection).actions
+                ForEach(actions, id: \.id) { action in
                     let button = Button(action.title) {
-                        WPAnalytics.track(.mySiteNoSitesViewActionTapped)
-                        action.handler()
-                    }
-                    if action.id == addSiteViewModel.actions.first?.id {
+                            WPAnalytics.track(.mySiteNoSitesViewActionTapped)
+                            action.handler()
+                        }
+                        .disabled(!action.isEnabled)
+                    if action.id == actions.first?.id {
                         button.buttonStyle(.primary)
                     } else {
                         button
@@ -51,13 +69,13 @@ struct NoSitesView: View {
         }
     }
 
-    private var accountAndSettingsButton: some View {
+    private func accountAndSettingsButton(viewModel: NoSitesViewModel) -> some View {
         Button {
             delegate?.didTapAccountAndSettingsButton()
         } label: {
             HStack(alignment: .center, spacing: .DS.Padding.double) {
-                makeGravatarIcon(size: 40)
-                accountAndSettingsStackView
+                makeGravatarIcon(size: 40, viewModel: viewModel)
+                accountAndSettingsStackView(viewModel: viewModel)
                 Spacer()
                 Image(systemName: "chevron.forward")
                     .tint(.secondary)
@@ -69,7 +87,7 @@ struct NoSitesView: View {
         }
     }
 
-    private var accountAndSettingsStackView: some View {
+    private func accountAndSettingsStackView(viewModel: NoSitesViewModel) -> some View {
         VStack(alignment: .leading) {
             Text(viewModel.displayName)
                 .foregroundColor(.primary)
@@ -84,7 +102,7 @@ struct NoSitesView: View {
         }
     }
 
-    private func makeGravatarIcon(size: CGFloat) -> some View {
+    private func makeGravatarIcon(size: CGFloat, viewModel: NoSitesViewModel) -> some View {
         AsyncImage(url: viewModel.gravatarURL) { phase in
             switch phase {
             case .success(let image):
