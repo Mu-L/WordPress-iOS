@@ -34,7 +34,9 @@ struct BuildSettingsGen: ParsableCommand {
             pushNotificationAppID: "testPushID"
         )
 
-        let data = try PropertyListEncoder().encode(settings)
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+        let data = try encoder.encode(settings)
         try data.write(to: outputDirectoryURL.appendingPathComponent("BuildSettings.plist"))
     }
 }
