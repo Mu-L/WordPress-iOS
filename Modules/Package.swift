@@ -158,6 +158,7 @@ enum XcodeSupport {
 
     static var targets: [Target] {
         let wordPresAuthentificatorDependencies: [Target.Dependency] = [
+            "BuildSettings",
             "WordPressShared",
             "WordPressUI",
             .product(name: "Gridicons", package: "Gridicons-iOS"),
@@ -169,6 +170,7 @@ enum XcodeSupport {
         ]
 
         let shareAndDraftExtensionsDependencies: [Target.Dependency] = [
+            "BuildSettings",
             "SFHFKeychainUtils",
             "WordPressShared",
             "WordPressUI",

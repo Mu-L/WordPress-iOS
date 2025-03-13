@@ -204,6 +204,12 @@
 		0C391E642A312DB20040EA91 /* BlazeCampaignViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C391E632A312DB20040EA91 /* BlazeCampaignViewModelTests.swift */; };
 		0C4CE8492C2F418000B9EEAC /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433840C622C2BA5B00CB13F8 /* AppImages.xcassets */; };
 		0C63266F2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C63266E2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift */; };
+		0C692AE62D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
+		0C692AE72D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
+		0C692AE82D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
+		0C692AE92D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
+		0C692AEA2D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
+		0C692AEB2D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
 		0C6940542D8336A8009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
 		0C69C2B22D834FB0009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C69C2B12D834FB0009ED775 /* BuildSettings.plist */; };
 		0C6AC6122C364A2800BF7600 /* XcodeTarget_App in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6112C364A2800BF7600 /* XcodeTarget_App */; };
@@ -1581,6 +1587,41 @@
 			remoteInfo = GenerateCredentials;
 		};
 		0C6910CB2D835327009ED775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C6910C42D83523E009ED775;
+			remoteInfo = JetpackBuildSettingsGen;
+		};
+		0C692ADC2D8357E0009ED775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C6910C42D83523E009ED775;
+			remoteInfo = JetpackBuildSettingsGen;
+		};
+		0C692ADE2D8357EF009ED775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C6910C42D83523E009ED775;
+			remoteInfo = JetpackBuildSettingsGen;
+		};
+		0C692AE02D8357F4009ED775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C6910C42D83523E009ED775;
+			remoteInfo = JetpackBuildSettingsGen;
+		};
+		0C692AE22D8357F8009ED775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C6910C42D83523E009ED775;
+			remoteInfo = JetpackBuildSettingsGen;
+		};
+		0C692AE42D835800009ED775 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -7430,6 +7471,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0C692AE32D8357F8009ED775 /* PBXTargetDependency */,
 			);
 			name = JetpackStatsWidgets;
 			packageProductDependencies = (
@@ -7451,6 +7493,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0C692AE52D835800009ED775 /* PBXTargetDependency */,
 			);
 			name = JetpackIntents;
 			packageProductDependencies = (
@@ -7595,6 +7638,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0C692ADD2D8357E0009ED775 /* PBXTargetDependency */,
 			);
 			name = JetpackShareExtension;
 			packageProductDependencies = (
@@ -7616,6 +7660,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0C692ADF2D8357EF009ED775 /* PBXTargetDependency */,
 			);
 			name = JetpackDraftActionExtension;
 			packageProductDependencies = (
@@ -7637,6 +7682,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0C692AE12D8357F4009ED775 /* PBXTargetDependency */,
 			);
 			name = JetpackNotificationServiceExtension;
 			packageProductDependencies = (
@@ -8005,6 +8051,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A690C242BA797F600A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
+				0C692AEA2D83581A009ED775 /* BuildSettings.plist in Resources */,
 				0107E0E228F97D5000DE87DB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8014,6 +8061,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A690C1B2BA7964100A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
+				0C692AEB2D83581A009ED775 /* BuildSettings.plist in Resources */,
 				0107E14D28FE9DB200DE87DB /* AppImages.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8216,6 +8264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8096219328E5613700940A5D /* AppImages.xcassets in Resources */,
+				0C692AE72D83581A009ED775 /* BuildSettings.plist in Resources */,
 				4A690C222BA7975800A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
 				8096211728E540D700940A5D /* MainInterface.storyboard in Resources */,
 				8096211828E540D700940A5D /* WordPressShare.js in Resources */,
@@ -8230,6 +8279,7 @@
 				8096219428E561A800940A5D /* AppImages.xcassets in Resources */,
 				8096217828E55C9400940A5D /* MainInterface.storyboard in Resources */,
 				8096217A28E55C9400940A5D /* WordPressShare.js in Resources */,
+				0C692AE82D83581A009ED775 /* BuildSettings.plist in Resources */,
 				4A690C182BA794C800A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
 				8096217B28E55C9400940A5D /* ShareExtension.storyboard in Resources */,
 				0C4CE8492C2F418000B9EEAC /* AppImages.xcassets in Resources */,
@@ -8242,6 +8292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A690C1F2BA796CD00A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
+				0C692AE92D83581A009ED775 /* BuildSettings.plist in Resources */,
 				80F6D04D28EE866A00953C1A /* Noticons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8532,6 +8583,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C692AE62D83581A009ED775 /* BuildSettings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9920,6 +9972,31 @@
 			isa = PBXTargetDependency;
 			target = 0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */;
 			targetProxy = 0C6910CB2D835327009ED775 /* PBXContainerItemProxy */;
+		};
+		0C692ADD2D8357E0009ED775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */;
+			targetProxy = 0C692ADC2D8357E0009ED775 /* PBXContainerItemProxy */;
+		};
+		0C692ADF2D8357EF009ED775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */;
+			targetProxy = 0C692ADE2D8357EF009ED775 /* PBXContainerItemProxy */;
+		};
+		0C692AE12D8357F4009ED775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */;
+			targetProxy = 0C692AE02D8357F4009ED775 /* PBXContainerItemProxy */;
+		};
+		0C692AE32D8357F8009ED775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */;
+			targetProxy = 0C692AE22D8357F8009ED775 /* PBXContainerItemProxy */;
+		};
+		0C692AE52D835800009ED775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0C6910C42D83523E009ED775 /* JetpackBuildSettingsGen */;
+			targetProxy = 0C692AE42D835800009ED775 /* PBXContainerItemProxy */;
 		};
 		0C69C2B02D834F56009ED775 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
