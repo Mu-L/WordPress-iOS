@@ -24,7 +24,7 @@ extension BuildSettingsGenPlugin: XcodeBuildToolPlugin {
         print("\n-----\nEnvironment:")
         print(ProcessInfo.processInfo.environment)
 
-        let outputPath = context.pluginWorkDirectoryURL.appending(component: "BuildSettings.json")
+        let outputPath = context.pluginWorkDirectoryURL
 
         print("\n-----\nOutput Path: \(outputPath)")
 
@@ -32,7 +32,7 @@ extension BuildSettingsGenPlugin: XcodeBuildToolPlugin {
             .buildCommand(
                 displayName: "Generate Build Configuration",
                 executable: try context.tool(named: "BuildSettingsGen").url,
-                arguments: ["--output-path", outputPath.absoluteString],
+                arguments: ["--output-path", context.pluginWorkDirectoryURL.absoluteString],
                 environment: [:]
             )
         ]

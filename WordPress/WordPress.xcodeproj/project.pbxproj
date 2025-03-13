@@ -191,6 +191,7 @@
 		0C391E642A312DB20040EA91 /* BlazeCampaignViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C391E632A312DB20040EA91 /* BlazeCampaignViewModelTests.swift */; };
 		0C4CE8492C2F418000B9EEAC /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433840C622C2BA5B00CB13F8 /* AppImages.xcassets */; };
 		0C63266F2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C63266E2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift */; };
+		0C6940542D8336A8009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
 		0C6AC6122C364A2800BF7600 /* XcodeTarget_App in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6112C364A2800BF7600 /* XcodeTarget_App */; };
 		0C6AC6142C364A3100BF7600 /* XcodeTarget_ShareExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6132C364A3100BF7600 /* XcodeTarget_ShareExtension */; };
 		0C6AC6162C364A3B00BF7600 /* XcodeTarget_DraftActionExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6152C364A3B00BF7600 /* XcodeTarget_DraftActionExtension */; };
@@ -1992,6 +1993,7 @@
 		0C391E632A312DB20040EA91 /* BlazeCampaignViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlazeCampaignViewModelTests.swift; sourceTree = "<group>"; };
 		0C43FF802C3601770084B698 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		0C63266E2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutenbergFilesAppMediaSourceTests.swift; sourceTree = "<group>"; };
+		0C6940532D8336A8009ED775 /* BuildSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = BuildSettings.plist; path = ../../../SourcePackages/plugins/WordPress.output/Jetpack/BuildSettingsGenPlugin/BuildSettings.plist; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C6C4CCF2A4F0A000049E762 /* BlazeCampaignsStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlazeCampaignsStreamTests.swift; sourceTree = "<group>"; };
 		0C6C4CD32A4F0AD80049E762 /* blaze-search-page-1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "blaze-search-page-1.json"; sourceTree = "<group>"; };
 		0C6C4CD52A4F0AEE0049E762 /* blaze-search-page-2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "blaze-search-page-2.json"; sourceTree = "<group>"; };
@@ -7286,6 +7288,7 @@
 		FABB28482603068B00C8785C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0C6940532D8336A8009ED775 /* BuildSettings.plist */,
 				F465976528E464DE00D5F49A /* Icons */,
 				FABB286B2603086900C8785C /* AppImages.xcassets */,
 				FABB28462603067C00C8785C /* Launch Screen.storyboard */,
@@ -8472,6 +8475,7 @@
 				F465978428E65E1800D5F49A /* blue-on-white-icon-app-76@2x.png in Resources */,
 				F46597EB28E6698D00D5F49A /* spectrum-on-black-icon-app-60@3x.png in Resources */,
 				FABB20862602FC2C00C8785C /* n.caf in Resources */,
+				0C6940542D8336A8009ED775 /* BuildSettings.plist in Resources */,
 				F465977D28E6598900D5F49A /* black-on-white-icon-app-83.5@2x.png in Resources */,
 				F41E4EDA28F2424B001880C6 /* dark-glow-icon-app-76@2x.png in Resources */,
 				F465979D28E65FC800D5F49A /* dark-green-icon-app-83.5@2x.png in Resources */,

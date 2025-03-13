@@ -12,17 +12,30 @@ public struct BuildSettings: Sendable, Codable {
         self.pushNotificationAppID = pushNotificationAppID
     }
 
-    // TODO: (kean)
-    public static var shared: BuildSettings {
-        fatalError()
-//        guard let value = _shared else {
-//            fatalError("configuration not registered")
-//        }
-//        return value
+    public static let shared: BuildSettings = {
+        if let cachedSettings {
+            return cachedSettings
+        }
+        let settings = getBuildSettings()
+        cachedSettings = settings
+        return settings
+    }()
+
+    nonisolated(unsafe) private static var cachedSettings: BuildSettings?
+
+    private static func getBuildSettings() -> BuildSettings {
+        guard let settingsURL = Bundle.main.url(forResource: "BuildSettings", withExtension: "plist") else {
+            fatalError("BuildSettings.plist is missing")
+        }
+        do {
+            let data = try Data(contentsOf: settingsURL)
+            return try PropertyListDecoder().decode(BuildSettings.self, from: data)
+        } catch {
+            fatalError("BuildSettings.plist invalid: \(error)")
+        }
     }
 
-//    private static var _shared: BuildSettings?
-
+    // TODO: (kean) remove
     public static func register(_ settings: BuildSettings) {
 //        guard _shared == nil else {
 //            fatalError("already registered")
@@ -30,3 +43,4 @@ public struct BuildSettings: Sendable, Codable {
 //        _shared = settings
     }
 }
+

@@ -8,6 +8,10 @@ struct BuildSettingsGen: ParsableCommand {
     var outputPath: String
 
     func run() throws {
+        guard let outputDirectoryURL = URL(string: outputPath) else {
+            throw BuildSettingsGenError.invalidOutputPath
+        }
+
         let environment = ProcessInfo.processInfo.environment
         print(environment)
 
@@ -30,7 +34,11 @@ struct BuildSettingsGen: ParsableCommand {
             pushNotificationAppID: "testPushID"
         )
 
-        let data = try JSONEncoder().encode(settings)
-        try data.write(to: URL(string: outputPath)!)
+        let data = try PropertyListEncoder().encode(settings)
+        try data.write(to: outputDirectoryURL.appendingPathComponent("BuildSettings.plist"))
     }
+}
+
+private enum BuildSettingsGenError: Error {
+    case invalidOutputPath
 }
