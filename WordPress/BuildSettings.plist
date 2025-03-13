@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>itunesAppID</key>
+	<string>1565481562</string>
+	<key>pushNotificationAppID</key>
+	<string>com.jetpack.appstore.dev</string>
+</dict>
+</plist>

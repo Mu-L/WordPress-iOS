@@ -192,6 +192,7 @@
 		0C4CE8492C2F418000B9EEAC /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433840C622C2BA5B00CB13F8 /* AppImages.xcassets */; };
 		0C63266F2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C63266E2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift */; };
 		0C6940542D8336A8009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
+		0C69C2B22D834FB0009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C69C2B12D834FB0009ED775 /* BuildSettings.plist */; };
 		0C6AC6122C364A2800BF7600 /* XcodeTarget_App in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6112C364A2800BF7600 /* XcodeTarget_App */; };
 		0C6AC6142C364A3100BF7600 /* XcodeTarget_ShareExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6132C364A3100BF7600 /* XcodeTarget_ShareExtension */; };
 		0C6AC6162C364A3B00BF7600 /* XcodeTarget_DraftActionExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6152C364A3B00BF7600 /* XcodeTarget_DraftActionExtension */; };
@@ -1994,6 +1995,7 @@
 		0C43FF802C3601770084B698 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		0C63266E2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GutenbergFilesAppMediaSourceTests.swift; sourceTree = "<group>"; };
 		0C6940532D8336A8009ED775 /* BuildSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = BuildSettings.plist; path = ../../../SourcePackages/plugins/WordPress.output/Jetpack/BuildSettingsGenPlugin/BuildSettings.plist; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C69C2B12D834FB0009ED775 /* BuildSettings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = BuildSettings.plist; path = ../../../SourcePackages/plugins/WordPress.output/WordPress/BuildSettingsGenPlugin/BuildSettings.plist; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C6C4CCF2A4F0A000049E762 /* BlazeCampaignsStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlazeCampaignsStreamTests.swift; sourceTree = "<group>"; };
 		0C6C4CD32A4F0AD80049E762 /* blaze-search-page-1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "blaze-search-page-1.json"; sourceTree = "<group>"; };
 		0C6C4CD52A4F0AEE0049E762 /* blaze-search-page-2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "blaze-search-page-2.json"; sourceTree = "<group>"; };
@@ -4265,6 +4267,7 @@
 				6EDC0E8E105881A800F68A1D /* iTunesArtwork */,
 				85ED98AA17DFB17200090D0B /* iTunesArtwork@2x */,
 				8D1107310486CEB800E47090 /* Info.plist */,
+				0C69C2B12D834FB0009ED775 /* BuildSettings.plist */,
 				931DF4D818D09A2F00540BDD /* InfoPlist.strings */,
 				E1D91454134A853D0089019C /* Localizable.strings */,
 				930C6374182BD86400976C21 /* WordPress-Internal-Info.plist */,
@@ -7455,6 +7458,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0C69C2B02D834F56009ED775 /* PBXTargetDependency */,
 				3FCFFAFE2994A949002840C9 /* PBXTargetDependency */,
 				096A92FD26E2A0AE00448C68 /* PBXTargetDependency */,
 				932225B01C7CE50300443B02 /* PBXTargetDependency */,
@@ -8115,6 +8119,7 @@
 				17222D83261DDDF90047B163 /* celadon-classic-icon-app-60x60@2x.png in Resources */,
 				1761F17626209AEE000815EF /* wordpress-dark-icon-app-76x76@2x.png in Resources */,
 				17222D95261DDDF90047B163 /* pink-icon-app-76x76.png in Resources */,
+				0C69C2B22D834FB0009ED775 /* BuildSettings.plist in Resources */,
 				172F06B92865C04F00C78FD4 /* spectrum-'22-icon-app-76x76.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9886,6 +9891,10 @@
 		0C69262C2D82FBF8009ED775 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 0C69262B2D82FBF8009ED775 /* BuildSettingsGenPlugin */;
+		};
+		0C69C2B02D834F56009ED775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 0C69C2AF2D834F56009ED775 /* BuildSettingsGenPlugin */;
 		};
 		3F47AC502A72074300208F0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13289,6 +13298,11 @@
 			productName = XcodeTarget_WordPressTests;
 		};
 		0C69262B2D82FBF8009ED775 /* BuildSettingsGenPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C69262A2D82FB3F009ED775 /* XCLocalSwiftPackageReference "../Modules" */;
+			productName = "plugin:BuildSettingsGenPlugin";
+		};
+		0C69C2AF2D834F56009ED775 /* BuildSettingsGenPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0C69262A2D82FB3F009ED775 /* XCLocalSwiftPackageReference "../Modules" */;
 			productName = "plugin:BuildSettingsGenPlugin";
