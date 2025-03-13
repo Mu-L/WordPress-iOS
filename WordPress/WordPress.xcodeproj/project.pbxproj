@@ -210,6 +210,9 @@
 		0C692AE92D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
 		0C692AEA2D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
 		0C692AEB2D83581A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
+		0C692AF12D835A3A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C69C2B12D834FB0009ED775 /* BuildSettings.plist */; };
+		0C692AF22D835A3A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C69C2B12D834FB0009ED775 /* BuildSettings.plist */; };
+		0C692AF32D835A3A009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C69C2B12D834FB0009ED775 /* BuildSettings.plist */; };
 		0C6940542D8336A8009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C6940532D8336A8009ED775 /* BuildSettings.plist */; };
 		0C69C2B22D834FB0009ED775 /* BuildSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C69C2B12D834FB0009ED775 /* BuildSettings.plist */; };
 		0C6AC6122C364A2800BF7600 /* XcodeTarget_App in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6112C364A2800BF7600 /* XcodeTarget_App */; };
@@ -8242,6 +8245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A690C1E2BA796CB00A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
+				0C692AF32D835A3A009ED775 /* BuildSettings.plist in Resources */,
 				F515E9662654312200848251 /* Noticons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8255,6 +8259,7 @@
 				7484D94D20320DFE006E94B4 /* WordPressShare.js in Resources */,
 				741AF3A2202F3DC400C771A5 /* ShareExtension.storyboard in Resources */,
 				433840C922C2BA6400CB13F8 /* AppImages.xcassets in Resources */,
+				0C692AF22D835A3A009ED775 /* BuildSettings.plist in Resources */,
 				4A690C192BA794CD00A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8309,6 +8314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				740C7C4F202F4CD6001C31B0 /* MainInterface.storyboard in Resources */,
+				0C692AF12D835A3A009ED775 /* BuildSettings.plist in Resources */,
 				4A690C212BA7975500A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
 				E1AFA8C31E8E34230004A323 /* WordPressShare.js in Resources */,
 				74F5CD381FE0646F00764E7C /* ShareExtension.storyboard in Resources */,
