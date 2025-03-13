@@ -1,6 +1,8 @@
+@import CocoaLumberjack;
 @import SFHFKeychainUtils;
+@import WordPressKit;
 #import "WPAccount.h"
-#import "WordPress-Swift.h"
+#import "Blog.h"
 
 @interface WPAccount ()
 
