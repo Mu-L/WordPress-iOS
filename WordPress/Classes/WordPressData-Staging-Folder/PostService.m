@@ -6,6 +6,7 @@
 #import "MediaService.h"
 #import "Media.h"
 #import "PostHelper.h"
+@import CocoaLumberjack;
 @import WordPressKit;
 @import WordPressShared;
 
