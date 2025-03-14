@@ -297,6 +297,7 @@ enum XcodeSupport {
                     "WordPressShared",
                     .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
                     .product(name: "NSObject-SafeExpectations", package: "NSObject-SafeExpectations"),
+                    .product(name: "NSURL+IDN", package: "NSURL-IDN"),
                     .product(name: "WordPressKit", package: "WordPressKit-iOS"),
                 ]
             ),
