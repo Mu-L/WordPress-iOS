@@ -295,6 +295,7 @@ enum XcodeSupport {
                     "BuildSettingsKit",
                     "SFHFKeychainUtils",
                     "WordPressShared",
+                    .product(name: "CocoaLumberjack", package: "CocoaLumberjack"),
                     .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
                     .product(name: "NSObject-SafeExpectations", package: "NSObject-SafeExpectations"),
                     .product(name: "NSURL+IDN", package: "NSURL-IDN"),
