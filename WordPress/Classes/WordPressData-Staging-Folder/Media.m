@@ -1,5 +1,5 @@
 #import "Media.h"
-#import "WordPressData-Swift.h"
+@import CocoaLumberjack;
 
 @implementation Media
 
