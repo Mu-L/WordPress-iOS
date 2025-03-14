@@ -292,6 +292,7 @@ enum XcodeSupport {
             .xcodeTarget(
                 "XcodeTarget_WordPressData",
                 dependencies: [
+                  "SFHFKeychainUtils",
                   "WordPressShared",
                   .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
                 ]
