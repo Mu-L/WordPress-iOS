@@ -5,7 +5,6 @@
 #import "CommentService.h"
 #import "MediaService.h"
 #import "Media.h"
-#import "WordPress-Swift.h"
 #import "PostHelper.h"
 @import WordPressKit;
 @import WordPressShared;
