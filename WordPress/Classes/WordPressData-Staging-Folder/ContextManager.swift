@@ -283,7 +283,7 @@ extension ContextManager {
     /// Tests purpose only
     static var overrideInstance: ContextManager?
 
-    @objc class func sharedInstance() -> ContextManager {
+    @objc public class func sharedInstance() -> ContextManager {
         if let overrideInstance {
             return overrideInstance
         }
@@ -291,7 +291,7 @@ extension ContextManager {
         return ContextManager.internalSharedInstance
     }
 
-    static var shared: ContextManager {
+    public static var shared: ContextManager {
         return sharedInstance()
     }
 }

@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-@import WordPressData;
+#import "CoreDataService.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

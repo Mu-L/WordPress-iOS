@@ -2,8 +2,8 @@
 #import "WPAccount.h"
 #import "AccountService.h"
 @import WordPressData;
+@import WordPressKit;
 @import WordPressShared;
-#import "WordPress-Swift.h"
 @import SFHFKeychainUtils;
 
 @import NSObject_SafeExpectations;
