@@ -1,7 +1,7 @@
 #import "Blog.h"
 #import "WPAccount.h"
 #import "AccountService.h"
-@import WordPressData;
+@import CocoaLumberjack;
 @import WordPressKit;
 @import WordPressShared;
 @import SFHFKeychainUtils;
