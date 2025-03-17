@@ -1,4 +1,5 @@
 import Foundation
+import WordPressData
 
 extension ReaderPost: SearchableItemConvertable {
     var searchItemType: SearchItemType {
