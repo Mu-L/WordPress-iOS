@@ -258,10 +258,6 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 
 /**
  *  Returnst the text description for a post format code
- *
- *  @param postFormatCode of the post format you want to display
- *
- *  @return a string with the post format description and if no description was found the postFormatCode sent.
  */
 - (nullable NSString *)postFormatTextFromSlug:(nullable NSString *)postFormatSlug;
 /**

@@ -18,9 +18,6 @@ extern NSUInteger const WPTopLevelHierarchicalCommentsPerPage;
 @interface CommentService : CoreDataService
 
 /// Initializes the instance with a custom service remote provider.
-///
-/// @param coreDataStack The `CoreDataStack` this instance will use for interacting with CoreData.
-/// @param commentServiceRemoteFactory The factory this instance will use to get service remote instances from.
 - (instancetype)initWithCoreDataStack:(id<CoreDataStack>)coreDataStack
           commentServiceRemoteFactory:(CommentServiceRemoteFactory *)remoteFactory NS_DESIGNATED_INITIALIZER;
 
