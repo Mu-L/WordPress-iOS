@@ -52,6 +52,23 @@ steps:
   #################
   # Run Unit Tests
   #################
+  - label: "WordPressData tests"
+    command: |
+      echo "--- :rubygems: Setting up Gems"
+      install_gems
+      echo "--- :swift: Setting up Swift Packages"
+      install_swiftpm_dependencies
+      echo "--- :microscope: Test"
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT=120 bundle exec fastlane run scan \
+        scheme:WordPressData \
+        device:'iPhone 16'
+    plugins: [$CI_TOOLKIT_PLUGIN]
+    artifact_paths:
+      - "build/results/*"
+    notify:
+      - github_commit_status:
+          context: "WordPressData Unit Tests"
+
   - label: "🔬 :wordpress: Unit Tests"
     command: ".buildkite/commands/run-unit-tests.sh"
     depends_on: "build_wordpress"
