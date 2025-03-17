@@ -1,4 +1,5 @@
-@import CocoaLumberjack;
+// FIXME: Having issues with CocoaLumberjack as a transitive dependency when added to Objective-C files
+//@import CocoaLumberjack;
 @import SFHFKeychainUtils;
 @import WordPressKit;
 #import "WPAccount.h"

@@ -6,7 +6,8 @@
 #import "MediaService.h"
 #import "Media.h"
 #import "PostHelper.h"
-@import CocoaLumberjack;
+// FIXME: Having issues with CocoaLumberjack as a transitive dependency when added to Objective-C files
+//@import CocoaLumberjack;
 @import WordPressKit;
 @import WordPressShared;
 

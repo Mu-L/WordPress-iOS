@@ -295,8 +295,9 @@ enum XcodeSupport {
                     "BuildSettingsKit",
                     "SFHFKeychainUtils",
                     "WordPressShared",
-                    .product(name: "CocoaLumberjack", package: "CocoaLumberjack"),
-                    .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
+                    // FIXME: Having issues with CocoaLumberjack as a transitive dependency when added to Objective-C files
+                    // .product(name: "CocoaLumberjack", package: "CocoaLumberjack"),
+                        .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
                     .product(name: "NSObject-SafeExpectations", package: "NSObject-SafeExpectations"),
                     .product(name: "NSURL+IDN", package: "NSURL-IDN"),
                     .product(name: "WordPressKit", package: "WordPressKit-iOS"),
