@@ -1,6 +1,7 @@
 #import "AbstractPost.h"
 #import "Media.h"
-#import "WordPressData-Swift.h"
+// FIXME: Why is the module header not generated?
+//#import "WordPressData-Swift.h"
 #import "BasePost.h"
 @import WordPressKit;
 @import WordPressShared;
@@ -27,7 +28,8 @@
 
 - (void)save
 {
-    [[ContextManager sharedInstance] saveContext:self.managedObjectContext];
+    // FIXME: Disabled to experiment with a compilation error
+//    [[ContextManager sharedInstance] saveContext:self.managedObjectContext];
 }
 
 
@@ -83,7 +85,8 @@
 
     AbstractPost *post = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass(self.class) inManagedObjectContext:self.managedObjectContext];
     [post cloneFrom:self];
-    post.remoteStatus = AbstractPostRemoteStatusLocalRevision;
+    // FIXME: Disabled to experiment with a compilation error
+//    post.remoteStatus = AbstractPostRemoteStatusLocalRevision;
     [post setValue:self forKey:@"original"];
     [post setValue:nil forKey:@"revision"];
     return post;
@@ -235,26 +238,33 @@
 // If the post has a scheduled status.
 - (BOOL)isScheduled
 {
-    return ([self.status isEqualToString:PostStatusScheduled]);
+    // FIXME: Disabled to experiment with a compilation error
+//    return ([self.status isEqualToString:PostStatusScheduled]);
+    return NO;
 }
 
 - (BOOL)isDraft
 {
-    return [self.status isEqualToString:PostStatusDraft];
+    // FIXME: Disabled to experiment with a compilation error
+//    return [self.status isEqualToString:PostStatusDraft];
+    return NO;
 }
 
 - (BOOL)isPublished
 {
-    return [self.status isEqualToString:PostStatusPublish];
+    // FIXME: Disabled to experiment with a compilation error
+//    return [self.status isEqualToString:PostStatusPublish];
+    return NO;
 }
 
 - (BOOL)originalIsDraft
 {
-    if ([self.status isEqualToString:PostStatusDraft]) {
-        return YES;
-    } else if (self.isRevision && [self.original.status isEqualToString:PostStatusDraft]) {
-        return YES;
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    if ([self.status isEqualToString:PostStatusDraft]) {
+//        return YES;
+//    } else if (self.isRevision && [self.original.status isEqualToString:PostStatusDraft]) {
+//        return YES;
+//    }
     return NO;
 }
 
@@ -278,7 +288,9 @@
 
 - (NSString *)blogNameForDisplay
 {
-    return [self.blog.settings.name makePlainText];
+    // FIXME: Disabled to experiment with a compilation error
+//    return [self.blog.settings.name makePlainText];
+    return NO;
 }
 
 - (NSURL *)blogURL
@@ -303,14 +315,16 @@
 
 - (NSString *)dateStringForDisplay
 {
-    if ([self originalIsDraft] || [self.status isEqualToString:PostStatusPending]) {
-        return [[self dateModified] mediumString];
-    } else if ([self isScheduled]) {
-        return [[self dateCreated] mediumStringWithTime];
-    } else if ([self shouldPublishImmediately]) {
-        return NSLocalizedString(@"Publish Immediately",@"A short phrase indicating a post is due to be immedately published.");
-    }
-    return [[self dateCreated] mediumString];
+    // FIXME: Disabled to experiment with a compilation error
+//    if ([self originalIsDraft] || [self.status isEqualToString:PostStatusPending]) {
+//        return [[self dateModified] mediumString];
+//    } else if ([self isScheduled]) {
+//        return [[self dateCreated] mediumStringWithTime];
+//    } else if ([self shouldPublishImmediately]) {
+//        return NSLocalizedString(@"Publish Immediately",@"A short phrase indicating a post is due to be immedately published.");
+//    }
+//    return [[self dateCreated] mediumString];
+    return @"TODO";
 }
 
 - (BOOL)isPrivateAtWPCom
@@ -325,7 +339,9 @@
 
 - (BOOL)isUploading
 {
-    return self.remoteStatus == AbstractPostRemoteStatusPushing;
+    // FIXME: Disabled to experiment with a compilation error
+//    return self.remoteStatus == AbstractPostRemoteStatusPushing;
+    return NO;
 }
 
 #pragma mark - Post

@@ -118,7 +118,8 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     }
 
     if (self.account == nil) {
-        [self deleteApplicationToken];
+        // FIXME: Disabled to experiment with a compilation error
+//        [self deleteApplicationToken];
     }
 
     [_xmlrpcApi invalidateAndCancelTasks];
@@ -327,7 +328,9 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (NSString *)defaultPostFormatText
 {
-    return [self postFormatTextFromSlug:self.settings.defaultPostFormat];
+    // FIXME: Disabled to experiment with a compilation error
+//    return [self postFormatTextFromSlug:self.settings.defaultPostFormat];
+    return @"TODO";
 }
 
 - (BOOL)hasMappedDomain {
@@ -396,7 +399,9 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 ///
 - (BOOL)isPrivate
 {
-    return [self.settings.privacy isEqualToNumber:@(SiteVisibilityPrivate)];
+    // FIXME: Disabled to experiment with a compilation error
+//    return [self.settings.privacy isEqualToNumber:@(SiteVisibilityPrivate)];
+    return YES;
 }
 
 /// Call this method to know whether the blog is private AND hosted at WP.com.
@@ -408,38 +413,40 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (SiteVisibility)siteVisibility
 {
-    switch ([self.settings.privacy integerValue]) {
-        case (SiteVisibilityHidden):
-            return SiteVisibilityHidden;
-            break;
-        case (SiteVisibilityPublic):
-            return SiteVisibilityPublic;
-            break;
-        case (SiteVisibilityPrivate):
-            return SiteVisibilityPrivate;
-            break;
-        default:
-            break;
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    switch ([self.settings.privacy integerValue]) {
+//        case (SiteVisibilityHidden):
+//            return SiteVisibilityHidden;
+//            break;
+//        case (SiteVisibilityPublic):
+//            return SiteVisibilityPublic;
+//            break;
+//        case (SiteVisibilityPrivate):
+//            return SiteVisibilityPrivate;
+//            break;
+//        default:
+//            break;
+//    }
     return SiteVisibilityUnknown;
 }
 
 - (void)setSiteVisibility:(SiteVisibility)siteVisibility
 {
-    switch (siteVisibility) {
-        case (SiteVisibilityHidden):
-            self.settings.privacy = @(SiteVisibilityHidden);
-            break;
-        case (SiteVisibilityPublic):
-            self.settings.privacy = @(SiteVisibilityPublic);
-            break;
-        case (SiteVisibilityPrivate):
-            self.settings.privacy = @(SiteVisibilityPrivate);
-            break;
-        default:
-            NSParameterAssert(siteVisibility >= SiteVisibilityPrivate && siteVisibility <= SiteVisibilityPublic);
-            break;
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    switch (siteVisibility) {
+//        case (SiteVisibilityHidden):
+//            self.settings.privacy = @(SiteVisibilityHidden);
+//            break;
+//        case (SiteVisibilityPublic):
+//            self.settings.privacy = @(SiteVisibilityPublic);
+//            break;
+//        case (SiteVisibilityPrivate):
+//            self.settings.privacy = @(SiteVisibilityPrivate);
+//            break;
+//        default:
+//            NSParameterAssert(siteVisibility >= SiteVisibilityPrivate && siteVisibility <= SiteVisibilityPublic);
+//            break;
+//    }
 }
 
 - (NSDictionary *)getImageResizeDimensions
@@ -548,107 +555,109 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (BOOL)supports:(BlogFeature)feature
 {
-    switch (feature) {
-        case BlogFeatureRemovable:
-            return ![self accountIsDefaultAccount];
-        case BlogFeatureVisibility:
-            /*
-             See -[BlogListViewController fetchRequestPredicateForHideableBlogs]
-             If the logic for this changes that needs to be updated as well
-             */
-            return [self accountIsDefaultAccount];
-        case BlogFeaturePeople:
-            return [self supportsRestApi] && self.isListingUsersAllowed;
-        case BlogFeatureWPComRESTAPI:
-        case BlogFeatureCommentLikes:
-            return [self supportsRestApi];
-        case BlogFeatureStats:
-            return [self supportsRestApi] && [self isViewingStatsAllowed];
-        case BlogFeatureStockPhotos:
-            return [self supportsRestApi] && [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
-        case BlogFeatureTenor:
-            return [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
-        case BlogFeatureSharing:
-            return [self supportsSharing];
-        case BlogFeatureOAuth2Login:
-            return [self isHostedAtWPcom];
-        case BlogFeatureMentions:
-            return [self isAccessibleThroughWPCom];
-        case BlogFeatureXposts:
-            return [self isAccessibleThroughWPCom];
-        case BlogFeatureReblog:
-        case BlogFeaturePlans:
-            return [self isHostedAtWPcom] && [self isAdmin];
-        case BlogFeaturePluginManagement:
-            return [self supportsPluginManagement] && [self isAdmin];
-        case BlogFeatureJetpackImageSettings:
-            return [self supportsJetpackImageSettings];
-        case BlogFeatureJetpackSettings:
-            return [self supportsJetpackSettings];
-        case BlogFeaturePushNotifications:
-            return [self supportsPushNotifications];
-        case BlogFeatureThemeBrowsing:
-            return [self supportsRestApi] && [self isAdmin];
-        case BlogFeatureActivity: {
-            // For now Activity is suported for admin users
-            return [self supportsRestApi] && [self isAdmin];
-        }
-        case BlogFeatureCustomThemes:
-            return [self supportsRestApi] && [self isAdmin] && ![self isHostedAtWPcom];
-        case BlogFeaturePremiumThemes:
-            return [self supports:BlogFeatureCustomThemes] && (self.planID.integerValue == JetpackProfessionalYearlyPlanId
-                                                               || self.planID.integerValue == JetpackProfessionalMonthlyPlanId);
-        case BlogFeatureMenus:
-            return [self supportsRestApi] && [self isAdmin];
-        case BlogFeaturePrivate:
-            // Private visibility is only supported by wpcom blogs
-            return [self isHostedAtWPcom];
-        case BlogFeatureSiteManagement:
-            return [self supportsSiteManagementServices];
-        case BlogFeatureDomains:
-            return ([self isHostedAtWPcom] || [self isAtomic]) && [self isAdmin] && ![self isWPForTeams];
-        case BlogFeatureNoncePreviews:
-            return [self supportsRestApi] && ![self isHostedAtWPcom];
-        case BlogFeatureMediaMetadataEditing:
-            return [self isAdmin];
-        case BlogFeatureMediaAltEditing:
-            // alt is not supported via XML-RPC API
-            // https://core.trac.wordpress.org/ticket/58582
-            // https://github.com/wordpress-mobile/WordPress-Android/issues/18514#issuecomment-1589752274
-            return [self supportsRestApi];
-        case BlogFeatureMediaDeletion:
-            return [self isAdmin];
-        case BlogFeatureHomepageSettings:
-            return [self supportsRestApi] && [self isAdmin];
-        case BlogFeatureContactInfo:
-            return [self supportsContactInfo];
-        case BlogFeatureBlockEditorSettings:
-            return [self supportsBlockEditorSettings];
-        case BlogFeatureLayoutGrid:
-            return [self supportsLayoutGrid];
-        case BlogFeatureTiledGallery:
-            return [self supportsTiledGallery];
-        case BlogFeatureVideoPress:
-            return [self supportsVideoPress];
-        case BlogFeatureVideoPressV5:
-            return [self supportsVideoPressV5];
-        case BlogFeatureFacebookEmbed:
-            return [self supportsEmbedVariation: @"9.0"];
-        case BlogFeatureInstagramEmbed:
-            return [self supportsEmbedVariation: @"9.0"];
-        case BlogFeatureLoomEmbed:
-            return [self supportsEmbedVariation: @"9.0"];
-        case BlogFeatureSmartframeEmbed:
-            return [self supportsEmbedVariation: @"10.2"];
-        case BlogFeatureFileDownloadsStats:
-            return [self isHostedAtWPcom];
-        case BlogFeatureBlaze:
-            return [self canBlaze];
-        case BlogFeaturePages:
-            return [self isListingPagesAllowed];
-        case BlogFeatureSiteMonitoring:
-            return [self isAdmin] && [self isAtomic];
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    switch (feature) {
+//        case BlogFeatureRemovable:
+//            return ![self accountIsDefaultAccount];
+//        case BlogFeatureVisibility:
+//            /*
+//             See -[BlogListViewController fetchRequestPredicateForHideableBlogs]
+//             If the logic for this changes that needs to be updated as well
+//             */
+//            return [self accountIsDefaultAccount];
+//        case BlogFeaturePeople:
+//            return [self supportsRestApi] && self.isListingUsersAllowed;
+//        case BlogFeatureWPComRESTAPI:
+//        case BlogFeatureCommentLikes:
+//            return [self supportsRestApi];
+//        case BlogFeatureStats:
+//            return [self supportsRestApi] && [self isViewingStatsAllowed];
+//        case BlogFeatureStockPhotos:
+//            return [self supportsRestApi] && [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
+//        case BlogFeatureTenor:
+//            return [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
+//        case BlogFeatureSharing:
+//            return [self supportsSharing];
+//        case BlogFeatureOAuth2Login:
+//            return [self isHostedAtWPcom];
+//        case BlogFeatureMentions:
+//            return [self isAccessibleThroughWPCom];
+//        case BlogFeatureXposts:
+//            return [self isAccessibleThroughWPCom];
+//        case BlogFeatureReblog:
+//        case BlogFeaturePlans:
+//            return [self isHostedAtWPcom] && [self isAdmin];
+//        case BlogFeaturePluginManagement:
+//            return [self supportsPluginManagement] && [self isAdmin];
+//        case BlogFeatureJetpackImageSettings:
+//            return [self supportsJetpackImageSettings];
+//        case BlogFeatureJetpackSettings:
+//            return [self supportsJetpackSettings];
+//        case BlogFeaturePushNotifications:
+//            return [self supportsPushNotifications];
+//        case BlogFeatureThemeBrowsing:
+//            return [self supportsRestApi] && [self isAdmin];
+//        case BlogFeatureActivity: {
+//            // For now Activity is suported for admin users
+//            return [self supportsRestApi] && [self isAdmin];
+//        }
+//        case BlogFeatureCustomThemes:
+//            return [self supportsRestApi] && [self isAdmin] && ![self isHostedAtWPcom];
+//        case BlogFeaturePremiumThemes:
+//            return [self supports:BlogFeatureCustomThemes] && (self.planID.integerValue == JetpackProfessionalYearlyPlanId
+//                                                               || self.planID.integerValue == JetpackProfessionalMonthlyPlanId);
+//        case BlogFeatureMenus:
+//            return [self supportsRestApi] && [self isAdmin];
+//        case BlogFeaturePrivate:
+//            // Private visibility is only supported by wpcom blogs
+//            return [self isHostedAtWPcom];
+//        case BlogFeatureSiteManagement:
+//            return [self supportsSiteManagementServices];
+//        case BlogFeatureDomains:
+//            return ([self isHostedAtWPcom] || [self isAtomic]) && [self isAdmin] && ![self isWPForTeams];
+//        case BlogFeatureNoncePreviews:
+//            return [self supportsRestApi] && ![self isHostedAtWPcom];
+//        case BlogFeatureMediaMetadataEditing:
+//            return [self isAdmin];
+//        case BlogFeatureMediaAltEditing:
+//            // alt is not supported via XML-RPC API
+//            // https://core.trac.wordpress.org/ticket/58582
+//            // https://github.com/wordpress-mobile/WordPress-Android/issues/18514#issuecomment-1589752274
+//            return [self supportsRestApi];
+//        case BlogFeatureMediaDeletion:
+//            return [self isAdmin];
+//        case BlogFeatureHomepageSettings:
+//            return [self supportsRestApi] && [self isAdmin];
+//        case BlogFeatureContactInfo:
+//            return [self supportsContactInfo];
+//        case BlogFeatureBlockEditorSettings:
+//            return [self supportsBlockEditorSettings];
+//        case BlogFeatureLayoutGrid:
+//            return [self supportsLayoutGrid];
+//        case BlogFeatureTiledGallery:
+//            return [self supportsTiledGallery];
+//        case BlogFeatureVideoPress:
+//            return [self supportsVideoPress];
+//        case BlogFeatureVideoPressV5:
+//            return [self supportsVideoPressV5];
+//        case BlogFeatureFacebookEmbed:
+//            return [self supportsEmbedVariation: @"9.0"];
+//        case BlogFeatureInstagramEmbed:
+//            return [self supportsEmbedVariation: @"9.0"];
+//        case BlogFeatureLoomEmbed:
+//            return [self supportsEmbedVariation: @"9.0"];
+//        case BlogFeatureSmartframeEmbed:
+//            return [self supportsEmbedVariation: @"10.2"];
+//        case BlogFeatureFileDownloadsStats:
+//            return [self isHostedAtWPcom];
+//        case BlogFeatureBlaze:
+//            return [self canBlaze];
+//        case BlogFeaturePages:
+//            return [self isListingPagesAllowed];
+//        case BlogFeatureSiteMonitoring:
+//            return [self isAdmin] && [self isAtomic];
+//    }
+    return NO;
 }
 
 -(BOOL)supportsSharing
@@ -663,9 +672,10 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         return NO;
     }
 
-    if (![self isPublishingPostsAllowed]) {
-        return NO;
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    if (![self isPublishingPostsAllowed]) {
+//        return NO;
+//    }
 
     if (self.isHostedAtWPcom) {
         // For WordPress.com YES unless it's disabled
@@ -714,7 +724,8 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     BOOL hasRequiredJetpack = [self hasRequiredJetpackVersion:@"5.6"];
 
     BOOL isTransferrable = self.isHostedAtWPcom
-    && self.hasBusinessPlan
+    // FIXME: Disabled to experiment with a compilation error
+//    && self.hasBusinessPlan
     && self.siteVisibility != SiteVisibilityPrivate;
 
     BOOL supports = isTransferrable || hasRequiredJetpack;
@@ -762,7 +773,9 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (BOOL)supportsJetpackSettings
 {
-    return [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled]
+    // FIXME: Disabled to experiment with a compilation error
+//    return [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled]
+    return YES
     && [self supportsRestApi]
     && ![self isHostedAtWPcom]
     && [self isAdmin];
@@ -770,7 +783,9 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (BOOL)accountIsDefaultAccount
 {
-    return [[self account] isDefaultWordPressComAccount];
+    // FIXME: Disabled to experiment with a compilation error
+//    return [[self account] isDefaultWordPressComAccount];
+    return YES;
 }
 
 - (NSNumber *)dotComID
@@ -778,10 +793,11 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     [self willAccessValueForKey:@"blogID"];
     NSNumber *dotComID = [self primitiveValueForKey:@"blogID"];
     if (dotComID.integerValue == 0) {
-        dotComID = self.jetpack.siteID;
-        if (dotComID.integerValue > 0) {
-            self.dotComID = dotComID;
-        }
+        // FIXME: Disabled to experiment with a compilation error
+//        dotComID = self.jetpack.siteID;
+//        if (dotComID.integerValue > 0) {
+//            self.dotComID = dotComID;
+//        }
     }
     [self didAccessValueForKey:@"blogID"];
     return dotComID;
@@ -811,13 +827,15 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (NSString *)logDescription
 {
-    NSString *extra = @"";
-    if (self.account) {
-        extra = [NSString stringWithFormat:@" wp.com account: %@ blogId: %@ plan: %@ (%@)", self.account ? self.account.username : @"NO", self.dotComID, self.planTitle, self.planID];
-    } else {
-        extra = [NSString stringWithFormat:@" jetpack: %@", [self.jetpack description]];
-    }
-    return [NSString stringWithFormat:@"<Blog Name: %@ URL: %@ XML-RPC: %@%@ ObjectID: %@>", self.settings.name, self.url, self.xmlrpc, extra, self.objectID.URIRepresentation];
+    // FIXME: Disabled to experiment with a compilation error
+//    NSString *extra = @"";
+//    if (self.account) {
+//        extra = [NSString stringWithFormat:@" wp.com account: %@ blogId: %@ plan: %@ (%@)", self.account ? self.account.username : @"NO", self.dotComID, self.planTitle, self.planID];
+//    } else {
+//        extra = [NSString stringWithFormat:@" jetpack: %@", [self.jetpack description]];
+//    }
+//    return [NSString stringWithFormat:@"<Blog Name: %@ URL: %@ XML-RPC: %@%@ ObjectID: %@>", self.settings.name, self.url, self.xmlrpc, extra, self.objectID.URIRepresentation];
+    return @"TODO";
 }
 
 - (NSString *)supportDescription
@@ -833,13 +851,15 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     if (self.account) {
         planDescription = [NSString stringWithFormat:@"Plan: %@ (%@)", self.planTitle, self.planID];
     } else {
-        username = [self.jetpack connectedUsername];
+        // FIXME: Disabled to experiment with a compilation error
+//        username = [self.jetpack connectedUsername];
     }
 
     NSString *jetpackVersion;
-    if ([self.jetpack isInstalled]) {
-        jetpackVersion = [NSString stringWithFormat:@"Jetpack-version: %@", [self.jetpack version]];
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    if ([self.jetpack isInstalled]) {
+//        jetpackVersion = [NSString stringWithFormat:@"Jetpack-version: %@", [self.jetpack version]];
+//    }
 
     // Add information to array in the order we want to display it.
 
@@ -853,9 +873,10 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     if (planDescription) {
         [blogInformation addObject:planDescription];
     }
-    if (jetpackVersion) {
-        [blogInformation addObject:jetpackVersion];
-    }
+    // FIXME: Disabled to experiment with a compilation error (see disabled code above, where jetpackVersion is defined)
+//    if (jetpackVersion) {
+//        [blogInformation addObject:jetpackVersion];
+//    }
 
     // Combine and return.
     return [NSString stringWithFormat:@"<%@>", [blogInformation componentsJoinedByString:@" "]];
@@ -867,14 +888,15 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         return @"wpcom";
     }
 
-    if ([self.jetpack isConnected]) {
-        NSString *apiType = [self wordPressComRestApi] ? @"REST" : @"XML-RPC";
-        return [NSString stringWithFormat:@"jetpack_connected - %@", apiType];
-    }
-
-    if ([self.jetpack isInstalled]) {
-        return @"self-hosted - jetpack_installed";
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    if ([self.jetpack isConnected]) {
+//        NSString *apiType = [self wordPressComRestApi] ? @"REST" : @"XML-RPC";
+//        return [NSString stringWithFormat:@"jetpack_connected - %@", apiType];
+//    }
+//
+//    if ([self.jetpack isInstalled]) {
+//        return @"self-hosted - jetpack_installed";
+//    }
 
     return @"self_hosted";
 }
@@ -896,7 +918,11 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 - (WordPressOrgRestApi *)selfHostedSiteRestApi
 {
     if (_selfHostedSiteRestApi == nil) {
-        _selfHostedSiteRestApi = self.account == nil ? [[WordPressOrgRestApi alloc] initWithBlog:self] : nil;
+        // FIXME: Disabled to experiment with a compilation error
+        //
+        // The method is defined in the Swift part of WordPress...
+        //
+//        _selfHostedSiteRestApi = self.account == nil ? [[WordPressOrgRestApi alloc] initWithBlog:self] : nil;
     }
     return _selfHostedSiteRestApi;
 }
@@ -960,8 +986,9 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 - (BOOL)hasRequiredJetpackVersion:(NSString *)requiredJetpackVersion
 {
     return [self supportsRestApi]
-    && ![self isHostedAtWPcom]
-    && [self.jetpack.version compare:requiredJetpackVersion options:NSNumericSearch] != NSOrderedAscending;
+    && ![self isHostedAtWPcom];
+    // FIXME: Disabled to experiment with a compilation error
+//    && [self.jetpack.version compare:requiredJetpackVersion options:NSNumericSearch] != NSOrderedAscending;
 }
 
 /// Checks the blogs installed WordPress version is more than or equal to the requiredVersion
