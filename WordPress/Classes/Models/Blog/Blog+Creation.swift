@@ -1,3 +1,5 @@
+import WordPressData
+
 extension Blog {
 
     /// Creates a blank `Blog` object for this account
