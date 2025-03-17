@@ -1,6 +1,5 @@
 import Foundation
 import CoreData
-import WordPressData
 import WordPressKit
 
 public typealias Domain = RemoteDomain
