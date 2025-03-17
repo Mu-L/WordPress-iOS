@@ -35,6 +35,7 @@ enum MediaDirectory {
 
 /// Encapsulates Media functions relative to the local Media directory.
 ///
+@objc
 class MediaFileManager: NSObject {
 
     fileprivate static let mediaDirectoryName = "Media"

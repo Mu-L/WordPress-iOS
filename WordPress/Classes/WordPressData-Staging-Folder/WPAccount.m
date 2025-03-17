@@ -82,7 +82,9 @@
         return self.cachedToken;
     }
 
-    NSString *token = [WPAccount tokenForUsername:self.username];
+    // FIXME: Disabled to experiment with a compilation error
+//    NSString *token = [WPAccount tokenForUsername:self.username];
+    NSString *token = @"TODO";
     self.cachedToken = token;
     return token;
 }
@@ -90,12 +92,15 @@
 - (void)setAuthToken:(NSString *)authToken
 {
     self.cachedToken = nil;
+    // FIXME: Cannot access yet because in Swift layer
+//    NSString *serviceName = [WPAccount authKeychainServiceName];
+    NSString *serviceName = @"FIXME";
 
     if (authToken) {
         NSError *error = nil;
         [SFHFKeychainUtils storeUsername:self.username
                              andPassword:authToken
-                          forServiceName:[WPAccount authKeychainServiceName]
+                          forServiceName:serviceName
                              accessGroup:nil
                           updateExisting:YES
                                    error:&error];
@@ -107,7 +112,7 @@
     } else {
         NSError *error = nil;
         [SFHFKeychainUtils deleteItemForUsername:self.username
-                                  andServiceName:[WPAccount authKeychainServiceName]
+                                  andServiceName:serviceName
                                      accessGroup:nil
                                            error:&error];
         if (error) {
@@ -138,7 +143,9 @@
 
     NSError *error = nil;
     NSString *authToken = [SFHFKeychainUtils getPasswordForUsername:username
-                                                     andServiceName:[WPAccount authKeychainServiceName]
+                                                       // FIXME: Cannot access yet because in Swift layer
+//                                                     andServiceName:[WPAccount authKeychainServiceName]
+                                                     andServiceName:@"TODO"
                                                         accessGroup:nil
                                                               error:&error];
     if (error) {
@@ -152,8 +159,8 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        SharedDataIssueSolver *sharedDataIssueSolver = [SharedDataIssueSolver instance];
-        [sharedDataIssueSolver migrateAuthKeyFor:username];
+//        SharedDataIssueSolver *sharedDataIssueSolver = [SharedDataIssueSolver instance];
+//        [sharedDataIssueSolver migrateAuthKeyFor:username];
     });
 }
 

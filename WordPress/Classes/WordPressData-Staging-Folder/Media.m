@@ -1,4 +1,6 @@
 #import "Media.h"
+// FIXME: Why is the module header not generated?
+//#import "WordPressData-Swift.h"
 @import CocoaLumberjack;
 
 @implementation Media
@@ -155,18 +157,20 @@
 
 - (NSURL *)absoluteURLForLocalPath:(NSString *)localPath cacheDirectory:(BOOL)cacheDirectory
 {
-    NSError *error;
-    NSURL *mediaDirectory = nil;
-    if (cacheDirectory) {
-        mediaDirectory = [[MediaFileManager cacheManager] directoryURLAndReturnError:&error];
-    } else {
-        mediaDirectory = [MediaFileManager uploadsDirectoryURLAndReturnError:&error];
-    }
-    if (error) {
-        DDLogInfo(@"Error resolving Media directory: %@", error);
-        return nil;
-    }
-    return [mediaDirectory URLByAppendingPathComponent:localPath.lastPathComponent];
+    // FIXME: Disabled to experiment with a compilation error
+//    NSError *error;
+//    NSURL *mediaDirectory = nil;
+//    if (cacheDirectory) {
+//        mediaDirectory = [[MediaFileManager cacheManager] directoryURLAndReturnError:&error];
+//    } else {
+//        mediaDirectory = [MediaFileManager uploadsDirectoryURLAndReturnError:&error];
+//    }
+//    if (error) {
+//        DDLogInfo(@"Error resolving Media directory: %@", error);
+//        return nil;
+//    }
+//    return [mediaDirectory URLByAppendingPathComponent:localPath.lastPathComponent];
+    return [[NSURL alloc] initWithString:@"https://wordpress.com"];
 }
 
 #pragma mark - CoreData Helpers
@@ -190,15 +194,17 @@
 
 - (void)remove
 {
-    [self.managedObjectContext performBlockAndWait:^{
-        [self.managedObjectContext deleteObject:self];
-        [[ContextManager sharedInstance] saveContextAndWait:self.managedObjectContext];
-    }];
+    // FIXME: Disabled to experiment with a compilation error
+//    [self.managedObjectContext performBlockAndWait:^{
+//        [self.managedObjectContext deleteObject:self];
+//        [[ContextManager sharedInstance] saveContextAndWait:self.managedObjectContext];
+//    }];
 }
 
 - (void)save
 {
-    [[ContextManager sharedInstance] saveContext:self.managedObjectContext];
+    // FIXME: Disabled to experiment with a compilation error
+//    [[ContextManager sharedInstance] saveContext:self.managedObjectContext];
 }
 
 - (BOOL)hasRemote {

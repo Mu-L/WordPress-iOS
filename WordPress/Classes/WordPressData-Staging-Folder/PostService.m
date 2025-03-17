@@ -24,8 +24,10 @@ const NSUInteger PostServiceDefaultNumberToSync = 40;
 @implementation PostService
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
-    return [self initWithManagedObjectContext:context
-                     postServiceRemoteFactory:[PostServiceRemoteFactory.alloc init]];
+    // FIXME: Disabled to experiment with a compilation error
+//    return [self initWithManagedObjectContext:context
+//                     postServiceRemoteFactory:[[PostServiceRemoteFactory alloc] init]];
+    return nil;
 }
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context
@@ -71,61 +73,63 @@ const NSUInteger PostServiceDefaultNumberToSync = 40;
                 success:(PostServiceSyncSuccess)success
                 failure:(PostServiceSyncFailure)failure
 {
-    NSManagedObjectID *blogObjectID = blog.objectID;
-    id<PostServiceRemote> remote = [self.postServiceRemoteFactory forBlog:blog];
-
-    if (loadedPosts.count > 0) {
-        options.offset = @(loadedPosts.count);
-    }
-
-    NSDictionary *remoteOptions = options ? [self remoteSyncParametersDictionaryForRemote:remote withOptions:options] : nil;
-    [remote getPostsOfType:postType
-                   options:remoteOptions
-                   success:^(NSArray <RemotePost *> *remotePosts) {
-        [loadedPosts addObjectsFromArray:remotePosts];
-
-        if (syncAll && remotePosts.count >= options.number.integerValue) {
-            [self syncPostsOfType:postType
-                      withOptions:options
-                          forBlog:blog
-                      loadedPosts:loadedPosts
-                          syncAll:syncAll
-                          success:success
-                          failure:failure];
-        } else {
-            [self.managedObjectContext performBlock:^{
-                NSError *error;
-                Blog *blogInContext = (Blog *)[self.managedObjectContext existingObjectWithID:blogObjectID error:&error];
-                if (!blogInContext || error) {
-                    DDLogError(@"Could not retrieve blog in context %@", (error ? [NSString stringWithFormat:@"with error: %@", error] : @""));
-                    return;
-                }
-                NSArray *posts = [PostHelper mergePosts:[loadedPosts copy]
-                                                 ofType:postType
-                                           withStatuses:options.statuses
-                                               byAuthor:options.authorID
-                                                forBlog:blogInContext
-                                          purgeExisting:options.purgesLocalSync
-                                              inContext:self.managedObjectContext];
-
-                [[ContextManager sharedInstance] saveContext:self.managedObjectContext withCompletionBlock:^{
-                    // Call the completion block after context is saved. The callback is called on the context queue because `posts`
-                    // contains models that are bound to the `self.managedObjectContext` object.
-                    if (success) {
-                        [self.managedObjectContext performBlock:^{
-                            success(posts);
-                        }];
-                    }
-                } onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-            }];
-        }
-    } failure:^(NSError *error) {
-        if (failure) {
-            [self.managedObjectContext performBlock:^{
-                failure(error);
-            }];
-        }
-    }];
+    // FIXME: Disabled to experiment with a compilation error
+//    NSManagedObjectID *blogObjectID = blog.objectID;
+//    id<PostServiceRemote> remote = [self.postServiceRemoteFactory forBlog:blog];
+//
+//    if (loadedPosts.count > 0) {
+//        options.offset = @(loadedPosts.count);
+//    }
+//
+//    NSDictionary *remoteOptions = options ? [self remoteSyncParametersDictionaryForRemote:remote withOptions:options] : nil;
+//    [remote getPostsOfType:postType
+//                   options:remoteOptions
+//                   success:^(NSArray <RemotePost *> *remotePosts) {
+//        [loadedPosts addObjectsFromArray:remotePosts];
+//
+//        if (syncAll && remotePosts.count >= options.number.integerValue) {
+//            [self syncPostsOfType:postType
+//                      withOptions:options
+//                          forBlog:blog
+//                      loadedPosts:loadedPosts
+//                          syncAll:syncAll
+//                          success:success
+//                          failure:failure];
+//        } else {
+//            [self.managedObjectContext performBlock:^{
+//                NSError *error;
+//                Blog *blogInContext = (Blog *)[self.managedObjectContext existingObjectWithID:blogObjectID error:&error];
+//                if (!blogInContext || error) {
+//                    DDLogError(@"Could not retrieve blog in context %@", (error ? [NSString stringWithFormat:@"with error: %@", error] : @""));
+//                    return;
+//                }
+//                NSArray *posts = [PostHelper mergePosts:[loadedPosts copy]
+//                                                 ofType:postType
+//                                           withStatuses:options.statuses
+//                                               byAuthor:options.authorID
+//                                                forBlog:blogInContext
+//                                          purgeExisting:options.purgesLocalSync
+//                                              inContext:self.managedObjectContext];
+//
+//
+//                [[ContextManager sharedInstance] saveContext:self.managedObjectContext withCompletionBlock:^{
+//                    // Call the completion block after context is saved. The callback is called on the context queue because `posts`
+//                    // contains models that are bound to the `self.managedObjectContext` object.
+//                    if (success) {
+//                        [self.managedObjectContext performBlock:^{
+//                            success(posts);
+//                        }];
+//                    }
+//                } onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+//            }];
+//        }
+//    } failure:^(NSError *error) {
+//        if (failure) {
+//            [self.managedObjectContext performBlock:^{
+//                failure(error);
+//            }];
+//        }
+//    }];
 }
 
 #pragma mark - Helpers
