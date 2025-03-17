@@ -37,7 +37,7 @@ extension NSManagedObjectContext {
     ///
     /// - Parameter predicate: Defines the conditions that any given object should meet. Optional.
     ///
-    func allObjects<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate? = nil, sortedBy descriptors: [NSSortDescriptor]? = nil) -> [T] {
+    public func allObjects<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate? = nil, sortedBy descriptors: [NSSortDescriptor]? = nil) -> [T] {
         let request = T.safeFetchRequest()
         request.predicate = predicate
         request.sortDescriptors = descriptors
