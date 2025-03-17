@@ -32,7 +32,7 @@ import UniformTypeIdentifiers
 
 // MARK: - SearchableItemConvertable
 
-@objc protocol SearchableItemConvertable {
+@objc public protocol SearchableItemConvertable {
     /// Identifies the item type this is
     ///
     var searchItemType: SearchItemType {get}
