@@ -1,7 +1,8 @@
 #import <WordPressData/Blog.h>
 #import "WPAccount.h"
 #import "AccountService.h"
-@import CocoaLumberjack;
+// FIXME: Having issues with CocoaLumberjack as a transitive dependency when added to Objective-C files
+//@import CocoaLumberjack;
 @import WordPressKit;
 @import WordPressShared;
 @import SFHFKeychainUtils;

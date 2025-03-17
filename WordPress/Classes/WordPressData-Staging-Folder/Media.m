@@ -1,7 +1,8 @@
 #import "Media.h"
 // FIXME: Why is the module header not generated?
 //#import "WordPressData-Swift.h"
-@import CocoaLumberjack;
+// FIXME: Having issues with CocoaLumberjack as a transitive dependency when added to Objective-C files
+//@import CocoaLumberjack;
 
 @implementation Media
 
