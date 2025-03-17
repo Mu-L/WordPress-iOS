@@ -3,5 +3,5 @@ import CoreData
 
 extension Page {
 
-    @NSManaged var parentID: NSNumber?
+    @NSManaged public var parentID: NSNumber?
 }
