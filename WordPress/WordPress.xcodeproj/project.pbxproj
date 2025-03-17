@@ -966,13 +966,6 @@
 			remoteGlobalIDString = 3F2AA3E22D81457F002A4E94;
 			remoteInfo = WordPressData;
 		};
-		3F2AA3EE2D81457F002A4E94 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
-			remoteInfo = WordPress;
-		};
 		3F2AA3F42D81457F002A4E94 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -5340,7 +5333,6 @@
 			);
 			dependencies = (
 				3F2AA3ED2D81457F002A4E94 /* PBXTargetDependency */,
-				3F2AA3EF2D81457F002A4E94 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				3F2AA3F02D81457F002A4E94 /* WordPressDataTests */,
@@ -7167,11 +7159,6 @@
 			isa = PBXTargetDependency;
 			target = 3F2AA3E22D81457F002A4E94 /* WordPressData */;
 			targetProxy = 3F2AA3EC2D81457F002A4E94 /* PBXContainerItemProxy */;
-		};
-		3F2AA3EF2D81457F002A4E94 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
-			targetProxy = 3F2AA3EE2D81457F002A4E94 /* PBXContainerItemProxy */;
 		};
 		3F2AA3F52D81457F002A4E94 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
