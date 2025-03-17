@@ -35,19 +35,11 @@ extern NSNotificationName const WPAccountEmailAndDefaultBlogUpdatedNotification;
 /**
  Query to check if an email address is paired to a wpcom account. Used in the 
  magic links signup flow.
-
- @param email
- @param success
- @param failure
  */
 - (void)isEmailAvailable:(NSString *)email success:(void (^)(BOOL available))success failure:(void (^)(NSError *error))failure;
 
 /**
  Query to check if a username is available. Used in the signup flow.
- 
- @param email
- @param success
- @param failure
  */
 - (void)isUsernameAvailable:(NSString *)username
                     success:(void (^)(BOOL available))success
@@ -55,9 +47,6 @@ extern NSNotificationName const WPAccountEmailAndDefaultBlogUpdatedNotification;
 
 /**
  Requests a verification email to be sent to the email address associated with the current account.
-
- @param success
- @param failure
  */
 - (void)requestVerificationEmail:(void (^)(void))success
                          failure:(void (^)(NSError *error))failure;
