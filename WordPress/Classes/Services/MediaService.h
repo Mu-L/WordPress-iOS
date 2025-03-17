@@ -68,9 +68,6 @@ typedef NS_ERROR_ENUM(MediaServiceErrorDomain, MediaServiceError) {
  
  The success handler is only called when all updates succeed. Failure is called
  if the entire process fails in some catostrophic way.
- 
- @param mediaObjects An array of media objects to update
- @param success
  */
 - (void)updateMedia:(nonnull NSArray<Media *> *)mediaObjects
      overallSuccess:(nullable void (^)(void))overallSuccess
@@ -81,10 +78,6 @@ typedef NS_ERROR_ENUM(MediaServiceErrorDomain, MediaServiceError) {
  
  The success handler is only called when all updates succeed. Failure is called
  if the entire process fails in some catostrophic way.
- 
- @param mediaObjects An array of media objects to update
- @param fieldsToUpdate Fields to be updated of media objects.
- @param success
  */
 - (void)updateMedia:(nonnull NSArray<Media *> *)mediaObjects
      fieldsToUpdate:(nonnull NSArray<NSString *> *)fieldsToUpdate
@@ -93,10 +86,6 @@ typedef NS_ERROR_ENUM(MediaServiceErrorDomain, MediaServiceError) {
 
 /**
  * Sync all Media objects from the server to local database
- 
- * @param blog
- * @param success a block that will be invoked when the sync succeeds
- * @param failure a block that will be invoked when the sync fails
  */
 - (void)syncMediaLibraryForBlog:(nonnull Blog *)blog
                         success:(nullable void (^)(void))success
