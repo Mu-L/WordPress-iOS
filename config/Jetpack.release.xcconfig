@@ -1,2 +1,1 @@
-BUILD_SCHEME = Jetpack
 WP_PUSH_NOTIFICATION_APP_ID = "com.jetpack.appstore"
