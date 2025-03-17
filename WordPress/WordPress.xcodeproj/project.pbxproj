@@ -2482,6 +2482,7 @@
 				"WordPressData-Staging-Folder/WPAccount.h",
 				"WordPressData-Staging-Folder/WPAccount.m",
 				"WordPressData-Staging-Folder/WPAccount+Lookup.swift",
+				"WordPressData-Staging-Folder/WPAccount+RestApi.swift",
 			);
 			publicHeaders = (
 				"WordPressData-Staging-Folder/AbstractPost.h",
@@ -2546,6 +2547,7 @@
 				"WordPressData-Staging-Folder/UserSettings.swift",
 				"WordPressData-Staging-Folder/WPAccount.m",
 				"WordPressData-Staging-Folder/WPAccount+Lookup.swift",
+				"WordPressData-Staging-Folder/WPAccount+RestApi.swift",
 			);
 			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
 		};
@@ -2601,6 +2603,7 @@
 				"WordPressData-Staging-Folder/UserSettings.swift",
 				"WordPressData-Staging-Folder/WPAccount.m",
 				"WordPressData-Staging-Folder/WPAccount+Lookup.swift",
+				"WordPressData-Staging-Folder/WPAccount+RestApi.swift",
 			);
 			target = FABB1F8F2602FC2C00C8785C /* Jetpack */;
 		};
