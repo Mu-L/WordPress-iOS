@@ -298,7 +298,7 @@ extension ContextManager {
 
 extension ContextManager {
     /// - warning: This is designed to be used only for testing purposes.
-    func resetEverything() {
+    public func resetEverything() {
         let container = persistentContainer.persistentStoreCoordinator
         assert(container.persistentStores.count == 1)
         guard let store = container.persistentStores.first, let storeURL = store.url else {
