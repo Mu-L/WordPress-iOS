@@ -2,7 +2,7 @@
 @import SFHFKeychainUtils;
 @import WordPressKit;
 #import "WPAccount.h"
-#import "Blog.h"
+#import <WordPressData/Blog.h>
 
 @interface WPAccount ()
 

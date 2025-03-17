@@ -2488,9 +2488,12 @@
 				"WordPressData-Staging-Folder/AbstractPost.h",
 				"WordPressData-Staging-Folder/BasePost.h",
 				"WordPressData-Staging-Folder/Blog.h",
+				"WordPressData-Staging-Folder/LocalCoreDataService.h",
 				"WordPressData-Staging-Folder/Media.h",
 				"WordPressData-Staging-Folder/PostCategory.h",
 				"WordPressData-Staging-Folder/PostHelper.h",
+				"WordPressData-Staging-Folder/PostService.h",
+				"WordPressData-Staging-Folder/PostServiceOptions.h",
 				"WordPressData-Staging-Folder/WPAccount.h",
 			);
 			target = 3F2AA3E22D81457F002A4E94 /* WordPressData */;

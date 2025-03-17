@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "LocalCoreDataService.h"
-#import "PostServiceOptions.h"
+#import <WordPressData/LocalCoreDataService.h>
+#import <WordPressData/PostServiceOptions.h>
 
 @class AbstractPost;
 @class Blog;

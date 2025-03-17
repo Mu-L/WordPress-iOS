@@ -1,4 +1,4 @@
-#import "Blog.h"
+#import <WordPressData/Blog.h>
 #import "WPAccount.h"
 #import "AccountService.h"
 @import CocoaLumberjack;
