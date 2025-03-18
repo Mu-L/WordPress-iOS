@@ -53,7 +53,7 @@ private func makeTags(from tags: String) -> [String] {
         .filter { !$0.isEmpty }
 }
 
-extension RemotePostUpdateParameters {
+public extension RemotePostUpdateParameters {
 
     var isEmpty: Bool {
         self == RemotePostUpdateParameters()
@@ -61,7 +61,7 @@ extension RemotePostUpdateParameters {
 
     /// Returns a diff between the original and the latest revision with the
     /// changes applied on top.
-    public static func changes(from original: AbstractPost, to latest: AbstractPost, with changes: RemotePostUpdateParameters? = nil) -> RemotePostUpdateParameters {
+    static func changes(from original: AbstractPost, to latest: AbstractPost, with changes: RemotePostUpdateParameters? = nil) -> RemotePostUpdateParameters {
         guard original !== latest else {
             return changes ?? RemotePostUpdateParameters()
         }

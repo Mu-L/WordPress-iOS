@@ -222,7 +222,7 @@ class PostRepositoryTests: CoreDataTestCase {
 // These mock classes are copied from PostServiceWPComTests. We can't simply remove the `private` in the original class
 // definition, because Xcode would complian about 'WordPress' module not found.
 
-private class PostServiceRemoteFactoryMock: PostServiceRemoteFactory {
+public class PostServiceRemoteFactoryMock: PostServiceRemoteFactory {
     var remoteToReturn: PostServiceRemote?
 
     public override func forBlog(_ blog: Blog) -> PostServiceRemote? {
