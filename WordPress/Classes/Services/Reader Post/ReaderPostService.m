@@ -6,7 +6,6 @@
 #import "ReaderPost.h"
 #import "ReaderSiteService.h"
 #import "SourcePostAttribution.h"
-#import "WPAccount.h"
 #import "WPAppAnalytics.h"
 #import "WordPress-Swift.h"
 

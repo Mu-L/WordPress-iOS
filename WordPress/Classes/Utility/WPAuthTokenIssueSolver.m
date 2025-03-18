@@ -2,7 +2,6 @@
 #import "AccountService.h"
 #import "BlogService.h"
 @import WordPressData;
-#import "WPAccount.h"
 #import "WordPress-Swift.h"
 
 @implementation WPAuthTokenIssueSolver

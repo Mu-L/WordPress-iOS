@@ -1,5 +1,4 @@
 #import "WPError.h"
-#import "WPAccount.h"
 #import "WordPress-Swift.h"
 
 @import WordPressShared;

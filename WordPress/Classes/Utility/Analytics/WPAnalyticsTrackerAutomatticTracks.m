@@ -2,7 +2,6 @@
 @import WordPressData;
 #import "AccountService.h"
 #import "BlogService.h"
-#import "WPAccount.h"
 #import "Blog.h"
 #import "WordPress-Swift.h"
 @import AutomatticTracks;

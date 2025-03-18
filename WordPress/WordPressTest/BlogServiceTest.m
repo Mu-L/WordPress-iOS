@@ -3,7 +3,6 @@
 #import "BlogService.h"
 @import WordPressData;
 #import "Blog.h"
-#import "WPAccount.h"
 #import "WordPressTest-Swift.h"
 
 @import OCMock;

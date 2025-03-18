@@ -3,7 +3,6 @@
 #import "Blog.h"
 @import WordPressData;
 #import "ReaderPost.h"
-#import "WPAccount.h"
 #import "PostService.h"
 #import "AbstractPost.h"
 #import "WordPress-Swift.h"
