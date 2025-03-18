@@ -46,7 +46,7 @@ enum WPActivityUserInfoKeys: String {
     case siteId = "siteid"
 }
 
-@objc protocol SearchableActivityConvertable {
+@objc public protocol SearchableActivityConvertable {
     /// Type name used to uniquly indentify this activity.
     ///
     @objc var activityType: String {get}
@@ -75,7 +75,7 @@ enum WPActivityUserInfoKeys: String {
     @objc optional var activityDescription: String? {get}
 }
 
-extension SearchableActivityConvertable where Self: UIViewController {
+public extension SearchableActivityConvertable where Self: UIViewController {
     internal func registerUserActivity() {
         let activity = NSUserActivity(activityType: activityType)
         activity.title = activityTitle

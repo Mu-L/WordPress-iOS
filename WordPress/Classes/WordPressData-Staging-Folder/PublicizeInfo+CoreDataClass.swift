@@ -22,7 +22,7 @@ import WordPressKit
         return NSEntityDescription.insertNewObject(forEntityName: Self.classNameWithoutNamespaces(), into: context) as? PublicizeInfo
     }
 
-    func configure(with remote: RemotePublicizeInfo) {
+    public func configure(with remote: RemotePublicizeInfo) {
         self.shareLimit = Int64(remote.shareLimit)
         self.toBePublicizedCount = Int64(remote.toBePublicizedCount)
         self.sharedPostsCount = Int64(remote.sharedPostsCount)
