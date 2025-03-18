@@ -60,7 +60,6 @@
 #import "UIApplication+Helpers.h"
 #import "UIView+Subviews.h"
 
-#import "WPAccount.h"
 #import "WPActivityDefaults.h"
 #import "WPAppAnalytics.h"
 #import "WPAuthTokenIssueSolver.h"

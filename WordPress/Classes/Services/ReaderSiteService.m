@@ -4,7 +4,6 @@
 @import WordPressData;
 #import "ReaderPostService.h"
 #import "ReaderPost.h"
-#import "WPAccount.h"
 #import "WordPress-Swift.h"
 #import "WPAppAnalytics.h"
 @import WordPressKit;

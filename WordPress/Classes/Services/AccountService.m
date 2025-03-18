@@ -1,5 +1,4 @@
 #import "AccountService.h"
-#import "WPAccount.h"
 @import WordPressData;
 #import "Blog.h"
 #import "BlogService.h"

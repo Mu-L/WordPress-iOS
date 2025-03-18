@@ -1,7 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "AccountService.h"
 #import "Blog.h"
-#import "WPAccount.h"
+@import WordPressData;
 #import "WordPressTest-Swift.h"
 
 @interface BlogTimeZoneTests : XCTestCase

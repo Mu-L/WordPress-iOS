@@ -1,7 +1,6 @@
 #import "MediaService.h"
 #import "AccountService.h"
 #import "Media.h"
-#import "WPAccount.h"
 @import WordPressData;
 @import WordPressShared;
 #import "Blog.h"

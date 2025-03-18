@@ -7,7 +7,6 @@
 #import "SiteSettingsViewController.h"
 #import "SharingViewController.h"
 #import "StatsViewController.h"
-#import "WPAccount.h"
 #import "WPAppAnalytics.h"
 #import "WordPress-Swift.h"
 #import "MenusViewController.h"

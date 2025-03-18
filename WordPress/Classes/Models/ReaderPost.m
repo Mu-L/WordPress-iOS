@@ -2,7 +2,6 @@
 #import "AccountService.h"
 @import WordPressData;
 #import "SourcePostAttribution.h"
-#import "WPAccount.h"
 #import "WordPress-Swift.h"
 
 @import WordPressShared;
