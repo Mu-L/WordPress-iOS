@@ -1,6 +1,5 @@
 import Foundation
 import CoreData
-import WordPressData
 
 @objc(Comment)
 public class Comment: NSManagedObject {
@@ -18,7 +17,7 @@ public class Comment: NSManagedObject {
     }
 
     @objc func isApproved() -> Bool {
-        return status.isEqual(to: CommentStatusType.approved.description)
+        return status == CommentStatusType.approved.description
     }
 
     private func isReadOnly() -> Bool {
