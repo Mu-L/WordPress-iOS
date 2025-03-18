@@ -40,9 +40,9 @@ public class ManagedDomain: NSManagedObject {
         public static let blog = "blog"
     }
 
-    @NSManaged var domainName: String
-    @NSManaged var isPrimary: Bool
-    @NSManaged var domainType: DomainType
+    @NSManaged public var domainName: String
+    @NSManaged public var isPrimary: Bool
+    @NSManaged public var domainType: DomainType
     @NSManaged var blog: Blog
     @NSManaged var autoRenewing: Bool
     @NSManaged var autoRenewalDate: String

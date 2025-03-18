@@ -3,7 +3,7 @@ import WordPressShared
 
 extension RemotePostCreateParameters {
     /// Initializes the parameters required to create the given post.
-    init(post: AbstractPost) {
+    public init(post: AbstractPost) {
         self.init(
             type: post is Post ? "post" : "page",
             status: (post.status ?? .draft).rawValue
@@ -61,7 +61,7 @@ extension RemotePostUpdateParameters {
 
     /// Returns a diff between the original and the latest revision with the
     /// changes applied on top.
-    static func changes(from original: AbstractPost, to latest: AbstractPost, with changes: RemotePostUpdateParameters? = nil) -> RemotePostUpdateParameters {
+    public static func changes(from original: AbstractPost, to latest: AbstractPost, with changes: RemotePostUpdateParameters? = nil) -> RemotePostUpdateParameters {
         guard original !== latest else {
             return changes ?? RemotePostUpdateParameters()
         }

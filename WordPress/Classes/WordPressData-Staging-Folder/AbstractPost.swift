@@ -240,7 +240,7 @@ public extension AbstractPost {
     }
 }
 
-enum PostVisibility: Identifiable, CaseIterable {
+public enum PostVisibility: Identifiable, CaseIterable {
     case `public`
     case `private`
     case protected
@@ -259,7 +259,7 @@ enum PostVisibility: Identifiable, CaseIterable {
         }
     }
 
-    var id: PostVisibility { self }
+    public var id: PostVisibility { self }
 
     var localizedTitle: String {
         switch self {
