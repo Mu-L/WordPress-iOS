@@ -1,6 +1,6 @@
 import WordPressKit
 
-extension WPAccount {
+public extension WPAccount {
 
     /// A `WordPressRestComApi` object if a default account exists in the giveng `NSManagedObjectContext` and is a WordPress.com account.
     /// Otherwise, it returns `nil`

@@ -5,7 +5,7 @@ import WordPressShared
 
 // MARK: - NSManagedObject Default entityName Helper
 //
-extension NSManagedObject {
+public extension NSManagedObject {
 
     /// Returns the Entity Name, if available, as specified in the NSEntityDescription. Otherwise, will return
     /// the subclass name.
@@ -69,7 +69,7 @@ extension NSManagedObjectContext {
 
     /// Deletes the specified Object Instance
     ///
-    func deleteObject<T: NSManagedObject>(_ object: T) {
+    public func deleteObject<T: NSManagedObject>(_ object: T) {
         delete(object)
     }
 
@@ -99,7 +99,7 @@ extension NSManagedObjectContext {
 
     /// Inserts a new Entity. For performance reasons, this helper *DOES NOT* persists the context.
     ///
-    func insertNewObject<T: NSManagedObject>(ofType type: T.Type) -> T {
+    public func insertNewObject<T: NSManagedObject>(ofType type: T.Type) -> T {
         return NSEntityDescription.insertNewObject(forEntityName: T.entityName(), into: self) as! T
     }
 
@@ -194,7 +194,7 @@ extension ContextManager.ContextManagerError: LocalizedError, CustomDebugStringC
     }
 }
 
-extension CoreDataStack {
+public extension CoreDataStack {
     /// Perform a query using the `mainContext` and return the result.
     ///
     /// - Warning: Do not return `NSManagedObject` instances from the closure.
