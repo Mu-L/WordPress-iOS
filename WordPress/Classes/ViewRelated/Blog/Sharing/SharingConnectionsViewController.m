@@ -1,6 +1,5 @@
 #import "SharingConnectionsViewController.h"
-
-#import "Blog.h"
+@import WordPressData;
 #import "BlogService.h"
 #import "SharingDetailViewController.h"
 #import "SharingAuthorizationHelper.h"

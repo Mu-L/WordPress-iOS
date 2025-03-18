@@ -1,8 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import <XCTest/XCTest.h>
-#import "Blog.h"
-#import "AbstractPost.h"
+@import WordPressData;
 
 @interface CoreDataMigrationTests : XCTestCase
 

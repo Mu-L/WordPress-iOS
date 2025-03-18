@@ -1,9 +1,7 @@
 #import "MediaService.h"
 #import "AccountService.h"
-#import "Media.h"
 @import WordPressData;
 @import WordPressShared;
-#import "Blog.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "WordPress-Swift.h"
 

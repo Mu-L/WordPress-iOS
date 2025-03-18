@@ -1,9 +1,9 @@
 #import <XCTest/XCTest.h>
 #import "MenusService.h"
-#import "Blog.h"
 #import "Menu.h"
 #import "MenuLocation.h"
 #import "MenuItem.h"
+@import WordPressData;
 #import "WordPressTest-Swift.h"
 
 @import OCMock;

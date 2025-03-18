@@ -1,5 +1,5 @@
 #import "CommentsViewController.h"
-#import "Blog.h"
+@import WordPressData;
 #import "WordPress-Swift.h"
 #import "WPTableViewHandler.h"
 

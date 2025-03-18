@@ -1,8 +1,8 @@
 #import "MenuDetailsViewController.h"
 #import "Menu.h"
 #import "Menu+ViewDesign.h"
-#import "Blog.h"
 #import "WPAppAnalytics.h"
+@import WordPressData;
 #import "WordPress-Swift.h"
 
 @import WordPressShared;
