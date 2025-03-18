@@ -4,11 +4,11 @@ import WordPressKit
 
 // MARK: - Reflects the user's Account Settings, as stored in Core Data.
 //
-class ManagedAccountSettings: NSManagedObject {
+public class ManagedAccountSettings: NSManagedObject {
 
     // MARK: - NSManagedObject
 
-    override class func entityName() -> String {
+    public override class func entityName() -> String {
         return "AccountSettings"
     }
 

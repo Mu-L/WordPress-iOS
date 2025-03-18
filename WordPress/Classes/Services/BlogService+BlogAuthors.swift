@@ -1,4 +1,5 @@
 import Foundation
+import WordPressData
 
 extension BlogService {
     /// Synchronizes authors for a `Blog` from an array of `RemoteUser`s.

@@ -89,7 +89,7 @@ extension NSManagedObjectContext {
     ///
     /// - Parameter predicate: Defines the conditions that any given object should meet.
     ///
-    func firstObject<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate) -> T? {
+    public func firstObject<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate) -> T? {
         let request = T.safeFetchRequest()
         request.predicate = predicate
         request.fetchLimit = 1
@@ -125,7 +125,7 @@ extension NSManagedObjectContext {
     ///   - type: Type of the Entity
     ///   - predicate: A predicate used to fetch a stored Entity
     /// - Returns: A valid Entity
-    func entity<Entity: NSManagedObject>(of type: Entity.Type, with predicate: NSPredicate) -> Entity {
+    public func entity<Entity: NSManagedObject>(of type: Entity.Type, with predicate: NSPredicate) -> Entity {
         guard let entity = firstObject(ofType: type, matching: predicate) else {
             return insertNewObject(ofType: type)
         }

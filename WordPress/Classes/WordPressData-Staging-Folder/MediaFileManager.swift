@@ -13,11 +13,11 @@ public enum MediaDirectory {
     case temporary(id: UUID)
 
     /// Use a new ID for every test scenario to make sure all tests are isolated.
-    static var temporary: MediaDirectory { .temporary(id: UUID()) }
+    public static var temporary: MediaDirectory { .temporary(id: UUID()) }
 
     /// Returns the directory URL for the directory type.
     ///
-    var url: URL {
+    public var url: URL {
         let fileManager = FileManager.default
         // Get a parent directory, based on the type.
         let parentDirectory: URL
@@ -66,7 +66,7 @@ public class MediaFileManager: NSObject {
     ///   We shouldn't change this default directory lightly as older versions of the app may rely on Media files being in
     ///   the documents directory for upload.
     ///
-    init(directory: MediaDirectory = .uploads) {
+    public init(directory: MediaDirectory = .uploads) {
         self.directory = directory
     }
 
@@ -92,7 +92,7 @@ public class MediaFileManager: NSObject {
     /// - Note: if a file already exists with the same name, the file name is appended with a number
     ///   and incremented until a unique filename is found.
     ///
-    @objc func makeLocalMediaURL(withFilename filename: String, fileExtension: String?, incremented: Bool = true) throws -> URL {
+    @objc public func makeLocalMediaURL(withFilename filename: String, fileExtension: String?, incremented: Bool = true) throws -> URL {
         let baseURL = try directoryURL()
         var url: URL
         if let fileExtension {
@@ -208,7 +208,7 @@ public class MediaFileManager: NSObject {
 
     /// Helper method for clearing the Media cache directory.
     ///
-    @objc class func clearAllMediaCacheFiles(onCompletion: (() -> Void)?, onError: ((Error) -> Void)?) {
+    @objc public class func clearAllMediaCacheFiles(onCompletion: (() -> Void)?, onError: ((Error) -> Void)?) {
         let cacheManager = MediaFileManager(directory: .cache)
         cacheManager.clearFilesFromDirectory(onCompletion: {
             MediaFileManager.clearUnusedMediaUploadFiles(onCompletion: onCompletion, onError: onError)
