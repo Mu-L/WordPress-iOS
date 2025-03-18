@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class UserSuggestion;
 @class SiteSuggestion;
 @class PageTemplateCategory;
+// FIXME: Try to remove this once you get to a green build on WordPress/Jetpack
 @class JetpackFeaturesRemovalCoordinator;
 @class PublicizeInfo;
 
