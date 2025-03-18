@@ -30,7 +30,7 @@ import WordPressKit
     }
 
     /// A value-type representation for Publicize auto-sharing usage.
-    struct SharingLimit {
+    public struct SharingLimit {
         /// The remaining shares available for use.
         let remaining: Int
 
