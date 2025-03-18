@@ -42,7 +42,7 @@ extension WPActivityType {
 
 /// NSUserActivity userInfo keys
 ///
-enum WPActivityUserInfoKeys: String {
+public enum WPActivityUserInfoKeys: String {
     case siteId = "siteid"
 }
 

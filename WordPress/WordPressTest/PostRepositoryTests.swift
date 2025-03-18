@@ -225,11 +225,11 @@ class PostRepositoryTests: CoreDataTestCase {
 private class PostServiceRemoteFactoryMock: PostServiceRemoteFactory {
     var remoteToReturn: PostServiceRemote?
 
-    override func forBlog(_ blog: Blog) -> PostServiceRemote? {
+    public override func forBlog(_ blog: Blog) -> PostServiceRemote? {
         return remoteToReturn
     }
 
-    override func restRemoteFor(siteID: NSNumber, context: NSManagedObjectContext) -> PostServiceRemoteREST? {
+    public override func restRemoteFor(siteID: NSNumber, context: NSManagedObjectContext) -> PostServiceRemoteREST? {
         return remoteToReturn as? PostServiceRemoteREST
     }
 }
