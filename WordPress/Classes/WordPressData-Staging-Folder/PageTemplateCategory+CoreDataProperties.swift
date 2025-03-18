@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public extension PageTemplateCategory {
+extension PageTemplateCategory {
 
     @nonobjc public class func fetchRequest(forBlog blog: Blog, categorySlugs: [String]) -> NSFetchRequest<PageTemplateCategory> {
         let request = NSFetchRequest<PageTemplateCategory>(entityName: "PageTemplateCategory")
