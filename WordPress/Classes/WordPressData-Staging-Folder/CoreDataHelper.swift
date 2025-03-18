@@ -390,7 +390,7 @@ public extension CoreDataStack {
 ///     return account.username
 /// }
 /// ```
-extension CoreDataStack {
+public extension CoreDataStack {
     @available(*, deprecated, message: "Returning `NSManagedObject` instances may introduce Core Data concurrency issues.")
     func performQuery<T>(_ block: @escaping (NSManagedObjectContext) -> T) -> T where T: NSManagedObject {
         mainContext.performAndWait { [mainContext] in

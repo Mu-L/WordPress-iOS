@@ -96,7 +96,7 @@ public class ManagedAccountSettings: NSManagedObject {
 }
 
 extension AccountSettings {
-    init(managed: ManagedAccountSettings) {
+    public init(managed: ManagedAccountSettings) {
         self.init(firstName: managed.firstName.stringByDecodingXMLCharacters(),
                   lastName: managed.lastName.stringByDecodingXMLCharacters(),
                   displayName: managed.displayName.stringByDecodingXMLCharacters(),
