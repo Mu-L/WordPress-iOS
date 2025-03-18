@@ -21,5 +21,5 @@ extension ManagedAccountSettings {
     @NSManaged var blockEmailNotifications: Bool
     @NSManaged var twoStepEnabled: Bool
 
-    @NSManaged var account: WPAccount
+    @NSManaged public var account: WPAccount
 }

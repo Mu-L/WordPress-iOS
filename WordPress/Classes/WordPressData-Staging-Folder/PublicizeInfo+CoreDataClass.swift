@@ -10,7 +10,7 @@ import WordPressKit
 ///
 @objc public class PublicizeInfo: NSManagedObject {
 
-    var sharingLimit: SharingLimit {
+    public var sharingLimit: SharingLimit {
         SharingLimit(remaining: Int(sharesRemaining), limit: Int(shareLimit))
     }
 
