@@ -108,7 +108,7 @@ public extension AbstractPost {
 
         /// The keyPath to access the underlying property.
         ///
-        var keyPath: String {
+        public var keyPath: String {
             switch self {
             case .dateCreated:
                 return #keyPath(AbstractPost.date_created_gmt)

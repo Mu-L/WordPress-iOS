@@ -1,5 +1,7 @@
 import UIKit
 import SVProgressHUD
+import WordPressData
+import WordPressShared
 import WordPressUI
 
 /// Allows the user to Invite Followers / Users
