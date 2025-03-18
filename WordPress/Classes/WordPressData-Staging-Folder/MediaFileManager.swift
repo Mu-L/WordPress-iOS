@@ -190,7 +190,7 @@ public class MediaFileManager: NSObject {
 
     /// Helper method for clearing unused Media upload files.
     ///
-    @objc class func clearUnusedMediaUploadFiles(onCompletion: (() -> Void)?, onError: ((Error) -> Void)?) {
+    @objc public class func clearUnusedMediaUploadFiles(onCompletion: (() -> Void)?, onError: ((Error) -> Void)?) {
         MediaFileManager.default.clearUnusedFilesFromDirectory(onCompletion: onCompletion, onError: onError)
     }
 

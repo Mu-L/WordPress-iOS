@@ -12,7 +12,7 @@ public class ManagedAccountSettings: NSManagedObject {
         return "AccountSettings"
     }
 
-    func updateWith(_ accountSettings: AccountSettings) {
+    public func updateWith(_ accountSettings: AccountSettings) {
         firstName = accountSettings.firstName
         lastName = accountSettings.lastName
         displayName = accountSettings.displayName
@@ -38,7 +38,7 @@ public class ManagedAccountSettings: NSManagedObject {
     ///
     /// - Returns: the change object needed to revert this change
     ///
-    func applyChange(_ change: AccountSettingsChange) -> AccountSettingsChange {
+    public func applyChange(_ change: AccountSettingsChange) -> AccountSettingsChange {
         let reverse = reverseChange(change)
 
         switch change {
