@@ -2,8 +2,8 @@
 #import "MenuItemSourceTextBar.h"
 #import "Menu.h"
 #import "MenuItemSourceFooterView.h"
-#import "Blog.h"
 #import "Menu+ViewDesign.h"
+@import WordPressData;
 #import "WordPress-Swift.h"
 
 @import WordPressShared;

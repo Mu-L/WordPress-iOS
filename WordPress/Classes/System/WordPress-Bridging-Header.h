@@ -3,7 +3,6 @@
 #import "ActivityLogViewController.h"
 #import "AccountService.h"
 
-#import "Blog.h"
 #import "BlogService.h"
 #import "BlogSyncFacade.h"
 #import "BlogDetailsViewController.h"

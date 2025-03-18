@@ -1,8 +1,8 @@
 #import "MenuItemTypeViewController.h"
 #import "MenuItemTypeSelectionView.h"
 #import "BlogService.h"
-#import "Blog.h"
 #import "PostType.h"
+@import WordPressData;
 #import "WordPress-Swift.h"
 
 @interface MenuItemTypeViewController () <MenuItemTypeViewDelegate>

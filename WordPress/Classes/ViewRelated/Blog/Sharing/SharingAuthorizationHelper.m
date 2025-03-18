@@ -1,7 +1,7 @@
 #import "SharingAuthorizationHelper.h"
-
-#import "Blog.h"
 #import "BlogService.h"
+#import "SVProgressHUD+Dismiss.h"
+@import WordPressData;
 
 #import "WordPress-Swift.h"
 
@@ -207,7 +207,7 @@
                                    fromViewController:weakSelf.navController];
             return;
         }
-        
+
         [weakSelf showAccountSelectorForKeyrings:marr];
     } failure:^(NSError * __unused error) {
         if ([self.delegate respondsToSelector:@selector(sharingAuthorizationHelper:keyringFetchFailedForService:)]) {
