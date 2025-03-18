@@ -32,9 +32,9 @@ import WordPressKit
     /// A value-type representation for Publicize auto-sharing usage.
     public struct SharingLimit {
         /// The remaining shares available for use.
-        let remaining: Int
+        public let remaining: Int
 
         /// Maximum number of shares allowed for the site.
-        let limit: Int
+        public let limit: Int
     }
 }

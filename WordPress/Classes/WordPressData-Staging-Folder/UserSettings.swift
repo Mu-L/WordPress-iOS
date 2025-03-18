@@ -20,10 +20,10 @@ public struct UserSettings {
     public static var userHasOptedOutOfCrashLogging: Bool
 
     @UserDefault(Keys.forceCrashLoggingKey.rawValue, defaultValue: false)
-    static var userHasForcedCrashLoggingEnabled: Bool
+    public static var userHasForcedCrashLoggingEnabled: Bool
 
     @NullableUserDefault(Keys.defaultDotComUUIDKey.rawValue)
-    static var defaultDotComUUID: String?
+    public static var defaultDotComUUID: String?
 
     /// Reset all UserSettings back to their defaults
     static func reset() {
@@ -69,14 +69,14 @@ public struct UserDefault<T> {
 
 /// A property wrapper for optional UserDefaults that return `nil` by default
 @propertyWrapper
-struct NullableUserDefault<T> {
+public struct NullableUserDefault<T> {
     let key: String
 
     init(_ key: String) {
         self.key = key
     }
 
-    var wrappedValue: T? {
+    public var wrappedValue: T? {
         get {
             return UserPersistentStoreFactory.instance().object(forKey: key) as? T
         }

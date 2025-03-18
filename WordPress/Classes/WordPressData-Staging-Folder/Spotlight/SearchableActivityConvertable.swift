@@ -78,7 +78,7 @@ public enum WPActivityUserInfoKeys: String {
 import UIKit
 
 public extension SearchableActivityConvertable where Self: UIViewController {
-    internal func registerUserActivity() {
+    func registerUserActivity() {
         let activity = NSUserActivity(activityType: activityType)
         activity.title = activityTitle
 

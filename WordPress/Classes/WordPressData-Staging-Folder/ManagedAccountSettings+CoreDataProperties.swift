@@ -19,7 +19,7 @@ extension ManagedAccountSettings {
     @NSManaged var language: String
     @NSManaged var tracksOptOut: Bool
     @NSManaged var blockEmailNotifications: Bool
-    @NSManaged var twoStepEnabled: Bool
+    @NSManaged public var twoStepEnabled: Bool
 
     @NSManaged public var account: WPAccount
 }

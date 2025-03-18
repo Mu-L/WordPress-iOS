@@ -37,7 +37,7 @@ public extension Blog {
     }
 
     /// Returns an human readable message indicating the percentage of disk quota space available in regard to the maximum allowed.Ex: 10% of 15 GB used
-    @objc var quotaUsageDescription: String? {
+    @objc public var quotaUsageDescription: String? {
         guard isQuotaAvailable, let quotaPercentageUsedDescription = self.quotaPercentageUsedDescription, let quotaSpaceAllowedDescription = self.quotaSpaceAllowedDescription else {
             return nil
         }
