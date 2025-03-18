@@ -1,7 +1,7 @@
 import Foundation
 import WordPressShared
 
-struct UserSettings {
+public struct UserSettings {
     /// Stores all `UserSettings` keys.
     ///
     /// The additional level of indirection allows these keys to be retrieved from tests.
@@ -10,14 +10,14 @@ struct UserSettings {
     ///
     /// Any change to these keys is a breaking change without some kind of migration.
     /// It's probably best never to change them.
-    enum Keys: String, CaseIterable {
+    public enum Keys: String, CaseIterable {
         case crashLoggingOptOutKey = "crashlytics_opt_out"
         case forceCrashLoggingKey = "force-crash-logging"
         case defaultDotComUUIDKey = "AccountDefaultDotcomUUID"
     }
 
     @UserDefault(Keys.crashLoggingOptOutKey.rawValue, defaultValue: false)
-    static var userHasOptedOutOfCrashLogging: Bool
+    public static var userHasOptedOutOfCrashLogging: Bool
 
     @UserDefault(Keys.forceCrashLoggingKey.rawValue, defaultValue: false)
     static var userHasForcedCrashLoggingEnabled: Bool
@@ -48,7 +48,7 @@ class ObjcCUserSettings: NSObject {
 
 /// A property wrapper for UserDefaults access
 @propertyWrapper
-struct UserDefault<T> {
+public struct UserDefault<T> {
     let key: String
     let defaultValue: T
 
@@ -57,7 +57,7 @@ struct UserDefault<T> {
         self.defaultValue = defaultValue
     }
 
-    var wrappedValue: T {
+    public var wrappedValue: T {
         get {
             return UserPersistentStoreFactory.instance().object(forKey: key) as? T ?? defaultValue
         }

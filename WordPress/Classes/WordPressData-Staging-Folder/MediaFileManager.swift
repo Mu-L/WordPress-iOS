@@ -4,7 +4,7 @@ import WordPressShared
 
 /// Type of the local Media directory URL in implementation.
 ///
-enum MediaDirectory {
+public enum MediaDirectory {
     /// Default, system Documents directory, for persisting media files for upload.
     case uploads
     /// System Caches directory, for creating discardable media files, such as thumbnails.
@@ -36,7 +36,7 @@ enum MediaDirectory {
 /// Encapsulates Media functions relative to the local Media directory.
 ///
 @objc
-class MediaFileManager: NSObject {
+public class MediaFileManager: NSObject {
 
     fileprivate static let mediaDirectoryName = "Media"
 
@@ -109,7 +109,7 @@ class MediaFileManager: NSObject {
 
     /// Objc friendly signature without specifying the `incremented` parameter.
     ///
-    @objc func makeLocalMediaURL(withFilename filename: String, fileExtension: String?) throws -> URL {
+    @objc public func makeLocalMediaURL(withFilename filename: String, fileExtension: String?) throws -> URL {
         return try makeLocalMediaURL(withFilename: filename, fileExtension: fileExtension, incremented: true)
     }
 

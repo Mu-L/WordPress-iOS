@@ -118,7 +118,7 @@ extension AbstractPost {
         }
     }
 
-    @objc func containsGutenbergBlocks() -> Bool {
+    @objc public func containsGutenbergBlocks() -> Bool {
         return content?.contains("<!-- wp:") ?? false
     }
 

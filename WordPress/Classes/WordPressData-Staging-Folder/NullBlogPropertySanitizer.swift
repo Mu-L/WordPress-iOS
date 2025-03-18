@@ -33,7 +33,7 @@ import WordPressShared
 
         store.set(currentBuildVersion(), forKey: Self.lastSanitizationVersionNumber)
 
-        let entityNamesWithRequiredBlogProperties = [
+        let entityNamesWithRequiredBlogProperties: [String] = [
             Post.entityName(),
             Page.entityName(),
             Media.entityName(),
