@@ -31,13 +31,13 @@ public extension NSManagedObject {
 
 // MARK: - NSManagedObjectContext Helpers!
 //
-extension NSManagedObjectContext {
+public extension NSManagedObjectContext {
 
     /// Returns all of the entities that match with a given predicate.
     ///
     /// - Parameter predicate: Defines the conditions that any given object should meet. Optional.
     ///
-    public func allObjects<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate? = nil, sortedBy descriptors: [NSSortDescriptor]? = nil) -> [T] {
+    func allObjects<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate? = nil, sortedBy descriptors: [NSSortDescriptor]? = nil) -> [T] {
         let request = T.safeFetchRequest()
         request.predicate = predicate
         request.sortDescriptors = descriptors
@@ -69,7 +69,7 @@ extension NSManagedObjectContext {
 
     /// Deletes the specified Object Instance
     ///
-    public func deleteObject<T: NSManagedObject>(_ object: T) {
+    func deleteObject<T: NSManagedObject>(_ object: T) {
         delete(object)
     }
 
@@ -89,7 +89,7 @@ extension NSManagedObjectContext {
     ///
     /// - Parameter predicate: Defines the conditions that any given object should meet.
     ///
-    public func firstObject<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate) -> T? {
+    func firstObject<T: NSManagedObject>(ofType type: T.Type, matching predicate: NSPredicate) -> T? {
         let request = T.safeFetchRequest()
         request.predicate = predicate
         request.fetchLimit = 1
@@ -99,7 +99,7 @@ extension NSManagedObjectContext {
 
     /// Inserts a new Entity. For performance reasons, this helper *DOES NOT* persists the context.
     ///
-    public func insertNewObject<T: NSManagedObject>(ofType type: T.Type) -> T {
+    func insertNewObject<T: NSManagedObject>(ofType type: T.Type) -> T {
         return NSEntityDescription.insertNewObject(forEntityName: T.entityName(), into: self) as! T
     }
 
@@ -125,7 +125,7 @@ extension NSManagedObjectContext {
     ///   - type: Type of the Entity
     ///   - predicate: A predicate used to fetch a stored Entity
     /// - Returns: A valid Entity
-    public func entity<Entity: NSManagedObject>(of type: Entity.Type, with predicate: NSPredicate) -> Entity {
+    func entity<Entity: NSManagedObject>(of type: Entity.Type, with predicate: NSPredicate) -> Entity {
         guard let entity = firstObject(ofType: type, matching: predicate) else {
             return insertNewObject(ofType: type)
         }

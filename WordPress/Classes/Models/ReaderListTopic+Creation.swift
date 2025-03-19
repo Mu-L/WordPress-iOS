@@ -1,4 +1,4 @@
-import Foundation
+import WordPressData
 import WordPressShared
 
 extension ReaderListTopic {
