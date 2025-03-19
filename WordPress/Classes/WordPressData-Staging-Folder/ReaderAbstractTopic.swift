@@ -3,8 +3,7 @@ import CoreData
 
 @objc open class ReaderAbstractTopic: NSManagedObject {
     // Relations
-    // FIXME:
-//    @NSManaged open var posts: [ReaderPost]
+    @NSManaged open var posts: [ReaderPost]
 
     // Properties
     @NSManaged open var inUse: Bool

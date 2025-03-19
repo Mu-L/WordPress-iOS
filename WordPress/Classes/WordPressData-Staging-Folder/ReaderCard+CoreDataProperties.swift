@@ -8,8 +8,7 @@ extension ReaderCard {
     }
 
     @NSManaged public var sortRank: Double
-    // FIXME:
-//    @NSManaged public var post: ReaderPost?
+    @NSManaged public var post: ReaderPost?
     @NSManaged public var topics: NSOrderedSet?
     @NSManaged public var sites: NSOrderedSet?
 
