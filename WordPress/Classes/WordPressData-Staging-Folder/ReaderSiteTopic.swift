@@ -32,11 +32,11 @@ import Foundation
         }
     }
 
-    var organizationType: SiteOrganizationType {
+    public var organizationType: SiteOrganizationType {
         SiteOrganizationType(rawValue: organizationID) ?? .none
     }
 
-    var isP2Type: Bool {
+    public var isP2Type: Bool {
         return organizationType == .p2 || organizationType == .automattic
     }
 
