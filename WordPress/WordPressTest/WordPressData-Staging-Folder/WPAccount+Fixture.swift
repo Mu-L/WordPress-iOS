@@ -1,3 +1,5 @@
+import WordPressData
+
 /// Centralized utility to generate preconfigured WPAccount instances
 extension WPAccount {
 

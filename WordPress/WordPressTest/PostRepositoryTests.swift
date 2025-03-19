@@ -1,4 +1,4 @@
-import WordPressData
+@preconcurrency @testable import WordPressData
 import XCTest
 
 @testable import WordPress

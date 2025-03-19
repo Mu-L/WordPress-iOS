@@ -1,4 +1,5 @@
 #import <XCTest/XCTest.h>
+@import WordPressData; // FIXME: Easy port to Swift
 
 @interface UserSettingsTestsObjc : XCTestCase
 

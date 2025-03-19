@@ -33,15 +33,16 @@ public struct UserSettings {
 
 /// Objective-C Wrapper for UserSettings
 @objc(UserSettings)
-class ObjcCUserSettings: NSObject {
+// FIXME: public access-level required only for the unit tests, which means that this is unused in prod. Let's migrate those tests soon!
+public class ObjcCUserSettings: NSObject {
     @objc
-    static var defaultDotComUUID: String? {
+    public static var defaultDotComUUID: String? {
         get { UserSettings.defaultDotComUUID }
         set { UserSettings.defaultDotComUUID = newValue }
     }
 
     @objc
-    static func reset() {
+    public static func reset() {
         UserSettings.reset()
     }
 }

@@ -1,6 +1,7 @@
 import XCTest
 import WordPressAPI
-@testable import WordPress
+@testable import WordPress // FIXME: The logic tested here is in Blog+SelfHosted
+@testable import WordPressData
 
 final class Blog_RestAPITests: CoreDataTestCase {
     let loginDetails = WpApiApplicationPasswordDetails(

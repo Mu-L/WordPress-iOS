@@ -1,6 +1,6 @@
 import Foundation
 
-@testable import WordPress
+@testable import WordPressData
 
 /// Builds a Post
 ///

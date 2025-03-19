@@ -2,7 +2,7 @@ import WordPressShared
 import XCTest
 import Nimble
 
-@testable import WordPress
+@testable import WordPressData
 
 class NullBlogPropertySanitizerTests: CoreDataTestCase {
     private var keyValueDatabase: StubKeyValueDatabase!

@@ -1,7 +1,7 @@
 import Foundation
 import XCTest
-
-@testable import WordPress
+@testable import WordPress // FIXME: BlogSettings+Discussion is not in WordPressData yet
+@testable import WordPressData
 
 class BlogSettingsDiscussionTests: CoreDataTestCase {
     func testCommentsAutoapprovalDisabledEnablesManualModerationFlag() {

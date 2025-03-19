@@ -1,5 +1,5 @@
 import XCTest
-@testable import WordPress
+@testable import WordPressData
 @testable import WordPressShared
 
 class SharedDataIssueSolverTests: XCTestCase {
