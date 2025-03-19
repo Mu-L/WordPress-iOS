@@ -2283,22 +2283,22 @@
 		3F2AA3FF2D81457F002A4E94 /* Exceptions for "WordPressData" folder in "WordPressData" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
-				AbstractPost.h,
-				BasePost.h,
-				Blog.h,
-				include/CoreDataService.h,
-				include/CoreDataStack.h,
-				include/PostContentProvider.h,
-				LocalCoreDataService.h,
-				Media.h,
-				PostCategory.h,
-				PostHelper.h,
-				PostService.h,
-				PostServiceOptions.h,
-				ReaderPost.h,
-				SourcePostAttribution.h,
+				"Objective-C/include/AbstractPost.h",
+				"Objective-C/include/BasePost.h",
+				"Objective-C/include/Blog.h",
+				"Objective-C/include/CoreDataService.h",
+				"Objective-C/include/CoreDataStack.h",
+				"Objective-C/include/LocalCoreDataService.h",
+				"Objective-C/include/Media.h",
+				"Objective-C/include/PostCategory.h",
+				"Objective-C/include/PostContentProvider.h",
+				"Objective-C/include/PostHelper.h",
+				"Objective-C/include/PostService.h",
+				"Objective-C/include/PostServiceOptions.h",
+				"Objective-C/include/ReaderPost.h",
+				"Objective-C/include/SourcePostAttribution.h",
+				"Objective-C/include/WPAccount.h",
 				WordPressData.h,
-				WPAccount.h,
 			);
 			target = 3F2AA3E22D81457F002A4E94 /* WordPressData */;
 		};
