@@ -51,7 +51,7 @@ public class Comment: NSManagedObject {
     }
 
     @objc func deleteWillBePermanent() -> Bool {
-        return status.isEqual(to: Comment.descriptionFor(.spam)) || status.isEqual(to: Comment.descriptionFor(.unapproved))
+        return status == Comment.descriptionFor(.spam) || status == Comment.descriptionFor(.unapproved)
     }
 
     func canEditAuthorData() -> Bool {
@@ -66,9 +66,10 @@ public class Comment: NSManagedObject {
     /// Convenience method to check if the current user can actually moderate.
     /// `canModerate` is only applicable when the site is dotcom-related (hosted or atomic). For self-hosted sites, default to true.
     @objc func allowsModeration() -> Bool {
-        if let _ = post as? ReaderPost {
-            return canModerate
-        }
+        // FIXME:
+//        if let _ = post as? ReaderPost {
+//            return canModerate
+//        }
 
         guard let blog, blog.isHostedAtWPcom || blog.isAtomic() else {
             return true
@@ -77,22 +78,26 @@ public class Comment: NSManagedObject {
     }
 
     func canReply() -> Bool {
-        if let post = post as? ReaderPost {
-            return post.commentsOpen
-        }
-        return !isReadOnly()
+        // FIXME:
+//        if let post = post as? ReaderPost {
+//            return post.commentsOpen
+//        }
+//        return !isReadOnly()
+        return false
     }
 
     // NOTE: Comment Likes could be disabled, but the API doesn't have that info yet. Let's update this once it's available.
     func canLike() -> Bool {
-        if (post as? ReaderPost) != nil {
-            return true
-        }
-        guard let blog else {
-            // Disable likes feature for self-hosted sites.
-            return false
-        }
-        return !isReadOnly() && blog.supports(.commentLikes)
+        // FIXME:
+//        if (post as? ReaderPost) != nil {
+//            return true
+//        }
+//        guard let blog else {
+//            // Disable likes feature for self-hosted sites.
+//            return false
+//        }
+//        return !isReadOnly() && blog.supports(.commentLikes)
+        return false
     }
 
     @objc func isTopLevelComment() -> Bool {

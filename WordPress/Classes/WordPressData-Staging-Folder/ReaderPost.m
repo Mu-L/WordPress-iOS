@@ -1,8 +1,6 @@
 #import "ReaderPost.h"
-@import WordPressData;
 #import "SourcePostAttribution.h"
-#import "WordPress-Swift.h"
-
+@import WordPressKit;
 @import WordPressShared;
 
 // These keys are used in the getStoredComment method
@@ -130,45 +128,48 @@ static NSString * const SourceAttributionStandardTaxonomy = @"standard-pick";
     post.canSubscribeComments = remotePost.canSubscribeComments;
     post.receivesCommentNotifications = remotePost.receivesCommentNotifications;
 
-    if (existing && [topic isKindOfClass:[ReaderSearchTopic class]]) {
-        // Failsafe.  The `read/search` endpoint might return the same post on
-        // more than one page. If this happens preserve the *original* sortRank
-        // to avoid content jumping around in the UI.
-    } else {
-        post.sortRank = remotePost.sortRank;
-    }
-
-    post.status = remotePost.status;
+    // FIXME: Disabled to experiment with a compilation error
+//    if (existing && [topic isKindOfClass:[ReaderSearchTopic class]]) {
+//        // Failsafe.  The `read/search` endpoint might return the same post on
+//        // more than one page. If this happens preserve the *original* sortRank
+//        // to avoid content jumping around in the UI.
+//    } else {
+//        post.sortRank = remotePost.sortRank;
+//    }
+//
+//    post.status = remotePost.status;
     post.summary = remotePost.summary;
     post.tags = remotePost.tags;
     post.isSharingEnabled = remotePost.isSharingEnabled;
     post.isLikesEnabled = remotePost.isLikesEnabled;
     post.isSiteBlocked = NO;
 
-    if (remotePost.crossPostMeta) {
-        if (!post.crossPostMeta) {
-            ReaderCrossPostMeta *meta = (ReaderCrossPostMeta *)[NSEntityDescription insertNewObjectForEntityForName:[ReaderCrossPostMeta classNameWithoutNamespaces]
-                                                                                     inManagedObjectContext:managedObjectContext];
-            post.crossPostMeta = meta;
-        }
-        post.crossPostMeta.siteURL = remotePost.crossPostMeta.siteURL;
-        post.crossPostMeta.postURL = remotePost.crossPostMeta.postURL;
-        post.crossPostMeta.commentURL = remotePost.crossPostMeta.commentURL;
-        post.crossPostMeta.siteID = remotePost.crossPostMeta.siteID;
-        post.crossPostMeta.postID = remotePost.crossPostMeta.postID;
-    } else {
-        post.crossPostMeta = nil;
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    if (remotePost.crossPostMeta) {
+//        if (!post.crossPostMeta) {
+//            ReaderCrossPostMeta *meta = (ReaderCrossPostMeta *)[NSEntityDescription insertNewObjectForEntityForName:[ReaderCrossPostMeta classNameWithoutNamespaces]
+//                                                                                     inManagedObjectContext:managedObjectContext];
+//            post.crossPostMeta = meta;
+//        }
+//        post.crossPostMeta.siteURL = remotePost.crossPostMeta.siteURL;
+//        post.crossPostMeta.postURL = remotePost.crossPostMeta.postURL;
+//        post.crossPostMeta.commentURL = remotePost.crossPostMeta.commentURL;
+//        post.crossPostMeta.siteID = remotePost.crossPostMeta.siteID;
+//        post.crossPostMeta.postID = remotePost.crossPostMeta.postID;
+//    } else {
+//        post.crossPostMeta = nil;
+//    }
 
     NSString *tag = remotePost.primaryTag;
     NSString *slug = remotePost.primaryTagSlug;
-    if ([topic isKindOfClass:[ReaderTagTopic class]]) {
-        ReaderTagTopic *tagTopic = (ReaderTagTopic *)topic;
-        if ([tagTopic.slug isEqualToString:remotePost.primaryTagSlug]) {
-            tag = remotePost.secondaryTag;
-            slug = remotePost.secondaryTagSlug;
-        }
-    }
+    // FIXME: Disabled to experiment with a compilation error
+//    if ([topic isKindOfClass:[ReaderTagTopic class]]) {
+//        ReaderTagTopic *tagTopic = (ReaderTagTopic *)topic;
+//        if ([tagTopic.slug isEqualToString:remotePost.primaryTagSlug]) {
+//            tag = remotePost.secondaryTag;
+//            slug = remotePost.secondaryTagSlug;
+//        }
+//    }
     post.primaryTag = tag;
     post.primaryTagSlug = slug;
 
@@ -241,7 +242,9 @@ static NSString * const SourceAttributionStandardTaxonomy = @"standard-pick";
 - (BOOL)isP2Type
 {
     NSInteger orgID = [self.organizationID intValue];
-    return orgID == SiteOrganizationTypeP2 || orgID == SiteOrganizationTypeAutomattic;
+    // FIXME: Disabled to experiment with a compilation error
+//    return orgID == SiteOrganizationTypeP2 || orgID == SiteOrganizationTypeAutomattic;
+    return NO;
 }
 
 - (NSString *)authorString
@@ -414,8 +417,9 @@ static NSString * const SourceAttributionStandardTaxonomy = @"standard-pick";
     // A ReaderCard can have either a post, or a list of topics, but not both.
     // Since this card has a post, we can confidently set `topics` to NULL.
     if ([self respondsToSelector:@selector(card)] && self.card.count > 0) {
-        self.card.allObjects[0].topics = NULL;
-        [[ContextManager sharedInstance] saveContext:self.managedObjectContext];
+        // FIXME: Disabled to experiment with a compilation error
+//        self.card.allObjects[0].topics = NULL;
+//        [[ContextManager sharedInstance] saveContext:self.managedObjectContext];
     }
 }
 

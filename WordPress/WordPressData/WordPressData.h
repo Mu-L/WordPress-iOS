@@ -11,6 +11,8 @@ FOUNDATION_EXPORT const unsigned char WordPressDataVersionString[];
 #import <WordPressData/PostContentProvider.h>
 #import <WordPressData/PostHelper.h>
 #import <WordPressData/PostService.h>
+#import <WordPressData/ReaderPost.h>
+#import <WordPressData/SourcePostAttribution.h>
 #import <WordPressData/WPAccount.h>
 // Should be private/project but currently can't be found at compilation otherwise
 #import <WordPressData/AbstractPost.h>

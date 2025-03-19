@@ -10,9 +10,10 @@ public class ReaderCard: NSManagedObject {
     }
 
     var type: CardType {
-        if post != nil {
-            return .post
-        }
+        // FIXME:
+//        if post != nil {
+//            return .post
+//        }
 
         if topicsArray.count > 0 {
             return .topics
@@ -50,8 +51,9 @@ public class ReaderCard: NSManagedObject {
         self.init(context: context)
 
         switch remoteCard.type {
-        case .post:
-            post = ReaderPost.createOrReplace(fromRemotePost: remoteCard.post, for: nil, context: context)
+            // FIXME:
+//        case .post:
+//            post = ReaderPost.createOrReplace(fromRemotePost: remoteCard.post, for: nil, context: context)
         case .interests:
             topics = NSOrderedSet(array: remoteCard.interests?.prefix(5).map {
                 ReaderTagTopic.createOrUpdateIfNeeded(from: $0, context: context)

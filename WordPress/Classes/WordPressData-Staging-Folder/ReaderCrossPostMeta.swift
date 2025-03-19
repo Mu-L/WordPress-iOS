@@ -3,7 +3,7 @@ import CoreData
 
 @objc open class ReaderCrossPostMeta: NSManagedObject {
     // Relations
-    @NSManaged open var post: ReaderPost
+//    @NSManaged open var post: ReaderPost
 
     // Properties
     @NSManaged open var siteURL: String
