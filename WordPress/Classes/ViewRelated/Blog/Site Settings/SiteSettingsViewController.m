@@ -13,7 +13,6 @@
 
 @import WordPressKit;
 @import WordPressShared;
-@import NSURL_IDN;
 
 NS_ENUM(NSInteger, SiteSettingsAccount) {
     SiteSettingsAccountUsername = 0,
