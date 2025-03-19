@@ -245,7 +245,7 @@ public enum PostVisibility: Identifiable, CaseIterable {
     case `private`
     case protected
 
-    init(post: AbstractPost) {
+    public init(post: AbstractPost) {
         self.init(status: post.status ?? .draft, password: post.password)
     }
 
@@ -261,7 +261,7 @@ public enum PostVisibility: Identifiable, CaseIterable {
 
     public var id: PostVisibility { self }
 
-    var localizedTitle: String {
+    public var localizedTitle: String {
         switch self {
         case .public: NSLocalizedString("postVisibility.public.title", value: "Public", comment: "Title for a 'Public' (default) privacy setting")
         case .protected: NSLocalizedString("postVisibility.protected.title", value: "Password protected", comment: "Title for a 'Password Protected' privacy setting")
@@ -269,7 +269,7 @@ public enum PostVisibility: Identifiable, CaseIterable {
         }
     }
 
-    var localizedDetails: String {
+    public var localizedDetails: String {
         switch self {
         case .public: NSLocalizedString("postVisibility.public.details", value: "Visible to everyone", comment: "Details for a 'Public' (default) privacy setting")
         case .protected: NSLocalizedString("postVisibility.protected.details", value: "Visibile to everyone but requires a password", comment: "Details for a 'Password Protected' privacy setting")

@@ -42,7 +42,7 @@ public extension PublicizeService {
         case unknown
 
         /// A string describing the service in a human-readable format.
-        var description: String {
+        public var description: String {
             rawValue.split(separator: "-").joined(separator: " ").localizedCapitalized
         }
     }
