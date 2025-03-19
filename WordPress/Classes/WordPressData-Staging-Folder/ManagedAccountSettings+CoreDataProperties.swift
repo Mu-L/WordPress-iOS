@@ -3,7 +3,7 @@ import CoreData
 
 // MARK: - Encapsulates all of the ManagedAccountSettings Core Data properties.
 //
-extension ManagedAccountSettings {
+public extension ManagedAccountSettings {
     @NSManaged var firstName: String
     @NSManaged var lastName: String
     @NSManaged var displayName: String
@@ -19,7 +19,7 @@ extension ManagedAccountSettings {
     @NSManaged var language: String
     @NSManaged var tracksOptOut: Bool
     @NSManaged var blockEmailNotifications: Bool
-    @NSManaged public var twoStepEnabled: Bool
+    @NSManaged var twoStepEnabled: Bool
 
-    @NSManaged public var account: WPAccount
+    @NSManaged var account: WPAccount
 }

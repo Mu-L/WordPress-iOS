@@ -3,10 +3,10 @@ import CoreData
 import WordPressShared
 
 open class PublicizeService: NSManagedObject {
-    @objc static let googlePlusServiceID = "google_plus"
+    @objc public static let googlePlusServiceID = "google_plus"
     @objc public static let facebookServiceID = "facebook"
-    @objc static public let defaultStatus = "ok"
-    @objc static let unsupportedStatus = "unsupported"
+    @objc public static let defaultStatus = "ok"
+    @objc public static let unsupportedStatus = "unsupported"
 
     @NSManaged open var connectURL: String
     @NSManaged open var detail: String
