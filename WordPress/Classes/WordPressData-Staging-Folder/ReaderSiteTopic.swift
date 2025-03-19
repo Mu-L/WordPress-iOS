@@ -41,7 +41,9 @@ import Foundation
     }
 
     @objc open var blogNameToDisplay: String {
-        return posts.first?.blogNameForDisplay() ?? title
+        // FIXME:
+//        return posts.first?.blogNameForDisplay() ?? title
+        title
     }
 
     @objc open var isSubscribedForPostNotifications: Bool {

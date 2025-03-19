@@ -118,7 +118,7 @@ public extension AbstractPost {
         }
     }
 
-    @objc public func containsGutenbergBlocks() -> Bool {
+    @objc func containsGutenbergBlocks() -> Bool {
         return content?.contains("<!-- wp:") ?? false
     }
 
@@ -142,7 +142,7 @@ public extension AbstractPost {
         }
     }
 
-    @objc override open func featuredImageURLForDisplay() -> URL? {
+    @objc override func featuredImageURLForDisplay() -> URL? {
         return featuredImageURL
     }
 
