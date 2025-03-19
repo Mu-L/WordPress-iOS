@@ -210,7 +210,7 @@ extension Comment: PostContentProvider {
         }
     }
 
-    static func typeForStatus(_ status: String?) -> CommentStatusType? {
+    public static func typeForStatus(_ status: String?) -> CommentStatusType? {
         switch status {
         case "hold":
             return .pending
