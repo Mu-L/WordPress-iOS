@@ -266,7 +266,10 @@ private extension ContentMigrationCoordinatorTests {
             completion?(.failure(exportErrorToReturn))
         }
 
-        func importData(completion: ((Result<Void, DataMigrationError>) -> Void)? = nil) {
+        func importData(
+            isJetpack: Bool,
+            completion: ((Result<Void, DataMigrationError>) -> Void)? = nil
+        ) {
             importCalled = true
             guard let importErrorToReturn else {
                 completion?(.success(()))
