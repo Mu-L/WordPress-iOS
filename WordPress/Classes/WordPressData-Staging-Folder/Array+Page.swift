@@ -91,7 +91,7 @@ public extension Array where Element == Page {
     /// Moves the homepage first if it is on the top level
     ///
     /// - Returns: An Array of Elements
-    public func setHomePageFirst() -> [Element] {
+    func setHomePageFirst() -> [Element] {
         if let homepageIndex = self.firstIndex(where: { $0.isSiteHomepage }) {
             var pages: [Page] = Array(self)
             let homepage = pages.remove(at: homepageIndex)
