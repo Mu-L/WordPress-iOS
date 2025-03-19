@@ -13,7 +13,7 @@ protocol ContentDataMigrating {
     /// Imports user's WordPress content data from the shared location.
     ///
     /// - Parameter completion: Closure called after the export process completes.
-    func importData(completion: ((Result<Void, DataMigrationError>) -> Void)?)
+    func importData(isJetpack: Bool, completion: ((Result<Void, DataMigrationError>) -> Void)?)
 
     /// Deletes any exported user content at the shared location if it exists.
     func deleteExportedData()
@@ -66,7 +66,10 @@ extension DataMigrator: ContentDataMigrating {
         completion?(.success(()))
     }
 
-    func importData(completion: ((Result<Void, DataMigrationError>) -> Void)? = nil) {
+    func importData(
+        isJetpack: Bool = AppConfiguration.isJetpack,
+        completion: ((Result<Void, DataMigrationError>) -> Void)? = nil
+    ) {
         guard isDataReadyToMigrate else {
             completion?(.failure(.dataNotReadyToImport))
             return
@@ -93,7 +96,7 @@ extension DataMigrator: ContentDataMigrating {
             sharedDefaults: sharedDefaults,
             appGroupName: appGroupName
         )
-        sharedDataIssueSolver.migrateAuthKey()
+        sharedDataIssueSolver.migrateAuthKey(isJetpack: isJetpack)
         sharedDataIssueSolver.migrateExtensionsData()
         BloggingRemindersScheduler.handleRemindersMigration(appGroupName: appGroupName)
         completion?(.success(()))
