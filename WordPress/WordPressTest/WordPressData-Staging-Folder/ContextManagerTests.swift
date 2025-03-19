@@ -2,7 +2,7 @@ import CoreData
 import Nimble
 import XCTest
 
-@testable import WordPress
+@testable import WordPressData
 
 class ContextManagerTests: XCTestCase {
     let storeURL = URL.Helpers.temporaryFile(named: "ContextManagerTests.sqlite")

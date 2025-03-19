@@ -43,12 +43,12 @@ public class ManagedDomain: NSManagedObject {
     @NSManaged public var domainName: String
     @NSManaged public var isPrimary: Bool
     @NSManaged public var domainType: DomainType
-    @NSManaged var blog: Blog
-    @NSManaged var autoRenewing: Bool
-    @NSManaged var autoRenewalDate: String
-    @NSManaged var expirySoon: Bool
-    @NSManaged var expired: Bool
-    @NSManaged var expiryDate: String
+    @NSManaged public var blog: Blog
+    @NSManaged public var autoRenewing: Bool
+    @NSManaged public var autoRenewalDate: String
+    @NSManaged public var expirySoon: Bool
+    @NSManaged public var expired: Bool
+    @NSManaged public var expiryDate: String
 
     public func updateWith(_ domain: Domain, blog: Blog) {
         self.domainName = domain.domainName

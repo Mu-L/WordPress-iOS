@@ -1,7 +1,7 @@
 import Foundation
 import XCTest
-
-@testable import WordPress
+@testable import WordPress // FIXME: BLog+JetpackSocial
+@testable import WordPressData
 
 final class Blog_PublicizeTests: CoreDataTestCase {
 

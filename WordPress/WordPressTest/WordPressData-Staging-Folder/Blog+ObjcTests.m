@@ -1,5 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "WordPressTest-Swift.h"
+@import WordPressData;
 
 @interface Blog_ObjcTests : XCTestCase
 @property (strong, nonatomic) id<CoreDataStack> contextManager;

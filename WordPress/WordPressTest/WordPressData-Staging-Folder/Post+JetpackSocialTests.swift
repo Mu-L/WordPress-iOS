@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import WordPress
+@testable import WordPressData
 
 class Post_JetpackSocialTests: CoreDataTestCase {
 

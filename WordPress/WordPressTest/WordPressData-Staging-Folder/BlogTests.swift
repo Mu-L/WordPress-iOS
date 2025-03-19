@@ -1,6 +1,6 @@
 import CoreData
 import XCTest
-@testable import WordPress
+@testable import WordPressData
 
 final class BlogTests: CoreDataTestCase {
 
@@ -271,6 +271,27 @@ final class BlogTests: CoreDataTestCase {
         XCTAssertFalse(result, "Domains should not be supported when the site is P2 site")
     }
 
+    func testDotComIdShouldBeJetpackSiteID() throws {
+        let blog = BlogBuilder(mainContext, dotComID: nil)
+            .set(blogOption: "jetpack_client_id", value: "123")
+            .build()
+        XCTAssertEqual(blog.jetpack?.siteID?.int64Value, 123)
+
+        try XCTAssertNil(Blog.lookup(withID: 123, in: mainContext))
+        try mainContext.save()
+
+        try XCTAssertNotNil(Blog.lookup(withID: 123, in: mainContext))
+
+        contextManager.performAndSave { context in
+            try? XCTAssertNotNil(Blog.lookup(withID: 123, in: context))
+        }
+    }
+}
+
+// TODO: This logic lives in the WordPress/Jetpack target still
+@testable import WordPress
+
+extension BlogTests {
     // Blog URL Parsing Tests
     func testBlogUrlShouldBeParseableForBlogWithSimpleUrl() throws {
         let blog = BlogBuilder(mainContext)
@@ -288,21 +309,5 @@ final class BlogTests: CoreDataTestCase {
             .build()
 
         XCTAssertEqual(try blog.wordPressClientParsedUrl().url(), "http://example.com/")
-    }
-
-    func testDotComIdShouldBeJetpackSiteID() throws {
-        let blog = BlogBuilder(mainContext, dotComID: nil)
-            .set(blogOption: "jetpack_client_id", value: "123")
-            .build()
-        XCTAssertEqual(blog.jetpack?.siteID?.int64Value, 123)
-
-        try XCTAssertNil(Blog.lookup(withID: 123, in: mainContext))
-        try mainContext.save()
-
-        try XCTAssertNotNil(Blog.lookup(withID: 123, in: mainContext))
-
-        contextManager.performAndSave { context in
-            try? XCTAssertNotNil(Blog.lookup(withID: 123, in: context))
-        }
     }
 }

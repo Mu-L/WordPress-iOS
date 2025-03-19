@@ -1,7 +1,7 @@
 import UIKit
 import XCTest
-
-@testable import WordPress
+@testable import WordPress // FIXME: ReaderPost+Swift
+@testable import WordPressData
 
 final class ReaderPostTests: CoreDataTestCase {
     func testSiteIconURL() throws {

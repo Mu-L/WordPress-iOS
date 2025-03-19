@@ -1,7 +1,7 @@
 import XCTest
 import Nimble
 
-@testable import WordPress
+@testable import WordPressData
 
 class ReaderCardTests: CoreDataTestCase {
     /// Create a Card of the type post from a RemoteReaderCard
