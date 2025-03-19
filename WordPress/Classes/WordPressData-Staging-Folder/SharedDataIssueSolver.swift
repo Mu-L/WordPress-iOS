@@ -28,7 +28,7 @@ public final class SharedDataIssueSolver: NSObject {
         return SharedDataIssueSolver()
     }
 
-    func migrateAuthKey(isJetpack: Bool) {
+    public func migrateAuthKey(isJetpack: Bool) {
         guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: contextManager.mainContext),
               let username = account.username else {
             return
