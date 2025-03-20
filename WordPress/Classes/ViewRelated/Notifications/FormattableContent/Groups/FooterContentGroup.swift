@@ -1,4 +1,3 @@
-
 import FormattableContentKit
 
 class FooterContentGroup: FormattableContentGroup {
