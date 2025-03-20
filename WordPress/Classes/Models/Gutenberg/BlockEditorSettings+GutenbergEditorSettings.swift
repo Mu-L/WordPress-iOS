@@ -21,7 +21,7 @@ extension BlockEditorSettings: GutenbergEditorSettings {
     }
 }
 
-extension BlockEditorSettings {
+public extension BlockEditorSettings {
     convenience init?(editorTheme: RemoteEditorTheme, context: NSManagedObjectContext) {
         self.init(context: context)
         self.isFSETheme = editorTheme.themeSupport?.blockTemplates ?? false
