@@ -1,6 +1,6 @@
 import CocoaLumberjackSwift
 import Foundation
-import WordPressData
+import CocoaLumberjackSwift
 
 @objc(BlockedAuthor)
 public final class BlockedAuthor: NSManagedObject {
