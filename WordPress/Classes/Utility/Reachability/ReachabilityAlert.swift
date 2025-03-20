@@ -1,8 +1,8 @@
 import Foundation
 
-private var currentReachabilityAlert: _ReachabilityAlert?
+var currentReachabilityAlert: ReachabilityAlert?
 
-class _ReachabilityAlert: NSObject {
+class ReachabilityAlert: NSObject {
 
     let retryBlock: (() -> Void)?
 
@@ -38,6 +38,6 @@ class _ReachabilityAlert: NSObject {
         // Note: This viewController might not be visible anymore
         alertController.presentFromRootViewController()
 
-        currentReachabilityAlert = self;
+        currentReachabilityAlert = self
     }
 }
