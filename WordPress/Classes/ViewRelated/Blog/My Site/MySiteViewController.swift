@@ -616,7 +616,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
     private func presentNeedsEmailVerificationAlert() {
         let alert = UIAlertController(
             title: NSLocalizedString("noSites.verifyEmail.title", value: "Verify Your Email", comment: "Title for email verification alert"),
-            message: NSLocalizedString("noSites.verifyEmail.message", value: "You need to verify you email to create a new site.", comment: "Message for email verification alert"),
+            message: NSLocalizedString("noSites.verifyEmail.message", value: "You need to verify your email to create a new site.", comment: "Message for email verification alert"),
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: SharedStrings.Button.close, style: .cancel, handler: nil))
