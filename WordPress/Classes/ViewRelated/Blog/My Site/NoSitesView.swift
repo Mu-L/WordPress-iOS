@@ -58,7 +58,6 @@ struct NoSitesView: View {
                             WPAnalytics.track(.mySiteNoSitesViewActionTapped)
                             action.handler()
                         }
-                        .disabled(!action.isEnabled)
                     if action.id == actions.first?.id {
                         button.buttonStyle(.primary)
                     } else {
