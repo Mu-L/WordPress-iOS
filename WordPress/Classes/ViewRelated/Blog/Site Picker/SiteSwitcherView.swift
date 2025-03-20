@@ -4,6 +4,7 @@ import WordPressUI
 
 final class SiteSwitcherViewController: UIHostingController<SiteSwitcherView>, UIPopoverPresentationControllerDelegate {
     private let viewModel: BlogListViewModel
+    private var signinObserver: NSObjectProtocol?
 
     init(configuration: BlogListConfiguration = .defaultConfig,
          addSiteAction: @escaping ((AddSiteMenuViewModel.Selection) -> Void),
@@ -27,6 +28,20 @@ final class SiteSwitcherViewController: UIHostingController<SiteSwitcherView>, U
 
         if #available(iOS 17, *) {
             AppTips.SitePickerTip().invalidate(reason: .actionPerformed)
+        }
+
+        // Add observer for sign-in completion notification
+        let notificationName = NSNotification.Name(WordPressAuthenticationManager.WPSigninDidFinishNotification)
+        signinObserver = NotificationCenter.default.addObserver(forName: notificationName, object: nil, queue: nil) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.presentingViewController?.dismiss(animated: true)
+            }
+        }
+    }
+
+    deinit {
+        if let observer = signinObserver {
+            NotificationCenter.default.removeObserver(observer)
         }
     }
 
