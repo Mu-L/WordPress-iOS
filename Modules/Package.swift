@@ -293,6 +293,7 @@ enum XcodeSupport {
                 "XcodeTarget_WordPressData",
                 dependencies: [
                     "BuildSettingsKit",
+                    "FormattableContentKit",
                     "SFHFKeychainUtils",
                     "WordPressShared",
                     // FIXME: Having issues with CocoaLumberjack as a transitive dependency when added to Objective-C files
