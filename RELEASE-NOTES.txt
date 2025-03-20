@@ -1,6 +1,6 @@
 25.9
 -----
-* [*] Site Switcher screen now properly dismisses after successfully adding a self-hosted site.
+* [*] Site Switcher screen now properly dismisses after successfully adding a self-hosted site. [#24273]
 
 25.8
 -----
