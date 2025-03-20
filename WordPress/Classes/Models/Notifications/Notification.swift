@@ -1,4 +1,5 @@
 import Foundation
+import CocoaLumberjackSwift
 import CoreData
 import WordPressKit
 import FormattableContentKit
@@ -6,7 +7,7 @@ import FormattableContentKit
 // MARK: - Notification Entity
 //
 @objc(Notification)
-class Notification: NSManagedObject {
+public class Notification: NSManagedObject {
     /// Notification Primary Key!
     ///
     @NSManaged var notificationId: String
@@ -33,7 +34,7 @@ class Notification: NSManagedObject {
 
     /// Notification Type
     ///
-    @NSManaged var type: String?
+    @NSManaged public var type: String?
 
     /// Associated Resource's URL
     ///
@@ -87,7 +88,7 @@ class Notification: NSManagedObject {
     ///
     fileprivate static let cachedAttributes = Set(arrayLiteral: "body", "header", "subject", "timestamp")
 
-    override func awakeFromFetch() {
+    public override func awakeFromFetch() {
         super.awakeFromFetch()
 
         if cachedAttributesObserver == nil {
@@ -351,8 +352,10 @@ extension Notification {
             return nil
         }
 
-        cachedSubjectContentGroup = SubjectContentGroup.createGroup(from: subject, parent: self)
-        return cachedSubjectContentGroup
+        // FIXME:
+//        cachedSubjectContentGroup = SubjectContentGroup.createGroup(from: subject, parent: self)
+//        return cachedSubjectContentGroup
+        return nil
     }
 
     var headerContentGroup: FormattableContentGroup? {
@@ -364,8 +367,10 @@ extension Notification {
             return nil
         }
 
-        cachedHeaderContentGroup = HeaderContentGroup.createGroup(from: header, parent: self)
-        return cachedHeaderContentGroup
+        // FIXME:
+//        cachedHeaderContentGroup = HeaderContentGroup.createGroup(from: header, parent: self)
+//        return cachedHeaderContentGroup
+        return nil
     }
 
     var bodyContentGroups: [FormattableContentGroup] {
@@ -511,7 +516,7 @@ extension Notification {
 // MARK: - Notifiable
 
 extension Notification: Notifiable {
-    var notificationIdentifier: String {
+    public var notificationIdentifier: String {
         return notificationId
     }
 }
