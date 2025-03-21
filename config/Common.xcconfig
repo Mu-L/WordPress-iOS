@@ -7,15 +7,23 @@ IPHONEOS_DEPLOYMENT_TARGET = 16.0
 // Signing
 
 CODE_SIGN_STYLE = Manual
-CODE_SIGN_IDENTITY[config=Debug]=Apple Development: Created via API (886NX39KP6)
 
-DEVELOPMENT_TEAM = PZYM8XX95Q
+CODE_SIGN_IDENTITY[config=Debug] = Apple Development: Created via API (886NX39KP6)
+
+DEVELOPMENT_TEAM[config=Debug] = PZYM8XX95Q
 DEVELOPMENT_TEAM[config=Release-Alpha] = 99KV9Z6BKV
+DEVELOPMENT_TEAM[config=Release] = PZYM8XX95Q
 
-// WP_*
+// WordPress Apps
 
-WP_APP_GROUP_NAME = group.org.wordpress
+WP_APP_GROUP_NAME[config=Debug] = group.org.wordpress
 WP_APP_GROUP_NAME[config=Release-Alpha] = group.org.wordpress.alpha
+WP_APP_GROUP_NAME[config=Release] = group.org.wordpress
 
-WP_APP_KEYCHAIN_ACCESS_GROUP = 3TMU3BH3NK.org.wordpress
+WP_APP_KEYCHAIN_ACCESS_GROUP[config=Debug] = 3TMU3BH3NK.org.wordpress
 WP_APP_KEYCHAIN_ACCESS_GROUP[config=Release-Alpha] = 99KV9Z6BKV.org.wordpress.alpha
+WP_APP_KEYCHAIN_ACCESS_GROUP[config=Release] = 3TMU3BH3NK.org.wordpress
+
+WP_BUILD_CONFIGURATION[config=Debug] = debug
+WP_BUILD_CONFIGURATION[config=Release-Alpha] = alpha
+WP_BUILD_CONFIGURATION[config=Release] = release
