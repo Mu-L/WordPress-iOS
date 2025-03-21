@@ -1,4 +1,5 @@
-#include "Common.debug.xcconfig"
+#include "Version.public.xcconfig"
+#include "Common.xcconfig"
 
 BUILD_SCHEME = Jetpack
 WP_PUSH_NOTIFICATION_APP_ID = "com.jetpack.appstore.dev"
