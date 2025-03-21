@@ -36,7 +36,7 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
     var analytics: WPAppAnalytics?
 
     @objc var internetReachability: Reachability?
-    @objc var connectionAvailable: Bool = true
+    var connectionAvailable: Bool = true
 
     // Private
 
@@ -874,6 +874,10 @@ extension WordPressAppDelegate {
     }
 
 }
+
+// Required for ReachabilityUtils.
+// See connectionAvailable stored var.
+extension WordPressAppDelegate: NetworkConnectionAvailabilityGetting {}
 
 // MARK: - UI Test Support
 
