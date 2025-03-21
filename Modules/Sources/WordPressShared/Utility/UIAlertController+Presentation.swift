@@ -1,7 +1,7 @@
 import UIKit
 
 @objc public extension UIAlertController {
-    // FIXME: Given we use the custom leafeViewController, this should be called prestenFromLeafViewController
+    // FIXME: Given we use the custom leafViewController, this should be called presentFromLeafViewController
     @objc func presentFromRootViewController() {
         // Note:
         // This method is required because the presenter ViewController must be visible, and we've got several
