@@ -1,6 +1,7 @@
 25.9
 -----
 * [*] Site Switcher screen now properly dismisses after successfully adding a self-hosted site. [#24273]
+* [*] Updated site display logic in sidebar to prioritize showing the currently selected site on iPad. [#24277]
 
 25.8
 -----
