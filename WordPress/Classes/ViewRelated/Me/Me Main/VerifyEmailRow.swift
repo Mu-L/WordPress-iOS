@@ -34,7 +34,33 @@ final class VerifyEmailCell: UITableViewCell {
     }
 }
 
+struct VerifyEmailModal: View {
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        NavigationStack {
+            VerifyEmailView(largeTitle: true, fillVerticalSpace: false)
+                .padding(.bottom, 44)
+                .toolbar {
+                    ToolbarItem {
+                        Button(SharedStrings.Button.close, role: .cancel) {
+                            dismiss()
+                        }
+                    }
+                }
+        }
+    }
+
+    static func present(on viewController: UIViewController) {
+        let modal = UIHostingController(rootView: Self())
+        viewController.present(modal, animated: true)
+    }
+}
+
 private struct VerifyEmailView: View {
+    var largeTitle: Bool = false
+    var fillVerticalSpace: Bool = true
+
     @StateObject private var viewModel = VerifyEmailViewModel()
 
     var body: some View {
@@ -44,13 +70,15 @@ private struct VerifyEmailView: View {
                 Text(Strings.verifyEmailTitle)
             }
             .foregroundStyle(Color(uiColor: #colorLiteral(red: 0.8392476439, green: 0.2103677094, blue: 0.2182099223, alpha: 1)))
-            .font(.subheadline.weight(.semibold))
+            .font((largeTitle ? Font.title : .subheadline).weight(.semibold))
 
             Text(viewModel.state.message)
                 .font(.callout)
                 .foregroundStyle(.primary)
 
-            Spacer()
+            if fillVerticalSpace {
+                Spacer()
+            }
 
             Button {
                 viewModel.sendVerificationEmail()
@@ -67,6 +95,7 @@ private struct VerifyEmailView: View {
             }
             .buttonStyle(.borderless)
             .disabled(!viewModel.state.isButtonEnabled)
+            .padding(.top, fillVerticalSpace ? 0 : 8)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)

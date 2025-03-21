@@ -138,6 +138,7 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
         if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext) {
             BlogSyncFacade().syncBlogs(for: account, success: { /* Do nothing */ }, failure: { _ in /* Do nothing */ })
+            AccountService(coreDataStack: ContextManager.shared).updateUserDetails(for: account, success: nil, failure: nil)
         }
 
         return true
@@ -178,6 +179,10 @@ class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
         updateFeatureFlags()
         updateRemoteConfig()
+
+        if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext) {
+            AccountService(coreDataStack: ContextManager.shared).updateUserDetails(for: account, success: nil, failure: nil)
+        }
 
 #if IS_JETPACK
         // JetpackWindowManager is only available in the Jetpack target.

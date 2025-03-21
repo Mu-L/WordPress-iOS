@@ -15,6 +15,12 @@ struct AddSiteController {
     }
 
     func showDotComSiteCreationScreen() {
+        if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext),
+           account.needsEmailVerification {
+            VerifyEmailModal.present(on: viewController)
+            return
+        }
+
         JetpackFeaturesRemovalCoordinator.presentSiteCreationOverlayIfNeeded(in: viewController, source: source, onDidDismiss: { [weak viewController] in
             guard JetpackFeaturesRemovalCoordinator.siteCreationPhase() != .two else {
                 return

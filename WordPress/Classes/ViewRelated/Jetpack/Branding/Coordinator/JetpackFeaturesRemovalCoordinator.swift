@@ -268,6 +268,12 @@ class JetpackFeaturesRemovalCoordinator: NSObject {
                                                    source: String,
                                                    onWillDismiss: JetpackOverlayDismissCallback? = nil,
                                                    onDidDismiss: JetpackOverlayDismissCallback? = nil) {
+        if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext),
+           account.needsEmailVerification {
+            VerifyEmailModal.present(on: viewController)
+            return
+        }
+
         let phase = siteCreationPhase()
         let coordinator = JetpackDefaultOverlayCoordinator()
         //
