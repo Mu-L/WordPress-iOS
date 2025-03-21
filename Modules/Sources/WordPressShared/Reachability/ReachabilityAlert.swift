@@ -24,15 +24,19 @@ class ReachabilityAlert: NSObject {
             preferredStyle: .alert
         )
 
-        alertController.addCancelActionWithTitle(cancelActionTitle) { _ in
-            currentReachabilityAlert = nil
-        }
+        alertController.addAction(
+            UIAlertAction(title: cancelActionTitle, style: .cancel) { _ in
+                currentReachabilityAlert = nil
+            }
+        )
 
         if let retryBlock {
-            alertController.addDefaultActionWithTitle(retryActionTitle) { _ in
-                currentReachabilityAlert = nil
-                retryBlock()
-            }
+            alertController.addAction(
+                UIAlertAction(title: retryActionTitle, style: .default) { _ in
+                    currentReachabilityAlert = nil
+                    retryBlock()
+                }
+            )
         }
 
         // Note: This viewController might not be visible anymore
