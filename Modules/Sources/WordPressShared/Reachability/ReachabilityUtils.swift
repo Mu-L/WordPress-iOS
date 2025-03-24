@@ -1,11 +1,17 @@
 import Foundation
+import Reachability
 
 @objc
 public class ReachabilityUtils: NSObject {
 
     @objc
+    public private(set) static var internetReachability: Reachability?
+
+    public static var connectionAvailable = false
+
+    @objc
     public static func isInternetReachable() -> Bool {
-        (UIApplication.shared.delegate as? NetworkConnectionAvailabilityGetting)?.connectionAvailable ?? false
+        connectionAvailable
     }
 
     @objc
@@ -30,5 +36,41 @@ public class ReachabilityUtils: NSObject {
     @objc
     public static func alertIsShowing() -> Bool {
         currentReachabilityAlert != nil
+    }
+
+    public static func configure(
+        notificationCenter: NotificationCenter = .default,
+        reachability: Reachability? = .forInternetConnection()
+    ) {
+        // The fact that the reachability instance is nullable is only an Objective-C bridging byproduct.
+        guard let internetReachability = reachability else {
+            fatalError("Failed to acquire internet reachability. This should never happen.")
+        }
+
+        let reachableStateChangedHandler: NetworkReachable = { reachability in
+            guard let reachability else { return }
+
+            DispatchQueue.main.async {
+                print(
+                    "Reachability state changed. WiFi: \(reachability.isReachableViaWiFi()) WWAN: \(reachability.isReachableViaWWAN())"
+                )
+                let newValue = reachability.isReachable()
+                connectionAvailable = newValue
+
+                notificationCenter.post(
+                    name: .reachabilityChanged,
+                    object: self,
+                    userInfo: [Notification.reachabilityKey: newValue]
+                )
+            }
+        }
+
+        internetReachability.reachableBlock = reachableStateChangedHandler
+        internetReachability.unreachableBlock = reachableStateChangedHandler
+
+        internetReachability.startNotifier()
+
+        self.internetReachability = internetReachability
+        connectionAvailable = internetReachability.isReachable()
     }
 }

@@ -1652,15 +1652,14 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
 
 - (void)preloadBlogData
 {
-    WordPressAppDelegate *appDelegate = [WordPressAppDelegate shared];
-    BOOL isOnWifi = [appDelegate.internetReachability isReachableViaWiFi];
-
     // only preload on wifi
-    if (isOnWifi) {
-        [self preloadComments];
-        [self preloadMetadata];
-        [self preloadDomains];
+    if ([ReachabilityUtils.internetReachability isReachableViaWiFi] == false) {
+        return;
     }
+
+    [self preloadComments];
+    [self preloadMetadata];
+    [self preloadDomains];
 }
 
 - (void)preloadComments
