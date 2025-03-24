@@ -21,6 +21,7 @@ public struct BuildSettings: Sendable {
     public var explatPlatform: String
     public var itunesAppID: String
     public var appURLScheme: String
+    public var jetpackAppURLScheme: String
 
     public static var current: BuildSettings {
         switch BuildSettingsEnvironment.current {
@@ -29,7 +30,8 @@ public struct BuildSettings: Sendable {
         case .preview:
             return .preview
         case .test:
-            fatalError("BuildSettings are unavailable when running unit tests. Make sure to inject the values manually in system under test.")
+            // TODO: update tests to ensure none of the rely on `BuildSettings` availability as it's incompatible with parallelized tests
+            return .live
         }
     }
 }
