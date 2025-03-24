@@ -39,12 +39,6 @@ final class SiteSwitcherViewController: UIHostingController<SiteSwitcherView>, U
         }
     }
 
-    deinit {
-        if let observer = signinObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-    }
-
     @objc private func buttonCloseTapped() {
         presentingViewController?.dismiss(animated: true)
     }
