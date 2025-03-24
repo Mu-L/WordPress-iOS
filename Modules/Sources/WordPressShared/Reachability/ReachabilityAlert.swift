@@ -14,7 +14,7 @@ class ReachabilityAlert: NSObject {
         guard currentReachabilityAlert == nil else { return }
 
         let title = NSLocalizedString("reachability-utils.alert.title", value: "No Connection", comment: "")
-        let message = "" // TODO:
+        let message = ReachabilityUtils.noConnectionMessage()
         let cancelActionTitle = NSLocalizedString("reachability-utils.alert.cancel", value: "OK", comment: "")
         let retryActionTitle = NSLocalizedString("reachability-utils.alert.retry", value: "Retry?", comment: "")
 
