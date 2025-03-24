@@ -5,7 +5,7 @@ public class ReachabilityUtils: NSObject {
 
     @objc
     public static func isInternetReachable() -> Bool {
-        (UIApplication.shared as? NetworkConnectionAvailabilityGetting)?.connectionAvailable ?? false
+        (UIApplication.shared.delegate as? NetworkConnectionAvailabilityGetting)?.connectionAvailable ?? false
     }
 
     @objc
