@@ -107,7 +107,6 @@
 
 - (Class)entityClass
 {
-    AssertSubclassMethod();
     return nil;
 }
 
