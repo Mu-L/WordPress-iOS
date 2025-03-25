@@ -124,11 +124,9 @@
 		0C391E642A312DB20040EA91 /* BlazeCampaignViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C391E632A312DB20040EA91 /* BlazeCampaignViewModelTests.swift */; };
 		0C4CE8492C2F418000B9EEAC /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433840C622C2BA5B00CB13F8 /* AppImages.xcassets */; };
 		0C63266F2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C63266E2A3D1305000B8C57 /* GutenbergFilesAppMediaSourceTests.swift */; };
-		0C6AC6122C364A2800BF7600 /* XcodeTarget_App in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6112C364A2800BF7600 /* XcodeTarget_App */; };
 		0C6AC6142C364A3100BF7600 /* XcodeTarget_ShareExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6132C364A3100BF7600 /* XcodeTarget_ShareExtension */; };
 		0C6AC6162C364A3B00BF7600 /* XcodeTarget_DraftActionExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6152C364A3B00BF7600 /* XcodeTarget_DraftActionExtension */; };
 		0C6AC61A2C364A4E00BF7600 /* XcodeTarget_NotificationServiceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6192C364A4E00BF7600 /* XcodeTarget_NotificationServiceExtension */; };
-		0C6AC61C2C364A6600BF7600 /* XcodeTarget_App in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC61B2C364A6600BF7600 /* XcodeTarget_App */; };
 		0C6AC61E2C364A6F00BF7600 /* XcodeTarget_ShareExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC61D2C364A6F00BF7600 /* XcodeTarget_ShareExtension */; };
 		0C6AC6202C364A7500BF7600 /* XcodeTarget_DraftActionExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC61F2C364A7500BF7600 /* XcodeTarget_DraftActionExtension */; };
 		0C6AC6222C364A7B00BF7600 /* XcodeTarget_NotificationServiceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 0C6AC6212C364A7B00BF7600 /* XcodeTarget_NotificationServiceExtension */; };
@@ -156,6 +154,14 @@
 		0CD542CA2CEFAE5F00666F44 /* wporg-blog-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CD542C82CEFAE5F00666F44 /* wporg-blog-icon.png */; };
 		0CD6299B2B9AAA9A00325EA4 /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD6299A2B9AAA9A00325EA4 /* Foundation+Extensions.swift */; };
 		0CF7D6C32ABB753A006D1E89 /* MediaImageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7D6C22ABB753A006D1E89 /* MediaImageServiceTests.swift */; };
+		0CFCD7372D93224100DBDCC2 /* Keystone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFCD7312D93224100DBDCC2 /* Keystone.framework */; };
+		0CFCD7382D93224100DBDCC2 /* Keystone.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFCD7312D93224100DBDCC2 /* Keystone.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0CFCDF2B2D93228A00DBDCC2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCDF2A2D93228A00DBDCC2 /* main.swift */; };
+		0CFCDF2C2D93229000DBDCC2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCDF2A2D93228A00DBDCC2 /* main.swift */; };
+		0CFCDF2D2D9322B500DBDCC2 /* Keystone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFCD7312D93224100DBDCC2 /* Keystone.framework */; };
+		0CFCDF2E2D9322B500DBDCC2 /* Keystone.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFCD7312D93224100DBDCC2 /* Keystone.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0CFCDF312D9322BC00DBDCC2 /* Keystone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFCD7312D93224100DBDCC2 /* Keystone.framework */; };
+		0CFCDF352D9322DA00DBDCC2 /* XcodeTarget_App in Frameworks */ = {isa = PBXBuildFile; productRef = 0CFCDF342D9322DA00DBDCC2 /* XcodeTarget_App */; };
 		0CFFFECB2C36F5760044709B /* XcodeTarget_WordPressAuthentificatorTests in Frameworks */ = {isa = PBXBuildFile; productRef = 0CFFFECA2C36F5760044709B /* XcodeTarget_WordPressAuthentificatorTests */; };
 		17222D80261DDDF90047B163 /* celadon-classic-icon-app-76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = 17222D45261DDDF10047B163 /* celadon-classic-icon-app-76x76.png */; };
 		17222D81261DDDF90047B163 /* celadon-classic-icon-app-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 17222D46261DDDF10047B163 /* celadon-classic-icon-app-76x76@2x.png */; };
@@ -1322,6 +1328,27 @@
 			remoteGlobalIDString = 096A92F526E29FFF00448C68;
 			remoteInfo = GenerateCredentials;
 		};
+		0CFCD7352D93224100DBDCC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CFCD7302D93224100DBDCC2;
+			remoteInfo = Keystone;
+		};
+		0CFCDF2F2D9322B500DBDCC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CFCD7302D93224100DBDCC2;
+			remoteInfo = Keystone;
+		};
+		0CFCDF322D9322BC00DBDCC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CFCD7302D93224100DBDCC2;
+			remoteInfo = Keystone;
+		};
 		3F47AC4F2A72074300208F0D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1568,6 +1595,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0CFCD7382D93224100DBDCC2 /* Keystone.framework in Embed Frameworks */,
 				3F60D3972D2C4BA4008ACD86 /* Gutenberg.xcframework in Embed Frameworks */,
 				3F60D3992D2C4BA4008ACD86 /* RNTAztecView.xcframework in Embed Frameworks */,
 				4AD953C82C21451700D0EEFA /* WordPressAuthenticator.framework in Embed Frameworks */,
@@ -1584,6 +1612,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0CFCDF2E2D9322B500DBDCC2 /* Keystone.framework in Embed Frameworks */,
 				4AD9555B2C21716A00D0EEFA /* WordPressAuthenticator.framework in Embed Frameworks */,
 				3F608F822D2D1A9E008ACD86 /* hermes.xcframework in Embed Frameworks */,
 				3F608F802D2D1A9E008ACD86 /* Gutenberg.xcframework in Embed Frameworks */,
@@ -1745,6 +1774,8 @@
 		0CD542C82CEFAE5F00666F44 /* wporg-blog-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wporg-blog-icon.png"; sourceTree = "<group>"; };
 		0CD6299A2B9AAA9A00325EA4 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		0CF7D6C22ABB753A006D1E89 /* MediaImageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaImageServiceTests.swift; sourceTree = "<group>"; };
+		0CFCD7312D93224100DBDCC2 /* Keystone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Keystone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CFCDF2A2D93228A00DBDCC2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		17222D45261DDDF10047B163 /* celadon-classic-icon-app-76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "celadon-classic-icon-app-76x76.png"; sourceTree = "<group>"; };
 		17222D46261DDDF10047B163 /* celadon-classic-icon-app-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "celadon-classic-icon-app-76x76@2x.png"; sourceTree = "<group>"; };
 		17222D47261DDDF10047B163 /* celadon-classic-icon-app-83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "celadon-classic-icon-app-83.5x83.5@2x.png"; sourceTree = "<group>"; };
@@ -2873,10 +2904,28 @@
 		FFE69A2A1B1BFE200073C2EB /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0CFCD73C2D93224100DBDCC2 /* Exceptions for "Keystone" folder in "Keystone" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				Keystone.h,
+			);
+			target = 0CFCD7302D93224100DBDCC2 /* Keystone */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0C5083352D8DB82F007987AB /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		0CFCD7322D93224100DBDCC2 /* Keystone */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0CFCD73C2D93224100DBDCC2 /* Exceptions for "Keystone" folder in "Keystone" target */,
+			);
+			path = Keystone;
 			sourceTree = "<group>";
 		};
 		24CE57C42CD3375200C7B37D /* Classes */ = {
@@ -2905,17 +2954,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0CFCD72E2D93224100DBDCC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CFCDF352D9322DA00DBDCC2 /* XcodeTarget_App in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F111B88D2658103C00057942 /* Combine.framework in Frameworks */,
 				3F60D39A2D2C4BA4008ACD86 /* hermes.xcframework in Frameworks */,
+				0CFCD7372D93224100DBDCC2 /* Keystone.framework in Frameworks */,
 				7E21C761202BBC8E00837CF5 /* iAd.framework in Frameworks */,
+				0CFCDF312D9322BC00DBDCC2 /* Keystone.framework in Frameworks */,
 				8298F3921EEF3BA7008EB7F0 /* StoreKit.framework in Frameworks */,
 				93F2E5441E9E5A570050D489 /* CoreSpotlight.framework in Frameworks */,
 				93F2E5421E9E5A350050D489 /* QuickLook.framework in Frameworks */,
-				0C6AC6122C364A2800BF7600 /* XcodeTarget_App in Frameworks */,
 				93F2E53E1E9E5A010050D489 /* CoreText.framework in Frameworks */,
 				E185474E1DED8D8800D875D7 /* UserNotifications.framework in Frameworks */,
 				3F60D39C2D2C4BA4008ACD86 /* yoga.xcframework in Frameworks */,
@@ -3045,6 +3103,7 @@
 				3F608F812D2D1A9E008ACD86 /* hermes.xcframework in Frameworks */,
 				FABB26212602FC2C00C8785C /* StoreKit.framework in Frameworks */,
 				FABB26222602FC2C00C8785C /* CoreSpotlight.framework in Frameworks */,
+				0CFCDF2D2D9322B500DBDCC2 /* Keystone.framework in Frameworks */,
 				FABB26232602FC2C00C8785C /* QuickLook.framework in Frameworks */,
 				FABB26242602FC2C00C8785C /* CoreText.framework in Frameworks */,
 				FABB26252602FC2C00C8785C /* UserNotifications.framework in Frameworks */,
@@ -3068,7 +3127,6 @@
 				FABB26322602FC2C00C8785C /* Security.framework in Frameworks */,
 				FABB26332602FC2C00C8785C /* MapKit.framework in Frameworks */,
 				FABB26342602FC2C00C8785C /* CoreLocation.framework in Frameworks */,
-				0C6AC61C2C364A6600BF7600 /* XcodeTarget_App in Frameworks */,
 				FABB26362602FC2C00C8785C /* CoreData.framework in Frameworks */,
 				FABB26372602FC2C00C8785C /* CFNetwork.framework in Frameworks */,
 				FABB26382602FC2C00C8785C /* MessageUI.framework in Frameworks */,
@@ -3242,6 +3300,21 @@
 				0C9CD79F2B9A6FDC0045BE03 /* remote-post.json */,
 			);
 			name = Posts;
+			sourceTree = "<group>";
+		};
+		0CFCDF282D93226A00DBDCC2 /* Jetpack2 */ = {
+			isa = PBXGroup;
+			children = (
+				0CFCDF2A2D93228A00DBDCC2 /* main.swift */,
+			);
+			path = Jetpack2;
+			sourceTree = "<group>";
+		};
+		0CFCDF292D93227000DBDCC2 /* WordPress2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WordPress2;
 			sourceTree = "<group>";
 		};
 		17222D44261DDDF10047B163 /* celadon-classic */ = {
@@ -3509,6 +3582,7 @@
 				EA14534229AD874C001F3143 /* JetpackUITests.xctest */,
 				4AD953B42C21451700D0EEFA /* WordPressAuthenticator.framework */,
 				4AD953BB2C21451700D0EEFA /* WordPressAuthenticatorTests.xctest */,
+				0CFCD7312D93224100DBDCC2 /* Keystone.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3525,6 +3599,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				0CFCDF292D93227000DBDCC2 /* WordPress2 */,
+				0CFCDF282D93226A00DBDCC2 /* Jetpack2 */,
 				F14B5F6F208E648200439554 /* config */,
 				E1B34C091CCDFFCE00889709 /* Credentials */,
 				24CE57C42CD3375200C7B37D /* Classes */,
@@ -3544,6 +3620,7 @@
 				8511CFB71C607A7000B7CEED /* WordPressScreenshotGeneration */,
 				FAF64BC82637DF0600E8A1DF /* JetpackScreenshotGeneration */,
 				4AD953B52C21451700D0EEFA /* WordPressAuthenticator */,
+				0CFCD7322D93224100DBDCC2 /* Keystone */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				93FA0F0118E451A80007903B /* LICENSE */,
@@ -6216,6 +6293,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		0CFCD72C2D93224100DBDCC2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AD953AF2C21451700D0EEFA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -6277,6 +6361,31 @@
 			productReference = 0107E15428FE9DB200DE87DB /* JetpackIntents.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		0CFCD7302D93224100DBDCC2 /* Keystone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0CFCD73D2D93224100DBDCC2 /* Build configuration list for PBXNativeTarget "Keystone" */;
+			buildPhases = (
+				0CFCD72C2D93224100DBDCC2 /* Headers */,
+				0CFCD72D2D93224100DBDCC2 /* Sources */,
+				0CFCD72E2D93224100DBDCC2 /* Frameworks */,
+				0CFCD72F2D93224100DBDCC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0CFCD7322D93224100DBDCC2 /* Keystone */,
+				24CE57C42CD3375200C7B37D /* Classes */,
+			);
+			name = Keystone;
+			packageProductDependencies = (
+				0CFCDF342D9322DA00DBDCC2 /* XcodeTarget_App */,
+			);
+			productName = Keystone;
+			productReference = 0CFCD7312D93224100DBDCC2 /* Keystone.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		1D6058900D05DD3D006BFB54 /* WordPress */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WordPress" */;
@@ -6300,13 +6409,11 @@
 				7457667B202B558C00F42E40 /* PBXTargetDependency */,
 				7358E6BE210BD318002323EB /* PBXTargetDependency */,
 				4AD953C62C21451700D0EEFA /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				24CE57C42CD3375200C7B37D /* Classes */,
+				0CFCD7362D93224100DBDCC2 /* PBXTargetDependency */,
+				0CFCDF332D9322BC00DBDCC2 /* PBXTargetDependency */,
 			);
 			name = WordPress;
 			packageProductDependencies = (
-				0C6AC6112C364A2800BF7600 /* XcodeTarget_App */,
 			);
 			productName = WordPress;
 			productReference = 1D6058910D05DD3D006BFB54 /* WordPress.app */;
@@ -6569,13 +6676,10 @@
 				8096219028E55F8600940A5D /* PBXTargetDependency */,
 				80F6D05F28EE88FC00953C1A /* PBXTargetDependency */,
 				4AD9555D2C21716A00D0EEFA /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				24CE57C42CD3375200C7B37D /* Classes */,
+				0CFCDF302D9322B500DBDCC2 /* PBXTargetDependency */,
 			);
 			name = Jetpack;
 			packageProductDependencies = (
-				0C6AC61B2C364A6600BF7600 /* XcodeTarget_App */,
 			);
 			productName = WordPress;
 			productReference = FABB26522602FC2C00C8785C /* Jetpack.app */;
@@ -6633,6 +6737,9 @@
 				TargetAttributes = {
 					096A92F526E29FFF00448C68 = {
 						CreatedOnToolsVersion = 12.5;
+					};
+					0CFCD7302D93224100DBDCC2 = {
+						CreatedOnToolsVersion = 16.1;
 					};
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = PZYM8XX95Q;
@@ -6803,6 +6910,7 @@
 				3F47AC482A7206BE00208F0D /* ConfigureSimulatorForUITesting */,
 				4AD953B32C21451700D0EEFA /* WordPressAuthenticator */,
 				4AD953BA2C21451700D0EEFA /* WordPressAuthenticatorTests */,
+				0CFCD7302D93224100DBDCC2 /* Keystone */,
 			);
 		};
 /* End PBXProject section */
@@ -6823,6 +6931,13 @@
 			files = (
 				4A690C1B2BA7964100A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
 				0107E14D28FE9DB200DE87DB /* AppImages.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CFCD72F2D93224100DBDCC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7612,12 +7727,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0CFCD72D2D93224100DBDCC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3F46AAFE25BF5D6300CE2E98 /* Sites.intentdefinition in Sources */,
 				24351254264DCA08009BB2B6 /* Secrets.swift in Sources */,
+				0CFCDF2B2D93228A00DBDCC2 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8379,6 +8502,7 @@
 			files = (
 				24351255264DCA08009BB2B6 /* Secrets.swift in Sources */,
 				FABB23A32602FC2C00C8785C /* Sites.intentdefinition in Sources */,
+				0CFCDF2C2D93229000DBDCC2 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8438,6 +8562,21 @@
 			isa = PBXTargetDependency;
 			target = 096A92F526E29FFF00448C68 /* GenerateCredentials */;
 			targetProxy = 096A92FC26E2A0AE00448C68 /* PBXContainerItemProxy */;
+		};
+		0CFCD7362D93224100DBDCC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CFCD7302D93224100DBDCC2 /* Keystone */;
+			targetProxy = 0CFCD7352D93224100DBDCC2 /* PBXContainerItemProxy */;
+		};
+		0CFCDF302D9322B500DBDCC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CFCD7302D93224100DBDCC2 /* Keystone */;
+			targetProxy = 0CFCDF2F2D9322B500DBDCC2 /* PBXContainerItemProxy */;
+		};
+		0CFCDF332D9322BC00DBDCC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CFCD7302D93224100DBDCC2 /* Keystone */;
+			targetProxy = 0CFCDF322D9322BC00DBDCC2 /* PBXContainerItemProxy */;
 		};
 		3F47AC502A72074300208F0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8990,6 +9129,185 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release-Alpha";
+		};
+		0CFCD7392D93224100DBDCC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F9DD3F62CC214BF00DF1760 /* Common.debug.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 WordPress. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Keystone;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		0CFCD73A2D93224100DBDCC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 98FB6E9F23074CE5002DDC8D /* Common.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 WordPress. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Keystone;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		0CFCD73B2D93224100DBDCC2 /* Release-Alpha */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F9DD3F72CC2188400DF1760 /* Common.alpha.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 WordPress. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Keystone;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = "Release-Alpha";
 		};
@@ -11434,6 +11752,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		0CFCD73D2D93224100DBDCC2 /* Build configuration list for PBXNativeTarget "Keystone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CFCD7392D93224100DBDCC2 /* Debug */,
+				0CFCD73A2D93224100DBDCC2 /* Release */,
+				0CFCD73B2D93224100DBDCC2 /* Release-Alpha */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WordPress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -11646,10 +11974,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = XcodeTarget_WordPressTests;
 		};
-		0C6AC6112C364A2800BF7600 /* XcodeTarget_App */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = XcodeTarget_App;
-		};
 		0C6AC6132C364A3100BF7600 /* XcodeTarget_ShareExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = XcodeTarget_ShareExtension;
@@ -11661,10 +11985,6 @@
 		0C6AC6192C364A4E00BF7600 /* XcodeTarget_NotificationServiceExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = XcodeTarget_NotificationServiceExtension;
-		};
-		0C6AC61B2C364A6600BF7600 /* XcodeTarget_App */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = XcodeTarget_App;
 		};
 		0C6AC61D2C364A6F00BF7600 /* XcodeTarget_ShareExtension */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -11689,6 +12009,10 @@
 		0C6AC6272C364A9000BF7600 /* XcodeTarget_WordPressAuthentificator */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = XcodeTarget_WordPressAuthentificator;
+		};
+		0CFCDF342D9322DA00DBDCC2 /* XcodeTarget_App */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = XcodeTarget_App;
 		};
 		0CFFFECA2C36F5760044709B /* XcodeTarget_WordPressAuthentificatorTests */ = {
 			isa = XCSwiftPackageProductDependency;
