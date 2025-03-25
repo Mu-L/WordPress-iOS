@@ -1,5 +1,6 @@
 import CoreData
 
+// FIXME: Remove from model once transition completed and a new build using it has been shipped
 @available(*, deprecated, message: "No longer used")
 @objc(QuickStartTourState)
 open class QuickStartTourState: NSManagedObject {

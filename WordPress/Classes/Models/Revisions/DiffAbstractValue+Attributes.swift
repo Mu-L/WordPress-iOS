@@ -1,4 +1,5 @@
 import UIKit
+import WordPressData
 import WordPressUI
 
 extension DiffAbstractValue {
@@ -46,7 +47,6 @@ extension Array where Element == DiffAbstractValue {
 }
 
 extension RevisionDiff {
-
     var contentToAttributedString: NSAttributedString? {
         return (contentDiffs?.operations ?? []).toAttributedString()
     }

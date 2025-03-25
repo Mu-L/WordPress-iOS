@@ -1,6 +1,6 @@
-import Foundation
+import CoreData
 
-extension PostCategory {
+public extension PostCategory {
 
     static func create(withBlogID id: NSManagedObjectID, in context: NSManagedObjectContext) throws -> PostCategory {
         let object = try context.existingObject(with: id)

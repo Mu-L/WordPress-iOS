@@ -1,6 +1,6 @@
 import Foundation
 import CoreData
 
-class DiffTitleValue: DiffAbstractValue {
+public class DiffContentValue: DiffAbstractValue {
     @NSManaged var revisionDiff: RevisionDiff?
 }
