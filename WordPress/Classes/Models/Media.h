@@ -1,6 +1,6 @@
 #import <CoreData/CoreData.h>
-#import "Blog.h"
-#import "AbstractPost.h"
+#import <Keystone/Blog.h>
+#import <Keystone/AbstractPost.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

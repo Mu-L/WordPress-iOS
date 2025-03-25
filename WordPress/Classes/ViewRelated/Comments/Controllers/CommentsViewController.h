@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "CommentService.h"
+#import <Keystone/CommentService.h>
 
 @class Blog;
 

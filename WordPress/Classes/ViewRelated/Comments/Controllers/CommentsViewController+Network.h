@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "CommentsViewController.h"
+#import <Keystone/CommentsViewController.h>
 @class WPTableViewHandler;
 
 

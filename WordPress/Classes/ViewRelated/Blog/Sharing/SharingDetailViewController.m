@@ -231,7 +231,7 @@ static NSString *const CellIdentifier = @"CellIdentifier";
                                 success:nil
                                 failure:^(NSError *error) {
                                     DDLogError([error description]);
-                                    [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Change failed", @"Message to show when Publicize globally shared setting failed")];
+                                    // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Change failed", @"Message to show when Publicize globally shared setting failed")];
                                     [weakSelf.tableView reloadData];
                                 }];
 }
@@ -259,7 +259,7 @@ static NSString *const CellIdentifier = @"CellIdentifier";
     SharingService *sharingService = [[SharingService alloc] initWithContextManager:[ContextManager sharedInstance]];
     [sharingService deletePublicizeConnectionForBlog:self.blog pubConn:self.publicizeConnection success:nil failure:^(NSError *error) {
         DDLogError([error description]);
-        [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Disconnect failed", @"Message to show when Publicize disconnect failed")];
+        // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Disconnect failed", @"Message to show when Publicize disconnect failed")];
     }];
 
     // Since the service optimistically deletes the connection, go ahead and pop.
@@ -300,7 +300,7 @@ static NSString *const CellIdentifier = @"CellIdentifier";
 
 - (void)sharingAuthorizationHelper:(SharingAuthorizationHelper *)helper didConnectToService:(PublicizeService *)service withPublicizeConnection:(PublicizeConnection *)keyringConnection
 {
-    [SVProgressHUD showDismissibleSuccessWithStatus:NSLocalizedString(@"Reconnected", @"Message shwon to confirm a publicize connection has been successfully reconnected.")];
+    // [SVProgressHUD showDismissibleSuccessWithStatus:NSLocalizedString(@"Reconnected", @"Message shwon to confirm a publicize connection has been successfully reconnected.")];
 }
 
 @end

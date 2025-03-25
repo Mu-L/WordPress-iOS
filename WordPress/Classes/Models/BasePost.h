@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "Blog.h"
-#import "PostContentProvider.h"
+#import <Keystone/Blog.h>
+#import <Keystone/PostContentProvider.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

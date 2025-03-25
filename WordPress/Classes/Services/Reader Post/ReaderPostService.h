@@ -1,14 +1,13 @@
 #import <Foundation/Foundation.h>
 
+#import <Keystone/CoreDataService.h>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnullability-completeness"
 
-@import WordPressKit;
-@import WordPressSharedObjC;
-
 @class ReaderPost;
 @class ReaderAbstractTopic;
+@class WordPressComRestApi;
 
 extern NSString * const ReaderPostServiceErrorDomain;
 extern NSString * const ReaderPostServiceToggleSiteFollowingState;

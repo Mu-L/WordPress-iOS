@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "LocalCoreDataService.h"
-#import "PostServiceOptions.h"
+#import <Keystone/LocalCoreDataService.h>
+#import <Keystone/PostServiceOptions.h>
 
 @class AbstractPost;
 @class Blog;

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
-#import "LocalCoreDataService.h"
+#import <Keystone/LocalCoreDataService.h>
 
 
 @class Media;

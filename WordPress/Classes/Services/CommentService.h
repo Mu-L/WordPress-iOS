@@ -1,5 +1,9 @@
+#if __has_warning("-Watimport-in-framework-header")
+#pragma clang diagnostic ignored "-Watimport-in-framework-header"
+#endif
+
 #import <Foundation/Foundation.h>
-#import "CoreDataService.h"
+#import <Keystone/CoreDataService.h>
 
 
 NS_ASSUME_NONNULL_BEGIN

@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "CoreDataStack.h"
+#import <Keystone/CoreDataStack.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

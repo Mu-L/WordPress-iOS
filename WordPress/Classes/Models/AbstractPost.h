@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "BasePost.h"
+#import <Keystone/BasePost.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

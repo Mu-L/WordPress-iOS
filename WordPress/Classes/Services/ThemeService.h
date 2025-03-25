@@ -1,4 +1,7 @@
+@import Foundation;
+@import CoreData;
 
+#import "CoreDataService.h"
 
 @class Blog;
 @class Theme;

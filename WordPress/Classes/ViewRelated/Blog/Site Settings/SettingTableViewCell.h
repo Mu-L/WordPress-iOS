@@ -1,9 +1,12 @@
+#if __has_warning("-Watimport-in-framework-header")
+#pragma clang diagnostic ignored "-Watimport-in-framework-header"
+#endif
+
 @import UIKit;
-@import WordPressSharedObjC;
 
 extern NSString * const SettingsTableViewCellReuseIdentifier;
 
-@interface SettingTableViewCell : WPTableViewCell
+@interface SettingTableViewCell : UITableViewCell
 
 - (instancetype)initWithLabel:(NSString *)label editable:(BOOL)editable reuseIdentifier:(NSString *)reuseIdentifier;
 

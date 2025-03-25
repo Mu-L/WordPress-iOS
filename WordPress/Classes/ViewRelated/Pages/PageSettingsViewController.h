@@ -1,4 +1,4 @@
-#import "PostSettingsViewController.h"
+#import <Keystone/PostSettingsViewController.h>
 
 @interface PageSettingsViewController : PostSettingsViewController
 

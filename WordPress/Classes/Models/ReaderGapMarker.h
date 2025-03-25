@@ -1,5 +1,5 @@
 #import <CoreData/CoreData.h>
-#import "ReaderPost.h"
+#import <Keystone/ReaderPost.h>
 
 /**
  The ReaderGapMarker is a subclass of ReaderrPost whose purpose is to act as a 
