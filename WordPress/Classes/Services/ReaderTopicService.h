@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "CoreDataService.h"
+#import <Keystone/CoreDataService.h>
 
 
 extern NSString * const ReaderTopicFreshlyPressedPathCommponent;

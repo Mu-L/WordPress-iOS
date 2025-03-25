@@ -86,9 +86,7 @@ FOUNDATION_EXPORT const unsigned char KeystoneVersionString[];
 
 #import <Keystone/WPAccount.h>
 #import <Keystone/WPActivityDefaults.h>
-#import <Keystone/WPAnalyticsTrackerWPCom.h>
 #import <Keystone/WPAppAnalytics.h>
-#import <Keystone/WPAnalyticsTrackerAutomatticTracks.h>
 #import <Keystone/WPAuthTokenIssueSolver.h>
 #import <Keystone/WPUploadStatusButton.h>
 #import <Keystone/WPError.h>

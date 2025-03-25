@@ -42,8 +42,7 @@ final class SiteIconPickerPresenter: NSObject {
     }
 
     fileprivate func showErrorLoadingImageMessage() {
-        // SVProgressHUD.showDismissibleError(withStatus: NSLocalizedString("Unable to load the image. Please choose a different one or try again later.",
-                                                                         comment: "Text displayed in HUD if there was an error attempting to load a media image."))
+        // SVProgressHUD.showDismissibleError(withStatus: NSLocalizedString("Unable to load the image. Please choose a different one or try again later.", comment: "Text displayed in HUD if there was an error attempting to load a media image."))
     }
 
     /// Shows a new ImageCropViewController for the given image.

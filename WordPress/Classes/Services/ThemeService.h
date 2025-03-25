@@ -1,7 +1,7 @@
 @import Foundation;
 @import CoreData;
 
-#import "CoreDataService.h"
+#import <Keystone/CoreDataService.h>
 
 @class Blog;
 @class Theme;

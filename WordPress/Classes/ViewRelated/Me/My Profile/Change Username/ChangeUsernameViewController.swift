@@ -1,6 +1,7 @@
 import UIKit
 import Combine
 import WordPressUI
+import SVProgressHUD
 
 class ChangeUsernameViewController: SignupUsernameTableViewController {
     typealias CompletionBlock = (String?) -> Void

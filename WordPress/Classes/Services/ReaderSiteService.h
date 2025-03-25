@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "ReaderTopicService.h"
+#import <Keystone/ReaderTopicService.h>
 
 
 typedef NS_ENUM(NSUInteger, ReaderSiteServiceError) {

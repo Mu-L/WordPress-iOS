@@ -2,6 +2,7 @@ import Foundation
 import AutomatticTracks
 import WordPressKit
 import SwiftUI
+import SVProgressHUD
 
 class RegisterDomainCoordinator {
 

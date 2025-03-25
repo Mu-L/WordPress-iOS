@@ -1,6 +1,7 @@
 import UIKit
 import Combine
 import WordPressFlux
+import SVProgressHUD
 
 enum EditMode {
     case richText
