@@ -1,5 +1,3 @@
-import Foundation
-
 public struct UserProfile {
     var bio = ""
     var displayName = ""

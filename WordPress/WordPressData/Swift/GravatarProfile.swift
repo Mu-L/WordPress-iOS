@@ -1,5 +1,3 @@
-import Foundation
-
 public struct GravatarProfile {
 
     var profileID = ""
@@ -10,5 +8,4 @@ public struct GravatarProfile {
     var thumbnailUrl = ""
     var name = ""
     var displayName = ""
-
 }
