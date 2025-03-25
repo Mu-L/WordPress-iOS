@@ -1,7 +1,7 @@
 #import "ActivityLogViewController.h"
 #import "ActivityLogDetailViewController.h"
 #import <CocoaLumberjack/DDFileLogger.h>
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 #import "WPLogger.h"
 
 @import WordPressShared;

@@ -1,6 +1,6 @@
 #import "MenuItemLinkViewController.h"
 #import "MenuItemCheckButtonView.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

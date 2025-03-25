@@ -4,7 +4,7 @@
 #import "Menu.h"
 #import "Menu+ViewDesign.h"
 #import "MenuLocation.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

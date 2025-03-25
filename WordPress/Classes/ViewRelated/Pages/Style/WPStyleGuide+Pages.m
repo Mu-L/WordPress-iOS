@@ -1,6 +1,6 @@
 #import "WPStyleGuide+Pages.h"
 #import <QuartzCore/QuartzCore.h>
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 @import WordPressShared;

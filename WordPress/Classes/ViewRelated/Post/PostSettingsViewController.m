@@ -5,7 +5,7 @@
 #import "SharingDetailViewController.h"
 @import WordPressDataObjC;
 #import "MediaService.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import Gridicons;
 @import WordPressShared;

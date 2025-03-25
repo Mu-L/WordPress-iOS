@@ -4,7 +4,7 @@
 #import "BlogService.h"
 #import "WPAccount.h"
 #import "Blog.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 @import AutomatticTracks;
 @import AutomatticTracksEvents;
 

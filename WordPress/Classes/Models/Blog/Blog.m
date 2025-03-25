@@ -3,7 +3,7 @@
 #import "AccountService.h"
 @import WordPressDataObjC;
 @import WordPressShared;
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 @import SFHFKeychainUtils;
 
 @import NSObject_SafeExpectations;

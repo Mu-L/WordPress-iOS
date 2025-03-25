@@ -1,7 +1,7 @@
 #import "MenusSelectionDetailView.h"
 #import "Menu+ViewDesign.h"
 #import "MenusSelectionView.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 @import Gridicons;

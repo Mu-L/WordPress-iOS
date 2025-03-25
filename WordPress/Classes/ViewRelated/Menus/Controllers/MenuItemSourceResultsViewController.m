@@ -4,7 +4,7 @@
 #import "MenuItemSourceFooterView.h"
 #import "Blog.h"
 #import "Menu+ViewDesign.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

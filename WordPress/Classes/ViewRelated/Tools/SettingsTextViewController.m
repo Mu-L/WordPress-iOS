@@ -1,5 +1,5 @@
 #import "SettingsTextViewController.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

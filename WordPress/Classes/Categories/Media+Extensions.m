@@ -3,7 +3,7 @@
 #import "Blog.h"
 @import WordPressDataObjC;
 @import WordPressShared;
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @implementation Media (Extensions)
 

@@ -1,6 +1,6 @@
 #import "ActivityLogDetailViewController.h"
 
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @interface ActivityLogDetailViewController ()
 

@@ -3,7 +3,7 @@
 #import "BlogService.h"
 #import "SharingConnectionsViewController.h"
 #import "SVProgressHUD+Dismiss.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressUI;
 @import WordPressShared;

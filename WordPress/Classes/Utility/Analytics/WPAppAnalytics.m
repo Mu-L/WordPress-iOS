@@ -8,7 +8,7 @@
 #import "BlogService.h"
 #import "Blog.h"
 #import "AbstractPost.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import NSObject_SafeExpectations;
 

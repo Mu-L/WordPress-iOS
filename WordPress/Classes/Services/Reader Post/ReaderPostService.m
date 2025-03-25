@@ -8,7 +8,7 @@
 #import "SourcePostAttribution.h"
 #import "WPAccount.h"
 #import "WPAppAnalytics.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressKit;
 @import WordPressShared;

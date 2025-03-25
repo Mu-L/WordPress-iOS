@@ -11,7 +11,7 @@
 #import "Menu+ViewDesign.h"
 @import WordPressDataObjC;
 #import "WPAppAnalytics.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

@@ -5,7 +5,7 @@
 #import "ReaderPost.h"
 #import "ReaderPostService.h"
 #import "WPAccount.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressKit;
 @import WordPressShared;

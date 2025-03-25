@@ -2,7 +2,7 @@
 @import WordPressDataObjC;
 #import "SourcePostAttribution.h"
 #import "WPAccount.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

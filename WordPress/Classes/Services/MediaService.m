@@ -6,7 +6,7 @@
 @import WordPressShared;
 #import "Blog.h"
 #import <MobileCoreServices/MobileCoreServices.h>
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressKit;
 @import WordPressUI;

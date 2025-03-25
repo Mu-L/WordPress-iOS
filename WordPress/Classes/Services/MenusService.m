@@ -6,7 +6,7 @@
 #import "MenuLocation.h"
 @import WordPressDataObjC;
 #import "PostService.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 @import WordPressKit;
 
 @implementation MenusService

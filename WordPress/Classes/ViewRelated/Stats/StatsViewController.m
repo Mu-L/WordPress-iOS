@@ -3,7 +3,7 @@
 #import "WPAccount.h"
 @import WordPressDataObjC;
 #import "BlogService.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 #import "WPAppAnalytics.h"
 
 @import WordPressShared;

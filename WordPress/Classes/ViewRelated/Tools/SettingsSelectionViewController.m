@@ -1,7 +1,7 @@
 #import "SettingsSelectionViewController.h"
 #import "SettingsTextViewController.h"
 #import "NSDictionary+SafeExpectations.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

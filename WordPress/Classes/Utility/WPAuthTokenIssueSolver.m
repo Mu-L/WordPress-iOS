@@ -3,7 +3,7 @@
 #import "BlogService.h"
 @import WordPressDataObjC;
 #import "WPAccount.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @implementation WPAuthTokenIssueSolver
 

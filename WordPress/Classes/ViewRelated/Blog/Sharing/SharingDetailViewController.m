@@ -3,7 +3,7 @@
 #import "BlogService.h"
 #import "SVProgressHUD+Dismiss.h"
 #import "SharingAuthorizationHelper.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

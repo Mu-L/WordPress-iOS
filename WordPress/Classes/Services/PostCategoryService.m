@@ -2,7 +2,7 @@
 #import "PostCategory.h"
 #import "Blog.h"
 @import WordPressDataObjC;
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 @import WordPressKit;
 
 NS_ASSUME_NONNULL_BEGIN

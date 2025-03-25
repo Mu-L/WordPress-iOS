@@ -10,7 +10,7 @@
 #import "StatsViewController.h"
 #import "WPAccount.h"
 #import "WPAppAnalytics.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 #import "MenusViewController.h"
 #import "NSMutableArray+NullableObjects.h"
 

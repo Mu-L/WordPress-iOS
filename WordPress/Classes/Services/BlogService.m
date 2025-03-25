@@ -8,7 +8,7 @@
 #import "PostCategoryService.h"
 #import "CommentService.h"
 #import "PostService.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 #import "PostType.h"
 @import WordPressKit;
 @import WordPressShared;

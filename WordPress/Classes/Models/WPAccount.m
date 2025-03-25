@@ -1,6 +1,6 @@
 @import SFHFKeychainUtils;
 #import "WPAccount.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @interface WPAccount ()
 

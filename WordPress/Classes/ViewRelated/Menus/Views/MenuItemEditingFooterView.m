@@ -1,5 +1,5 @@
 #import "MenuItemEditingFooterView.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import Gridicons;
 @import WordPressShared;

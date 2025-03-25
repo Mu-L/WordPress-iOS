@@ -1,5 +1,5 @@
 #import "WPTableViewHandler.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import CoreData;
 @import NSObject_SafeExpectations;

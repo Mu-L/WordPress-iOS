@@ -1,7 +1,7 @@
 #import "MenuItemEditingHeaderView.h"
 #import "MenuItem.h"
 #import "MenuItem+ViewDesign.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import WordPressShared;
 

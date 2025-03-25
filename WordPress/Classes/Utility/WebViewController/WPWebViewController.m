@@ -4,7 +4,7 @@
 #import "Constants.h"
 #import "WPError.h"
 #import "WPStyleGuide+WebView.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 @import Gridicons;
 @import WordPressShared;
