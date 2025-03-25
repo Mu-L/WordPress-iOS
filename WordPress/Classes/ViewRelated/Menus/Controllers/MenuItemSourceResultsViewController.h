@@ -1,4 +1,4 @@
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "MenuItemSourceTextBar.h"
 #import "MenuItemSourceCell.h"
 #import "MenuItem.h"
@@ -96,8 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Called when a source has been selected and the MenuItem should be updated.
- @param contentId - The ID of the source such as a postID, tagID, categoryID, etc.
- @param itemType - The type of the source.
+ @param contentID - The ID of the source such as a postID, tagID, categoryID, etc.
  @param name - The name that should be used for the source.
  */
 - (void)setItemSourceWithContentID:(nullable NSNumber *)contentID name:(nullable NSString *)name;

@@ -1,3 +1,4 @@
+@import UIKit;
 #import "Menu+ViewDesign.h"
 
 CGFloat const MenusDesignStrokeWidth = 0.5;
