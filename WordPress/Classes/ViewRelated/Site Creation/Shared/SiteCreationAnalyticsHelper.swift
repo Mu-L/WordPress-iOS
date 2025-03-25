@@ -1,6 +1,7 @@
 import Foundation
 import WordPressKit
 import AutomatticTracks
+import WordPressShared
 
 extension Variation {
     var tracksProperty: String {

@@ -1,7 +1,7 @@
 @import Foundation;
+@import WordPressShared;
 
 @class Blog, AbstractPost, AccountService;
-typedef NS_ENUM(NSUInteger, WPAnalyticsStat); // Forward declaration
 
 typedef NSString*(^WPAppAnalyticsLastVisibleScreenCallback)(void);
 

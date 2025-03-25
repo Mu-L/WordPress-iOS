@@ -1,5 +1,5 @@
-
 import UIKit
+import WordPressShared
 
 // MARK: - ErrorStateViewController
 
@@ -37,10 +37,10 @@ final class ErrorStateViewController: UIViewController {
     }
 
     private func trackError() {
-        let errorProperties: [String: AnyObject] = [
-            "error_info": configuration.title as AnyObject
-        ]
+//        let errorProperties: [String: AnyObject] = [
+//            "error_info": configuration.title as AnyObject
+//        ]
 
-        WPAnalytics.track(.enhancedSiteCreationErrorShown, withProperties: errorProperties)
+//        WPAnalytics.track(.enhancedSiteCreationErrorShown, withProperties: errorProperties)
     }
 }

@@ -137,11 +137,11 @@ private extension ShareAppContentPresenter {
     // MARK: Tracking Helpers
 
     func trackEngagement(source: ShareAppEventSource) {
-        WPAnalytics.track(.recommendAppEngaged, properties: [String.sourceParameterKey: source.rawValue])
+//        WPAnalytics.track(.recommendAppEngaged, properties: [String.sourceParameterKey: source.rawValue])
     }
 
     func trackContentFetchFailed() {
-        WPAnalytics.track(.recommendAppContentFetchFailed)
+//        WPAnalytics.track(.recommendAppContentFetchFailed)
     }
 }
 
