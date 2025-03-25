@@ -116,7 +116,6 @@ static NSString *const EmptySiteSupportURL = @"https://en.support.wordpress.com/
 
 - (void)viewDidLoad
 {
-    DDLogMethod();
     [super viewDidLoad];
 
     self.tableView.cellLayoutMarginsFollowReadableWidth = YES;

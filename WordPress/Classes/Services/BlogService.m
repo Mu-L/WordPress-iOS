@@ -28,8 +28,6 @@ NSString *const WPBlogSettingsUpdatedNotification = @"WPBlogSettingsUpdatedNotif
                     success:(void (^)(void))success
                     failure:(void (^)(NSError *error))failure
 {
-    DDLogMethod();
-
     id<AccountServiceRemote> remote = [self remoteForAccount:account];
     
     BOOL filterJetpackSites = false;

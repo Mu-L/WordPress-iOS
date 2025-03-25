@@ -2924,6 +2924,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0CFC16BF2D93320E00DBDCC2 /* Exceptions for "Classes" folder in "Keystone" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				"ViewRelated/Me/Help & Support/Activity Logs/ActivityLogViewController.h",
+			);
+			target = 0CFCD7302D93224100DBDCC2 /* Keystone */;
+		};
 		0CFCD73C2D93224100DBDCC2 /* Exceptions for "Keystone" folder in "Keystone" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
@@ -2949,6 +2956,9 @@
 		};
 		24CE57C42CD3375200C7B37D /* Classes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0CFC16BF2D93320E00DBDCC2 /* Exceptions for "Classes" folder in "Keystone" target */,
+			);
 			path = Classes;
 			sourceTree = "<group>";
 		};

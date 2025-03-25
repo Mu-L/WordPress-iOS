@@ -9,9 +9,6 @@
 	// 3rd Party    
     @import CocoaLumberjack;
 
-#define DDLogMethod() DDLogInfo(@"%@ %@", self, NSStringFromSelector(_cmd));
-#define DDLogMethodParam(param) DDLogInfo(@"%@ %@%@", self, NSStringFromSelector(_cmd), param);
-
 // CocoaLumberjack Default Logging Level
 #ifndef COCOA_LUMBERJACK
 #define COCOA_LUMBERJACK

@@ -1,3 +1,5 @@
+@import UIKit;
+
 #import "UIAlertControllerProxy.h"
 #import "Keystone-Swift.h"
 
