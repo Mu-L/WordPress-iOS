@@ -1,3 +1,4 @@
+import CoreData
 import WordPressKit
 
 public extension WPAccount {
