@@ -4,6 +4,7 @@
 #import "Menu.h"
 #import "MenuItem.h"
 #import "Blog.h"
+@import CocoaLumberjack;
 
 static NSUInteger const MenuItemSourceTagSyncLimit = 100;
 
