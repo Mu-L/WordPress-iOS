@@ -15,4 +15,3 @@ public protocol NotificationSyncMediatorProtocol {
         completion: @escaping (Result<Bool, Error>) -> Void
     )
 }
-
