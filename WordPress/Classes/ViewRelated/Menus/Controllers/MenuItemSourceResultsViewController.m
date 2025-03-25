@@ -205,7 +205,7 @@ static CGFloat const SearchBarHeight = 44.0;
 
 - (void)searchBarInputChangeDetectedForLocalResultsUpdateWithText:(NSString *)searchText
 {
-    NSAssert
+    NSAssert(NO, @"You must override %@ in a subclass", NSStringFromSelector(_cmd));
 }
 
 - (void)searchBarInputChangeDetectedForRemoteResultsUpdateWithText:(NSString *)searchText
