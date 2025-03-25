@@ -1,6 +1,7 @@
 import SwiftUI
 import UIKit
 import WordPressAuthenticator
+import SVProgressHUD
 
 protocol WordPressAuthenticatorProtocol {
     static func loginUI() -> UIViewController?

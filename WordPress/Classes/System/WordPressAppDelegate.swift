@@ -13,6 +13,7 @@ import AutomatticAbout
 import UIDeviceIdentifier
 import WordPressUI
 import ZendeskCoreSDK
+import SVProgressHUD
 
 class WordPressAppDelegate: UIResponder, UIApplicationDelegate {
 
