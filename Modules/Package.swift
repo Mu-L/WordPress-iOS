@@ -280,6 +280,7 @@ enum XcodeSupport {
                 .product(name: "WordPressEditor", package: "AztecEditor-iOS"),
             ]),
             .xcodeTarget("XcodeTarget_WordPressTests", dependencies: testDependencies + [
+                "FormattableContentKit",
                 "SFHFKeychainUtils",
                 "WordPressShared",
                 "WordPressUI",
