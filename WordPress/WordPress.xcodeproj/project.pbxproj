@@ -2978,7 +2978,6 @@
 				Utility/Sharing/SafariActivity.h,
 				Utility/Sharing/WPActivityDefaults.h,
 				Utility/UIAlertControllerProxy.h,
-				"Utility/WebViewController/WPStyleGuide+WebView.h",
 				Utility/WebViewController/WPWebViewController.h,
 				Utility/WPAuthTokenIssueSolver.h,
 				Utility/WPError.h,
