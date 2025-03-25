@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "Blog.h"
-
+#import "CoreDataService.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
