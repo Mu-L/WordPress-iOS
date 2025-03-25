@@ -1,5 +1,5 @@
 import CoreData
-import WordPressData
+
 import WordPressKit
 
 @objc class JetpackSocialService: NSObject {

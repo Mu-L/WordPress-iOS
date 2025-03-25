@@ -3039,6 +3039,8 @@
 				ViewRelated/Tools/SettingsSelectionViewController.h,
 				ViewRelated/Tools/SettingsTextViewController.h,
 				ViewRelated/Views/WPUploadStatusButton.h,
+				WordPressData/CoreDataService.h,
+				WordPressData/CoreDataStack.h,
 			);
 			target = 0CFCD7302D93224100DBDCC2 /* Keystone */;
 		};

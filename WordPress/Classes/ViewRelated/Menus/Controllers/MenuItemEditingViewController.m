@@ -6,7 +6,7 @@
 #import "MenuItemEditingFooterView.h"
 #import "MenuItemSourceViewController.h"
 #import "MenuItemTypeViewController.h"
-@import WordPressDataObjC;
+
 #import "Keystone-Swift.h"
 
 @import WordPressShared;

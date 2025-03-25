@@ -1,6 +1,6 @@
 import CoreData
 import Foundation
-import WordPressData
+
 
 protocol PostSearchServiceDelegate: AnyObject {
     func service(_ service: PostSearchService, didAppendPosts page: [AbstractPost])

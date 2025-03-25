@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import SwiftUI
 import UIKit
-import WordPressData
+
 import WordPressUI
 
 /// Manages top-level Reader navigation.

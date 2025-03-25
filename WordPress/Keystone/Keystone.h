@@ -16,6 +16,8 @@ FOUNDATION_EXPORT const unsigned char KeystoneVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Keystone/PublicHeader.h>
 
+#import <Keystone/CoreDataStack.h>
+#import <Keystone/CoreDataService.h>
 
 #import <Keystone/ActivityLogViewController.h>
 #import <Keystone/AccountService.h>

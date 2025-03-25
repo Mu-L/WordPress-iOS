@@ -1,5 +1,5 @@
 import SwiftUI
-import WordPressData
+
 import WordPressUI
 import WordPressReader
 

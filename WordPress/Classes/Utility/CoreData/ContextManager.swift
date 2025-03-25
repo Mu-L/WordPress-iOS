@@ -1,6 +1,6 @@
 import CoreData
 import Foundation
-import WordPressData
+
 import WordPressShared
 
 /// A constant representing the current version of the data model.

@@ -1,5 +1,5 @@
 #import "Media.h"
-@import WordPressDataObjC;
+
 #import "Keystone-Swift.h"
 
 @implementation Media

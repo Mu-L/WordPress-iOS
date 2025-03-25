@@ -1,7 +1,7 @@
 #import "PostTagService.h"
 #import "Blog.h"
 #import "PostTag.h"
-@import WordPressDataObjC;
+
 #import "Keystone-Swift.h"
 @import WordPressKit;
 

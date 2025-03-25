@@ -1,7 +1,7 @@
 #import "Blog.h"
 #import "WPAccount.h"
 #import "AccountService.h"
-@import WordPressDataObjC;
+
 @import WordPressShared;
 #import "Keystone-Swift.h"
 @import SFHFKeychainUtils;

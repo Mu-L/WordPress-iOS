@@ -1,6 +1,6 @@
 import Foundation
 import BuildSettingsKit
-import WordPressData
+
 
 protocol NotificationScheduler {
     func add(_ request: UNNotificationRequest, withCompletionHandler completionHandler: ((Error?) -> Void)?)

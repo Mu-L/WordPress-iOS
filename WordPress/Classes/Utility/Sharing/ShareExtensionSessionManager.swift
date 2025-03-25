@@ -4,7 +4,7 @@ import BuildSettingsKit
 import CoreData
 import Foundation
 import ShareExtensionCore
-import WordPressData
+
 import WordPressFlux
 
 /// Manages URLSessions initiated by the share extension

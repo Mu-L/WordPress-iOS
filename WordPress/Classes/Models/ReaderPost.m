@@ -1,5 +1,5 @@
 #import "ReaderPost.h"
-@import WordPressDataObjC;
+
 #import "SourcePostAttribution.h"
 #import "WPAccount.h"
 #import "Keystone-Swift.h"

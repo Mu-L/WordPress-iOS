@@ -1,7 +1,7 @@
 #import "ReaderPostService.h"
 
 #import "AccountService.h"
-@import WordPressDataObjC;
+
 #import "ReaderGapMarker.h"
 #import "ReaderPost.h"
 #import "ReaderSiteService.h"

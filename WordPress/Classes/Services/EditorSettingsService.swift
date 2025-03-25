@@ -1,5 +1,5 @@
 import Foundation
-import WordPressData
+
 import WordPressKit
 
 @objc enum EditorSettingsServiceError: Int, Swift.Error {
