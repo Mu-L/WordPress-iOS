@@ -3027,7 +3027,6 @@
 				ViewRelated/Menus/Views/MenusSelectionItemView.h,
 				ViewRelated/Menus/Views/MenusSelectionView.h,
 				ViewRelated/Pages/PageSettingsViewController.h,
-				"ViewRelated/Pages/Style/WPStyleGuide+Pages.h",
 				ViewRelated/Post/PostSettingsViewController_Internal.h,
 				ViewRelated/Post/PostSettingsViewController.h,
 				ViewRelated/Post/Views/PostMetaButton.h,
