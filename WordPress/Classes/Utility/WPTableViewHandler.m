@@ -1,6 +1,7 @@
 #import "WPTableViewHandler.h"
 #import "Keystone-Swift.h"
 
+@import UIKit;
 @import CoreData;
 @import NSObject_SafeExpectations;
 @import WordPressShared;
