@@ -1,4 +1,6 @@
+import CoreData
 import Foundation
+import WordPressKit
 
 @objc open class ReaderTagTopic: ReaderAbstractTopic {
     @NSManaged open var isRecommended: Bool

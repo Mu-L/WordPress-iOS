@@ -1,4 +1,6 @@
+import CoreData
 import Foundation
+import WordPressKit
 
 @objc open class ReaderSiteTopic: ReaderAbstractTopic {
     // Relations
