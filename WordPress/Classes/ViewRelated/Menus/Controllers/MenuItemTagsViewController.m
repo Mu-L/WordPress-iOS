@@ -4,6 +4,8 @@
 #import "Menu.h"
 #import "MenuItem.h"
 #import "Blog.h"
+#import "WPLogger.h"
+
 @import CocoaLumberjack;
 
 static NSUInteger const MenuItemSourceTagSyncLimit = 100;
