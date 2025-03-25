@@ -1,7 +1,7 @@
+#import "Blog.h"
 #import "Menu.h"
 #import "MenuItem.h"
 #import "MenuLocation.h"
-@import WordPressData;
 
 NSInteger const MenuDefaultID = -1;
 
