@@ -554,192 +554,14 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     return NO;
 }
 
-- (BOOL)supports:(BlogFeature)feature
-{
-    // FIXME: Disabled to experiment with a compilation error
-//    switch (feature) {
-//        case BlogFeatureRemovable:
-//            return ![self accountIsDefaultAccount];
-//        case BlogFeatureVisibility:
-//            /*
-//             See -[BlogListViewController fetchRequestPredicateForHideableBlogs]
-//             If the logic for this changes that needs to be updated as well
-//             */
-//            return [self accountIsDefaultAccount];
-//        case BlogFeaturePeople:
-//            return [self supportsRestApi] && self.isListingUsersAllowed;
-//        case BlogFeatureWPComRESTAPI:
-//        case BlogFeatureCommentLikes:
-//            return [self supportsRestApi];
-//        case BlogFeatureStats:
-//            return [self supportsRestApi] && [self isViewingStatsAllowed];
-//        case BlogFeatureStockPhotos:
-//            return [self supportsRestApi] && [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
-//        case BlogFeatureTenor:
-//            return [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
-//        case BlogFeatureSharing:
-//            return [self supportsSharing];
-//        case BlogFeatureOAuth2Login:
-//            return [self isHostedAtWPcom];
-//        case BlogFeatureMentions:
-//            return [self isAccessibleThroughWPCom];
-//        case BlogFeatureXposts:
-//            return [self isAccessibleThroughWPCom];
-//        case BlogFeatureReblog:
-//        case BlogFeaturePlans:
-//            return [self isHostedAtWPcom] && [self isAdmin];
-//        case BlogFeaturePluginManagement:
-//            return [self supportsPluginManagement] && [self isAdmin];
-//        case BlogFeatureJetpackImageSettings:
-//            return [self supportsJetpackImageSettings];
-//        case BlogFeatureJetpackSettings:
-//            return [self supportsJetpackSettings];
-//        case BlogFeaturePushNotifications:
-//            return [self supportsPushNotifications];
-//        case BlogFeatureThemeBrowsing:
-//            return [self supportsRestApi] && [self isAdmin];
-//        case BlogFeatureActivity: {
-//            // For now Activity is suported for admin users
-//            return [self supportsRestApi] && [self isAdmin];
-//        }
-//        case BlogFeatureCustomThemes:
-//            return [self supportsRestApi] && [self isAdmin] && ![self isHostedAtWPcom];
-//        case BlogFeaturePremiumThemes:
-//            return [self supports:BlogFeatureCustomThemes] && (self.planID.integerValue == JetpackProfessionalYearlyPlanId
-//                                                               || self.planID.integerValue == JetpackProfessionalMonthlyPlanId);
-//        case BlogFeatureMenus:
-//            return [self supportsRestApi] && [self isAdmin];
-//        case BlogFeaturePrivate:
-//            // Private visibility is only supported by wpcom blogs
-//            return [self isHostedAtWPcom];
-//        case BlogFeatureSiteManagement:
-//            return [self supportsSiteManagementServices];
-//        case BlogFeatureDomains:
-//            return ([self isHostedAtWPcom] || [self isAtomic]) && [self isAdmin] && ![self isWPForTeams];
-//        case BlogFeatureNoncePreviews:
-//            return [self supportsRestApi] && ![self isHostedAtWPcom];
-//        case BlogFeatureMediaMetadataEditing:
-//            return [self isAdmin];
-//        case BlogFeatureMediaAltEditing:
-//            // alt is not supported via XML-RPC API
-//            // https://core.trac.wordpress.org/ticket/58582
-//            // https://github.com/wordpress-mobile/WordPress-Android/issues/18514#issuecomment-1589752274
-//            return [self supportsRestApi];
-//        case BlogFeatureMediaDeletion:
-//            return [self isAdmin];
-//        case BlogFeatureHomepageSettings:
-//            return [self supportsRestApi] && [self isAdmin];
-//        case BlogFeatureContactInfo:
-//            return [self supportsContactInfo];
-//        case BlogFeatureBlockEditorSettings:
-//            return [self supportsBlockEditorSettings];
-//        case BlogFeatureLayoutGrid:
-//            return [self supportsLayoutGrid];
-//        case BlogFeatureTiledGallery:
-//            return [self supportsTiledGallery];
-//        case BlogFeatureVideoPress:
-//            return [self supportsVideoPress];
-//        case BlogFeatureVideoPressV5:
-//            return [self supportsVideoPressV5];
-//        case BlogFeatureFacebookEmbed:
-//            return [self supportsEmbedVariation: @"9.0"];
-//        case BlogFeatureInstagramEmbed:
-//            return [self supportsEmbedVariation: @"9.0"];
-//        case BlogFeatureLoomEmbed:
-//            return [self supportsEmbedVariation: @"9.0"];
-//        case BlogFeatureSmartframeEmbed:
-//            return [self supportsEmbedVariation: @"10.2"];
-//        case BlogFeatureFileDownloadsStats:
-//            return [self isHostedAtWPcom];
-//        case BlogFeatureBlaze:
-//            return [self canBlaze];
-//        case BlogFeaturePages:
-//            return [self isListingPagesAllowed];
-//        case BlogFeatureSiteMonitoring:
-//            return [self isAdmin] && [self isAtomic];
-//    }
-    return NO;
-}
-
--(BOOL)supportsSharing
-{
-    return [self supportsPublicize] || [self supportsShareButtons];
-}
-
-- (BOOL)supportsPublicize
-{
-    // Publicize is only supported via REST
-    if (![self supports:BlogFeatureWPComRESTAPI]) {
-        return NO;
-    }
-
-    // FIXME: Disabled to experiment with a compilation error
-//    if (![self isPublishingPostsAllowed]) {
-//        return NO;
-//    }
-
-    if (self.isHostedAtWPcom) {
-        // For WordPress.com YES unless it's disabled
-        return ![[self getOptionValue:OptionsKeyPublicizeDisabled] boolValue];
-
-    } else {
-        // For Jetpack, check if the module is enabled
-        return [self jetpackPublicizeModuleEnabled];
-    }
-}
-
-- (BOOL)supportsShareButtons
-{
-    // Share Button settings are only supported via REST, and for admins
-    if (![self isAdmin] || ![self supports:BlogFeatureWPComRESTAPI]) {
-        return NO;
-    }
-
-    if (self.isHostedAtWPcom) {
-        // For WordPress.com YES
-        return YES;
-
-    } else {
-        // For Jetpack, check if the module is enabled
-        return [self jetpackSharingButtonsModuleEnabled];
-    }
-}
-
 - (BOOL)isStatsActive
 {
     return [self jetpackStatsModuleEnabled] || [self isHostedAtWPcom];
 }
 
-- (BOOL)supportsPushNotifications
-{
-    return [self accountIsDefaultAccount];
-}
-
 - (BOOL)supportsJetpackImageSettings
 {
     return [self hasRequiredJetpackVersion:@"5.6"];
-}
-
-- (BOOL)supportsPluginManagement
-{
-    BOOL hasRequiredJetpack = [self hasRequiredJetpackVersion:@"5.6"];
-
-    BOOL isTransferrable = self.isHostedAtWPcom
-    // FIXME: Disabled to experiment with a compilation error
-//    && self.hasBusinessPlan
-    && self.siteVisibility != SiteVisibilityPrivate;
-
-    BOOL supports = isTransferrable || hasRequiredJetpack;
-
-    // If the site is not hosted on WP.com we can still manage plugins directly using the WP.org rest API
-    // Reference: https://make.wordpress.org/core/2020/07/16/new-and-modified-rest-api-endpoints-in-wordpress-5-5/
-    if(!supports && !self.account){
-        supports = !self.isHostedAtWPcom
-        && self.selfHostedSiteRestApi
-        && [self hasRequiredWordPressVersion:@"5.5"];
-    }
-
-    return supports;
 }
 
 - (BOOL)supportsContactInfo
@@ -757,16 +579,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     return self.isHostedAtWPcom;
 }
 
-- (BOOL)supportsVideoPress
-{
-    return self.isHostedAtWPcom;
-}
-
-- (BOOL)supportsVideoPressV5
-{
-    return self.isHostedAtWPcom || self.isAtomic || [self hasRequiredJetpackVersion:@"8.5"];
-}
-
 - (BOOL)supportsEmbedVariation:(NSString *)requiredJetpackVersion
 {
     return [self hasRequiredJetpackVersion:requiredJetpackVersion] || self.isHostedAtWPcom;
@@ -780,13 +592,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     && [self supportsRestApi]
     && ![self isHostedAtWPcom]
     && [self isAdmin];
-}
-
-- (BOOL)accountIsDefaultAccount
-{
-    // FIXME: Disabled to experiment with a compilation error
-//    return [[self account] isDefaultWordPressComAccount];
-    return YES;
 }
 
 - (NSNumber *)dotComID
