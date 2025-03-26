@@ -1,6 +1,6 @@
-#import <Keystone/Media.h>
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+#import <Keystone/Media.h>
 
 @interface Media (Extensions)
 
