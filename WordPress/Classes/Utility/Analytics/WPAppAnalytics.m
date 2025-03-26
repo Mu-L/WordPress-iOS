@@ -4,8 +4,6 @@
 #import "WPAppAnalytics.h"
 #import "WPAnalyticsTrackerWPCom.h"
 #import "WPAnalyticsTrackerAutomatticTracks.h"
-#import "Blog.h"
-#import "AbstractPost.h"
 #import "WordPress-Swift.h"
 
 NSString * const WPAppAnalyticsDefaultsUserOptedOut                 = @"tracks_opt_out";
