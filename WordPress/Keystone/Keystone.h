@@ -1,11 +1,3 @@
-//
-//  Keystone.h
-//  Keystone
-//
-//  Created by Alex on 3/25/25.
-//  Copyright © 2025 WordPress. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 //! Project version number for Keystone.
