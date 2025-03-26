@@ -33,6 +33,24 @@ extension Blog {
         }
     }
 
+    @objc
+    public var siteVisibility: SiteVisibility {
+        get {
+            guard let privacy = settings?.privacy?.intValue else {
+                return .unknown
+            }
+
+            guard let visibility = SiteVisibility(rawValue: privacy) else {
+                return .unknown
+            }
+
+            return visibility
+        }
+        set(value) {
+            settings?.privacy = NSNumber(value: value.rawValue)
+        }
+    }
+
     open override func willSave() {
         super.willSave()
 
