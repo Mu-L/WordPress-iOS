@@ -62,7 +62,7 @@
     [self dismissNavViewController];
     NSString *message = NSLocalizedString(@"%@ was reconnected.", @"Let's the user know that a third party sharing service was reconnected. The %@ is a placeholder for the service name.");
     message = [NSString stringWithFormat:message, self.publicizeService.label];
-    // [SVProgressHUD showDismissibleSuccessWithStatus:message];
+    [SVProgressHUD showDismissibleSuccessWithStatus:message];
 }
 
 
@@ -137,7 +137,7 @@
         return;
     }
 
-    // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection failed", @"Message to show when Publicize authorization failed")];
+    [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection failed", @"Message to show when Publicize authorization failed")];
 }
 
 /**
@@ -154,7 +154,7 @@
         return;
     }
 
-    // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection canceled", @"Message to show when Publicize authorization is canceled")];
+    [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection canceled", @"Message to show when Publicize authorization is canceled")];
 }
 
 
@@ -194,7 +194,7 @@
                 return;
             }
             NSString *status = [NSString stringWithFormat:NSLocalizedString(@"No connections found for %@", @"Message to show when Keyring connection synchronization succeeded but no matching connections were found. %@ is a service name like Facebook or Twitter"), self.publicizeService.label];
-            // [SVProgressHUD showDismissibleErrorWithStatus:status];
+            [SVProgressHUD showDismissibleErrorWithStatus:status];
             return;
         }
 
@@ -216,7 +216,7 @@
         }
 
         NSString *status = [NSString stringWithFormat:NSLocalizedString(@"We had trouble loading connections for %@", @"Message to show when Keyring connection synchronization failed. %@ is a service name like Facebook or Twitter"), self.publicizeService.label];
-        // [SVProgressHUD showDismissibleErrorWithStatus:status];
+        [SVProgressHUD showDismissibleErrorWithStatus:status];
     }];
 }
 
@@ -390,7 +390,7 @@
         [self.delegate sharingAuthorizationHelper:self connectionFailedForService:self.publicizeService];
         return;
     }
-    // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection failed", @"Message to show when Publicize connect failed")];
+    [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection failed", @"Message to show when Publicize connect failed")];
 }
 
 
@@ -406,7 +406,7 @@
         [self.delegate sharingAuthorizationHelper:self connectionCancelledForService:self.publicizeService];
         return;
     }
-    // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection canceled", @"Message to show when Publicize connection is canceled by the user.")];
+    [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Connection canceled", @"Message to show when Publicize connection is canceled by the user.")];
 }
 
 - (void)sharingAccountViewController:(SharingAccountViewController *)controller

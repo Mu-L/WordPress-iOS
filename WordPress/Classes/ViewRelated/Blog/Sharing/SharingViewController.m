@@ -415,7 +415,7 @@ static NSString *const CellIdentifier = @"CellIdentifier";
         if (!ReachabilityUtils.isInternetReachable) {
             [weakSelf showConnectionError];
         } else {
-            // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Jetpack Social service synchronization failed", @"Message to show when Publicize service synchronization failed")];
+            [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Jetpack Social service synchronization failed", @"Message to show when Publicize service synchronization failed")];
             [weakSelf refreshPublicizers];
         }
     }];
@@ -431,7 +431,7 @@ static NSString *const CellIdentifier = @"CellIdentifier";
         if (!ReachabilityUtils.isInternetReachable) {
             [weakSelf showConnectionError];
         } else {
-            // [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Jetpack Social connection synchronization failed", @"Message to show when Publicize connection synchronization failed")];
+            [SVProgressHUD showDismissibleErrorWithStatus:NSLocalizedString(@"Jetpack Social connection synchronization failed", @"Message to show when Publicize connection synchronization failed")];
             [weakSelf refreshPublicizers];
         }
     }];
