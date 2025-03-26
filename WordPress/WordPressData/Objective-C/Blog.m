@@ -98,17 +98,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 #pragma mark - NSManagedObject subclass methods
 
-- (void)willSave {
-    [super willSave];
-
-    // The `dotComID` getter has a speicial code to _update_ `blogID` value.
-    // This is a weird patch to make sure `blogID` is set to a correct value.
-    //
-    // It's important that calling `[self dotComID]` repeatedly only updates
-    // `Blog` instance once, which is the case at the moment.
-    [self dotComID];
-}
-
 - (void)prepareForDeletion
 {
     [super prepareForDeletion];
@@ -592,28 +581,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     && [self supportsRestApi]
     && ![self isHostedAtWPcom]
     && [self isAdmin];
-}
-
-- (NSNumber *)dotComID
-{
-    [self willAccessValueForKey:@"blogID"];
-    NSNumber *dotComID = [self primitiveValueForKey:@"blogID"];
-    if (dotComID.integerValue == 0) {
-        // FIXME: Disabled to experiment with a compilation error
-//        dotComID = self.jetpack.siteID;
-//        if (dotComID.integerValue > 0) {
-//            self.dotComID = dotComID;
-//        }
-    }
-    [self didAccessValueForKey:@"blogID"];
-    return dotComID;
-}
-
-- (void)setDotComID:(NSNumber *)dotComID
-{
-    [self willChangeValueForKey:@"blogID"];
-    [self setPrimitiveValue:dotComID forKey:@"blogID"];
-    [self didChangeValueForKey:@"blogID"];
 }
 
 - (NSSet *)allowedFileTypes

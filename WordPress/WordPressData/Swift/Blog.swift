@@ -3,6 +3,47 @@ extension Blog {
     static let jetpackProfessionalYearlyPlanId = 2004
     static let jetpackProfessionalMonthlyPlanId = 2001
 
+    /// WordPress.com site ID stored as signed 32-bit integer
+    @objc
+    public var dotComID: NSNumber? {
+        get {
+            let key = "blogID"
+            willAccessValue(forKey: key)
+
+            guard var id = primitiveValue(forKey: key) as? NSNumber else {
+                didAccessValue(forKey: key)
+                return nil
+            }
+
+            if id.intValue == 0 {
+                if let id = jetpack?.siteID {
+                    self.dotComID = id
+                }
+                id = 0
+            }
+
+            didAccessValue(forKey: key)
+            return id
+        }
+        set(value) {
+            let key = "blogID"
+            willChangeValue(forKey: key)
+            setPrimitiveValue(value, forKey: key)
+            didChangeValue(forKey: key)
+        }
+    }
+
+    open override func willSave() {
+        super.willSave()
+
+        // The `dotComID` getter has a speicial code to _update_ `blogID` value.
+        // This is a weird patch to make sure `blogID` is set to a correct value.
+        //
+        // It's important that calling `[self dotComID]` repeatedly only updates
+        // `Blog` instance once, which is the case at the moment.
+        _ = dotComID
+    }
+
     @objc
     public func supports(_ feature: BlogFeature) -> Bool {
         switch feature {
@@ -170,7 +211,7 @@ extension Blog {
     }
 
     private struct OptionsKeys {
-        static let activeModules = ""
+        static let activeModules = "active_modules"
         static let publicizeDisabled = "publicize_permanently_disabled"
     }
 
