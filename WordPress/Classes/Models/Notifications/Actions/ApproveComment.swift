@@ -36,22 +36,18 @@ class ApproveComment: DefaultNotificationActionCommand {
     }
 
     private func unApprove(block: FormattableCommentContent) {
-        ReachabilityUtils.onAvailableInternetConnectionDo {
-            actionsService?.unapproveCommentWithBlock(block, completion: { [weak self] success in
-                if success {
-                    self?.on.toggle()
-                }
-            })
-        }
+        actionsService?.unapproveCommentWithBlock(block, completion: { [weak self] success in
+            if success {
+                self?.on.toggle()
+            }
+        })
     }
 
     private func approve(block: FormattableCommentContent) {
-        ReachabilityUtils.onAvailableInternetConnectionDo {
-            actionsService?.approveCommentWithBlock(block, completion: { [weak self] success in
-                if success {
-                    self?.on.toggle()
-                }
-            })
-        }
+        actionsService?.approveCommentWithBlock(block, completion: { [weak self] success in
+            if success {
+                self?.on.toggle()
+            }
+        })
     }
 }
