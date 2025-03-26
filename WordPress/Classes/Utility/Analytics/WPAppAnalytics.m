@@ -101,23 +101,6 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 
 #pragma mark - App Tracking
 
-+ (void)trackTrainTracksInteraction:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties
-{
-    NSMutableDictionary *mutableProperties;
-    if (properties) {
-        mutableProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
-    } else {
-        mutableProperties = [NSMutableDictionary new];
-    }
-    // TrainTracks are specific to the AutomatticTracks tracker.
-    // The action property should be the event string for the stat.
-    // Other trackers should ignore `WPAnalyticsStatTrainTracksInteract`
-    NSString *eventName = [WPAnalyticsTrackerAutomatticTracks eventNameForStat:stat];
-    [mutableProperties setObject:eventName forKey:@"action"];
-
-    [self track:WPAnalyticsStatTrainTracksInteract withProperties:mutableProperties];
-}
-
 /**
  *  @brief      Pass-through method to [WPAnalytics track:stat]. Use this method instead of calling WPAnalytics directly.
  */
