@@ -2974,7 +2974,6 @@
 				Utility/Analytics/WPAppAnalytics.h,
 				Utility/LocationService.h,
 				Utility/Logging/WPLogger.h,
-				Utility/Reachability/ReachabilityUtils.h,
 				Utility/Sharing/SafariActivity.h,
 				Utility/Sharing/WPActivityDefaults.h,
 				Utility/UIAlertControllerProxy.h,

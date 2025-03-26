@@ -57,7 +57,6 @@ FOUNDATION_EXPORT const unsigned char KeystoneVersionString[];
 #import <Keystone/PostTag.h>
 #import <Keystone/PostTagService.h>
 
-#import <Keystone/ReachabilityUtils.h>
 #import <Keystone/ReaderGapMarker.h>
 #import <Keystone/ReaderPost.h>
 #import <Keystone/ReaderPostService.h>

@@ -126,6 +126,7 @@ let package = Package(
         .target(
             name: "WordPressShared",
             dependencies: [
+                .product(name: "Reachability", package: "Reachability"),
                 .target(name: "SFHFKeychainUtils"),
                 .target(name: "WordPressSharedObjC"),
             ],
