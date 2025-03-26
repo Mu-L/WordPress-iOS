@@ -479,7 +479,7 @@ private extension StatsTotalRow {
         }
 
         if let blogIdentifier = SiteStatsInformation.sharedInstance.siteID {
-            WPAppAnalytics.track(event, withBlogID: blogIdentifier)
+            WPAppAnalytics.track(event, blogID: blogIdentifier)
         } else {
             WPAppAnalytics.track(event)
         }

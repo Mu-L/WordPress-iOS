@@ -219,7 +219,9 @@ final class SiteMediaViewController: UIViewController, SiteMediaCollectionViewCo
 
         updateProgress(nil)
         coordinator.delete(media: selection, onProgress: updateProgress, success: { [weak self] in
-            WPAppAnalytics.track(.mediaLibraryDeletedItems, withProperties: ["number_of_items_deleted": deletedItemsCount], with: self?.blog)
+            if let blog = self?.blog {
+                WPAppAnalytics.track(.mediaLibraryDeletedItems, properties: ["number_of_items_deleted": deletedItemsCount], blog: blog)
+            }
             SVProgressHUD.showSuccess(withStatus: Strings.deletionSuccessMessage)
 
             self?.setEditing(false)

@@ -11,7 +11,7 @@ public extension SiteSettingsViewController {
     @objc func confirmExportContent() {
         tableView.deselectSelectedRowWithAnimation(true)
 
-        WPAppAnalytics.track(.siteSettingsExportSiteAccessed, with: self.blog)
+        WPAppAnalytics.track(.siteSettingsExportSiteAccessed, blog: self.blog)
         present(confirmExportController(), animated: true)
     }
 
@@ -46,27 +46,32 @@ public extension SiteSettingsViewController {
         SVProgressHUD.show(withStatus: status)
 
         let trackedBlog = blog
-        WPAppAnalytics.track(.siteSettingsExportSiteRequested, with: trackedBlog)
+        if let trackedBlog {
+            WPAppAnalytics.track(.siteSettingsExportSiteRequested, blog: trackedBlog)
+        }
         let service = SiteManagementService(coreDataStack: ContextManager.shared)
         service.exportContentForBlog(blog,
-            success: {
-                WPAppAnalytics.track(.siteSettingsExportSiteResponseOK, with: trackedBlog)
-                let status = NSLocalizedString("Email sent!", comment: "Overlay message displayed when export content started")
-                // SVProgressHUD.showDismissibleSuccess(withStatus: status)
-            },
-            failure: { error in
-                DDLogError("Error exporting content: \(error.localizedDescription)")
-                WPAppAnalytics.track(.siteSettingsExportSiteResponseError, with: trackedBlog)
-                SVProgressHUD.dismiss()
+                                     success: {
+            if let trackedBlog {
+                WPAppAnalytics.track(.siteSettingsExportSiteResponseOK, blog: trackedBlog)
+            }
+            let status = NSLocalizedString("Email sent!", comment: "Overlay message displayed when export content started")
+            // SVProgressHUD.showDismissibleSuccess(withStatus: status)
+        }, failure: { error in
+            DDLogError("Error exporting content: \(error.localizedDescription)")
+            if let trackedBlog {
+                WPAppAnalytics.track(.siteSettingsExportSiteResponseError, blog: trackedBlog)
+            }
+            SVProgressHUD.dismiss()
 
-                let errorTitle = NSLocalizedString("Export Content Error", comment: "Title of alert when export content fails")
-                let alertController = UIAlertController(title: errorTitle, message: error.localizedDescription, preferredStyle: .alert)
+            let errorTitle = NSLocalizedString("Export Content Error", comment: "Title of alert when export content fails")
+            let alertController = UIAlertController(title: errorTitle, message: error.localizedDescription, preferredStyle: .alert)
 
-                let okTitle = SharedStrings.Button.ok
-                _ = alertController.addDefaultActionWithTitle(okTitle, handler: nil)
+            let okTitle = SharedStrings.Button.ok
+            _ = alertController.addDefaultActionWithTitle(okTitle, handler: nil)
 
-                alertController.presentFromRootViewController()
-            })
+            alertController.presentFromRootViewController()
+        })
     }
 
     /// Requests site purchases to determine whether site is deletable
@@ -77,7 +82,7 @@ public extension SiteSettingsViewController {
         let status = NSLocalizedString("Checking purchases…", comment: "Overlay message displayed while checking if site has premium purchases")
         SVProgressHUD.show(withStatus: status)
 
-        WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesRequested, with: blog)
+        WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesRequested, blog: blog)
         let service = SiteManagementService(coreDataStack: ContextManager.shared)
         service.getActivePurchasesForBlog(blog,
             success: { [weak self] purchases in
@@ -87,10 +92,10 @@ public extension SiteSettingsViewController {
                 }
 
                 if purchases.isEmpty {
-                    WPAppAnalytics.track(.siteSettingsDeleteSiteAccessed, with: strongSelf.blog)
+                    WPAppAnalytics.track(.siteSettingsDeleteSiteAccessed, blog: strongSelf.blog)
                     strongSelf.navigationController?.pushViewController(DeleteSiteViewController.controller(strongSelf.blog), animated: true)
                 } else {
-                    WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShown, with: strongSelf.blog)
+                    WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShown, blog: strongSelf.blog)
                     strongSelf.present(strongSelf.warnPurchasesController(), animated: true)
                 }
             },
@@ -122,7 +127,7 @@ public extension SiteSettingsViewController {
 
         let showTitle = NSLocalizedString("Show Purchases", comment: "Show site purchases action title")
         alertController.addDefaultActionWithTitle(showTitle, handler: { _ in
-            WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShowClicked, with: self.blog)
+            WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShowClicked, blog: self.blog)
             self.showPurchases()
         })
 

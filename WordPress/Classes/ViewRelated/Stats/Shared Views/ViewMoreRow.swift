@@ -69,7 +69,7 @@ private extension ViewMoreRow {
 
     func captureAnalyticsEvent(_ event: WPAnalyticsStat) {
         if let blogIdentifier = SiteStatsInformation.sharedInstance.siteID {
-            WPAppAnalytics.track(event, withBlogID: blogIdentifier)
+            WPAppAnalytics.track(event, blogID: blogIdentifier)
         } else {
             WPAppAnalytics.track(event)
         }

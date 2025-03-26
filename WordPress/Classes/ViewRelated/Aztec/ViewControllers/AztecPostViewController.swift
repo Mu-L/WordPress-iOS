@@ -1868,7 +1868,7 @@ extension AztecPostViewController {
         if let headingStyle {
             properties["heading_style"] = headingStyle
         }
-        WPAppAnalytics.track(stat, withProperties: properties, with: post)
+        WPAppAnalytics.track(stat, properties: properties, post: post)
     }
 
     // MARK: - Toolbar creation
@@ -2326,7 +2326,7 @@ extension AztecPostViewController {
         case .image:
             let attachment = insertImageAttachment(with: remoteURL, caption: media.caption)
             attachment.alt = media.alt
-            WPAppAnalytics.track(.editorAddedPhotoViaWPMediaLibrary, withProperties: WPAppAnalytics.properties(for: media, selectionMethod: mediaSelectionMethod), with: post)
+            WPAppAnalytics.track(.editorAddedPhotoViaWPMediaLibrary, properties: WPAppAnalytics.properties(for: media, selectionMethod: mediaSelectionMethod), post: post)
         case .video:
             var posterURL: URL?
             if let posterURLString = media.remoteThumbnailURL {
@@ -2337,12 +2337,12 @@ extension AztecPostViewController {
                 attachment.videoPressID = videoPressGUID
                 richTextView.refresh(attachment)
             }
-            WPAppAnalytics.track(.editorAddedVideoViaWPMediaLibrary, withProperties: WPAppAnalytics.properties(for: media, selectionMethod: mediaSelectionMethod), with: post)
+            WPAppAnalytics.track(.editorAddedVideoViaWPMediaLibrary, properties: WPAppAnalytics.properties(for: media, selectionMethod: mediaSelectionMethod), post: post)
         default:
             // If we drop in here, let's just insert a link the the remote media
             let linkTitle = media.title?.nonEmptyString() ?? remoteURLStr
             richTextView.setLink(remoteURL, title: linkTitle, inRange: richTextView.selectedRange)
-            WPAppAnalytics.track(.editorAddedOtherMediaViaWPMediaLibrary, withProperties: WPAppAnalytics.properties(for: media, selectionMethod: mediaSelectionMethod), with: post)
+            WPAppAnalytics.track(.editorAddedOtherMediaViaWPMediaLibrary, properties: WPAppAnalytics.properties(for: media, selectionMethod: mediaSelectionMethod), post: post)
         }
     }
 
@@ -2452,7 +2452,7 @@ extension AztecPostViewController {
             return
         }
 
-        WPAppAnalytics.track(.editorUploadMediaFailed, withProperties: [WPAppAnalyticsKeyEditorSource: Analytics.editorSource], with: self.post.blog)
+        WPAppAnalytics.track(.editorUploadMediaFailed, properties: [WPAppAnalyticsKeyEditorSource: Analytics.editorSource], blog: self.post.blog)
 
         let message = MediaAttachmentActionSheet.failedMediaActionTitle
 
@@ -2723,7 +2723,7 @@ extension AztecPostViewController {
         navController.modalPresentationStyle = .formSheet
         present(navController, animated: true)
 
-        WPAppAnalytics.track(.editorEditedImage, withProperties: [WPAppAnalyticsKeyEditorSource: Analytics.editorSource], with: post)
+        WPAppAnalytics.track(.editorEditedImage, properties: [WPAppAnalyticsKeyEditorSource: Analytics.editorSource], post: post)
     }
 
     func displayPlayerFor(videoAttachment: VideoAttachment, atPosition position: CGPoint) {
