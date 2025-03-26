@@ -50,19 +50,19 @@ public extension SiteSettingsViewController {
             WPAppAnalytics.track(.siteSettingsExportSiteRequested, blog: trackedBlog)
         }
         let service = SiteManagementService(coreDataStack: ContextManager.shared)
-        service.exportContentForBlog(blog,
-                                     success: {
+        service.exportContentForBlog(blog, success: {
             if let trackedBlog {
                 WPAppAnalytics.track(.siteSettingsExportSiteResponseOK, blog: trackedBlog)
             }
             let status = NSLocalizedString("Email sent!", comment: "Overlay message displayed when export content started")
-            SVProgressHUD.showDismissibleSuccess(withStatus: status)
+            SVProgressHUD.showDismissibleSuccess(status: status)
         }, failure: { error in
             DDLogError("Error exporting content: \(error.localizedDescription)")
             if let trackedBlog {
                 WPAppAnalytics.track(.siteSettingsExportSiteResponseError, blog: trackedBlog)
             }
             SVProgressHUD.dismiss()
+
 
             let errorTitle = NSLocalizedString("Export Content Error", comment: "Title of alert when export content fails")
             let alertController = UIAlertController(title: errorTitle, message: error.localizedDescription, preferredStyle: .alert)

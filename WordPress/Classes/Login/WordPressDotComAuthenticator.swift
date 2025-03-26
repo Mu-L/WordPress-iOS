@@ -2,7 +2,7 @@ import Alamofire
 import AuthenticationServices
 import Foundation
 import UIKit
-
+import SVProgressHUD
 import WordPressShared
 
 /// Log in or sign up a WordPress.com account via web.
