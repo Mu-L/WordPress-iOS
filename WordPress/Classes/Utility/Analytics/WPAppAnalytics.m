@@ -13,7 +13,6 @@
 @import NSObject_SafeExpectations;
 
 NSString * const WPAppAnalyticsDefaultsUserOptedOut                 = @"tracks_opt_out";
-NSString * const WPAppAnalyticsDefaultsKeyUsageTracking_deprecated  = @"usage_tracking_enabled";
 NSString * const WPAppAnalyticsKeyBlogID                            = @"blog_id";
 NSString * const WPAppAnalyticsKeyPostID                            = @"post_id";
 NSString * const WPAppAnalyticsKeyPostAuthorID                      = @"post_author_id";
@@ -253,21 +252,6 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
     return error;
 }
 
-#pragma mark - Usage tracking
-
-+ (BOOL)isTrackingUsage
-{
-    return [[UserPersistentStoreFactory userDefaultsInstance] boolForKey:WPAppAnalyticsDefaultsKeyUsageTracking_deprecated];
-}
-
-- (void)setTrackingUsage:(BOOL)trackingUsage
-{
-    if (trackingUsage != [WPAppAnalytics isTrackingUsage]) {
-        [[UserPersistentStoreFactory userDefaultsInstance] setBool:trackingUsage
-                                                forKey:WPAppAnalyticsDefaultsKeyUsageTracking_deprecated];
-    }
-}
-
 #pragma mark - Tracks Opt Out
 
 - (void)initializeOptOutTracking {
@@ -275,16 +259,7 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
         // We've already configured the opt out setting
         return;
     }
-
-    if ([[UserPersistentStoreFactory userDefaultsInstance] objectForKey:WPAppAnalyticsDefaultsKeyUsageTracking_deprecated] == nil) {
-        [self setUserHasOptedOutValue:NO];
-    } else if ([[UserPersistentStoreFactory userDefaultsInstance] boolForKey:WPAppAnalyticsDefaultsKeyUsageTracking_deprecated] == NO) {
-        // If the user has already explicitly disabled tracking,
-        // then we should mirror that to the new setting
-        [self setUserHasOptedOutValue:YES];
-    } else {
-        [self setUserHasOptedOutValue:NO];
-    }
+    [self setUserHasOptedOutValue:NO];
 }
 
 + (BOOL)userHasOptedOutIsSet {

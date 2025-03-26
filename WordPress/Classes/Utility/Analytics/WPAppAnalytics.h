@@ -4,7 +4,6 @@
 @class Blog, AbstractPost, AccountService;
 
 extern NSString * const WPAppAnalyticsDefaultsUserOptedOut;
-extern NSString * const WPAppAnalyticsDefaultsKeyUsageTracking_deprecated;
 extern NSString * const WPAppAnalyticsKeyBlogID;
 extern NSString * const WPAppAnalyticsKeyPostID;
 extern NSString * const WPAppAnalyticsKeyPostAuthorID;
@@ -71,20 +70,6 @@ extern NSString * const WPAppAnalyticsValueSiteTypeP2;
 - (void)setUserHasOptedOut:(BOOL)optedOut;
 
 #pragma mark - Usage tracking
-
-/**
- *  @brief      Call this method to know if usage is being tracked.
- *
- *  @returns    YES if usage is being tracked, NO otherwise.
- */
-+ (BOOL)isTrackingUsage __attribute__((deprecated("Use userHasOptedOut instead.")));
-
-/**
- *  @brief      Sets usage tracking ON or OFF
- *
- *  @param      trackingUsage   The new status for usage tracking.
- */
-- (void)setTrackingUsage:(BOOL)trackingUsage __attribute__((deprecated("Use setUserHasOptedOut instead.")));
 
 /**
  *  @brief      Tracks stats with the blog details when available
