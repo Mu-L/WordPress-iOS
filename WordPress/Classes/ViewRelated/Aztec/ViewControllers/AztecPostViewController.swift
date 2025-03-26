@@ -2452,7 +2452,7 @@ extension AztecPostViewController {
             return
         }
 
-        WPAppAnalytics.track(.editorUploadMediaFailed, withProperties: [WPAppAnalyticsKeyEditorSource: Analytics.editorSource], with: self.post.blog)
+        WPAppAnalytics.track(.editorUploadMediaFailed, properties: [WPAppAnalyticsKeyEditorSource: Analytics.editorSource], blog: self.post.blog)
 
         let message = MediaAttachmentActionSheet.failedMediaActionTitle
 

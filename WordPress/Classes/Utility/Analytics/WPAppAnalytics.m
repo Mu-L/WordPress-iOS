@@ -79,13 +79,6 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
     [WPAnalytics clearTrackers];
 }
 
-+ (NSString *)siteTypeForBlogWithID:(NSNumber *)blogID
-{
-    NSManagedObjectContext *context = [[ContextManager sharedInstance] mainContext];
-    Blog *blog = [Blog lookupWithID:blogID in:context];
-    return [blog isWPForTeams] ? WPAppAnalyticsValueSiteTypeP2 : WPAppAnalyticsValueSiteTypeBlog;
-}
-
 #pragma mark - Notifications
 
 - (void)startObservingNotifications
@@ -110,58 +103,6 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 }
 
 #pragma mark - App Tracking
-
-/**
- *  @brief      Tracks stats with the blog details when available
- */
-+ (void)track:(WPAnalyticsStat)stat withBlog:(Blog *)blog {
-    [WPAppAnalytics track:stat withBlogID:blog.dotComID];
-}
-
-/**
- *  @brief      Tracks stats with the blog_id when available
- */
-+ (void)track:(WPAnalyticsStat)stat withBlogID:(NSNumber *)blogID {
-    if (NSThread.isMainThread) {
-        [WPAppAnalytics track:stat withProperties:nil withBlogID:blogID];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [WPAppAnalytics track:stat withProperties:nil withBlogID:blogID];
-        });
-    }
-}
-
-/**
- *  @brief      Tracks stats with the blog details when available
- */
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties withBlog:(Blog *)blog {
-    [WPAppAnalytics track:stat withProperties:properties withBlogID:blog.dotComID];
-}
-
-/**
- *  @brief      Tracks stats with the blog_id when available
- */
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties withBlogID:(NSNumber *)blogID {
-    NSMutableDictionary *mutableProperties;
-    if (properties) {
-        mutableProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
-    } else {
-        mutableProperties = [NSMutableDictionary new];
-    }
-    
-    if (blogID) {
-        [mutableProperties setObject:blogID forKey:WPAppAnalyticsKeyBlogID];
-
-        NSString *siteType = [self siteTypeForBlogWithID:blogID];
-        [mutableProperties setObject:siteType forKey:WPAppAnalyticsKeySiteType];
-    }
-    
-    if ([mutableProperties count] > 0) {
-        [WPAppAnalytics track:stat withProperties:mutableProperties];
-    } else {
-        [WPAppAnalytics track:stat];
-    }
-}
 
 + (void)track:(WPAnalyticsStat)stat withPost:(AbstractPost *)postOrPage {
     [WPAppAnalytics track:stat withProperties:nil withPost:postOrPage];

@@ -155,7 +155,7 @@ extension PublishingEditor {
         let postTypeValue = post is Page ? "page" : "post"
 
         guard stat != .editorSavedDraft && stat != .editorQuickSavedDraft else {
-            WPAppAnalytics.track(stat, withProperties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource, WPAppAnalyticsKeyPostType: postTypeValue], with: post.blog)
+            WPAppAnalytics.track(stat, properties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource, WPAppAnalyticsKeyPostType: postTypeValue], blog: post.blog)
             return
         }
 

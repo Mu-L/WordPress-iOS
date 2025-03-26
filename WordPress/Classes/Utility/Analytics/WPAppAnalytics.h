@@ -48,11 +48,6 @@ extern NSString * const WPAppAnalyticsValueSiteTypeP2;
  */
 - (instancetype)init;
 
-/**
- *  @brief      Returns the site type for the blogID. Default is "blog".
- */
-+ (NSString *)siteTypeForBlogWithID:(NSNumber *)blogID;
-
 #pragma mark - User Opt Out
 
 /**
@@ -70,26 +65,6 @@ extern NSString * const WPAppAnalyticsValueSiteTypeP2;
 - (void)setUserHasOptedOut:(BOOL)optedOut;
 
 #pragma mark - Usage tracking
-
-/**
- *  @brief      Tracks stats with the blog details when available
- */
-+ (void)track:(WPAnalyticsStat)stat withBlog:(Blog *)blog;
-
-/**
- *  @brief      Tracks stats with the blog_id when available
- */
-+ (void)track:(WPAnalyticsStat)stat withBlogID:(NSNumber*)blogID;
-
-/**
- *  @brief      Tracks stats with the blog details when available
- */
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties withBlog:(Blog *)blog;
-
-/**
- *  @brief      Tracks stats with the blog_id when available
- */
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties withBlogID:(NSNumber*)blogID;
 
 /**
  *  @brief      Tracks stats with the post details when available

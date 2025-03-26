@@ -103,11 +103,4 @@ typedef void(^OCMockInvocationBlock)(NSInvocation* invocation);
     XCTAssertFalse([WPAppAnalytics userHasOptedOut]);
 }
 
-- (void)testSiteTypeForBlog
-{
-    NSString *siteType = [WPAppAnalytics siteTypeForBlogWithID: @99999999];
-    XCTAssertNotNil(siteType);
-    XCTAssertTrue([siteType isEqualToString:@"blog"]);
-}
-
 @end
