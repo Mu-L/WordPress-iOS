@@ -3,6 +3,8 @@
 
 @class Blog, AbstractPost, AccountService;
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const WPAppAnalyticsDefaultsUserOptedOut;
 extern NSString * const WPAppAnalyticsKeyBlogID;
 extern NSString * const WPAppAnalyticsKeyPostID;
@@ -37,7 +39,7 @@ extern NSString * const WPAppAnalyticsValueSiteTypeP2;
 /**
  *  @brief      Timestamp of the app's opening time.
  */
-@property (nonatomic, strong, readwrite) NSDate* applicationOpenedTime;
+@property (nonatomic, strong, readwrite) NSDate* _Nullable applicationOpenedTime;
 
 #pragma mark - Init
 
@@ -73,13 +75,8 @@ extern NSString * const WPAppAnalyticsValueSiteTypeP2;
 
 + (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties;
 
-/**
- *  @brief      Track Anaylytics with associate error that is translated to properties
- */
-+ (void)track:(WPAnalyticsStat)stat error:(NSError *)error;
++ (NSError *)sanitizedErrorFromError:(NSError *)error;
 
-/**
- *  @brief      Track Anaylytics with associate error that is translated to properties, along with available blog details
- */
-+ (void)track:(WPAnalyticsStat)stat error:(NSError *)error withBlogID:(NSNumber *)blogID;
 @end
+
+NS_ASSUME_NONNULL_END

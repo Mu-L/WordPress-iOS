@@ -69,6 +69,23 @@ extension WPAppAnalytics {
 
         WPAppAnalytics.track(stat, properties: properties, blog: post.blog)
     }
+
+    // MARK: WPAppAnalytics (Errors)
+
+    static func track(_ stat: WPAnalyticsStat, error: Error) {
+        track(stat, error: error, blogID: nil)
+    }
+
+    @objc(track:error:withBlogID:)
+    class func track(_ stat: WPAnalyticsStat, error: Error, blogID: NSNumber?) {
+        let error = self.sanitizedError(fromError: error) as NSError
+        track(stat, withProperties: [
+            "error_code": String(error.code),
+            "error_domain": error.domain,
+            "error_description": error.description,
+            WPAppAnalyticsKeyBlogID: blogID ?? 0
+        ])
+    }
 }
 
 private enum Constants {
