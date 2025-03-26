@@ -8,7 +8,7 @@ class NotificationCommentDetailViewController: UIViewController, NoResultsViewHo
 
     private var content: Content?
 
-    private var notification: Notification {
+    private var notification: WordPressData.Notification {
         didSet {
             title = notification.title
         }
@@ -88,7 +88,7 @@ class NotificationCommentDetailViewController: UIViewController, NoResultsViewHo
 
     // MARK: - Init
 
-    init(notification: Notification,
+    init(notification: WordPressData.Notification,
          notificationDelegate: CommentDetailsNotificationDelegate) {
         self.notification = notification
         self.notificationDelegate = notificationDelegate
@@ -115,7 +115,7 @@ class NotificationCommentDetailViewController: UIViewController, NoResultsViewHo
         configureNavBarButtons()
     }
 
-    func refreshViewController(notification: Notification) {
+    func refreshViewController(notification: WordPressData.Notification) {
         self.notification = notification
         loadComment()
     }
@@ -197,7 +197,7 @@ private extension NotificationCommentDetailViewController {
     ///   - notification: The notification object, used for additional information like site ID.
     ///
     /// - Returns: Either `.readerComments` with a `ReaderCommentsViewController` or `.commentDetails` with a `CommentDetailViewController`.
-    private func makeNewContent(with comment: Comment, notification: Notification) -> Content {
+    private func makeNewContent(with comment: Comment, notification: WordPressData.Notification) -> Content {
         let blogSupportsWpcomRestAPI: Bool = {
             return blog?.supports(.wpComRESTAPI) ?? true
         }()

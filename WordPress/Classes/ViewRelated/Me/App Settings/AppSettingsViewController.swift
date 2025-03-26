@@ -71,7 +71,7 @@ class AppSettingsViewController: UITableViewController {
     }
 
     @objc
-    private func accountSettingsDidChange(_ notification: Notification) {
+    private func accountSettingsDidChange(_ notification: WordPressData.Notification) {
         reloadViewModel()
     }
 

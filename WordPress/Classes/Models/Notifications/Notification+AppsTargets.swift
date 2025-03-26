@@ -1,112 +1,7 @@
-import Foundation
-import CocoaLumberjackSwift
-import CoreData
-import WordPressKit
+import WordPressData
 import FormattableContentKit
 
-// MARK: - Notification Entity
-//
-@objc(Notification)
-public class Notification: NSManagedObject {
-    /// Notification Primary Key!
-    ///
-    @NSManaged var notificationId: String
-
-    /// Notification Hash!
-    ///
-    @NSManaged var notificationHash: String?
-
-    /// Indicates whether the note was already read, or not
-    ///
-    @NSManaged var read: Bool
-
-    /// Associated Resource's Icon, as a plain string
-    ///
-    @NSManaged var icon: String?
-
-    /// Noticon resource, associated with this notification
-    ///
-    @NSManaged var noticon: String?
-
-    /// Timestamp as a String
-    ///
-    @NSManaged var timestamp: String?
-
-    /// Notification Type
-    ///
-    @NSManaged public var type: String?
-
-    /// Associated Resource's URL
-    ///
-    @NSManaged var url: String?
-
-    /// Plain Title ("1 Like" / Etc)
-    ///
-    @NSManaged var title: String?
-
-    /// Raw Subject Blocks
-    ///
-    @NSManaged var subject: [AnyObject]?
-
-    /// Raw Header Blocks
-    ///
-    @NSManaged var header: [AnyObject]?
-
-    /// Raw Body Blocks
-    ///
-    @NSManaged var body: [AnyObject]?
-
-    /// Raw Associated Metadata
-    ///
-    @NSManaged var meta: [String: AnyObject]?
-
-    /// Timestamp As Date Transient Storage.
-    ///
-    fileprivate var cachedTimestampAsDate: Date?
-
-    private let formatter = FormattableContentFormatter()
-
-    /// Subject Blocks Transient Storage.
-    ///
-    fileprivate var cachedSubjectContentGroup: FormattableContentGroup?
-
-    /// Header Blocks Transient Storage.
-    ///
-    fileprivate var cachedHeaderContentGroup: FormattableContentGroup?
-
-    /// Body Blocks Transient Storage.
-    ///
-    fileprivate var cachedBodyContentGroups: [FormattableContentGroup]?
-
-    /// Header + Body Blocks Transient Storage.
-    ///
-    fileprivate var cachedHeaderAndBodyContentGroups: [FormattableContentGroup]?
-
-    private var cachedAttributesObserver: NotificationCachedAttributesObserver?
-
-    /// Array that contains the Cached Property Names
-    ///
-    fileprivate static let cachedAttributes = Set(arrayLiteral: "body", "header", "subject", "timestamp")
-
-    public override func awakeFromFetch() {
-        super.awakeFromFetch()
-
-        if cachedAttributesObserver == nil {
-            let observer = NotificationCachedAttributesObserver()
-            for attr in Notification.cachedAttributes {
-                addObserver(observer, forKeyPath: attr, options: [.prior], context: nil)
-            }
-            cachedAttributesObserver = observer
-        }
-    }
-
-    deinit {
-        if let observer = cachedAttributesObserver {
-            for attr in Notification.cachedAttributes {
-                removeObserver(observer, forKeyPath: attr)
-            }
-        }
-    }
+extension WordPressData.Notification {
 
     func renderSubject() -> NSAttributedString? {
         guard let subjectContent = subjectContentGroup?.blocks.first else {
@@ -120,26 +15,6 @@ public class Notification: NSManagedObject {
             return nil
         }
         return formatter.render(content: snippetContent, with: SnippetsContentStyles())
-    }
-
-    /// Nukes any cached values.
-    ///
-    func resetCachedAttributes() {
-        cachedTimestampAsDate = nil
-
-        formatter.resetCache()
-        cachedBodyContentGroups = nil
-        cachedHeaderContentGroup = nil
-        cachedSubjectContentGroup = nil
-        cachedHeaderAndBodyContentGroups = nil
-    }
-
-    // This is a NO-OP that will force NSFetchedResultsController to reload the row for this object.
-    // Helpful when dealing with transient attributes.
-    //
-    @objc func didChangeOverrides() {
-        let readValue = read
-        read = readValue
     }
 
     /// Returns the first BlockGroup of the specified type, if any.
@@ -169,11 +44,6 @@ public class Notification: NSManagedObject {
 
         return nil
     }
-}
-
-// MARK: - Read / Write Body Objects
-
-extension Notification {
 
     private func indexOfBody(type: BodyType) -> Int? {
         guard let body else {
@@ -213,7 +83,7 @@ extension Notification {
 
 // MARK: - Notification Computed Properties
 //
-extension Notification {
+extension WordPressData.Notification {
 
     /// Verifies if the current notification is a Pingback.
     ///
@@ -325,24 +195,6 @@ extension Notification {
         return resourceURL
     }
 
-    /// Parse the Timestamp as a Cocoa Date Instance.
-    ///
-    @objc var timestampAsDate: Date {
-        assert(timestamp != nil, "Notification Timestamp should not be nil [\(notificationId)]")
-
-        if let timestampAsDate = cachedTimestampAsDate {
-            return timestampAsDate
-        }
-
-        guard let timestamp, let timestampAsDate = Date.dateWithISO8601String(timestamp) else {
-            DDLogError("Error: couldn't parse date [\(String(describing: self.timestamp))] for notification with id [\(notificationId)]")
-            return Date()
-        }
-
-        cachedTimestampAsDate = timestampAsDate
-        return timestampAsDate
-    }
-
     var subjectContentGroup: FormattableContentGroup? {
         if let group = cachedSubjectContentGroup {
             return group
@@ -352,10 +204,8 @@ extension Notification {
             return nil
         }
 
-        // FIXME:
-//        cachedSubjectContentGroup = SubjectContentGroup.createGroup(from: subject, parent: self)
-//        return cachedSubjectContentGroup
-        return nil
+        cachedSubjectContentGroup = SubjectContentGroup.createGroup(from: subject, parent: self)
+        return cachedSubjectContentGroup
     }
 
     var headerContentGroup: FormattableContentGroup? {
@@ -367,10 +217,8 @@ extension Notification {
             return nil
         }
 
-        // FIXME:
-//        cachedHeaderContentGroup = HeaderContentGroup.createGroup(from: header, parent: self)
-//        return cachedHeaderContentGroup
-        return nil
+        cachedHeaderContentGroup = HeaderContentGroup.createGroup(from: header, parent: self)
+        return cachedHeaderContentGroup
     }
 
     var bodyContentGroups: [FormattableContentGroup] {
@@ -430,7 +278,7 @@ extension Notification {
 
 // MARK: - Notification Subtypes
 
-extension Notification {
+extension WordPressData.Notification {
 
     /// Parses the meta data of the notification to extract key information like postID
     /// Parsing logic and wrapper used depends on the notification kind
@@ -454,13 +302,13 @@ extension Notification {
     enum ParsedNotification {
         case newPost(NewPostNotification)
         case comment(CommentNotification)
-        case other(Notification)
+        case other(WordPressData.Notification)
     }
 }
 
 // MARK: - Update Helpers
 //
-extension Notification {
+extension WordPressData.Notification {
     /// Updates the local fields with the new values stored in a given Remote Notification
     ///
     func update(with remote: RemoteNotification) {
@@ -482,7 +330,7 @@ extension Notification {
 
 // MARK: - Notification Types
 //
-extension Notification {
+extension WordPressData.Notification {
     /// Meta Parsing Keys
     ///
     fileprivate enum MetaKeys {
@@ -515,30 +363,8 @@ extension Notification {
 
 // MARK: - Notifiable
 
-extension Notification: Notifiable {
+extension WordPressData.Notification: Notifiable {
     public var notificationIdentifier: String {
         return notificationId
-    }
-}
-
-private class NotificationCachedAttributesObserver: NSObject {
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        guard let keyPath, let notification = object as? Notification, Notification.cachedAttributes.contains(keyPath) else {
-            return
-        }
-
-        guard (change?[.notificationIsPriorKey] as? NSNumber)?.boolValue == true else {
-            return
-        }
-
-        // Note:
-        // Cached Attributes are only consumed on the main thread, when initializing UI elements.
-        // As an optimization, we'll only reset those attributes when we're running on the main thread.
-        //
-        guard notification.managedObjectContext?.concurrencyType == .mainQueueConcurrencyType else {
-            return
-        }
-
-        notification.resetCachedAttributes()
     }
 }
