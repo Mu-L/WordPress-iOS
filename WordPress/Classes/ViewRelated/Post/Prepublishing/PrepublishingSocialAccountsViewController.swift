@@ -1,4 +1,3 @@
-import WordPressData
 import WordPressShared
 import WordPressUI
 
