@@ -28,8 +28,6 @@ NSString * const WPAppAnalyticsKeyTabSource                         = @"tab_sour
 NSString * const WPAppAnalyticsKeyReplyingTo                        = @"replying_to";
 NSString * const WPAppAnalyticsKeySiteType                          = @"site_type";
 
-NSString * const WPAppAnalyticsKeyHasGutenbergBlocks                = @"has_gutenberg_blocks";
-
 NSString * const WPAppAnalyticsValueSiteTypeBlog                    = @"blog";
 NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 
@@ -135,13 +133,14 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 }
 
 + (void)track:(WPAnalyticsStat)stat error:(NSError * _Nonnull)error withBlogID:(NSNumber *)blogID {
-    NSError *err = [self sanitizedErrorFromError:error];
-    NSDictionary *properties = @{
-                                 @"error_code": [@(err.code) stringValue],
-                                 @"error_domain": err.domain,
-                                 @"error_description": err.description
-    };
-    [self track:stat withProperties: properties withBlogID:blogID];
+    // TODO: (kean)
+//    NSError *err = [self sanitizedErrorFromError:error];
+//    NSDictionary *properties = @{
+//                                 @"error_code": [@(err.code) stringValue],
+//                                 @"error_domain": err.domain,
+//                                 @"error_description": err.description
+//    };
+    // [self track:stat withProperties: properties withBlogID:blogID];
 }
 
 + (void)track:(WPAnalyticsStat)stat error:(NSError * _Nonnull)error {

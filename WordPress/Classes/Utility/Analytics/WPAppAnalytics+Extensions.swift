@@ -50,11 +50,25 @@ extension WPAppAnalytics {
     static func track(_ stat: WPAnalyticsStat, properties: [String: Any]? = nil, post: AbstractPost) {
         var properties = properties ?? [:]
 
-        if let postID = post.postID, postID > 0 {
+        if let postID = post.postID, postID.intValue > 0 {
             properties[WPAppAnalyticsKeyPostID] = postID
         }
-        properties[WPAppAnalyticsKeyHasGutenbergBlocks] = post.containsGutenbergBlocks()
+        properties[Constants.hasGutenbergBlocksKey] = post.containsGutenbergBlocks()
 
         WPAppAnalytics.track(stat, properties: properties, blog: post.blog)
     }
+
+    // MARK: WPAppAnalytics (Legacy)
+
+    @objc class func track(_ stat: WPAnalyticsStat, withBlog blog: Blog) {
+        track(stat, blog: blog)
+    }
+
+    @objc class func track(_ stat: WPAnalyticsStat, withProperties properties: [String: Any]?, withBlog blog: Blog) {
+        track(stat, properties: properties, blog: blog)
+    }
+}
+
+private enum Constants {
+    static let hasGutenbergBlocksKey = "has_gutenberg_blocks"
 }

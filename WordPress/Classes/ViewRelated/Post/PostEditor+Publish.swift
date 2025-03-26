@@ -175,7 +175,7 @@ extension PublishingEditor {
             }
         }
 
-        WPAppAnalytics.track(stat, withProperties: properties, with: post)
+        WPAppAnalytics.track(stat, properties: properties, post: post)
     }
 
     // MARK: - Close button handling
@@ -218,7 +218,7 @@ extension PublishingEditor {
             return
         }
 
-        WPAppAnalytics.track(.editorDiscardedChanges, withProperties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], with: post)
+        WPAppAnalytics.track(.editorDiscardedChanges, properties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], post: post)
 
         // Cancel upload of only newly inserted media items
         if let previous = post.original {
@@ -277,7 +277,7 @@ extension PublishingEditor {
     func dismissOrPopView(presentBloggingReminders: Bool = false) {
         stopEditing()
 
-        WPAppAnalytics.track(.editorClosed, withProperties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], with: post)
+        WPAppAnalytics.track(.editorClosed, properties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], post: post)
 
         if let onClose {
             // if this closure exists, the presentation of the Blogging Reminders flow (if needed)
