@@ -36,13 +36,13 @@ extension WPAppAnalytics {
     }
 
     private func trackApplicationClosed(screenName: String) {
-        var properties: [String: String] = [:]
+        var properties: [String: Any] = [:]
         properties[Constants.lastVisibleScreenKey] = screenName
 
         if let applicationOpenedTime {
             let applicationClosedTime = Date()
             let timeInApp = applicationClosedTime.timeIntervalSince(applicationOpenedTime).rounded()
-            properties[Constants.timeInAppKey] = String(timeInApp)
+            properties[Constants.timeInAppKey] = NSNumber(value: timeInApp)
             self.applicationOpenedTime = nil
         }
 
