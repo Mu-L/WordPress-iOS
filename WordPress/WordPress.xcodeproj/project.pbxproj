@@ -2930,7 +2930,6 @@
 				"Categories/Media+Extensions.h",
 				"Categories/NSMutableArray+NullableObjects.h",
 				"Categories/NSObject+Helpers.h",
-				"Categories/SVProgressHUD+Dismiss.h",
 				"Categories/UIApplication+Helpers.h",
 				"Categories/UINavigationController+KeyboardFix.h",
 				"Categories/UIView+Subviews.h",

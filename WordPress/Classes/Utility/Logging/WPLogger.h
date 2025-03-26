@@ -1,9 +1,6 @@
 #import <Foundation/Foundation.h>
-@import CocoaLumberjack;
 
 @class DDFileLogger;
-
-extern DDLogLevel ddLogLevel;
 
 /**
  *  @class      WPlogger

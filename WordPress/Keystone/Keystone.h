@@ -74,7 +74,6 @@ FOUNDATION_EXPORT const unsigned char KeystoneVersionString[];
 #import <Keystone/StatsViewController.h>
 #import <Keystone/SuggestionsTableView.h>
 #import <Keystone/SuggestionsTableViewCell.h>
-#import <Keystone/SVProgressHUD+Dismiss.h>
 
 #import <Keystone/Theme.h>
 #import <Keystone/ThemeService.h>
