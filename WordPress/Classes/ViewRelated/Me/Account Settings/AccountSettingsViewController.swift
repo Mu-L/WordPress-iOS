@@ -285,7 +285,7 @@ private class AccountSettingsController: SettingsController {
             case .success:
                 WPAnalytics.track(.accountCloseCompleted, properties: ["status": "success"])
                 let status = NSLocalizedString("Account closed", comment: "Overlay message displayed when account successfully closed")
-                // SVProgressHUD.showDismissibleSuccess(withStatus: status)
+                SVProgressHUD.showDismissibleSuccess(withStatus: status)
                 AccountHelper.logOutDefaultWordPressComAccount()
             case .failure(let error):
                 let errorCode = self.errorCode(error) ?? "unknown"
