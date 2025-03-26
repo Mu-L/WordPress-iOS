@@ -3,7 +3,7 @@
 #import "WPAppAnalytics.h"
 #import "WPAnalyticsTrackerWPCom.h"
 #import "WPAnalyticsTrackerAutomatticTracks.h"
-#import "WordPress-Swift.h"
+#import "Keystone-Swift.h"
 
 NSString * const WPAppAnalyticsDefaultsUserOptedOut                 = @"tracks_opt_out";
 NSString * const WPAppAnalyticsKeyBlogID                            = @"blog_id";
