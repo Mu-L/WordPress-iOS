@@ -1,16 +1,12 @@
-#import "WPAppAnalytics.h"
-
 @import WordPressDataObjC;
+@import NSObject_SafeExpectations;
+
+#import "WPAppAnalytics.h"
 #import "WPAnalyticsTrackerWPCom.h"
 #import "WPAnalyticsTrackerAutomatticTracks.h"
-#import "WPTabBarController.h"
-#import "AccountService.h"
-#import "BlogService.h"
 #import "Blog.h"
 #import "AbstractPost.h"
 #import "WordPress-Swift.h"
-
-@import NSObject_SafeExpectations;
 
 NSString * const WPAppAnalyticsDefaultsUserOptedOut                 = @"tracks_opt_out";
 NSString * const WPAppAnalyticsKeyBlogID                            = @"blog_id";
