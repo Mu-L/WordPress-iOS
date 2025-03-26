@@ -1,6 +1,7 @@
 import Foundation
 import WidgetKit
 import JetpackStatsWidgetsCore
+import WordPressShared
 
 @objcMembers class WidgetAnalytics: NSObject {
     static func trackLoadedWidgetsOnApplicationOpened() {

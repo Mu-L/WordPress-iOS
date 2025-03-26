@@ -1,5 +1,6 @@
 import SVProgressHUD
 import WordPressAuthenticator
+import WordPressShared
 
 class SignupEpilogueViewController: UIViewController {
 
