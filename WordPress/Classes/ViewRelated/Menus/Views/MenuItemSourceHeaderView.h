@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "MenuItem.h"
+#import <Keystone/MenuItem.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

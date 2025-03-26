@@ -1,4 +1,4 @@
-#import "MenuItemAbstractPostsViewController.h"
+#import <Keystone/MenuItemAbstractPostsViewController.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
