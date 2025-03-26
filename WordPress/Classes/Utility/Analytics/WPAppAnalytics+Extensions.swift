@@ -5,7 +5,13 @@ extension WPAppAnalytics {
 
     // MARK: WPAppAnalytics (Blog)
 
-    static func track(_ stat: WPAnalyticsStat, properties: [String: Any]? = nil, blog: Blog) {
+    @objc(track:withBlog:)
+    class func track(_ stat: WPAnalyticsStat, blog: Blog) {
+        track(stat, properties: nil, blog: blog)
+    }
+
+    @objc(track:withProperties:withBlog:)
+    class func track(_ stat: WPAnalyticsStat, properties: [String: Any]?, blog: Blog) {
         var properties = properties ?? [:]
         if let blogID = blog.dotComID {
             properties[WPAppAnalyticsKeyBlogID] = blogID
@@ -15,7 +21,13 @@ extension WPAppAnalytics {
         WPAppAnalytics.track(stat, withProperties: properties)
     }
 
-    static func track(_ stat: WPAnalyticsStat, properties: [String: Any]? = nil, blogID: NSNumber?) {
+    @objc(track:withBlogID:)
+    class func track(_ stat: WPAnalyticsStat, blogID: NSNumber?) {
+        track(stat, properties: nil, blogID: blogID)
+    }
+
+    @objc(track:withProperties:withBlogID:)
+    class func track(_ stat: WPAnalyticsStat, properties: [String: Any]?, blogID: NSNumber?) {
         if Thread.isMainThread {
             _track(stat, properties: properties, blogID: blogID)
         } else {
@@ -56,16 +68,6 @@ extension WPAppAnalytics {
         properties[Constants.hasGutenbergBlocksKey] = post.containsGutenbergBlocks()
 
         WPAppAnalytics.track(stat, properties: properties, blog: post.blog)
-    }
-
-    // MARK: WPAppAnalytics (Legacy)
-
-    @objc class func track(_ stat: WPAnalyticsStat, withBlog blog: Blog) {
-        track(stat, blog: blog)
-    }
-
-    @objc class func track(_ stat: WPAnalyticsStat, withProperties properties: [String: Any]?, withBlog blog: Blog) {
-        track(stat, properties: properties, blog: blog)
     }
 }
 
