@@ -102,20 +102,6 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 #pragma mark - App Tracking
 
 /**
- *  @brief      Pass-through method to [WPAnalytics track:stat]. Use this method instead of calling WPAnalytics directly.
- */
-+ (void)track:(WPAnalyticsStat)stat {
-    [WPAnalytics track:stat];
-}
-
-/**
- *  @brief      Pass-through method to WPAnalytics. Use this method instead of calling WPAnalytics directly.
- */
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties {
-    [WPAnalytics track:stat withProperties:properties];
-}
-
-/**
  * @brief   Sanitize an NSError so we're not tracking unnecessary or usless information.
  */
 + (NSError * _Nonnull)sanitizedErrorFromError:(NSError * _Nonnull)error

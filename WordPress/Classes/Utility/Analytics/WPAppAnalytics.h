@@ -1,7 +1,4 @@
 @import Foundation;
-@import WordPressSharedObjC;
-
-@class Blog, AbstractPost, AccountService;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -66,14 +63,7 @@ extern NSString * const WPAppAnalyticsValueSiteTypeP2;
  */
 - (void)setUserHasOptedOut:(BOOL)optedOut;
 
-#pragma mark - Usage tracking
-
-/**
- *  @brief      Pass-through methods to WPAnalytics
- */
-+ (void)track:(WPAnalyticsStat)stat;
-
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties;
+#pragma mark - Internal
 
 + (NSError *)sanitizedErrorFromError:(NSError *)error;
 

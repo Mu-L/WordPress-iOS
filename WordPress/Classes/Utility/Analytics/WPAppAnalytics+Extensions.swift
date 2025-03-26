@@ -3,6 +3,14 @@ import WordPressShared
 
 extension WPAppAnalytics {
 
+    @objc class func track(_ stat: WPAnalyticsStat) {
+        WPAnalytics.track(stat)
+    }
+
+    @objc class func track(_ stat: WPAnalyticsStat, withProperties properties: [AnyHashable: Any]?) {
+        WPAnalytics.track(stat, withProperties: properties)
+    }
+
     // MARK: WPAppAnalytics (Blog)
 
     @objc(track:withBlog:)
