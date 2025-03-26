@@ -6,6 +6,7 @@ private enum Constants {
     static let Ranges = "ranges"
 }
 
+// FIXME: This is a WordPressData notification!
 extension Notification {
     enum ContentType: String {
         case comment
