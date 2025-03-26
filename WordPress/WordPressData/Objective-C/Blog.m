@@ -401,44 +401,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     return (self.isHostedAtWPcom && [self isPrivate]);
 }
 
-- (SiteVisibility)siteVisibility
-{
-    // FIXME: Disabled to experiment with a compilation error
-//    switch ([self.settings.privacy integerValue]) {
-//        case (SiteVisibilityHidden):
-//            return SiteVisibilityHidden;
-//            break;
-//        case (SiteVisibilityPublic):
-//            return SiteVisibilityPublic;
-//            break;
-//        case (SiteVisibilityPrivate):
-//            return SiteVisibilityPrivate;
-//            break;
-//        default:
-//            break;
-//    }
-    return SiteVisibilityUnknown;
-}
-
-- (void)setSiteVisibility:(SiteVisibility)siteVisibility
-{
-    // FIXME: Disabled to experiment with a compilation error
-//    switch (siteVisibility) {
-//        case (SiteVisibilityHidden):
-//            self.settings.privacy = @(SiteVisibilityHidden);
-//            break;
-//        case (SiteVisibilityPublic):
-//            self.settings.privacy = @(SiteVisibilityPublic);
-//            break;
-//        case (SiteVisibilityPrivate):
-//            self.settings.privacy = @(SiteVisibilityPrivate);
-//            break;
-//        default:
-//            NSParameterAssert(siteVisibility >= SiteVisibilityPrivate && siteVisibility <= SiteVisibilityPublic);
-//            break;
-//    }
-}
-
 - (NSDictionary *)getImageResizeDimensions
 {
     CGSize smallSize, mediumSize, largeSize;
