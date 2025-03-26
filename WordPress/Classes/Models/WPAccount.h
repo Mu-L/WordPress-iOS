@@ -34,13 +34,6 @@
 /// @name API Helpers
 ///------------------
 
-/// A WordPressRestComApi object if the account is a WordPress.com account. Otherwise, it returns `nil`.
-///
-/// Important: Do not set this directly!
-///
-/// It's reserved for Objective-C to Swift interoperability in the context of separating this model from the app target and will be removed at some point.
-@property (nonatomic, strong) WordPressComRestApi *wordPressComRestApi;
-
 @end
 
 @interface WPAccount (CoreDataGeneratedAccessors)

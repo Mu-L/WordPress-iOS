@@ -22,7 +22,6 @@
 @dynamic userID;
 @dynamic avatarURL;
 @dynamic settings;
-@synthesize wordPressComRestApi;
 @synthesize cachedToken;
 
 #pragma mark - NSManagedObject subclass methods
