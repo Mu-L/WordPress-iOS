@@ -2,6 +2,9 @@ import Foundation
 import WordPressShared
 
 extension WPAppAnalytics {
+
+    // MARK: WPAppAnalytics (Blog)
+
     static func track(_ stat: WPAnalyticsStat, properties: [String: Any]? = nil, blog: Blog) {
         var properties = properties ?? [:]
         if let blogID = blog.dotComID {
@@ -40,5 +43,18 @@ extension WPAppAnalytics {
 
     private static func siteType(for blog: Blog) -> String {
         blog.isWPForTeams() ? WPAppAnalyticsValueSiteTypeP2 : WPAppAnalyticsValueSiteTypeBlog
+    }
+
+    // MARK: WPAppAnalytics (AbstractPost)
+
+    static func track(_ stat: WPAnalyticsStat, properties: [String: Any]? = nil, post: AbstractPost) {
+        var properties = properties ?? [:]
+
+        if let postID = post.postID, postID > 0 {
+            properties[WPAppAnalyticsKeyPostID] = postID
+        }
+        properties[WPAppAnalyticsKeyHasGutenbergBlocks] = post.containsGutenbergBlocks()
+
+        WPAppAnalytics.track(stat, properties: properties, blog: post.blog)
     }
 }

@@ -67,16 +67,6 @@ extern NSString * const WPAppAnalyticsValueSiteTypeP2;
 #pragma mark - Usage tracking
 
 /**
- *  @brief      Tracks stats with the post details when available
- */
-+ (void)track:(WPAnalyticsStat)stat withPost:(AbstractPost *)postOrPage;
-
-/**
- *  @brief      Tracks stats with the post details when available
- */
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties withPost:(AbstractPost *)postOrPage;
-
-/**
     @brief      Used only for bumping the TrainTracks interaction event. The stat's
                 event name is passed as an "action" property.
  */

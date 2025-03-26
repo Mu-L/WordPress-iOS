@@ -29,7 +29,6 @@ NSString * const WPAppAnalyticsKeyReplyingTo                        = @"replying
 NSString * const WPAppAnalyticsKeySiteType                          = @"site_type";
 
 NSString * const WPAppAnalyticsKeyHasGutenbergBlocks                = @"has_gutenberg_blocks";
-NSString * const WPAppAnalyticsKeyHasStoriesBlocks                  = @"has_wp_stories_blocks";
 
 NSString * const WPAppAnalyticsValueSiteTypeBlog                    = @"blog";
 NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
@@ -103,28 +102,6 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 }
 
 #pragma mark - App Tracking
-
-+ (void)track:(WPAnalyticsStat)stat withPost:(AbstractPost *)postOrPage {
-    [WPAppAnalytics track:stat withProperties:nil withPost:postOrPage];
-}
-
-+ (void)track:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties withPost:(AbstractPost *)postOrPage {
-    NSMutableDictionary *mutableProperties;
-    if (properties) {
-        mutableProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
-    } else {
-        mutableProperties = [NSMutableDictionary new];
-    }
-
-    if (postOrPage.postID.integerValue > 0) {
-        mutableProperties[WPAppAnalyticsKeyPostID] = postOrPage.postID;
-    }
-    mutableProperties[WPAppAnalyticsKeyHasGutenbergBlocks] = @([postOrPage containsGutenbergBlocks]);
-    mutableProperties[WPAppAnalyticsKeyHasStoriesBlocks] = @([postOrPage containsStoriesBlocks]);
-
-    [WPAppAnalytics track:stat withProperties:mutableProperties withBlog:postOrPage.blog];
-}
-
 
 + (void)trackTrainTracksInteraction:(WPAnalyticsStat)stat withProperties:(NSDictionary *)properties
 {
