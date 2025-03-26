@@ -1,8 +1,4 @@
-#if __has_warning("-Watimport-in-framework-header")
-#pragma clang diagnostic ignored "-Watimport-in-framework-header"
-#endif
-
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 extern NSString * const SettingsTableViewCellReuseIdentifier;
 

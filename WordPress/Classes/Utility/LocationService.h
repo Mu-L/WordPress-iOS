@@ -1,5 +1,5 @@
-@import Foundation;
-@import MapKit;
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
 /**
  Completion block for LocationService methods.

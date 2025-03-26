@@ -1,7 +1,7 @@
-@import UIKit;
-#import "MenuItemSourceTextBar.h"
-#import "MenuItemSourceCell.h"
-#import "MenuItem.h"
+#import <UIKit/UIKit.h>
+#import <Keystone/MenuItemSourceTextBar.h>
+#import <Keystone/MenuItemSourceCell.h>
+#import <Keystone/MenuItem.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
