@@ -133,14 +133,14 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 }
 
 + (void)track:(WPAnalyticsStat)stat error:(NSError * _Nonnull)error withBlogID:(NSNumber *)blogID {
-    // TODO: (kean)
-//    NSError *err = [self sanitizedErrorFromError:error];
-//    NSDictionary *properties = @{
-//                                 @"error_code": [@(err.code) stringValue],
-//                                 @"error_domain": err.domain,
-//                                 @"error_description": err.description
-//    };
-    // [self track:stat withProperties: properties withBlogID:blogID];
+    NSError *err = [self sanitizedErrorFromError:error];
+    NSDictionary *properties = @{
+        @"error_code": [@(err.code) stringValue],
+        @"error_domain": err.domain,
+        @"error_description": err.description,
+        WPAppAnalyticsKeyBlogID: blogID ?: @0
+    };
+    [self track:stat withProperties: properties];
 }
 
 + (void)track:(WPAnalyticsStat)stat error:(NSError * _Nonnull)error {
