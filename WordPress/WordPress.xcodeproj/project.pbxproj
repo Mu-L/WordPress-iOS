@@ -308,6 +308,7 @@
 		3F60D39B2D2C4BA4008ACD86 /* hermes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3922D2C4BA3008ACD86 /* hermes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3F60D39C2D2C4BA4008ACD86 /* yoga.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3932D2C4BA4008ACD86 /* yoga.xcframework */; };
 		3F60D39D2D2C4BA4008ACD86 /* yoga.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3932D2C4BA4008ACD86 /* yoga.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3F636B282D937D8900B721C1 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F636B272D937D8900B721C1 /* TestingAppDelegate.swift */; };
 		3F6E6A5B2D82ACE000DAF6EA /* KeychainUtilsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6E6A5A2D82ACE000DAF6EA /* KeychainUtilsMock.swift */; };
 		3F751D462491A93D0008A2B1 /* ZendeskUtilsTests+Plans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F751D452491A93D0008A2B1 /* ZendeskUtilsTests+Plans.swift */; };
 		3F759FBA2A2DA93B0039A845 /* WPAccount+Fixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F759FB92A2DA93B0039A845 /* WPAccount+Fixture.swift */; };
@@ -834,7 +835,6 @@
 		931DF4D618D09A2F00540BDD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 931DF4D818D09A2F00540BDD /* InfoPlist.strings */; };
 		932225B11C7CE50300443B02 /* WordPressShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 932225A71C7CE50300443B02 /* WordPressShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		932645A41E7C206600134988 /* GutenbergSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932645A31E7C206600134988 /* GutenbergSettingsTests.swift */; };
-		933D1F471EA64108009FB462 /* TestingAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D1F461EA64108009FB462 /* TestingAppDelegate.m */; };
 		933D1F6C1EA7A3AB009FB462 /* TestingMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 933D1F6B1EA7A3AB009FB462 /* TestingMode.storyboard */; };
 		933D1F6E1EA7A402009FB462 /* TestAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 933D1F6D1EA7A402009FB462 /* TestAssets.xcassets */; };
 		93594BD5191D2F5A0079E6B2 /* stats-batch.json in Resources */ = {isa = PBXBuildFile; fileRef = 93594BD4191D2F5A0079E6B2 /* stats-batch.json */; };
@@ -1923,6 +1923,7 @@
 		3F60D3912D2C4BA3008ACD86 /* RNTAztecView.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RNTAztecView.xcframework; path = Frameworks/RNTAztecView.xcframework; sourceTree = "<group>"; };
 		3F60D3922D2C4BA3008ACD86 /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = Frameworks/hermes.xcframework; sourceTree = "<group>"; };
 		3F60D3932D2C4BA4008ACD86 /* yoga.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = yoga.xcframework; path = Frameworks/yoga.xcframework; sourceTree = "<group>"; };
+		3F636B272D937D8900B721C1 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		3F6E6A5A2D82ACE000DAF6EA /* KeychainUtilsMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainUtilsMock.swift; sourceTree = "<group>"; };
 		3F751D452491A93D0008A2B1 /* ZendeskUtilsTests+Plans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZendeskUtilsTests+Plans.swift"; sourceTree = "<group>"; };
 		3F759FB92A2DA93B0039A845 /* WPAccount+Fixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WPAccount+Fixture.swift"; sourceTree = "<group>"; };
@@ -2393,8 +2394,6 @@
 		931DF4DF18D09B3900540BDD /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		932225A71C7CE50300443B02 /* WordPressShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WordPressShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		932645A31E7C206600134988 /* GutenbergSettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GutenbergSettingsTests.swift; sourceTree = "<group>"; };
-		933D1F451EA64108009FB462 /* TestingAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestingAppDelegate.h; sourceTree = "<group>"; };
-		933D1F461EA64108009FB462 /* TestingAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestingAppDelegate.m; sourceTree = "<group>"; };
 		933D1F6B1EA7A3AB009FB462 /* TestingMode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestingMode.storyboard; sourceTree = "<group>"; };
 		933D1F6D1EA7A402009FB462 /* TestAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TestAssets.xcassets; sourceTree = "<group>"; };
 		934F1B3119ACCE5600E9E63E /* WordPress.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = WordPress.entitlements; sourceTree = "<group>"; };
@@ -5507,8 +5506,7 @@
 				F4426FD8287F02FD00218003 /* SiteSuggestionsServiceMock.swift */,
 				F4426FD2287E08C300218003 /* SuggestionServiceMock.swift */,
 				933D1F6D1EA7A402009FB462 /* TestAssets.xcassets */,
-				933D1F451EA64108009FB462 /* TestingAppDelegate.h */,
-				933D1F461EA64108009FB462 /* TestingAppDelegate.m */,
+				3F636B272D937D8900B721C1 /* TestingAppDelegate.swift */,
 				933D1F6B1EA7A3AB009FB462 /* TestingMode.storyboard */,
 				3F4A4C202AD39CB100DE5DF8 /* TruthTable.swift */,
 				24CDE3402C5863A1005E5E43 /* TestKeychain.swift */,
@@ -8190,6 +8188,7 @@
 				17FC0032264D728E00FCBD37 /* SharingServiceTests.swift in Sources */,
 				3236F7A124B61B950088E8F3 /* ReaderInterestsDataSourceTests.swift in Sources */,
 				0CB424F42ADF3CBE0080B807 /* PostSearchViewModelTests.swift in Sources */,
+				3F636B282D937D8900B721C1 /* TestingAppDelegate.swift in Sources */,
 				8BDA5A74247C5EAA00AB124C /* ReaderDetailCoordinatorTests.swift in Sources */,
 				74585B991F0D58F300E7E667 /* DomainsServiceTests.swift in Sources */,
 				D88A64B0208DA093008AE9BC /* StockPhotosResultsPageTests.swift in Sources */,
@@ -8301,7 +8300,6 @@
 				179501CD27A01D4100882787 /* PublicizeAuthorizationURLComponentsTests.swift in Sources */,
 				7E53AB0A20FE83A9005796FE /* MockContentCoordinator.swift in Sources */,
 				932645A41E7C206600134988 /* GutenbergSettingsTests.swift in Sources */,
-				933D1F471EA64108009FB462 /* TestingAppDelegate.m in Sources */,
 				FEE54C4C2C12393A00740A68 /* ReaderPostStreamServiceTest.swift in Sources */,
 				C8567498243F41CA001A995E /* MockTenorService.swift in Sources */,
 				1D19C56629C9DB0A00FB0087 /* GutenbergVideoPressUploadProcessorTests.swift in Sources */,
