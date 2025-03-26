@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 @property (nullable, nonatomic, retain) NSSet<PageTemplateCategory *> *pageTemplateCategories;
 
 /**
- *  @details    Maps to a BlogSettings instance, which contains a collection of the available preferences, 
+ *  @details    Maps to a BlogSettings instance, which contains a collection of the available preferences,
  *              and their values.
  */
 @property (nonatomic, strong, readwrite, nullable) BlogSettings *settings;
@@ -251,8 +251,6 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 - (NSString *)adminUrlWithPath:(NSString *)path;
 - (NSDictionary *) getImageResizeDimensions;
 - (BOOL)supportsFeaturedImages;
-- (BOOL)supports:(BlogFeature)feature;
-- (BOOL)supportsPublicize;
 - (BOOL)supportsShareButtons;
 - (BOOL)isStatsActive;
 - (BOOL)hasMappedDomain;
@@ -263,7 +261,7 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 - (nullable NSString *)postFormatTextFromSlug:(nullable NSString *)postFormatSlug;
 /**
  Returns a human readable description for logging
- 
+
  Instead of inspecting the core data object, this returns select information, more
  useful for support.
  */
@@ -293,7 +291,7 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 
 /**
  Call this method to know if the blog is hosted at WPcom or accessed through Jetpack.
- 
+
  @return YES if the blog is hosted at WPcom or if it's connected through Jetpack.
     NO otherwise.
  */
@@ -309,6 +307,13 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 /// Checks the blogs installed WordPress version is more than or equal to the requiredVersion
 /// @param requiredVersion The minimum version to check for
 - (BOOL)hasRequiredWordPressVersion:(NSString *)requiredVersion;
+
+#pragma mark - Exposed to Swift
+
+- (BOOL)supportsRestApi;
+- (BOOL)supportsJetpackImageSettings;
+- (BOOL)supportsJetpackSettings;
+- (BOOL)jetpackSharingButtonsModuleEnabled;
 
 @end
 
