@@ -1,4 +1,5 @@
 import UIKit
+import WordPressData
 import WordPressShared
 
 typealias DashboardCollectionViewCell = UICollectionViewCell & Reusable & BlogDashboardCardConfigurable
@@ -158,7 +159,7 @@ final class BlogDashboardViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
-    @objc private func updateCollectionViewHeight(notification: Notification) {
+    @objc private func updateCollectionViewHeight(notification: WordPressData.Notification) {
         collectionView.collectionViewLayout.invalidateLayout()
     }
 

@@ -1,16 +1,16 @@
-import Foundation
+import WordPressData
 
 struct NewPostNotification: LikeableNotification {
 
     // MARK: - Properties
 
-    private let note: Notification
+    private let note: WordPressData.Notification
     private let postID: UInt
     private let siteID: UInt
 
     // MARK: - Init
 
-    init?(note: Notification) {
+    init?(note: WordPressData.Notification) {
         guard let postID = note.metaPostID?.uintValue, let siteID = note.metaSiteID?.uintValue else {
             return nil
         }
@@ -42,8 +42,8 @@ struct NewPostNotification: LikeableNotification {
 
     private func getPostLikedStatus() -> Bool {
         guard let body = note.body(ofType: .post),
-              let actions = body[Notification.BodyKeys.actions] as? [String: Bool],
-              let liked = actions[Notification.ActionsKeys.likePost]
+              let actions = body[WordPressData.Notification.BodyKeys.actions] as? [String: Bool],
+              let liked = actions[WordPressData.Notification.ActionsKeys.likePost]
         else {
             return false
         }
@@ -51,13 +51,13 @@ struct NewPostNotification: LikeableNotification {
     }
 
     private func updatePostLikedStatus(_ newValue: Bool) {
-        guard var body = note.body(ofType: Notification.BodyType.post),
-              var actions = body[Notification.BodyKeys.actions] as? [String: Bool]
+        guard var body = note.body(ofType: WordPressData.Notification.BodyType.post),
+              var actions = body[WordPressData.Notification.BodyKeys.actions] as? [String: Bool]
         else {
             return
         }
-        actions[Notification.ActionsKeys.likePost] = newValue
-        body[Notification.BodyKeys.actions] = actions
+        actions[WordPressData.Notification.ActionsKeys.likePost] = newValue
+        body[WordPressData.Notification.BodyKeys.actions] = actions
         self.note.updateBody(ofType: .post, newValue: body)
     }
 }
