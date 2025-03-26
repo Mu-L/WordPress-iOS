@@ -1,6 +1,7 @@
 import Foundation
 
 import WordPressKit
+import WordPressShared
 
 class BlockEditorSettingsService {
     struct SettingsServiceResult {

@@ -1,6 +1,7 @@
 import UIKit
 import WordPressShared
 import AsyncImageKit
+import WordPressShared
 
 final class BlazePostPreviewView: UIView {
 

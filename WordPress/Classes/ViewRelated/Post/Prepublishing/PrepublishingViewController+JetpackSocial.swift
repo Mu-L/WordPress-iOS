@@ -1,6 +1,6 @@
 import SwiftUI
 import UIKit
-
+import WordPressShared
 
 /// Encapsulates logic related to Jetpack Social in the pre-publishing sheet.
 ///

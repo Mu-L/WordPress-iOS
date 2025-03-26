@@ -63,7 +63,6 @@ public extension SiteSettingsViewController {
             }
             SVProgressHUD.dismiss()
 
-
             let errorTitle = NSLocalizedString("Export Content Error", comment: "Title of alert when export content fails")
             let alertController = UIAlertController(title: errorTitle, message: error.localizedDescription, preferredStyle: .alert)
 

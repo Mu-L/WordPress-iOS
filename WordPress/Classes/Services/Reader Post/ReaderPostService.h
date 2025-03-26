@@ -5,6 +5,8 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnullability-completeness"
 
+@import WordPressKit;
+
 @class ReaderPost;
 @class ReaderAbstractTopic;
 @class WordPressComRestApi;

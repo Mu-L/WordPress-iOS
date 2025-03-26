@@ -1,6 +1,6 @@
 import Foundation
-import WordPressKit
 import AutomatticTracks
+import WordPressKit
 import WordPressShared
 
 extension Variation {
