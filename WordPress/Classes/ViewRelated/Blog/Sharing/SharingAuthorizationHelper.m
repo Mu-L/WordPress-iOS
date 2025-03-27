@@ -1,6 +1,5 @@
 #import "SharingAuthorizationHelper.h"
 #import "BlogService.h"
-#import "SVProgressHUD+Dismiss.h"
 @import WordPressData;
 
 #import "WordPress-Swift.h"
