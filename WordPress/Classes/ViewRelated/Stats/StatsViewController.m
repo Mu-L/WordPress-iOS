@@ -1,10 +1,9 @@
 #import "StatsViewController.h"
-@import WordPressData;
 #import "BlogService.h"
 #import "WordPress-Swift.h"
 #import "WPAppAnalytics.h"
 
-@import WordPressDataObjC;
+@import WordPressData;
 @import WordPressShared;
 @import Reachability;
 
