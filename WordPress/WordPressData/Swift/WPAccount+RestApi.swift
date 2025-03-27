@@ -7,6 +7,6 @@ public extension WPAccount {
     /// Otherwise, it returns `nil`
     static func defaultWordPressComAccountRestAPI(in context: NSManagedObjectContext) throws -> WordPressComRestApi? {
         let account = try WPAccount.lookupDefaultWordPressComAccount(in: context)
-        return account?.wordPressComRestApi
+        return account?._private_wordPressComRestApi
     }
 }
