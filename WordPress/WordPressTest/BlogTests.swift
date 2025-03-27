@@ -4,6 +4,11 @@ import XCTest
 
 final class BlogTests: CoreDataTestCase {
 
+    func testAsURLBehavior() throws {
+        XCTAssertEqual(try "https://wordpress.com".asURL(), URL(string: "https://wordpress.com")!)
+        XCTAssertEqual(try "invalid".asURL(), URL(string: "invalid")!)
+    }
+
     // MARK: - Atomic Tests
     func testIsAtomic() {
         let blog = BlogBuilder(mainContext)
