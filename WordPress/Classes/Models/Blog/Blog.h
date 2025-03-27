@@ -122,8 +122,6 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 @interface Blog : NSManagedObject
 
 @property (nonatomic, strong, readwrite, nullable) NSNumber *blogID __deprecated_msg("Use dotComID instead");
-/// WordPress.com site ID stored as signed 32-bit integer.
-@property (nonatomic, strong, readwrite, nullable) NSNumber *dotComID;
 @property (nonatomic, strong, readwrite, nullable) NSString *xmlrpc;
 @property (nonatomic, strong, readwrite, nullable) NSString *apiKey;
 @property (nonatomic, strong, readwrite, nonnull) NSNumber *organizationID;
@@ -159,7 +157,6 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 @property (nonatomic, assign, readwrite) BOOL isHostedAtWPcom;
 @property (nonatomic, assign, readwrite) BOOL hasDomainCredit;
 @property (nonatomic, strong, readwrite, nullable) NSString *icon;
-@property (nonatomic, assign, readwrite) SiteVisibility siteVisibility;
 @property (nonatomic, strong, readwrite, nullable) NSNumber *planID;
 @property (nonatomic, strong, readwrite, nullable) NSString *planTitle;
 @property (nonatomic, strong, readwrite, nullable) NSArray<NSString *> *planActiveFeatures;
@@ -250,8 +247,6 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 - (NSString *)adminUrlWithPath:(NSString *)path;
 - (NSDictionary *) getImageResizeDimensions;
 - (BOOL)supportsFeaturedImages;
-- (BOOL)supports:(BlogFeature)feature;
-- (BOOL)supportsPublicize;
 - (BOOL)supportsShareButtons;
 - (BOOL)isStatsActive;
 - (BOOL)hasMappedDomain;
@@ -282,6 +277,13 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 /// Checks the blogs installed WordPress version is more than or equal to the requiredVersion
 /// @param requiredVersion The minimum version to check for
 - (BOOL)hasRequiredWordPressVersion:(NSString *)requiredVersion;
+
+#pragma mark - Exposed to ease Swift migration
+
+- (BOOL)supportsRestApi;
+- (BOOL)supportsJetpackImageSettings;
+- (BOOL)supportsJetpackSettings;
+- (BOOL)jetpackSharingButtonsModuleEnabled;
 
 @end
 
