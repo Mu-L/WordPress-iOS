@@ -138,6 +138,7 @@ let package = Package(
                 .product(name: "Reachability", package: "Reachability"),
                 .target(name: "SFHFKeychainUtils"),
                 .target(name: "WordPressSharedObjC"),
+                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
             ],
             resources: [.process("Resources")],
             swiftSettings: [.swiftLanguageMode(.v5)]
