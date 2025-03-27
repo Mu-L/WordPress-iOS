@@ -1,6 +1,5 @@
 import CocoaLumberjackSwift
 import Foundation
-import CocoaLumberjackSwift
 
 @objc(BlockedAuthor)
 public final class BlockedAuthor: NSManagedObject {
