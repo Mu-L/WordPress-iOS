@@ -7,7 +7,12 @@ private func apiBase(blog: Blog) -> URL? {
         assertionFailure(".com support has not been implemented yet")
         return nil
     }
-    return try? blog.url(withPath: "wp-json/")?.asURL()
+
+    guard let urlString = blog.url(withPath: "wp-json/") else {
+        return nil
+    }
+
+    return URL(string: urlString)
 }
 
 extension WordPressOrgRestApi {
