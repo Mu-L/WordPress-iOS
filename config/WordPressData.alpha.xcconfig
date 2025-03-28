@@ -1,4 +1,4 @@
 #include "WordPressData.xcconfig"
-#include "Common.enterprise.xcconfig"
+#include "Common.alpha.xcconfig"
 
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym

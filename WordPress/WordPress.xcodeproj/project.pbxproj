@@ -1461,7 +1461,7 @@
 		3FDDFE9527C8178C00606933 /* SiteStatsInformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStatsInformationTests.swift; sourceTree = "<group>"; };
 		3FE6D31D2B0705D400D14923 /* JetpackBrandingVisibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JetpackBrandingVisibilityTests.swift; sourceTree = "<group>"; };
 		3FE8B6742D8B898C000A3E7B /* WordPressData.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WordPressData.xcconfig; sourceTree = "<group>"; };
-		3FE8B6762D8B89AE000A3E7B /* WordPressData.enterprise.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WordPressData.enterprise.xcconfig; sourceTree = "<group>"; };
+		3FE8B6762D8B89AE000A3E7B /* WordPressData.alpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WordPressData.alpha.xcconfig; sourceTree = "<group>"; };
 		3FE8B6772D8B89C2000A3E7B /* WordPressDataTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WordPressDataTests.xcconfig; sourceTree = "<group>"; };
 		3FFB3F212AFC72EC00A742B0 /* DeepLinkSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkSourceTests.swift; sourceTree = "<group>"; };
 		3FFCBCE32D814FA700C2F712 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
@@ -4703,7 +4703,7 @@
 				24351059264DC1E2009BB2B6 /* Jetpack.release.xcconfig */,
 				2439B1DB264ECBDF00239130 /* Jetpack.alpha.xcconfig */,
 				3FE8B6742D8B898C000A3E7B /* WordPressData.xcconfig */,
-				3FE8B6762D8B89AE000A3E7B /* WordPressData.enterprise.xcconfig */,
+				3FE8B6762D8B89AE000A3E7B /* WordPressData.alpha.xcconfig */,
 				3FE8B6772D8B89C2000A3E7B /* WordPressDataTests.xcconfig */,
 			);
 			name = config;
@@ -7643,7 +7643,7 @@
 		};
 		3F2AA3FA2D81457F002A4E94 /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FE8B6762D8B89AE000A3E7B /* WordPressData.enterprise.xcconfig */;
+			baseConfigurationReference = 3FE8B6762D8B89AE000A3E7B /* WordPressData.alpha.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
