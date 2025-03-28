@@ -66,10 +66,9 @@ public class Comment: NSManagedObject {
     /// Convenience method to check if the current user can actually moderate.
     /// `canModerate` is only applicable when the site is dotcom-related (hosted or atomic). For self-hosted sites, default to true.
     @objc public func allowsModeration() -> Bool {
-        // FIXME:
-//        if let _ = post as? ReaderPost {
-//            return canModerate
-//        }
+        if let _ = post as? ReaderPost {
+            return canModerate
+        }
 
         guard let blog, blog.isHostedAtWPcom || blog.isAtomic() else {
             return true
@@ -78,26 +77,22 @@ public class Comment: NSManagedObject {
     }
 
     public func canReply() -> Bool {
-        // FIXME:
-//        if let post = post as? ReaderPost {
-//            return post.commentsOpen
-//        }
-//        return !isReadOnly()
-        return false
+        if let post = post as? ReaderPost {
+            return post.commentsOpen
+        }
+        return !isReadOnly()
     }
 
     // NOTE: Comment Likes could be disabled, but the API doesn't have that info yet. Let's update this once it's available.
     public func canLike() -> Bool {
-        // FIXME:
-//        if (post as? ReaderPost) != nil {
-//            return true
-//        }
-//        guard let blog else {
-//            // Disable likes feature for self-hosted sites.
-//            return false
-//        }
-//        return !isReadOnly() && blog.supports(.commentLikes)
-        return false
+        if (post as? ReaderPost) != nil {
+            return true
+        }
+        guard let blog else {
+            // Disable likes feature for self-hosted sites.
+            return false
+        }
+        return !isReadOnly() && blog.supports(.commentLikes)
     }
 
     @objc public func isTopLevelComment() -> Bool {
