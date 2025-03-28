@@ -1,11 +1,16 @@
 import Foundation
-import CocoaLumberjackSwift
 
 // MARK: - Assertions
 
 /// The system that logs assertions in production.
 public protocol AssertionLogging {
     func trackAssertion(message: String, filename: String, line: UInt, userInfo: [String: Any]?)
+}
+
+extension AssertionLogging {
+    public func shouldSendAssertion(withID assertionID: String) -> Bool {
+        WPAssertion.shouldSendAssertion(withID: assertionID)
+    }
 }
 
 public enum AssertionLoggerDependencyContainer {
@@ -19,11 +24,8 @@ public func wpAssert(_ closure: @autoclosure () -> Bool, _ message: StaticString
         return
     }
 
-    let filename = (file.description as NSString).lastPathComponent
-    DDLogError("WPAssertionFailure in \(filename)–\(line): \(message)\n\(userInfo ?? [:])")
-
-    if let logger = AssertionLoggerDependencyContainer.logger,
-        WPAssertion.shouldSendAssertion(withID: "\(filename)-\(line)") {
+    if let logger = AssertionLoggerDependencyContainer.logger {
+        let filename = (file.description as NSString).lastPathComponent
         logger.trackAssertion(message: message.description, filename: filename, line: line, userInfo: userInfo)
     }
 
