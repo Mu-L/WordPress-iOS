@@ -12,8 +12,7 @@ public extension AbstractPost {
     /// Returns `true` if the post was never uploaded to the remote and has
     /// not revisions that were marked for syncing.
     var isNewDraft: Bool {
-        // FIXME: Delaying wpAssert migration because of underlying dependencies
-        // wpAssert(isOriginal(), "Must be called on the original")
+        wpAssert(isOriginal(), "Must be called on the original")
         return !hasRemote() && getLatestRevisionNeedingSync() == nil
     }
 
@@ -179,8 +178,7 @@ public extension AbstractPost {
     /// Returns the latest saved revisions that needs to be synced with the server.
     /// Returns `nil` if there are no such revisions.
     func getLatestRevisionNeedingSync() -> AbstractPost? {
-        // FIXME: Delaying wpAssert migration because of underlying dependencies
-        // wpAssert(original == nil, "Must be called on an original revision")
+        wpAssert(original == nil, "Must be called on an original revision")
         let revision = allRevisions.last(where: \.isSyncNeeded)
         guard revision != self else {
             return nil
@@ -191,8 +189,7 @@ public extension AbstractPost {
     /// Deletes all of the synced revisions until and including the `latest`
     /// one passed as a parameter.
     func deleteSyncedRevisions(until latest: AbstractPost) {
-        // FIXME: Delaying wpAssert migration because of underlying dependencies
-        // wpAssert(original == nil, "Must be called on an original revision")
+        wpAssert(original == nil, "Must be called on an original revision")
         let tail = latest.revision
 
         var current = self
@@ -210,8 +207,7 @@ public extension AbstractPost {
 
     /// Deletes the given revision and deletes the post if it's empty.
     static func deleteLatestRevision(_ revision: AbstractPost, in context: NSManagedObjectContext) {
-        // FIXME: Delaying wpAssert migration because of underlying dependencies
-        // wpAssert(revision.isRevision() && !revision.isSyncNeeded, "must be a local revision")
+        wpAssert(revision.isRevision() && !revision.isSyncNeeded, "must be a local revision")
 
         // - warning: The use of `.original` is intentional – we want to get
         // the previous revision in the list.
@@ -228,8 +224,7 @@ public extension AbstractPost {
     }
 
     func deleteAllRevisions() {
-        // FIXME: Delaying wpAssert migration because of underlying dependencies
-        // wpAssert(isOriginal())
+        wpAssert(isOriginal())
         for revision in allRevisions {
             revision.deleteRevision()
         }

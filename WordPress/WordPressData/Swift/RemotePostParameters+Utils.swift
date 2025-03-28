@@ -31,10 +31,9 @@ extension RemotePostCreateParameters {
             }
             metadata = Set(PostHelper.remoteMetadata(for: post).compactMap { value -> RemotePostMetadataItem? in
                 guard let dictionary = value as? [String: Any] else {
-                    // FIXME: Delaying wpAssert migration because of underlying dependencies
-                    // wpAssertionFailure("Unexpected value", userInfo: [
-                    //     "value": value
-                    // ])
+                    wpAssertionFailure("Unexpected value", userInfo: [
+                        "value": value
+                    ])
                     return nil
                 }
                 return PostHelper.mapDictionaryToMetadataItems(dictionary)
