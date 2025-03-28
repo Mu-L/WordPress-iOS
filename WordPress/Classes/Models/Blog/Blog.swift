@@ -1,3 +1,5 @@
+import BuildSettingsKit
+
 extension Blog {
 
     static let jetpackProfessionalYearlyPlanId = 2004
@@ -64,6 +66,10 @@ extension Blog {
 
     @objc
     public func supports(_ feature: BlogFeature) -> Bool {
+        supports(feature, buildSettings: .current)
+    }
+
+    public func supports(_ feature: BlogFeature, buildSettings: BuildSettings = .current) -> Bool {
         switch feature {
         case .removable:
             return accountIsDefaultAccount
@@ -78,9 +84,9 @@ extension Blog {
         case .stats:
             return supportsRestApi() && isViewingStatsAllowed()
         case .stockPhotos:
-            return supportsRestApi() && JetpackFeaturesRemovalCoordinator.jetpackFeaturesEnabled()
+            return supportsRestApi() && buildSettings.brand == .jetpack
         case .tenor:
-            return JetpackFeaturesRemovalCoordinator.jetpackFeaturesEnabled()
+            return buildSettings.brand == .jetpack
         case .sharing:
             return supportsSharing
         case .oAuth2Login:
