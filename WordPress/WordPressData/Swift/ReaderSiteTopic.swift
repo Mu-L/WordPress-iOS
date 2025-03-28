@@ -43,9 +43,7 @@ import WordPressKit
     }
 
     @objc open var blogNameToDisplay: String {
-        // FIXME:
-//        return posts.first?.blogNameForDisplay() ?? title
-        title
+        return posts.first?.blogNameForDisplay() ?? title
     }
 
     @objc open var isSubscribedForPostNotifications: Bool {
