@@ -2780,13 +2780,6 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		B532ACD41DC3AE1F00FFFA57 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
 		B5416CF81C17542900006DD8 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -3209,21 +3202,12 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
-		E131CB5B16CAD638004B0314 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Helpers;
-			sourceTree = "<group>";
-		};
 		E16AB92F14D978240047A2E5 /* WordPressTest */ = {
 			isa = PBXGroup;
 			children = (
 				0CBC09FC2D97285900313942 /* Helpers */,
 				0CBC0A742D9728DD00313942 /* Test Data */,
 				E16AB93014D978240047A2E5 /* Supporting Files */,
-				B532ACD41DC3AE1F00FFFA57 /* Extensions */,
-				E131CB5B16CAD638004B0314 /* Helpers */,
 				E1239B7B176A2E0F00D37220 /* Tests */,
 				CCCF53BC237B13760035E9CA /* WordPressUnitTests.xctestplan */,
 			);
