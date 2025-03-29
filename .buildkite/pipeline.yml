@@ -1,7 +1,7 @@
 # Most of the steps need to run on a macOS agent, so let's define it as a root property.
 agents:
   # queue: mac-staging
-  hostname: MV-MKE-ARM64-014
+  hostname: MV-MKE-ARM64-015
 env:
   IMAGE_ID: $IMAGE_ID
 
