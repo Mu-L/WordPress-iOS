@@ -1460,9 +1460,6 @@
 		3FB6D13E2AD2AC5A00768C07 /* Announcement+Fixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Announcement+Fixture.swift"; sourceTree = "<group>"; };
 		3FDDFE9527C8178C00606933 /* SiteStatsInformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStatsInformationTests.swift; sourceTree = "<group>"; };
 		3FE6D31D2B0705D400D14923 /* JetpackBrandingVisibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JetpackBrandingVisibilityTests.swift; sourceTree = "<group>"; };
-		3FE8B6742D8B898C000A3E7B /* WordPressData.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WordPressData.xcconfig; sourceTree = "<group>"; };
-		3FE8B6762D8B89AE000A3E7B /* WordPressData.alpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WordPressData.alpha.xcconfig; sourceTree = "<group>"; };
-		3FE8B6772D8B89C2000A3E7B /* WordPressDataTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WordPressDataTests.xcconfig; sourceTree = "<group>"; };
 		3FFB3F212AFC72EC00A742B0 /* DeepLinkSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkSourceTests.swift; sourceTree = "<group>"; };
 		3FFCBCE32D814FA700C2F712 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		3FFE3C0728FE00D10021BB96 /* StatsSegmentedControlDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsSegmentedControlDataTests.swift; sourceTree = "<group>"; };
@@ -2281,11 +2278,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0C1CB0CD2D95C63C00494A8C /* Sources */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Sources;
-			sourceTree = "<group>";
-		};
 		0C1C180E2D95DA5200494A8C /* Icons */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			name = Icons;
@@ -2295,6 +2287,11 @@
 		0C1C18F32D95DA6D00494A8C /* Icons */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Icons;
+			sourceTree = "<group>";
+		};
+		0C1CB0CD2D95C63C00494A8C /* Sources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		0C5083352D8DB82F007987AB /* Sources */ = {
@@ -4702,9 +4699,6 @@
 				24350E7C264DB76E009BB2B6 /* Jetpack.debug.xcconfig */,
 				24351059264DC1E2009BB2B6 /* Jetpack.release.xcconfig */,
 				2439B1DB264ECBDF00239130 /* Jetpack.alpha.xcconfig */,
-				3FE8B6742D8B898C000A3E7B /* WordPressData.xcconfig */,
-				3FE8B6762D8B89AE000A3E7B /* WordPressData.alpha.xcconfig */,
-				3FE8B6772D8B89C2000A3E7B /* WordPressDataTests.xcconfig */,
 			);
 			name = config;
 			path = ../config;
@@ -7532,7 +7526,7 @@
 		};
 		3F2AA3F82D81457F002A4E94 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FE8B6742D8B898C000A3E7B /* WordPressData.xcconfig */;
+			baseConfigurationReference = 3F9DD3F62CC214BF00DF1760 /* Common.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -7590,7 +7584,7 @@
 		};
 		3F2AA3F92D81457F002A4E94 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FE8B6742D8B898C000A3E7B /* WordPressData.xcconfig */;
+			baseConfigurationReference = 0C96AC202D92FC17000779B8 /* Common.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -7643,7 +7637,7 @@
 		};
 		3F2AA3FA2D81457F002A4E94 /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FE8B6762D8B89AE000A3E7B /* WordPressData.alpha.xcconfig */;
+			baseConfigurationReference = 3F9DD3F72CC2188400DF1760 /* Common.alpha.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -7695,7 +7689,7 @@
 		};
 		3F2AA3FB2D81457F002A4E94 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FE8B6772D8B89C2000A3E7B /* WordPressDataTests.xcconfig */;
+			baseConfigurationReference = 3F9DD3F62CC214BF00DF1760 /* Common.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -7739,7 +7733,7 @@
 		};
 		3F2AA3FC2D81457F002A4E94 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FE8B6772D8B89C2000A3E7B /* WordPressDataTests.xcconfig */;
+			baseConfigurationReference = 0C96AC202D92FC17000779B8 /* Common.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -7777,7 +7771,7 @@
 		};
 		3F2AA3FD2D81457F002A4E94 /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FE8B6772D8B89C2000A3E7B /* WordPressDataTests.xcconfig */;
+			baseConfigurationReference = 3F9DD3F72CC2188400DF1760 /* Common.alpha.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
