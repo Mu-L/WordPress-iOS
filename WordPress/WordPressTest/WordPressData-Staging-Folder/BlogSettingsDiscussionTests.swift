@@ -71,7 +71,9 @@ class BlogSettingsDiscussionTests: CoreDataTestCase {
 extension BlogSettings {
 
     static func newSettings(in context: NSManagedObjectContext) -> BlogSettings {
-        let name = BlogSettings.classNameWithoutNamespaces()
+        // FIXME: Restore computed name once WordPressData migration completed
+//        let name = BlogSettings.classNameWithoutNamespaces()
+        let name = "WordPressData.BlogSettings"
         let entity = NSEntityDescription.insertNewObject(forEntityName: name, into: context)
 
         return entity as! BlogSettings
