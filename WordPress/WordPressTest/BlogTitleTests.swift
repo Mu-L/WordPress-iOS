@@ -15,7 +15,7 @@ class BlogTitleTests: CoreDataTestCase {
         // Given a blog
         // When blogName is a string
         let blogName = "my blog name"
-        blog.settings = newSettings()
+        blog.settings = BlogSettings.newSettings(in: mainContext)
         blog.settings?.name = blogName
 
         // Then blogTitle is blogName
@@ -25,7 +25,7 @@ class BlogTitleTests: CoreDataTestCase {
     func testBlogSettingsNameIsNil() throws {
         // Given a blog
         // When blogName is nil
-        blog.settings = newSettings()
+        blog.settings = BlogSettings.newSettings(in: mainContext)
         blog.settings?.name = nil
 
         // Then blogTitle is blogDisplayURL
@@ -37,14 +37,6 @@ class BlogTitleTests: CoreDataTestCase {
         // When a blog has no blogSettings
         // Then blogTitle is blogDisplayURL
         XCTAssertEqual(blog.title, Constants.blogDisplayURL)
-    }
-
-    // MARK: - Private Helpers
-    fileprivate func newSettings() -> BlogSettings {
-        let name = BlogSettings.classNameWithoutNamespaces()
-        let entity = NSEntityDescription.insertNewObject(forEntityName: name, into: mainContext)
-
-        return entity as! BlogSettings
     }
 }
 

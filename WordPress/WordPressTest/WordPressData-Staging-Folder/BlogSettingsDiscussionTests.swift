@@ -5,28 +5,28 @@ import XCTest
 
 class BlogSettingsDiscussionTests: CoreDataTestCase {
     func testCommentsAutoapprovalDisabledEnablesManualModerationFlag() {
-        let settings = newSettings()
+        let settings = BlogSettings.newSettings(in: mainContext)
         settings.commentsAutoapproval = .disabled
         XCTAssertTrue(settings.commentsRequireManualModeration)
         XCTAssertFalse(settings.commentsFromKnownUsersAllowlisted)
     }
 
     func testCommentsAutoapprovalFromKnownUsersEnablesAllowlistedFlag() {
-        let settings = newSettings()
+        let settings = BlogSettings.newSettings(in: mainContext)
         settings.commentsAutoapproval = .fromKnownUsers
         XCTAssertFalse(settings.commentsRequireManualModeration)
         XCTAssertTrue(settings.commentsFromKnownUsersAllowlisted)
     }
 
     func testCommentsAutoapprovalEverythingDisablesManualModerationAndAllowlistedFlags() {
-        let settings = newSettings()
+        let settings = BlogSettings.newSettings(in: mainContext)
         settings.commentsAutoapproval = .everything
         XCTAssertFalse(settings.commentsRequireManualModeration)
         XCTAssertFalse(settings.commentsFromKnownUsersAllowlisted)
     }
 
     func testCommentsSortingSetsTheCorrectCommentSortOrderIntegerValue() {
-        let settings = newSettings()
+        let settings = BlogSettings.newSettings(in: mainContext)
 
         settings.commentsSorting = .ascending
         XCTAssertTrue(settings.commentsSortOrder?.intValue == Sorting.ascending.rawValue)
@@ -36,7 +36,7 @@ class BlogSettingsDiscussionTests: CoreDataTestCase {
     }
 
     func testCommentsSortOrderAscendingSetsTheCorrectCommentSortOrderIntegerValue() {
-        let settings = newSettings()
+        let settings = BlogSettings.newSettings(in: mainContext)
 
         settings.commentsSortOrderAscending = true
         XCTAssertTrue(settings.commentsSortOrder?.intValue == Sorting.ascending.rawValue)
@@ -46,14 +46,14 @@ class BlogSettingsDiscussionTests: CoreDataTestCase {
     }
 
     func testCommentsThreadingDisablesSetsThreadingEnabledFalse() {
-        let settings = newSettings()
+        let settings = BlogSettings.newSettings(in: mainContext)
 
         settings.commentsThreading = .disabled
         XCTAssertFalse(settings.commentsThreadingEnabled)
     }
 
     func testCommentsThreadingEnabledSetsThreadingEnabledTrueAndTheRightDepthValue() {
-        let settings = newSettings()
+        let settings = BlogSettings.newSettings(in: mainContext)
 
         settings.commentsThreading = .enabled(depth: 10)
         XCTAssertTrue(settings.commentsThreadingEnabled)
@@ -66,11 +66,13 @@ class BlogSettingsDiscussionTests: CoreDataTestCase {
 
     // MARK: - Typealiases
     typealias Sorting = BlogSettings.CommentsSorting
+}
 
-    // MARK: - Private Helpers
-    fileprivate func newSettings() -> BlogSettings {
+extension BlogSettings {
+
+    static func newSettings(in context: NSManagedObjectContext) -> BlogSettings {
         let name = BlogSettings.classNameWithoutNamespaces()
-        let entity = NSEntityDescription.insertNewObject(forEntityName: name, into: mainContext)
+        let entity = NSEntityDescription.insertNewObject(forEntityName: name, into: context)
 
         return entity as! BlogSettings
     }

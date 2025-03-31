@@ -72,14 +72,3 @@ class PublishSettingsViewControllerTests: CoreDataTestCase {
         }
     }
 }
-
-extension PublishSettingsViewControllerTests {
-    // MARK: - Private Helpers
-    fileprivate func newSettings() -> BlogSettings {
-        let context = contextManager.mainContext
-        let name = BlogSettings.classNameWithoutNamespaces()
-        let entity = NSEntityDescription.insertNewObject(forEntityName: name, into: context)
-
-        return entity as! BlogSettings
-    }
-}
