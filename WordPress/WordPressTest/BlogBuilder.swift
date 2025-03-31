@@ -80,7 +80,7 @@ final class BlogBuilder {
 
     func with(siteName: String) -> Self {
         if blog.settings == nil {
-            blog.settings = NSEntityDescription.insertNewObject(forEntityName: BlogSettings.entityName(), into: context) as! BlogSettings
+            blog.settings = BlogSettings.newSettings(in: context)
         }
         blog.settings?.name = siteName
         return self
