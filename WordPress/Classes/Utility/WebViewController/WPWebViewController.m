@@ -2,11 +2,7 @@
 #import "WPActivityDefaults.h"
 #import "Constants.h"
 #import "WPError.h"
-#ifdef KEYSTONE
-#import "Keystone-Swift.h"
-#else
 #import "WordPress-Swift.h"
-#endif
 
 @import Gridicons;
 @import WordPressShared;

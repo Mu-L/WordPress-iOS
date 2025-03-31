@@ -4,11 +4,7 @@
 #import "AccountService.h"
 #import "Blog.h"
 #import "WPAppAnalytics.h"
-#ifdef KEYSTONE
-#import "Keystone-Swift.h"
-#else
 #import "WordPress-Swift.h"
-#endif
 
 @import WordPressShared;
 @import NSObject_SafeExpectations;

@@ -1,9 +1,5 @@
 #import "WPAnalyticsTrackerWPCom.h"
-#ifdef KEYSTONE
-#import "Keystone-Swift.h"
-#else
 #import "WordPress-Swift.h"
-#endif
 #import "Constants.h"
 
 @import WordPressShared;

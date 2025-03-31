@@ -5,11 +5,7 @@
 #import "WPAnalyticsTrackerWPCom.h"
 #import "WPAnalyticsTrackerAutomatticTracks.h"
 
-#ifdef KEYSTONE
-#import "Keystone-Swift.h"
-#else
 #import "WordPress-Swift.h"
-#endif
 
 NSString * const WPAppAnalyticsDefaultsUserOptedOut                 = @"tracks_opt_out";
 NSString * const WPAppAnalyticsKeyBlogID                            = @"blog_id";
