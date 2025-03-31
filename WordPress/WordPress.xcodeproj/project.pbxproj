@@ -1172,7 +1172,7 @@
 		0CB424F32ADF3CBE0080B807 /* PostSearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSearchViewModelTests.swift; sourceTree = "<group>"; };
 		0CD382852A4B6FCE00612173 /* DashboardBlazeCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardBlazeCardCellViewModelTest.swift; sourceTree = "<group>"; };
 		0CD6299A2B9AAA9A00325EA4 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
-		0CED01702D95B897003015CF /* Keystone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Keystone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CED01702D95B897003015CF /* WordPress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WordPress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CF7D6C22ABB753A006D1E89 /* MediaImageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaImageServiceTests.swift; sourceTree = "<group>"; };
 		173D82E6238EE2A7008432DA /* FeatureFlagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagTests.swift; sourceTree = "<group>"; };
 		174C116E2624603400346EC6 /* MBarRouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBarRouteTests.swift; sourceTree = "<group>"; };
@@ -1401,7 +1401,6 @@
 		7EC9FE0A22C627DB00C5A888 /* PostEditorAnalyticsSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorAnalyticsSessionTests.swift; sourceTree = "<group>"; };
 		7EF2EE9F210A67B60007A76B /* notifications-unapproved-comment.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "notifications-unapproved-comment.json"; sourceTree = "<group>"; };
 		801D951C291ADB7E0051993E /* OverlayFrequencyTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayFrequencyTrackerTests.swift; sourceTree = "<group>"; };
-		80293CF6284450AD0083F946 /* WordPress-Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WordPress-Swift.h"; sourceTree = "<group>"; };
 		80379C6D2A5C0D8F00D924AC /* PostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTests.swift; sourceTree = "<group>"; };
 		803BB99329667CF700B3F6D6 /* JetpackBrandingTextProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JetpackBrandingTextProviderTests.swift; sourceTree = "<group>"; };
 		803DE81828FFB7B5007D4E9C /* RemoteParameterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParameterTests.swift; sourceTree = "<group>"; };
@@ -1920,7 +1919,7 @@
 		0C5C47012D9839DE00F2CD55 /* Exceptions for "Keystone" folder in "Keystone" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
-				Keystone.h,
+				WordPress.h,
 			);
 			target = 0CED016F2D95B897003015CF /* Keystone */;
 		};
@@ -2407,7 +2406,7 @@
 				EA14534229AD874C001F3143 /* JetpackUITests.xctest */,
 				4AD953B42C21451700D0EEFA /* WordPressAuthenticator.framework */,
 				4AD953BB2C21451700D0EEFA /* WordPressAuthenticatorTests.xctest */,
-				0CED01702D95B897003015CF /* Keystone.framework */,
+				0CED01702D95B897003015CF /* WordPress.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2481,7 +2480,6 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				931DF4D818D09A2F00540BDD /* InfoPlist.strings */,
 				E1D91454134A853D0089019C /* Localizable.strings */,
-				80293CF6284450AD0083F946 /* WordPress-Swift.h */,
 				4A690C142BA790BC00A8E0C5 /* PrivacyInfo.xcprivacy */,
 			);
 			name = Resources;
@@ -4176,7 +4174,7 @@
 				0CED2AD72D95BB46003015CF /* XcodeTarget_App */,
 			);
 			productName = Keystone;
-			productReference = 0CED01702D95B897003015CF /* Keystone.framework */;
+			productReference = 0CED01702D95B897003015CF /* WordPress.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		1D6058900D05DD3D006BFB54 /* WordPress */ = {
@@ -6378,7 +6376,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					"KEYSTONE=1",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -6398,7 +6395,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Keystone;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = WordPress;
+				PRODUCT_NAME = WordPress;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -6443,7 +6441,6 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREFIX_HEADER = ../Sources/Keystone/Keystone_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "KEYSTONE=1";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -6462,7 +6459,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Keystone;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = WordPress;
+				PRODUCT_NAME = WordPress;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
@@ -6505,7 +6503,6 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREFIX_HEADER = ../Sources/Keystone/Keystone_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "KEYSTONE=1";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -6524,7 +6521,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Keystone;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = WordPress;
+				PRODUCT_NAME = WordPress;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
