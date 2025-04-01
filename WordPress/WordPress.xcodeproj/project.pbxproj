@@ -2049,6 +2049,7 @@
 				"Models/Blog/Blog+Post.swift",
 				"Models/Blog/Blog+Quota.swift",
 				"Models/Blog/Blog+SelfHosted.swift",
+				"Models/Blog/Blog+WordPressComRestAPI.swift",
 				Models/Blog/BlogAuthor.swift,
 				Models/Blog/BlogSettings.swift,
 				"Models/BloggingPrompt+CoreDataClass.swift",
