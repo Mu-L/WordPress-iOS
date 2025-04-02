@@ -9,7 +9,7 @@ import BuildSettingsKit
     private var userProperties: [String: Any] = [:]
     private var appURLScheme: String
     private var cachedAnonymousUserID: String?
-    private var cachedLoggedInUserID: String?
+    private var cachedCurrentUserID: String?
 
     @objc convenience public override init() {
         self.init(
@@ -73,15 +73,15 @@ import BuildSettingsKit
     // MARK: - Session Management
 
     @objc public func beginSession() {
-        if let loggedInID, !loggedInID.isEmpty {
+        if let currentUserID, !currentUserID.isEmpty {
             tracksService.switchToAuthenticatedUser(
-                withUsername: loggedInID,
+                withUsername: currentUserID,
                 userID: nil,
-                wpComToken: try? WPAccount.token(forUsername: loggedInID),
+                wpComToken: try? WPAccount.token(forUsername: currentUserID),
                 skipAliasEventCreation: true
             )
         } else {
-            tracksService.switchToAnonymousUser(withAnonymousID: anonymousID)
+            tracksService.switchToAnonymousUser(withAnonymousID: anonymousUserID)
         }
         refreshMetadata()
     }
@@ -134,9 +134,9 @@ import BuildSettingsKit
 
         // Tell the client what kind of user
         if isDotcomUser, let username {
-            if loggedInID?.isEmpty == true {
+            if currentUserID?.isEmpty == true {
                 // No previous username logged
-                loggedInID = username
+                currentUserID = username
                 removeAnonymousID()
 
                 tracksService.switchToAuthenticatedUser(
@@ -145,7 +145,7 @@ import BuildSettingsKit
                     wpComToken: try? WPAccount.token(forUsername: username),
                     skipAliasEventCreation: false
                 )
-            } else if loggedInID == username {
+            } else if currentUserID == username {
                 // Username did not change from last refreshMetadata - just make sure Tracks client has it
                 tracksService.switchToAuthenticatedUser(
                     withUsername: username,
@@ -155,26 +155,26 @@ import BuildSettingsKit
                 )
             } else {
                 // Username changed for some reason - switch back to anonymous first
-                tracksService.switchToAnonymousUser(withAnonymousID: anonymousID)
+                tracksService.switchToAnonymousUser(withAnonymousID: anonymousUserID)
                 tracksService.switchToAuthenticatedUser(
                     withUsername: username,
                     userID: "",
                     wpComToken: try? WPAccount.token(forUsername: username),
                     skipAliasEventCreation: false
                 )
-                loggedInID = username
+                currentUserID = username
                 removeAnonymousID()
             }
         } else {
             // User is not authenticated, switch to an anonymous mode
-            tracksService.switchToAnonymousUser(withAnonymousID: anonymousID)
-            loggedInID = nil
+            tracksService.switchToAnonymousUser(withAnonymousID: anonymousUserID)
+            currentUserID = nil
         }
     }
 
     // MARK: - Private
 
-    private var anonymousID: String {
+    private var anonymousUserID: String {
         if cachedAnonymousUserID == nil || cachedAnonymousUserID?.isEmpty == true {
             let userDefaults = UserPersistentStoreFactory.instance()
             var anonymousID = userDefaults.string(forKey: Constants.tracksUserDefaultsAnonymousUserIDKey)
@@ -196,21 +196,21 @@ import BuildSettingsKit
             .removeObject(forKey: Constants.tracksUserDefaultsAnonymousUserIDKey)
     }
 
-    private var loggedInID: String? {
+    private var currentUserID: String? {
         get {
-            if cachedLoggedInUserID == nil || cachedLoggedInUserID?.isEmpty == true {
+            if cachedCurrentUserID == nil || cachedCurrentUserID?.isEmpty == true {
                 let userDefaults = UserPersistentStoreFactory.instance()
                 let loggedInID = userDefaults.string(forKey: Constants.tracksUserDefaultsLoggedInUserIDKey)
 
                 if loggedInID != nil {
-                    cachedLoggedInUserID = loggedInID
+                    cachedCurrentUserID = loggedInID
                 }
             }
 
-            return cachedLoggedInUserID
+            return cachedCurrentUserID
         }
         set {
-            cachedLoggedInUserID = newValue
+            cachedCurrentUserID = newValue
 
             let userDefaults = UserPersistentStoreFactory.instance()
             if let newValue {
