@@ -12,10 +12,11 @@ import BuildSettingsKit
     private var cachedCurrentUserID: String?
 
     @objc convenience public override init() {
+        let settings = BuildSettings.current
         self.init(
-            eventNamePrefix: WPAnalytics.eventNamePrefix,
-            platform: WPAnalytics.explatPlatform,
-            appURLScheme: BuildSettings.current.appURLScheme
+            eventNamePrefix: WPAnalyticsTesting.eventNamePrefix ?? settings.eventNamePrefix,
+            platform: WPAnalyticsTesting.explatPlatform ?? settings.explatPlatform,
+            appURLScheme: settings.appURLScheme
         )
     }
 
@@ -114,12 +115,12 @@ import BuildSettingsKit
             currentUserID = nil
             return
         }
-        
+
         if currentUserID?.isEmpty == true {
             // No previous username logged
             currentUserID = username
             removeAnonymousID()
-            
+
             tracksService.switchToAuthenticatedUser(
                 withUsername: username,
                 userID: "",
