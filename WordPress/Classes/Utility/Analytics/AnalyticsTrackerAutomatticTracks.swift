@@ -8,8 +8,8 @@ import BuildSettingsKit
     private let tracksService: TracksService
     private var userProperties: [String: Any] = [:]
     private var appURLScheme: String
-    private var _anonymousID: String?
-    private var _loggedInID: String?
+    private var cachedAnonymousUserID: String?
+    private var cachedLoggedInUserID: String?
 
     @objc convenience public override init() {
         self.init(
@@ -175,7 +175,7 @@ import BuildSettingsKit
     // MARK: - Private
 
     private var anonymousID: String {
-        if _anonymousID == nil || _anonymousID?.isEmpty == true {
+        if cachedAnonymousUserID == nil || cachedAnonymousUserID?.isEmpty == true {
             let userDefaults = UserPersistentStoreFactory.instance()
             var anonymousID = userDefaults.string(forKey: Constants.tracksUserDefaultsAnonymousUserIDKey)
 
@@ -184,33 +184,33 @@ import BuildSettingsKit
                 userDefaults.set(anonymousID, forKey: Constants.tracksUserDefaultsAnonymousUserIDKey)
             }
 
-            _anonymousID = anonymousID
+            cachedAnonymousUserID = anonymousID
         }
 
-        return _anonymousID!
+        return cachedAnonymousUserID!
     }
 
     private func removeAnonymousID() {
-        _anonymousID = nil
+        cachedAnonymousUserID = nil
         UserPersistentStoreFactory.instance()
             .removeObject(forKey: Constants.tracksUserDefaultsAnonymousUserIDKey)
     }
 
     private var loggedInID: String? {
         get {
-            if _loggedInID == nil || _loggedInID?.isEmpty == true {
+            if cachedLoggedInUserID == nil || cachedLoggedInUserID?.isEmpty == true {
                 let userDefaults = UserPersistentStoreFactory.instance()
                 let loggedInID = userDefaults.string(forKey: Constants.tracksUserDefaultsLoggedInUserIDKey)
 
                 if loggedInID != nil {
-                    _loggedInID = loggedInID
+                    cachedLoggedInUserID = loggedInID
                 }
             }
 
-            return _loggedInID
+            return cachedLoggedInUserID
         }
         set {
-            _loggedInID = newValue
+            cachedLoggedInUserID = newValue
 
             let userDefaults = UserPersistentStoreFactory.instance()
             if let newValue {
