@@ -3,13 +3,13 @@ import WordPressShared
 
 struct TracksEvent {
     let name: String
-    let properties: [String: String]?
+    let properties: [String: Any]?
 }
 
 extension TracksEvent {
-    static func make(for stat: WPAnalyticsStat) -> TracksEvent {
+    static func make(for stat: WPAnalyticsStat) -> TracksEvent? {
         let name: String
-        var properties: [String: String]?
+        var properties: [String: Any]?
 
         switch stat {
         case .abTestStart:
@@ -1239,7 +1239,7 @@ extension TracksEvent {
 
             // The following are yet to be implemented.
             //
-            // If you get test failures in WPAnalyticsTrackerAutomatticTracksTests, it's most likely
+            // If you get test failures in AnalyticsTrackerAutomatticTracks, it's most likely
             // because there are new . enum values. This can mean that somebody is
             // currently working on it. In cases like this, add the enum values here, returning
             // as `nil`. The tests should pass.
@@ -1260,6 +1260,4 @@ private enum Constants {
     static let tracksEventPropertyButtonKey = "button"
     static let tracksEventPropertyMenuItemKey = "menu_item"
     static let tracksEventPropertyViaKey = "via"
-    static let tracksUserDefaultsAnonymousUserIDKey = "TracksAnonymousUserID"
-    static let tracksUserDefaultsLoggedInUserIDKey = "TracksLoggedInUserID"
 }

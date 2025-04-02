@@ -1,14 +1,15 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
-#import "WPAnalyticsTrackerAutomatticTracks.h"
 
+@import WordPress;
 @import AutomatticTracks;
 @import AutomatticTracksEvents;
 @import OCMock;
 
+
 @interface WPAnalyticsTrackerAutomatticTracksTests : XCTestCase
 
-@property (nonatomic, strong) WPAnalyticsTrackerAutomatticTracks *subject;
+@property (nonatomic, strong) AnalyticsTrackerAutomatticTracks *subject;
 @property (nonatomic, strong) id serviceMock;
 
 @end
