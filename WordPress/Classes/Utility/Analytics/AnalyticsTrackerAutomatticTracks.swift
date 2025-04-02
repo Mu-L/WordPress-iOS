@@ -93,7 +93,7 @@ import BuildSettingsKit
     @objc public func refreshMetadata() {
         let session = getSessionInfo(in: ContextManager.shared.mainContext)
 
-        if let username = session.userName, UUID(uuidString: username) != nil {
+        if let username = session.username, UUID(uuidString: username) != nil {
             // User has authenticated but we're waiting for account details to sync.
             // Once details are synced this method will be called again with the actual
             // username. For now just exit without making changes.
@@ -102,45 +102,49 @@ import BuildSettingsKit
 
         let userProperties = makeUserProperties(with: session)
         tracksService.userProperties.removeAllObjects()
-        tracksService.userProperties.addEntries(from: properties)
+        tracksService.userProperties.addEntries(from: userProperties)
 
-        // Tell the client what kind of user
-        if session.isDotcomUser, let username = session.username {
-            if currentUserID?.isEmpty == true {
-                // No previous username logged
-                currentUserID = username
-                removeAnonymousID()
+        startTracksSession(with: session)
+    }
 
-                tracksService.switchToAuthenticatedUser(
-                    withUsername: username,
-                    userID: "",
-                    wpComToken: try? WPAccount.token(forUsername: username),
-                    skipAliasEventCreation: false
-                )
-            } else if currentUserID == username {
-                // Username did not change from last refreshMetadata - just make sure Tracks client has it
-                tracksService.switchToAuthenticatedUser(
-                    withUsername: username,
-                    userID: "",
-                    wpComToken: try? WPAccount.token(forUsername: username),
-                    skipAliasEventCreation: true
-                )
-            } else {
-                // Username changed for some reason - switch back to anonymous first
-                tracksService.switchToAnonymousUser(withAnonymousID: anonymousUserID)
-                tracksService.switchToAuthenticatedUser(
-                    withUsername: username,
-                    userID: "",
-                    wpComToken: try? WPAccount.token(forUsername: username),
-                    skipAliasEventCreation: false
-                )
-                currentUserID = username
-                removeAnonymousID()
-            }
-        } else {
+    private func startTracksSession(with session: SessionInfo) {
+        guard session.isDotcomUser, let username = session.username else {
             // User is not authenticated, switch to an anonymous mode
             tracksService.switchToAnonymousUser(withAnonymousID: anonymousUserID)
             currentUserID = nil
+            return
+        }
+        
+        if currentUserID?.isEmpty == true {
+            // No previous username logged
+            currentUserID = username
+            removeAnonymousID()
+            
+            tracksService.switchToAuthenticatedUser(
+                withUsername: username,
+                userID: "",
+                wpComToken: try? WPAccount.token(forUsername: username),
+                skipAliasEventCreation: false
+            )
+        } else if currentUserID == username {
+            // Username did not change from last refreshMetadata - just make sure Tracks client has it
+            tracksService.switchToAuthenticatedUser(
+                withUsername: username,
+                userID: "",
+                wpComToken: try? WPAccount.token(forUsername: username),
+                skipAliasEventCreation: true
+            )
+        } else {
+            // Username changed for some reason - switch back to anonymous first
+            tracksService.switchToAnonymousUser(withAnonymousID: anonymousUserID)
+            tracksService.switchToAuthenticatedUser(
+                withUsername: username,
+                userID: "",
+                wpComToken: try? WPAccount.token(forUsername: username),
+                skipAliasEventCreation: false
+            )
+            currentUserID = username
+            removeAnonymousID()
         }
     }
 
@@ -162,7 +166,7 @@ import BuildSettingsKit
                 username: account?.username,
                 isDotcomUser: account?.username.isEmpty == false,
                 hasJetpackBlogs: (try? Blog.hasAnyJetpackBlogs(in: context)) == true,
-                isGutenbergEnabled: (account.blogs ?? []).contains(where: \.isGutenbergEnabled)
+                isGutenbergEnabled: (account?.blogs ?? []).contains(where: \.isGutenbergEnabled)
             )
         }
     }
