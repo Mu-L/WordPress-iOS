@@ -91,49 +91,21 @@ import BuildSettingsKit
     }
 
     @objc public func refreshMetadata() {
-        let context = ContextManager.sharedInstance().mainContext
+        let session = getSessionInfo(in: ContextManager.shared.mainContext)
 
-        var blogCount: Int = 0
-        var username: String?
-        var accountPresent = false
-        var hasJetpackBlogs = false
-        var isGutenbergEnabled = false
-
-        context.performAndWait {
-            guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context) else {
-                return
-            }
-            blogCount = Blog.count(in: context)
-            hasJetpackBlogs = (try? Blog.hasAnyJetpackBlogs(in: context)) == true
-            username = account.username
-            accountPresent = true
-            isGutenbergEnabled = (account.blogs ?? []).contains(where: \.isGutenbergEnabled)
-        }
-
-        if let username, UUID(uuidString: username) != nil {
+        if let username = session.userName, UUID(uuidString: username) != nil {
             // User has authenticated but we're waiting for account details to sync.
             // Once details are synced this method will be called again with the actual
             // username. For now just exit without making changes.
             return
         }
 
-        let isDotcomUser = (accountPresent && username?.isEmpty == false)
-
-        var properties: [String: Any] = [:]
-        properties["app_scheme"] = WPAnalyticsTesting.appURLScheme ?? appURLScheme
-        properties["platform"] = "iOS"
-        properties["dotcom_user"] = isDotcomUser
-        properties["jetpack_user"] = hasJetpackBlogs
-        properties["number_of_blogs"] = blogCount
-        properties["accessibility_voice_over_enabled"] = UIAccessibility.isVoiceOverRunning
-        properties["is_rtl_language"] = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
-        properties["gutenberg_enabled"] = isGutenbergEnabled
-
+        let userProperties = makeUserProperties(with: session)
         tracksService.userProperties.removeAllObjects()
         tracksService.userProperties.addEntries(from: properties)
 
         // Tell the client what kind of user
-        if isDotcomUser, let username {
+        if session.isDotcomUser, let username = session.username {
             if currentUserID?.isEmpty == true {
                 // No previous username logged
                 currentUserID = username
@@ -170,6 +142,42 @@ import BuildSettingsKit
             tracksService.switchToAnonymousUser(withAnonymousID: anonymousUserID)
             currentUserID = nil
         }
+    }
+
+    // MARK: - SessionInfo
+
+    private struct SessionInfo {
+        var blogCount: Int
+        var username: String?
+        var isDotcomUser: Bool
+        var hasJetpackBlogs: Bool
+        var isGutenbergEnabled: Bool
+    }
+
+    private func getSessionInfo(in context: NSManagedObjectContext) -> SessionInfo {
+        context.performAndWait {
+            let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context)
+            return SessionInfo(
+                blogCount: Blog.count(in: context),
+                username: account?.username,
+                isDotcomUser: account?.username.isEmpty == false,
+                hasJetpackBlogs: (try? Blog.hasAnyJetpackBlogs(in: context)) == true,
+                isGutenbergEnabled: (account.blogs ?? []).contains(where: \.isGutenbergEnabled)
+            )
+        }
+    }
+
+    private func makeUserProperties(with info: SessionInfo) -> [String: Any] {
+        return [
+            "app_scheme": WPAnalyticsTesting.appURLScheme ?? appURLScheme,
+            "platform": "iOS",
+            "dotcom_user": info.isDotcomUser,
+            "jetpack_user": info.hasJetpackBlogs,
+            "number_of_blogs": info.blogCount,
+            "accessibility_voice_over_enabled": UIAccessibility.isVoiceOverRunning,
+            "is_rtl_language": UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft,
+            "gutenberg_enabled": info.isGutenbergEnabled,
+        ]
     }
 
     // MARK: - Private
