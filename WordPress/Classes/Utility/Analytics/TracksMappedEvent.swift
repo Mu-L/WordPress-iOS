@@ -1,13 +1,13 @@
 import Foundation
 import WordPressShared
 
-struct TracksEvent {
+struct TracksMappedEvent {
     let name: String
     let properties: [String: Any]?
 }
 
-extension TracksEvent {
-    static func make(for stat: WPAnalyticsStat) -> TracksEvent? {
+extension TracksMappedEvent {
+    static func make(for stat: WPAnalyticsStat) -> TracksMappedEvent? {
         let name: String
         var properties: [String: Any]?
 
@@ -1252,7 +1252,7 @@ extension TracksEvent {
             return nil
         }
 
-        return TracksEvent(name: name, properties: properties)
+        return TracksMappedEvent(name: name, properties: properties)
     }
 }
 

@@ -28,6 +28,7 @@ import BuildSettingsKit
         tracksService = TracksService(contextManager: contextManager)
         tracksService.eventNamePrefix = eventNamePrefix
         tracksService.platform = platform
+        self.appURLScheme = appURLScheme
     }
 
     // MARK: - WPAnalyticsTracker
@@ -36,13 +37,13 @@ import BuildSettingsKit
         track(stat, withProperties: nil)
     }
 
-    public func track(_ stat: WPAnalyticsStat, withProperties properties: [String: Any]?) {
-        guard let event = TracksEvent.make(for: stat) else {
+    public func track(_ stat: WPAnalyticsStat, withProperties properties: [AnyHashable: Any]?) {
+        guard let event = TracksMappedEvent.make(for: stat) else {
             DDLogInfo("WPAnalyticsStat not supported by AnalyticsTrackerAutomatticTracks: \(stat)")
             return
         }
 
-        var mergedProperties = event.properties ?? [:]
+        var mergedProperties: [AnyHashable: Any] = event.properties ?? [:]
         for (key, value) in properties ?? [:] {
             mergedProperties[key] = value
         }
@@ -53,15 +54,17 @@ import BuildSettingsKit
         trackString(event, withProperties: nil)
     }
 
-    public func trackString(_ event: String, withProperties properties: [String: Any]?) {
+    public func trackString(_ event: String, withProperties properties: [AnyHashable: Any]?) {
         if properties == nil {
             DDLogInfo("🔵 Tracked: \(event)")
         } else {
-            let description = Array(properties ?? [:]).sorted {
-                $0.key.localizedCaseInsensitiveCompare($1.key) == .orderedAscending
-            }.map { key, value in
-                "\(key): \(value)"
-            }.joined(separator: ", ")
+            let description = (properties ?? [:])
+                .map { (key: "\($0)", value: $1) }
+                .sorted {
+                    $0.key.localizedCaseInsensitiveCompare($1.key) == .orderedAscending
+                }
+                .map { key, value in "\(key): \(value)" }
+                .joined(separator: ", ")
             DDLogInfo("🔵 Tracked: \(event) <\(description)>")
         }
         tracksService.trackEventName(event, withCustomProperties: properties)
