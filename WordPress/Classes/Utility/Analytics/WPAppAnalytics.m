@@ -2,7 +2,6 @@
 
 #import "WPAppAnalytics.h"
 #import "WPAnalyticsTrackerWPCom.h"
-#import "WPAnalyticsTrackerAutomatticTracks.h"
 
 #ifdef KEYSTONE
 #import "Keystone-Swift.h"
@@ -69,7 +68,7 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 - (void)registerTrackers
 {
     [WPAnalytics registerTracker:[WPAnalyticsTrackerWPCom new]];
-    [WPAnalytics registerTracker:[WPAnalyticsTrackerAutomatticTracks new]];
+    [WPAnalytics registerTracker:[AnalyticsTrackerAutomatticTracks new]];
 }
 
 - (void)clearTrackers
