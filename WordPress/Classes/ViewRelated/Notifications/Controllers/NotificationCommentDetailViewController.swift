@@ -7,7 +7,7 @@ class NotificationCommentDetailViewController: UIViewController, NoResultsViewHo
 
     private var content: Content?
 
-    private var notification: Notification {
+    private var notification: WordPressData.Notification {
         didSet {
             title = notification.title
         }
