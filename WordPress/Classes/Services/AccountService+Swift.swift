@@ -6,6 +6,8 @@ import WebKit
 extension AccountService {
     // MARK: - Current Account
 
+    @objc public static let defaultDotcomAccountUUIDDefaultsKey = "AccountDefaultDotcomUUID"
+
     @objc public func setDefaultWordPressComAccount(_ account: WPAccount) {
         wpAssert(account.authToken?.isEmpty == false, "Account should have an authToken for WP.com")
 
@@ -13,7 +15,7 @@ extension AccountService {
             return
         }
 
-        UserPersistentStoreFactory.instance().set(account.uuid, forKey: Constants.defaultDotcomAccountUUIDDefaultsKey)
+        UserPersistentStoreFactory.instance().set(account.uuid, forKey: AccountService.defaultDotcomAccountUUIDDefaultsKey)
 
         let objectID = TaggedManagedObjectID(account)
         let notifyAccountChange = {
@@ -66,30 +68,12 @@ extension AccountService {
         URLCache.shared.removeAllCachedResponses()
 
         // Remove defaults
-        UserPersistentStoreFactory.instance().removeObject(forKey: Constants.defaultDotcomAccountUUIDDefaultsKey)
+        UserPersistentStoreFactory.instance().removeObject(forKey: AccountService.defaultDotcomAccountUUIDDefaultsKey)
 
         WPAnalytics.refreshMetadata()
         NotificationCenter.default.post(name: .WPAccountDefaultWordPressComAccountChanged, object: nil)
 
         StatsCache.clearCaches()
-    }
-
-    func restoreDisassociatedAccountIfNecessary() {
-        wpAssert(Thread.isMainThread, "Must be called from main thread")
-
-        let context = coreDataStack.mainContext
-        guard (try? WPAccount.lookupDefaultWordPressComAccount(in: context)) == nil else {
-            return
-        }
-
-        // Attempt to restore a default account that has somehow been disassociated.
-        if let accounts = try? WPAccount.lookupAllAccounts(in: context),
-           let account = findDefaultAccountCandidate(fromAccounts: accounts) {
-            // Assume we have a good candidate account and make it the default account in the app.
-            // Note that this should be the account with the most blogs.
-            // Updates user defaults here vs the setter method to avoid potential side-effects from dispatched notifications.
-            UserPersistentStoreFactory.instance().set(account.uuid, forKey: Constants.defaultDotcomAccountUUIDDefaultsKey)
-        }
     }
 
     // MARK: - App Extensions
@@ -166,8 +150,4 @@ extension AccountService {
         }
     }
 
-}
-
-private enum Constants {
-    static let defaultDotcomAccountUUIDDefaultsKey = "AccountDefaultDotcomUUID"
 }

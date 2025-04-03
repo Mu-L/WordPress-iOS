@@ -150,6 +150,24 @@ NSString * const WPAccountEmailAndDefaultBlogUpdatedNotification = @"WPAccountEm
     return YES;
 }
 
+- (void)restoreDisassociatedAccountIfNecessary
+{
+    NSAssert([NSThread isMainThread], @"This method should only be called from the main thread");
+
+    if([WPAccount lookupDefaultWordPressComAccountInContext:self.coreDataStack.mainContext] != nil) {
+        return;
+    }
+
+    // Attempt to restore a default account that has somehow been disassociated.
+    WPAccount *account = [self findDefaultAccountCandidateFromAccounts:[WPAccount lookupAllAccountsInContext:self.coreDataStack.mainContext]];
+    if (account) {
+        // Assume we have a good candidate account and make it the default account in the app.
+        // Note that this should be the account with the most blogs.
+        // Updates user defaults here vs the setter method to avoid potential side-effects from dispatched notifications.
+        [[UserPersistentStoreFactory userDefaultsInstance] setObject:account.uuid forKey:AccountService.defaultDotcomAccountUUIDDefaultsKey];
+    }
+}
+
 - (WPAccount *)findDefaultAccountCandidateFromAccounts:(NSArray *)allAccounts
 {
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"blogs.@count" ascending:NO];
