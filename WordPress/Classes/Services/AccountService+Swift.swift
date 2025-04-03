@@ -4,7 +4,9 @@ import ShareExtensionCore
 import WebKit
 
 extension AccountService {
-    func setDefaultWordPressComAccount(_ account: WPAccount) {
+    // MARK: - Current Account
+
+    @objc public func setDefaultWordPressComAccount(_ account: WPAccount) {
         wpAssert(account.authToken?.isEmpty == false, "Account should have an authToken for WP.com")
 
         guard account.isDefaultWordPressComAccount else {
@@ -33,7 +35,7 @@ extension AccountService {
     }
 
     func removeDefaultWordPressComAccount() {
-        wpAssert(Thread.isMainThread, "This method should only be called from the main thread")
+        wpAssert(Thread.isMainThread, "Must be called from main thread")
 
         PushNotificationsManager.shared.unregisterDeviceToken()
 
@@ -71,6 +73,26 @@ extension AccountService {
 
         StatsCache.clearCaches()
     }
+
+    func restoreDisassociatedAccountIfNecessary() {
+        wpAssert(Thread.isMainThread, "Must be called from main thread")
+
+        let context = coreDataStack.mainContext
+        guard try? WPAccount.lookupDefaultWordPressComAccount(in: context) == nil {
+            return
+        }
+
+        // Attempt to restore a default account that has somehow been disassociated.
+        if let accounts = try? WPAccount.lookupAllAccounts(in: context),
+           let account = findDefaultAccountCandidate(from: accounts) {
+            // Assume we have a good candidate account and make it the default account in the app.
+            // Note that this should be the account with the most blogs.
+            // Updates user defaults here vs the setter method to avoid potential side-effects from dispatched notifications.
+            UserPersistentStoreFactory.instance().set(account.uuid, forKey: Constants.defaultDotcomAccountUUIDDefaultsKey)
+        }
+    }
+
+    // MARK: - App Extensions
 
     func setupAppExtensions() {
         let context = coreDataStack.mainContext

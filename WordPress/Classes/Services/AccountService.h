@@ -94,12 +94,8 @@ extern NSNotificationName const WPAccountEmailAndDefaultBlogUpdatedNotification;
  */
 - (void)purgeAccountIfUnused:(WPAccount *)account;
 
-/**
- Restores a disassociated default WordPress.com account if the current defaultWordPressCom account is nil
- and another candidate account is found.  This method bypasses the normal setter to avoid triggering unintended
- side-effects from dispatching account changed notifications.
- */
-- (void)restoreDisassociatedAccountIfNecessary;
+// FIXME: rewrite in Swift
+- (WPAccount *)findDefaultAccountCandidateFromAccounts:(NSArray *)allAccounts;
 
 @end
 
