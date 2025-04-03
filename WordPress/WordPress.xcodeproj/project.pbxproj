@@ -4410,7 +4410,6 @@
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WordPress" */;
 			buildPhases = (
 				09607CE7281C9CA6002D2E5A /* [Lint] Check AppLocalizedString usage */,
-				0C96F99E2D92E28E000779B8 /* Generate Credentials */,
 				825F0EBF1F7EBF7C00321528 /* App Icons: Add Version For Internal Releases */,
 				24E55D502CCC143F008D071D /* Build Acknowledgements Bundle */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
@@ -4743,7 +4742,6 @@
 			buildConfigurationList = FABB264D2602FC2C00C8785C /* Build configuration list for PBXNativeTarget "Jetpack" */;
 			buildPhases = (
 				09607CE8281C9D0F002D2E5A /* [Lint] Check AppLocalizedString usage */,
-				3F32E4AE270EAF5100A33D51 /* Generate Credentials */,
 				FABB1FA92602FC2C00C8785C /* App Icons: Add Version For Internal Releases */,
 				245562402C5C3C5D00A15446 /* Build Acknowledgements Bundle */,
 				FABB1FAA2602FC2C00C8785C /* Resources */,
@@ -5367,26 +5365,6 @@
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/../Scripts/BuildPhases/GenerateCredentials.sh\n";
 		};
-		0C96F99E2D92E28E000779B8 /* Generate Credentials */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(SRCROOT)/../Scripts/BuildPhases/GenerateCredentials.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "Generate Credentials";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILD_DIR)/Secrets/Secrets.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/../Scripts/BuildPhases/GenerateCredentials.sh\n";
-		};
 		245562402C5C3C5D00A15446 /* Build Acknowledgements Bundle */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5428,26 +5406,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "#!/bin/bash\n\nbash ../Scripts/BuildPhases/GenerateAcknowledgementsBundle.sh\n";
-		};
-		3F32E4AE270EAF5100A33D51 /* Generate Credentials */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(SRCROOT)/../Scripts/BuildPhases/GenerateCredentials.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "Generate Credentials";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILD_DIR)/Secrets/Secrets.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/../Scripts/BuildPhases/GenerateCredentials.sh\n";
 		};
 		3F47AC4E2A7206C900208F0D /* Set up Simulator */ = {
 			isa = PBXShellScriptBuildPhase;
