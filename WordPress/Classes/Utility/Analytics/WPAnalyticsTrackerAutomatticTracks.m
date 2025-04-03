@@ -1,11 +1,12 @@
 #import "WPAnalyticsTrackerAutomatticTracks.h"
 #import "AccountService.h"
 #import "BlogService.h"
-#import "WPAccount.h"
-#import "Blog.h"
 #ifdef KEYSTONE
+#import "Blog.h"
+#import "WPAccount.h"
 #import "Keystone-Swift.h"
 #else
+@import WordPressData;
 #import "WordPress-Swift.h"
 #endif
 @import AutomatticTracks;

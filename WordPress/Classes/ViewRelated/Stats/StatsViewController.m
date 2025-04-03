@@ -1,6 +1,4 @@
 #import "StatsViewController.h"
-#import "Blog.h"
-#import "WPAccount.h"
 #import "BlogService.h"
 #ifdef KEYSTONE
 #import "Keystone-Swift.h"
@@ -9,6 +7,7 @@
 #endif
 #import "WPAppAnalytics.h"
 
+@import WordPressData;
 @import WordPressShared;
 @import Reachability;
 
@@ -45,10 +44,10 @@
 
     self.view.backgroundColor = [UIColor systemGroupedBackgroundColor];
     self.navigationItem.title = NSLocalizedString(@"Stats", @"Stats window title");
-    
+
     UINavigationController *statsNavVC = [[UIStoryboard storyboardWithName:@"SiteStatsDashboard" bundle:nil] instantiateInitialViewController];
     self.siteStatsDashboardVC = statsNavVC.viewControllers.firstObject;
-    
+
     self.noResultsViewController = [NoResultsViewController controller];
     self.noResultsViewController.delegate = self;
 
@@ -97,17 +96,17 @@
 
     // WordPress.com + Jetpack REST
     if (self.blog.account) {
-        
+
         // Prompt user to enable site stats if stats module is disabled
         if (!self.isActivatingStatsModule && ![self.blog isStatsActive]) {
             [self showStatsModuleDisabled];
             return;
         }
-        
+
         SiteStatsInformation.sharedInstance.oauth2Token = self.blog.account.authToken;
         SiteStatsInformation.sharedInstance.siteID = self.blog.dotComID;
         SiteStatsInformation.sharedInstance.supportsFileDownloads = [self.blog supports:BlogFeatureFileDownloadsStats];
-        
+
         [self addStatsViewControllerToView];
         [self initializeStatsWidgetsIfNeeded];
         return;
@@ -202,9 +201,9 @@
 -(void)actionButtonPressed
 {
     [self showEnablingSiteStats];
-        
+
     self.isActivatingStatsModule = YES;
-    
+
     __weak __typeof(self) weakSelf = self;
 
     [self activateStatsModuleWithSuccess:^{
