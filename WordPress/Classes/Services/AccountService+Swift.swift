@@ -9,7 +9,7 @@ extension AccountService {
     @objc public func setDefaultWordPressComAccount(_ account: WPAccount) {
         wpAssert(account.authToken?.isEmpty == false, "Account should have an authToken for WP.com")
 
-        guard account.isDefaultWordPressComAccount else {
+        guard !account.isDefaultWordPressComAccount else {
             return
         }
 
