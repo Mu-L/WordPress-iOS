@@ -44,11 +44,9 @@ import BuildSettingsKit
             return
         }
 
-        var mergedProperties: [AnyHashable: Any] = event.properties ?? [:]
-        for (key, value) in properties ?? [:] {
-            mergedProperties[key] = value
-        }
-        trackString(event.name, withProperties: mergedProperties)
+        let properties = (event.properties ?? [:])
+            .merging(properties ?? [:]) { _, new in new }
+        trackString(event.name, withProperties: properties)
     }
 
     public func trackString(_ event: String) {
