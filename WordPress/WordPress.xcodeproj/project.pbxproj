@@ -1983,6 +1983,8 @@
 				"Categories/NSObject+Helpers.h",
 				"Categories/UIApplication+Helpers.h",
 				"Categories/UIView+Subviews.h",
+				Models/AbstractPost.h,
+				Models/BasePost.h,
 				Models/Blog/Blog.h,
 				Models/CoreDataStack/CoreDataStack.h,
 				Models/Media.h,
