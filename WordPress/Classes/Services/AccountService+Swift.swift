@@ -1,8 +1,52 @@
 import Foundation
 import WordPressShared
 import ShareExtensionCore
+import WebKit
 
 extension AccountService {
+
+    @objc public static let defaultDotcomAccountUUIDDefaultsKey = "AccountDefaultDotcomUUID"
+
+    func removeDefaultWordPressComAccount() {
+        wpAssert(Thread.isMainThread, "This method should only be called from the main thread")
+
+        PushNotificationsManager.shared.unregisterDeviceToken()
+
+        guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: coreDataStack.mainContext) else {
+            return
+        }
+
+        let objectID = TaggedManagedObjectID(account)
+        coreDataStack.performAndSave { context in
+            do {
+                let account = try context.existingObject(with: objectID)
+                context.delete(account)
+            } catch {
+                wpAssertionFailure("account missing")
+            }
+        }
+
+        // Clear WordPress.com cookies
+        let cookieJars: [CookieJar] = [
+            HTTPCookieStorage.shared,
+            WKWebsiteDataStore.default().httpCookieStore
+        ]
+
+        for cookieJar in cookieJars {
+            cookieJar.removeWordPressComCookies(completion: {})
+        }
+
+        URLCache.shared.removeAllCachedResponses()
+
+        // Remove defaults
+        UserPersistentStoreFactory.instance().removeObject(forKey: AccountService.defaultDotcomAccountUUIDDefaultsKey)
+
+        WPAnalytics.refreshMetadata()
+        NotificationCenter.default.post(name: .WPAccountDefaultWordPressComAccountChanged, object: nil)
+
+        StatsCache.clearCaches()
+    }
+
     func setupAppExtensions() {
         let context = coreDataStack.mainContext
         context.performAndWait {
