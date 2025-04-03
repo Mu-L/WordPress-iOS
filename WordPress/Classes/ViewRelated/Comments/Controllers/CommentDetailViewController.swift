@@ -267,7 +267,7 @@ class CommentDetailViewController: UIViewController, NoResultsViewHost {
     }
 
     // Update the Notification Comment being displayed.
-    func refreshView(comment: Comment, notification: Notification) {
+    func refreshView(comment: Comment, notification: WordPressData.Notification) {
         hideNoResults()
         self.notification = notification
         displayComment(comment)
