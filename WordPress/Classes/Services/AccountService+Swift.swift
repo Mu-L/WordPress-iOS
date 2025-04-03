@@ -88,7 +88,7 @@ extension AccountService {
         }
     }
 
-    @objc func setupAppExtensions(defaultAccount: WPAccount) {
+    @objc public func setupAppExtensions(defaultAccount: WPAccount) {
         let shareExtensionService = ShareExtensionService()
         let notificationSupportService = NotificationSupportService()
 
