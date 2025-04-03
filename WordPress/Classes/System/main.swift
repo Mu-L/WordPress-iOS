@@ -1,9 +1,9 @@
 import Foundation
 import UIKit
-import Keystone
+import WordPress
 
 let isRunningTests = NSClassFromString("XCTestCase") != nil
-let appDelegateClass = isRunningTests ? "TestingAppDelegate" : NSStringFromClass(Keystone.WordPressAppDelegate.self)
+let appDelegateClass = isRunningTests ? "TestingAppDelegate" : NSStringFromClass(WordPress.WordPressAppDelegate.self)
 
 UIApplicationMain(
     CommandLine.argc,
