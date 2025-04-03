@@ -69,7 +69,7 @@ NSString * const WPAppAnalyticsValueSiteTypeP2                      = @"p2";
 - (void)registerTrackers
 {
     [WPAnalytics registerTracker:[WPAnalyticsTrackerWPCom new]];
-    [WPAnalytics registerTracker:[AnalyticsTrackerAutomatticTracks new]];
+//    [WPAnalytics registerTracker:[AnalyticsTrackerAutomatticTracks new]];
 }
 
 - (void)clearTrackers

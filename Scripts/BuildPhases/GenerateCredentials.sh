@@ -60,19 +60,19 @@ ensure_is_in_input_files_list $EXAMPLE_SECRETS_FILE
 SECRETS_DESTINATION_FILE="${BUILD_DIR}/Secrets/Secrets.swift"
 mkdir -p $(dirname "$SECRETS_DESTINATION_FILE")
 
-# If the WordPress Production Secrets are available for WordPress, use them
-if [ -f "$WORDPRESS_SECRETS_FILE" ] && [ "${TARGET_NAME}" == "WordPress" ]; then
-    echo "Applying Production Secrets"
-    cp -v "$WORDPRESS_SECRETS_FILE" "${SECRETS_DESTINATION_FILE}"
-    exit 0
-fi
+# # If the WordPress Production Secrets are available for WordPress, use them
+# if [ -f "$WORDPRESS_SECRETS_FILE" ] && [ "${TARGET_NAME}" == "WordPress" ]; then
+#     echo "Applying Production Secrets"
+#     cp -v "$WORDPRESS_SECRETS_FILE" "${SECRETS_DESTINATION_FILE}"
+#     exit 0
+# fi
 
 # If the Jetpack Secrets are available (and if we're building Jetpack) use them
-if [ -f "$JETPACK_SECRETS_FILE" ] && [ "${TARGET_NAME}" == "Jetpack" ]; then
+# if [ -f "$JETPACK_SECRETS_FILE" ] && [ "${TARGET_NAME}" == "Jetpack" ]; then
     echo "Applying Jetpack Secrets"
     cp -v "$JETPACK_SECRETS_FILE" "${SECRETS_DESTINATION_FILE}"
     exit 0
-fi
+# fi
 
 EXTERNAL_CONTRIBUTOR_RELEASE_MSG="External contributors should not need to perform a Release build"
 
