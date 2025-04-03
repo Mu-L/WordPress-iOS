@@ -7034,6 +7034,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress;
+				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "WordPress Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
@@ -7089,6 +7090,7 @@
 					"-l\"z\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress;
+				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.wordpress";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
@@ -8561,6 +8563,7 @@
 					"-l\"z\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress.alpha;
+				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse org.wordpress.alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
@@ -9128,7 +9131,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.jetpack;
-				PRODUCT_MODULE_NAME = WordPress;
+				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Jetpack iOS Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
@@ -9183,7 +9186,7 @@
 					"-l\"z\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.jetpack;
-				PRODUCT_MODULE_NAME = WordPress;
+				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.automattic.jetpack";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
@@ -9234,7 +9237,7 @@
 					"-l\"z\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jetpack.alpha;
-				PRODUCT_MODULE_NAME = WordPress;
+				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.jetpack.alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
