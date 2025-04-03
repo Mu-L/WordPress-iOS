@@ -20,7 +20,7 @@ public extension NibLoadable {
     }
 
     static var defaultBundle: Bundle {
-        return Bundle.main
+        return Bundle(for: BundleToken.self)
     }
 
     static var defaultNib: UINib {
@@ -37,3 +37,5 @@ public extension NibLoadable {
         return result
     }
 }
+
+private final class BundleToken {}
