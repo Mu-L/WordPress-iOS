@@ -95,7 +95,7 @@ extern NSNotificationName const WPAccountEmailAndDefaultBlogUpdatedNotification;
 - (void)purgeAccountIfUnused:(WPAccount *)account;
 
 // FIXME: rewrite in Swift
-- (WPAccount *)findDefaultAccountCandidateFromAccounts:(NSArray *)allAccounts;
+- (WPAccount * _Nullable)findDefaultAccountCandidateFromAccounts:(NSArray *)allAccounts;
 
 @end
 

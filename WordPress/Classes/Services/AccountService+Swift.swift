@@ -78,13 +78,13 @@ extension AccountService {
         wpAssert(Thread.isMainThread, "Must be called from main thread")
 
         let context = coreDataStack.mainContext
-        guard try? WPAccount.lookupDefaultWordPressComAccount(in: context) == nil {
+        guard (try? WPAccount.lookupDefaultWordPressComAccount(in: context)) == nil else {
             return
         }
 
         // Attempt to restore a default account that has somehow been disassociated.
         if let accounts = try? WPAccount.lookupAllAccounts(in: context),
-           let account = findDefaultAccountCandidate(from: accounts) {
+           let account = findDefaultAccountCandidate(fromAccounts: accounts) {
             // Assume we have a good candidate account and make it the default account in the app.
             // Note that this should be the account with the most blogs.
             // Updates user defaults here vs the setter method to avoid potential side-effects from dispatched notifications.
