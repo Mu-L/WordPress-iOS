@@ -28,46 +28,6 @@ NSString * const WPAccountEmailAndDefaultBlogUpdatedNotification = @"WPAccountEm
     return self;
 }
 
-///------------------------------------
-/// @name Default WordPress.com account
-///------------------------------------
-
-/**
- Sets the default WordPress.com account
-
- @param account the account to set as default for WordPress.com
- @see defaultWordPressComAccount
- @see removeDefaultWordPressComAccount
- */
-- (void)setDefaultWordPressComAccount:(WPAccount *)account
-{
-    NSParameterAssert(account != nil);
-    NSAssert(account.authToken.length > 0, @"Account should have an authToken for WP.com");
-
-    if ([account isDefaultWordPressComAccount]) {
-        return;
-    }
-
-    [[UserPersistentStoreFactory userDefaultsInstance] setObject:account.uuid forKey:AccountService.defaultDotcomAccountUUIDDefaultsKey];
-
-    NSManagedObjectID *accountID = account.objectID;
-    void (^notifyAccountChange)(void) = ^{
-        NSManagedObjectContext *mainContext = self.coreDataStack.mainContext;
-        NSManagedObject *accountInContext = [mainContext existingObjectWithID:accountID error:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:WPAccountDefaultWordPressComAccountChangedNotification object:accountInContext];
-
-        [[PushNotificationsManager shared] setupRemoteNotifications];
-    };
-    if ([NSThread isMainThread]) {
-        // This is meant to help with testing account observers.
-        // Short version: dispatch_async and XCTest asynchronous helpers don't play nice with each other
-        // Long version: see the comment in https://github.com/wordpress-mobile/WordPress-iOS/blob/2f9a2100ca69d8f455acec47a1bbd6cbc5084546/WordPress/WordPressTest/AccountServiceRxTests.swift#L7
-        notifyAccountChange();
-    } else {
-        dispatch_async(dispatch_get_main_queue(), notifyAccountChange);
-    }
-}
-
 - (void)isEmailAvailable:(NSString *)email success:(void (^)(BOOL available))success failure:(void (^)(NSError *error))failure
 {
     id<AccountServiceRemote> remote = [self remoteForAnonymous];

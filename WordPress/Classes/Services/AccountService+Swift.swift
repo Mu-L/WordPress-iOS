@@ -4,8 +4,33 @@ import ShareExtensionCore
 import WebKit
 
 extension AccountService {
+    func setDefaultWordPressComAccount(_ account: WPAccount) {
+        wpAssert(account.authToken?.isEmpty == false, "Account should have an authToken for WP.com")
 
-    @objc public static let defaultDotcomAccountUUIDDefaultsKey = "AccountDefaultDotcomUUID"
+        guard account.isDefaultWordPressComAccount else {
+            return
+        }
+
+        UserPersistentStoreFactory.instance().set(account.uuid, forKey: Constants.defaultDotcomAccountUUIDDefaultsKey)
+
+        let objectID = TaggedManagedObjectID(account)
+        let notifyAccountChange = {
+            let context = self.coreDataStack.mainContext
+            let account = try? context.existingObject(with: objectID)
+            NotificationCenter.default.post(name: .WPAccountDefaultWordPressComAccountChanged, object: account)
+
+            PushNotificationsManager.shared.setupRemoteNotifications()
+        }
+
+        if Thread.isMainThread {
+            // This is meant to help with testing account observers.
+            // Short version: dispatch_async and XCTest asynchronous helpers don't play nice with each other
+            // Long version: see the comment in https://github.com/wordpress-mobile/WordPress-iOS/blob/2f9a2100ca69d8f455acec47a1bbd6cbc5084546/WordPress/WordPressTest/AccountServiceRxTests.swift#L7
+            notifyAccountChange()
+        } else {
+            DispatchQueue.main.async(execute: notifyAccountChange)
+        }
+    }
 
     func removeDefaultWordPressComAccount() {
         wpAssert(Thread.isMainThread, "This method should only be called from the main thread")
@@ -39,7 +64,7 @@ extension AccountService {
         URLCache.shared.removeAllCachedResponses()
 
         // Remove defaults
-        UserPersistentStoreFactory.instance().removeObject(forKey: AccountService.defaultDotcomAccountUUIDDefaultsKey)
+        UserPersistentStoreFactory.instance().removeObject(forKey: Constants.defaultDotcomAccountUUIDDefaultsKey)
 
         WPAnalytics.refreshMetadata()
         NotificationCenter.default.post(name: .WPAccountDefaultWordPressComAccountChanged, object: nil)
@@ -119,4 +144,8 @@ extension AccountService {
         }
     }
 
+}
+
+private enum Constants {
+    static let defaultDotcomAccountUUIDDefaultsKey = "AccountDefaultDotcomUUID"
 }

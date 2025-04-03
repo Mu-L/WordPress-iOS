@@ -23,15 +23,6 @@ extern NSNotificationName const WPAccountEmailAndDefaultBlogUpdatedNotification;
 ///------------------------------------
 
 /**
- Sets the default WordPress.com account
- 
- @param account the account to set as default for WordPress.com
- @see defaultWordPressComAccount
- @see removeDefaultWordPressComAccount
- */
-- (void)setDefaultWordPressComAccount:(WPAccount *)account;
-
-/**
  Query to check if an email address is paired to a wpcom account. Used in the 
  magic links signup flow.
 
