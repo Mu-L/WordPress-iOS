@@ -1219,7 +1219,7 @@ private extension NotificationsViewController {
         }
     }
 
-    func selectRow(for notification: Notification, animated: Bool = true,
+    func selectRow(for notification: WordPressData.Notification, animated: Bool = true,
                    scrollPosition: UITableView.ScrollPosition = .none) {
         selectedNotification = notification
 
@@ -1687,7 +1687,7 @@ private extension NotificationsViewController {
         return mainContext.firstObject(ofType: Notification.self, matching: predicate)
     }
 
-    func loadNotification(near note: Notification, withIndexDelta delta: Int) -> WordPressData.Notification? {
+    func loadNotification(near note: WordPressData.Notification, withIndexDelta delta: Int) -> WordPressData.Notification? {
         guard let notifications = tableViewHandler?.resultsController?.fetchedObjects as? [WordPressData.Notification] else {
             return nil
         }
