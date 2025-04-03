@@ -2026,6 +2026,7 @@
 				ViewRelated/Comments/Controllers/CommentsViewController.h,
 				"ViewRelated/Me/Help & Support/Activity Logs/ActivityLogViewController.h",
 				ViewRelated/Menus/Controllers/MenuItemsViewController.h,
+				ViewRelated/Menus/Controllers/MenusViewController.h,
 				ViewRelated/Pages/PageSettingsViewController.h,
 				ViewRelated/Post/PostSettingsViewController.h,
 				ViewRelated/Post/Views/PostMetaButton.h,
