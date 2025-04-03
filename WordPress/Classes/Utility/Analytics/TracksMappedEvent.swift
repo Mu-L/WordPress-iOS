@@ -3,13 +3,13 @@ import WordPressShared
 
 struct TracksMappedEvent {
     let name: String
-    let properties: [String: Any]?
+    let properties: [AnyHashable: Any]?
 }
 
 extension TracksMappedEvent {
     static func make(for stat: WPAnalyticsStat) -> TracksMappedEvent? {
         let name: String
-        var properties: [String: Any]?
+        var properties: [AnyHashable: Any]?
 
         switch stat {
         case .abTestStart:
