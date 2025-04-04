@@ -3,7 +3,7 @@ import UIKit
 
 struct JetpackAuthenticationManager: AuthenticationHandler {
     let statusBarStyle: UIStatusBarStyle = .default
-    let prologueViewController: UIViewController? = JetpackPrologueViewController()
+    let prologueViewController: UIViewController? = JetpackPrologueViewController(nibName: "JetpackPrologueViewController", bundle: Bundle(for: JetpackPrologueViewController.self))
     let buttonViewTopShadowImage: UIImage? = UIImage()
     let prologueButtonsBackgroundColor: UIColor? = JetpackPrologueStyleGuide.gradientColor
     let prologueButtonsBlurEffect: UIBlurEffect? = JetpackPrologueStyleGuide.prologueButtonsBlurEffect
