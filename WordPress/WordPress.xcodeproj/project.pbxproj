@@ -182,7 +182,6 @@
 		17C3F8BF25E4438200EFFE12 /* notifications-button-text-content.json in Resources */ = {isa = PBXBuildFile; fileRef = 17C3F8BE25E4438100EFFE12 /* notifications-button-text-content.json */; };
 		17FC0032264D728E00FCBD37 /* SharingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FC0031264D728E00FCBD37 /* SharingServiceTests.swift */; };
 		1D19C56629C9DB0A00FB0087 /* GutenbergVideoPressUploadProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D19C56529C9DB0A00FB0087 /* GutenbergVideoPressUploadProcessorTests.swift */; };
-		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1D91080729F847A2003F9A5E /* MediaServiceUpdateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D91080629F847A2003F9A5E /* MediaServiceUpdateTests.m */; };
 		1DE9F2B32BA30E820044AA53 /* GutenbergFileUploadProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE9F2B22BA30E820044AA53 /* GutenbergFileUploadProcessorTests.swift */; };
 		1DF7A0D32BA0B1810003CBA3 /* GutenbergContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF7A0D22BA0B1810003CBA3 /* GutenbergContentParser.swift */; };
@@ -196,13 +195,9 @@
 		24C69A8B2612421900312D9A /* UserSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C69A8A2612421900312D9A /* UserSettingsTests.swift */; };
 		24C69AC22612467C00312D9A /* UserSettingsTestsObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C69AC12612467C00312D9A /* UserSettingsTestsObjc.m */; };
 		24CDE3412C5863A1005E5E43 /* TestKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CDE3402C5863A1005E5E43 /* TestKeychain.swift */; };
-		24E55D4E2CC9A5C8008D071D /* ImagePlayground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E55D4D2CC9A5C8008D071D /* ImagePlayground.framework */; };
-		24E55D4F2CC9A5CD008D071D /* ImagePlayground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E55D4D2CC9A5C8008D071D /* ImagePlayground.framework */; };
-		296890780FE971DC00770264 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 296890770FE971DC00770264 /* Security.framework */; };
 		321955C124BE4EBF00E3F316 /* ReaderSelectInterestsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321955C024BE4EBF00E3F316 /* ReaderSelectInterestsCoordinatorTests.swift */; };
 		3236F7A124B61B950088E8F3 /* ReaderInterestsDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3236F7A024B61B950088E8F3 /* ReaderInterestsDataSourceTests.swift */; };
 		323F8F3023A22C4C000BA49C /* SiteCreationRotatingMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C6CDDA23A1FF0D002556FF /* SiteCreationRotatingMessageViewTests.swift */; };
-		374CB16215B93C0800DD0EBC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374CB16115B93C0800DD0EBC /* AudioToolbox.framework */; };
 		3F0FD9FC2D9B92F700CD05D6 /* WordPressData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; };
 		3F0FD9FD2D9B92F700CD05D6 /* WordPressData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3F0FDA002D9B930100CD05D6 /* WordPressData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; };
@@ -351,7 +346,6 @@
 		748BD8851F19234300813F9A /* notifications-mark-as-read.json in Resources */ = {isa = PBXBuildFile; fileRef = 748BD8841F19234300813F9A /* notifications-mark-as-read.json */; };
 		74B335EC1F06F9520053A184 /* MockWordPressComRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B335EB1F06F9520053A184 /* MockWordPressComRestApi.swift */; };
 		77A141172B68546100BF75DD /* BooleanUserDefaultsDebugViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A141162B68546100BF75DD /* BooleanUserDefaultsDebugViewModelTests.swift */; };
-		7E21C761202BBC8E00837CF5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21C760202BBC8D00837CF5 /* iAd.framework */; };
 		7E442FC720F677CB00DEACA5 /* ActivityLogRangesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E442FC620F677CB00DEACA5 /* ActivityLogRangesTest.swift */; };
 		7E442FCA20F678D100DEACA5 /* activity-log-pingback-content.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E442FC920F678D100DEACA5 /* activity-log-pingback-content.json */; };
 		7E442FCF20F6C19000DEACA5 /* ActivityLogFormattableContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E442FCE20F6C19000DEACA5 /* ActivityLogFormattableContentTests.swift */; };
@@ -412,15 +406,9 @@
 		80F6D04D28EE866A00953C1A /* Noticons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5A34D0C25DF2F7700C9654B /* Noticons.ttf */; };
 		80F6D05D28EE88FC00953C1A /* JetpackNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 80F6D05428EE866A00953C1A /* JetpackNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		82301B8F1E787420009C9C4E /* AppRatingUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82301B8E1E787420009C9C4E /* AppRatingUtilityTests.swift */; };
-		8298F3921EEF3BA7008EB7F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8298F3911EEF3BA7008EB7F0 /* StoreKit.framework */; };
-		83043E55126FA31400EC9953 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83043E54126FA31400EC9953 /* MessageUI.framework */; };
 		8332DD2829259BEB00802F7D /* DataMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8332DD2729259BEB00802F7D /* DataMigratorTests.swift */; };
-		834CE7341256D0DE0046A4A3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834CE7331256D0DE0046A4A3 /* CFNetwork.framework */; };
-		8355D7D911D260AA00A61362 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8355D7D811D260AA00A61362 /* CoreData.framework */; };
 		83BFAE502A6EBF9900C7B683 /* DashboardJetpackSocialCardCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFAE4F2A6EBF9900C7B683 /* DashboardJetpackSocialCardCellTests.swift */; };
 		83EF3D7F2937F08C000AF9BF /* SharedDataIssueSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF3D7C2937E969000AF9BF /* SharedDataIssueSolverTests.swift */; };
-		83F3E26011275E07004CD686 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F3E25F11275E07004CD686 /* MapKit.framework */; };
-		83F3E2D311276371004CD686 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F3E2D211276371004CD686 /* CoreLocation.framework */; };
 		8511CFC51C60884400B7CEED /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8511CFC41C60884400B7CEED /* SnapshotHelper.swift */; };
 		8511CFC71C60894200B7CEED /* WordPressScreenshotGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8511CFC61C60894200B7CEED /* WordPressScreenshotGeneration.swift */; };
 		855408861A6F105700DDBD79 /* app-review-prompt-all-enabled.json in Resources */ = {isa = PBXBuildFile; fileRef = 855408851A6F105700DDBD79 /* app-review-prompt-all-enabled.json */; };
@@ -465,21 +453,14 @@
 		937250EE267A492D0086075F /* StatsPeriodStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937250ED267A492D0086075F /* StatsPeriodStoreTests.swift */; };
 		938466B92683CA0E00A538DC /* ReferrerDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938466B82683CA0E00A538DC /* ReferrerDetailsViewModelTests.swift */; };
 		93A379EC19FFBF7900415023 /* KeychainTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A379EB19FFBF7900415023 /* KeychainTest.m */; };
-		93A3F7DE1843F6F00082FEEA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A3F7DD1843F6F00082FEEA /* CoreTelephony.framework */; };
 		93C882A11EEB18D700227A59 /* html_page_with_link_to_rsd_non_standard.html in Resources */ = {isa = PBXBuildFile; fileRef = 93C882981EEB18D700227A59 /* html_page_with_link_to_rsd_non_standard.html */; };
 		93C882A21EEB18D700227A59 /* html_page_with_link_to_rsd.html in Resources */ = {isa = PBXBuildFile; fileRef = 93C882991EEB18D700227A59 /* html_page_with_link_to_rsd.html */; };
 		93C882A31EEB18D700227A59 /* plugin_redirect.html in Resources */ = {isa = PBXBuildFile; fileRef = 93C8829A1EEB18D700227A59 /* plugin_redirect.html */; };
 		93C882A41EEB18D700227A59 /* rsd.xml in Resources */ = {isa = PBXBuildFile; fileRef = 93C8829B1EEB18D700227A59 /* rsd.xml */; };
 		93CD939319099BE70049096E /* authtoken.json in Resources */ = {isa = PBXBuildFile; fileRef = 93CD939219099BE70049096E /* authtoken.json */; };
 		93D86B981C691E71003D8E3E /* LocalCoreDataServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 59A9AB391B4C3ECD00A433DC /* LocalCoreDataServiceTests.m */; };
-		93E5285619A77BAC003A1A9C /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E5283B19A7741A003A1A9C /* NotificationCenter.framework */; };
 		93EF094C19ED533500C89770 /* ContextManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E9050319E6F242005513C9 /* ContextManagerTests.swift */; };
-		93F2E53E1E9E5A010050D489 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E131CB5116CACA6B004B0314 /* CoreText.framework */; };
-		93F2E5401E9E5A180050D489 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F2E53F1E9E5A180050D489 /* libsqlite3.tbd */; };
-		93F2E5421E9E5A350050D489 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F2E5411E9E5A350050D489 /* QuickLook.framework */; };
-		93F2E5441E9E5A570050D489 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F2E5431E9E5A570050D489 /* CoreSpotlight.framework */; };
 		9A9D34FF2360A4E200BC95A3 /* StatsPeriodAsyncOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D34FE2360A4E200BC95A3 /* StatsPeriodAsyncOperationTests.swift */; };
-		A01C542E0E24E88400D411F2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01C542D0E24E88400D411F2 /* SystemConfiguration.framework */; };
 		AB2211F425ED6E7A00BF72FC /* CommentServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2211F325ED6E7A00BF72FC /* CommentServiceTests.swift */; };
 		AC68C9CA28E5DF14009030A9 /* NotificationsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC68C9C928E5DF14009030A9 /* NotificationsViewControllerTests.swift */; };
 		AE3047AA270B66D300FE9266 /* Scanner+QuotedTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3047A9270B66D300FE9266 /* Scanner+QuotedTextTests.swift */; };
@@ -497,7 +478,6 @@
 		B5772AC61C9C84900031F97E /* GravatarServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5772AC51C9C84900031F97E /* GravatarServiceTests.swift */; };
 		B5882C471D5297D1008E0EAA /* NotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5882C461D5297D1008E0EAA /* NotificationTests.swift */; };
 		B59D40A61DB522DF003D2D79 /* NSAttributedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59D40A51DB522DF003D2D79 /* NSAttributedStringTests.swift */; };
-		B5AA54D51A8E7510003BDD12 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA54D41A8E7510003BDD12 /* WebKit.framework */; };
 		B5AEEC791ACACFDA008BF2A4 /* notifications-badge.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AEEC741ACACFDA008BF2A4 /* notifications-badge.json */; };
 		B5AEEC7A1ACACFDA008BF2A4 /* notifications-like.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AEEC751ACACFDA008BF2A4 /* notifications-like.json */; };
 		B5AEEC7C1ACACFDA008BF2A4 /* notifications-new-follower.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AEEC771ACACFDA008BF2A4 /* notifications-new-follower.json */; };
@@ -592,9 +572,6 @@
 		DCF892D0282FA42A00BB71E1 /* SiteStatsImmuTableRowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF892CF282FA42A00BB71E1 /* SiteStatsImmuTableRowsTests.swift */; };
 		DCF892D2282FA45500BB71E1 /* StatsMockDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF892D1282FA45500BB71E1 /* StatsMockDataLoader.swift */; };
 		DCFC6A29292523D20062D65B /* SiteStatsPinnedItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFC6A28292523D20062D65B /* SiteStatsPinnedItemStoreTests.swift */; };
-		E10B3652158F2D3F00419A93 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10B3651158F2D3F00419A93 /* QuartzCore.framework */; };
-		E10B3654158F2D4500419A93 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10B3653158F2D4500419A93 /* UIKit.framework */; };
-		E10B3655158F2D7800419A93 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834CE7371256D0F60046A4A3 /* CoreGraphics.framework */; };
 		E10F3DA11E5C2CE0008FAADA /* PostListFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10F3DA01E5C2CE0008FAADA /* PostListFilterTests.swift */; };
 		E11330511A13BAA300D36D84 /* me-sites-with-jetpack.json in Resources */ = {isa = PBXBuildFile; fileRef = E11330501A13BAA300D36D84 /* me-sites-with-jetpack.json */; };
 		E11DF3E420C97F0A00C0B07C /* NotificationCenterObserveOnceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11DF3E320C97F0A00C0B07C /* NotificationCenterObserveOnceTests.swift */; };
@@ -609,11 +586,7 @@
 		E157D5E01C690A6C00F04FB9 /* ImmuTableTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E157D5DF1C690A6C00F04FB9 /* ImmuTableTestUtils.swift */; };
 		E180BD4C1FB462FF00D0D781 /* CookieJarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180BD4B1FB462FF00D0D781 /* CookieJarTests.swift */; };
 		E180BD4E1FB4681E00D0D781 /* MockCookieJar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180BD4D1FB4681E00D0D781 /* MockCookieJar.swift */; };
-		E185474E1DED8D8800D875D7 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E185474D1DED8D8800D875D7 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E18549DB230FBFEF003C620E /* BlogServiceDeduplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18549DA230FBFEF003C620E /* BlogServiceDeduplicationTests.swift */; };
-		E1A386C814DB05C300954CF8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A386C714DB05C300954CF8 /* AVFoundation.framework */; };
-		E1A386CA14DB05F700954CF8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A386C914DB05F700954CF8 /* CoreMedia.framework */; };
-		E1A386CB14DB063800954CF8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FB4D3E122C38F700DB9506 /* MediaPlayer.framework */; };
 		E1AB5A091E0BF31E00574B4E /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AB5A081E0BF31E00574B4E /* ArrayTests.swift */; };
 		E1AB5A3A1E0C464700574B4E /* DelayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AB5A391E0C464700574B4E /* DelayTests.swift */; };
 		E1AFA8C31E8E34230004A323 /* WordPressShare.js in Resources */ = {isa = PBXBuildFile; fileRef = E1AFA8C21E8E34230004A323 /* WordPressShare.js */; };
@@ -645,7 +618,6 @@
 		EAD2BF4227594DAB00A847BB /* StatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD2BF4127594DAB00A847BB /* StatsTests.swift */; };
 		F11023A1231863CE00C4E84A /* MediaServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11023A0231863CE00C4E84A /* MediaServiceTests.swift */; };
 		F11023A323186BCA00C4E84A /* MediaBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11023A223186BCA00C4E84A /* MediaBuilder.swift */; };
-		F111B88D2658103C00057942 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F111B88B2658102700057942 /* Combine.framework */; };
 		F127FFD824213B5600B9D41A /* atomic-get-authentication-cookie-success.json in Resources */ = {isa = PBXBuildFile; fileRef = F127FFD724213B5600B9D41A /* atomic-get-authentication-cookie-success.json */; };
 		F1450CF92437EEBB00A28BFE /* MediaRequestAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1450CF82437EEBB00A28BFE /* MediaRequestAuthenticatorTests.swift */; };
 		F151EC832665271200AEA89E /* BloggingRemindersSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F151EC822665271200AEA89E /* BloggingRemindersSchedulerTests.swift */; };
@@ -700,34 +672,6 @@
 		FABB20762602FC2C00C8785C /* WordPressShare.js in Resources */ = {isa = PBXBuildFile; fileRef = E1AFA8C21E8E34230004A323 /* WordPressShare.js */; };
 		FABB20862602FC2C00C8785C /* n.caf in Resources */ = {isa = PBXBuildFile; fileRef = 5D69DBC3165428CA00A2D1F7 /* n.caf */; };
 		FABB23A32602FC2C00C8785C /* Sites.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3F46AB0225BF5D6300CE2E98 /* Sites.intentdefinition */; settings = {ATTRIBUTES = (codegen, ); }; };
-		FABB26202602FC2C00C8785C /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E21C760202BBC8D00837CF5 /* iAd.framework */; };
-		FABB26212602FC2C00C8785C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8298F3911EEF3BA7008EB7F0 /* StoreKit.framework */; };
-		FABB26222602FC2C00C8785C /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F2E5431E9E5A570050D489 /* CoreSpotlight.framework */; };
-		FABB26232602FC2C00C8785C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F2E5411E9E5A350050D489 /* QuickLook.framework */; };
-		FABB26242602FC2C00C8785C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E131CB5116CACA6B004B0314 /* CoreText.framework */; };
-		FABB26252602FC2C00C8785C /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E185474D1DED8D8800D875D7 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		FABB26262602FC2C00C8785C /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF75933A1BE2423800814D3B /* Photos.framework */; };
-		FABB26272602FC2C00C8785C /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E5283B19A7741A003A1A9C /* NotificationCenter.framework */; };
-		FABB26282602FC2C00C8785C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A3F7DD1843F6F00082FEEA /* CoreTelephony.framework */; };
-		FABB26292602FC2C00C8785C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01C542D0E24E88400D411F2 /* SystemConfiguration.framework */; };
-		FABB262A2602FC2C00C8785C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374CB16115B93C0800DD0EBC /* AudioToolbox.framework */; };
-		FABB262B2602FC2C00C8785C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834CE7371256D0F60046A4A3 /* CoreGraphics.framework */; };
-		FABB262C2602FC2C00C8785C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10B3653158F2D4500419A93 /* UIKit.framework */; };
-		FABB262D2602FC2C00C8785C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10B3651158F2D3F00419A93 /* QuartzCore.framework */; };
-		FABB262E2602FC2C00C8785C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FB4D3E122C38F700DB9506 /* MediaPlayer.framework */; };
-		FABB262F2602FC2C00C8785C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A386C914DB05F700954CF8 /* CoreMedia.framework */; };
-		FABB26302602FC2C00C8785C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A386C714DB05C300954CF8 /* AVFoundation.framework */; };
-		FABB26312602FC2C00C8785C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		FABB26322602FC2C00C8785C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 296890770FE971DC00770264 /* Security.framework */; };
-		FABB26332602FC2C00C8785C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F3E25F11275E07004CD686 /* MapKit.framework */; };
-		FABB26342602FC2C00C8785C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F3E2D211276371004CD686 /* CoreLocation.framework */; };
-		FABB26362602FC2C00C8785C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8355D7D811D260AA00A61362 /* CoreData.framework */; };
-		FABB26372602FC2C00C8785C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834CE7331256D0DE0046A4A3 /* CFNetwork.framework */; };
-		FABB26382602FC2C00C8785C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83043E54126FA31400EC9953 /* MessageUI.framework */; };
-		FABB26392602FC2C00C8785C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3D6D2B1349F5D30061136A /* ImageIO.framework */; };
-		FABB263A2602FC2C00C8785C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA54D41A8E7510003BDD12 /* WebKit.framework */; };
-		FABB263B2602FC2C00C8785C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F2E53F1E9E5A180050D489 /* libsqlite3.tbd */; };
-		FABB263F2602FC2C00C8785C /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DEAD7244B56E200ACA032 /* CoreServices.framework */; };
 		FABB28472603067C00C8785C /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FABB28462603067C00C8785C /* Launch Screen.storyboard */; };
 		FABB286C2603086900C8785C /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FABB286B2603086900C8785C /* AppImages.xcassets */; };
 		FAF0FAAC2AA094C0004C3228 /* NoSiteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0FAAB2AA094C0004C3228 /* NoSiteViewModelTests.swift */; };
@@ -738,7 +682,6 @@
 		FAF64B922637DEEC00E8A1DF /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8511CFC41C60884400B7CEED /* SnapshotHelper.swift */; };
 		FAF64B982637DEEC00E8A1DF /* ScreenshotCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9463A7221C05EE90081F11E /* ScreenshotCredentials.swift */; };
 		FAF64E4F2637E85800E8A1DF /* JetpackScreenshotGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF64E4E2637E85800E8A1DF /* JetpackScreenshotGeneration.swift */; };
-		FD3D6D2C1349F5D30061136A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3D6D2B1349F5D30061136A /* ImageIO.framework */; };
 		FE003F62282E73E6006F8D1D /* blogging-prompts-fetch-success.json in Resources */ = {isa = PBXBuildFile; fileRef = FE003F61282E73E6006F8D1D /* blogging-prompts-fetch-success.json */; };
 		FE1E201E2A49D59400CE7C90 /* JetpackSocialServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1E201D2A49D59400CE7C90 /* JetpackSocialServiceTests.swift */; };
 		FE2E3729281C839C00A1E82A /* BloggingPromptsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2E3728281C839C00A1E82A /* BloggingPromptsServiceTests.swift */; };
@@ -767,8 +710,6 @@
 		FF2716921CAAC87B0006E2D4 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2716911CAAC87B0006E2D4 /* LoginTests.swift */; };
 		FF2716A11CABC7D40006E2D4 /* XCTest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2716A01CABC7D40006E2D4 /* XCTest+Extensions.swift */; };
 		FF2EC3C22209AC19006176E1 /* GutenbergImgUploadProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2EC3C12209AC19006176E1 /* GutenbergImgUploadProcessorTests.swift */; };
-		FF4DEAD8244B56E300ACA032 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DEAD7244B56E200ACA032 /* CoreServices.framework */; };
-		FF75933B1BE2423800814D3B /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF75933A1BE2423800814D3B /* Photos.framework */; };
 		FF8032661EE9E22200861F28 /* MediaProgressCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8032651EE9E22200861F28 /* MediaProgressCoordinatorTests.swift */; };
 		FF9A6E7121F9361700D36D14 /* MediaUploadHashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9A6E7021F9361700D36D14 /* MediaUploadHashTests.swift */; };
 /* End PBXBuildFile section */
@@ -2335,44 +2276,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F111B88D2658103C00057942 /* Combine.framework in Frameworks */,
 				3F60D39A2D2C4BA4008ACD86 /* hermes.xcframework in Frameworks */,
 				0C1201282D9EF32000C69EBA /* WordPress.framework in Frameworks */,
-				7E21C761202BBC8E00837CF5 /* iAd.framework in Frameworks */,
-				8298F3921EEF3BA7008EB7F0 /* StoreKit.framework in Frameworks */,
-				93F2E5441E9E5A570050D489 /* CoreSpotlight.framework in Frameworks */,
-				93F2E5421E9E5A350050D489 /* QuickLook.framework in Frameworks */,
-				93F2E53E1E9E5A010050D489 /* CoreText.framework in Frameworks */,
-				E185474E1DED8D8800D875D7 /* UserNotifications.framework in Frameworks */,
 				3F60D39C2D2C4BA4008ACD86 /* yoga.xcframework in Frameworks */,
-				FF75933B1BE2423800814D3B /* Photos.framework in Frameworks */,
-				93E5285619A77BAC003A1A9C /* NotificationCenter.framework in Frameworks */,
-				93A3F7DE1843F6F00082FEEA /* CoreTelephony.framework in Frameworks */,
-				A01C542E0E24E88400D411F2 /* SystemConfiguration.framework in Frameworks */,
 				4AD953C72C21451700D0EEFA /* WordPressAuthenticator.framework in Frameworks */,
-				374CB16215B93C0800DD0EBC /* AudioToolbox.framework in Frameworks */,
-				E10B3655158F2D7800419A93 /* CoreGraphics.framework in Frameworks */,
-				24E55D4F2CC9A5CD008D071D /* ImagePlayground.framework in Frameworks */,
-				E10B3654158F2D4500419A93 /* UIKit.framework in Frameworks */,
-				E10B3652158F2D3F00419A93 /* QuartzCore.framework in Frameworks */,
 				3F60D3942D2C4BA4008ACD86 /* React.xcframework in Frameworks */,
 				3F60D3982D2C4BA4008ACD86 /* RNTAztecView.xcframework in Frameworks */,
 				3F0FD9FC2D9B92F700CD05D6 /* WordPressData.framework in Frameworks */,
-				E1A386CB14DB063800954CF8 /* MediaPlayer.framework in Frameworks */,
-				E1A386CA14DB05F700954CF8 /* CoreMedia.framework in Frameworks */,
 				3F60D3962D2C4BA4008ACD86 /* Gutenberg.xcframework in Frameworks */,
-				E1A386C814DB05C300954CF8 /* AVFoundation.framework in Frameworks */,
-				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				296890780FE971DC00770264 /* Security.framework in Frameworks */,
-				83F3E26011275E07004CD686 /* MapKit.framework in Frameworks */,
-				83F3E2D311276371004CD686 /* CoreLocation.framework in Frameworks */,
-				8355D7D911D260AA00A61362 /* CoreData.framework in Frameworks */,
-				834CE7341256D0DE0046A4A3 /* CFNetwork.framework in Frameworks */,
-				83043E55126FA31400EC9953 /* MessageUI.framework in Frameworks */,
-				FD3D6D2C1349F5D30061136A /* ImageIO.framework in Frameworks */,
-				B5AA54D51A8E7510003BDD12 /* WebKit.framework in Frameworks */,
-				93F2E5401E9E5A180050D489 /* libsqlite3.tbd in Frameworks */,
-				FF4DEAD8244B56E300ACA032 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2483,43 +2394,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FABB26202602FC2C00C8785C /* iAd.framework in Frameworks */,
 				3F608F812D2D1A9E008ACD86 /* hermes.xcframework in Frameworks */,
-				FABB26212602FC2C00C8785C /* StoreKit.framework in Frameworks */,
-				FABB26222602FC2C00C8785C /* CoreSpotlight.framework in Frameworks */,
 				0C1201242D9EF31700C69EBA /* WordPress.framework in Frameworks */,
-				FABB26232602FC2C00C8785C /* QuickLook.framework in Frameworks */,
-				FABB26242602FC2C00C8785C /* CoreText.framework in Frameworks */,
-				FABB26252602FC2C00C8785C /* UserNotifications.framework in Frameworks */,
 				3F608F832D2D1A9E008ACD86 /* React.xcframework in Frameworks */,
-				FABB26262602FC2C00C8785C /* Photos.framework in Frameworks */,
-				FABB26272602FC2C00C8785C /* NotificationCenter.framework in Frameworks */,
-				FABB26282602FC2C00C8785C /* CoreTelephony.framework in Frameworks */,
-				FABB26292602FC2C00C8785C /* SystemConfiguration.framework in Frameworks */,
-				FABB262A2602FC2C00C8785C /* AudioToolbox.framework in Frameworks */,
-				FABB262B2602FC2C00C8785C /* CoreGraphics.framework in Frameworks */,
-				FABB262C2602FC2C00C8785C /* UIKit.framework in Frameworks */,
-				FABB262D2602FC2C00C8785C /* QuartzCore.framework in Frameworks */,
-				FABB262E2602FC2C00C8785C /* MediaPlayer.framework in Frameworks */,
 				3F608F7F2D2D1A9E008ACD86 /* Gutenberg.xcframework in Frameworks */,
-				FABB262F2602FC2C00C8785C /* CoreMedia.framework in Frameworks */,
 				3F608F852D2D1A9E008ACD86 /* RNTAztecView.xcframework in Frameworks */,
-				FABB26302602FC2C00C8785C /* AVFoundation.framework in Frameworks */,
-				FABB26312602FC2C00C8785C /* Foundation.framework in Frameworks */,
 				4AD9555A2C21716A00D0EEFA /* WordPressAuthenticator.framework in Frameworks */,
 				3F608F872D2D1A9E008ACD86 /* yoga.xcframework in Frameworks */,
-				FABB26322602FC2C00C8785C /* Security.framework in Frameworks */,
-				FABB26332602FC2C00C8785C /* MapKit.framework in Frameworks */,
-				FABB26342602FC2C00C8785C /* CoreLocation.framework in Frameworks */,
 				3F0FDA002D9B930100CD05D6 /* WordPressData.framework in Frameworks */,
-				FABB26362602FC2C00C8785C /* CoreData.framework in Frameworks */,
-				FABB26372602FC2C00C8785C /* CFNetwork.framework in Frameworks */,
-				FABB26382602FC2C00C8785C /* MessageUI.framework in Frameworks */,
-				FABB26392602FC2C00C8785C /* ImageIO.framework in Frameworks */,
-				FABB263A2602FC2C00C8785C /* WebKit.framework in Frameworks */,
-				FABB263B2602FC2C00C8785C /* libsqlite3.tbd in Frameworks */,
-				24E55D4E2CC9A5C8008D071D /* ImagePlayground.framework in Frameworks */,
-				FABB263F2602FC2C00C8785C /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
