@@ -18,17 +18,6 @@
 			name = ConfigureSimulatorForUITesting;
 			productName = ConfigureSimulatorForUITesting;
 		};
-		FFA8E22A1F94E3DE0002170F /* SwiftLint */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = FFA8E22F1F94E3DE0002170F /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
-			buildPhases = (
-				FFA8E2301F94E3EF0002170F /* SwiftLint */,
-			);
-			dependencies = (
-			);
-			name = SwiftLint;
-			productName = SwiftLint;
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -919,20 +908,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3F7AE0B42D9B30A100AB4892;
 			remoteInfo = WordPressData;
-		};
-		3FCFFAFD2994A949002840C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FFA8E22A1F94E3DE0002170F;
-			remoteInfo = SwiftLint;
-		};
-		3FCFFAFF2994AB25002840C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FFA8E22A1F94E3DE0002170F;
-			remoteInfo = SwiftLint;
 		};
 		4AD953BD2C21451700D0EEFA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4649,7 +4624,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				3FCFFAFE2994A949002840C9 /* PBXTargetDependency */,
 				932225B01C7CE50300443B02 /* PBXTargetDependency */,
 				7457667B202B558C00F42E40 /* PBXTargetDependency */,
 				7358E6BE210BD318002323EB /* PBXTargetDependency */,
@@ -4980,7 +4954,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				3FCFFB002994AB25002840C9 /* PBXTargetDependency */,
 				0107E15728FEA03800DE87DB /* PBXTargetDependency */,
 				0107E0ED28F97E6100DE87DB /* PBXTargetDependency */,
 				8096212728E5411400940A5D /* PBXTargetDependency */,
@@ -5160,10 +5133,6 @@
 						LastSwiftMigration = 0800;
 						TestTargetID = 1D6058900D05DD3D006BFB54;
 					};
-					FFA8E22A1F94E3DE0002170F = {
-						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WordPress" */;
@@ -5222,7 +5191,6 @@
 				E16AB92914D978240047A2E5 /* WordPressTest */,
 				FF27168E1CAAC87A0006E2D4 /* WordPressUITests */,
 				8511CFB51C607A7000B7CEED /* WordPressScreenshotGeneration */,
-				FFA8E22A1F94E3DE0002170F /* SwiftLint */,
 				FABB1F8F2602FC2C00C8785C /* Jetpack */,
 				FAF64B662637DEEC00E8A1DF /* JetpackScreenshotGeneration */,
 				809620CF28E540D700940A5D /* JetpackShareExtension */,
@@ -5699,22 +5667,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$SRCROOT/../Scripts/BuildPhases/CopyGutenbergJS.sh\"\n";
-		};
-		FFA8E2301F94E3EF0002170F /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh \"${SRCROOT}/../Scripts/BuildPhases/SwiftLint.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -6415,16 +6367,6 @@
 			target = 3F7AE0B42D9B30A100AB4892 /* WordPressData */;
 			targetProxy = 3F7AE0BE2D9B30A200AB4892 /* PBXContainerItemProxy */;
 		};
-		3FCFFAFE2994A949002840C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FFA8E22A1F94E3DE0002170F /* SwiftLint */;
-			targetProxy = 3FCFFAFD2994A949002840C9 /* PBXContainerItemProxy */;
-		};
-		3FCFFB002994AB25002840C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FFA8E22A1F94E3DE0002170F /* SwiftLint */;
-			targetProxy = 3FCFFAFF2994AB25002840C9 /* PBXContainerItemProxy */;
-		};
 		4AD953BE2C21451700D0EEFA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
@@ -7002,6 +6944,7 @@
 		};
 		0C8B4BDD2DA0187A00E73DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24350E7C264DB76E009BB2B6 /* Jetpack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -7036,7 +6979,6 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7087,7 +7029,6 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7137,7 +7078,6 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7156,6 +7096,7 @@
 		};
 		0C8B4BF92DA0189400E73DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24350E7C264DB76E009BB2B6 /* Jetpack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -7190,7 +7131,6 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7241,7 +7181,6 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7291,7 +7230,6 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9592,33 +9530,6 @@
 			};
 			name = "Release-Alpha";
 		};
-		FFA8E22B1F94E3DE0002170F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		FFA8E22C1F94E3DE0002170F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		FFA8E22E1F94E3DE0002170F /* Release-Alpha */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = "Release-Alpha";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -9868,16 +9779,6 @@
 				FF2716961CAAC87B0006E2D4 /* Debug */,
 				FF2716971CAAC87B0006E2D4 /* Release */,
 				FF2716991CAAC87B0006E2D4 /* Release-Alpha */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FFA8E22F1F94E3DE0002170F /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FFA8E22B1F94E3DE0002170F /* Debug */,
-				FFA8E22C1F94E3DE0002170F /* Release */,
-				FFA8E22E1F94E3DE0002170F /* Release-Alpha */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
