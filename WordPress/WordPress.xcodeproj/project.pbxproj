@@ -4639,7 +4639,6 @@
 			buildPhases = (
 				09607CE7281C9CA6002D2E5A /* [Lint] Check AppLocalizedString usage */,
 				825F0EBF1F7EBF7C00321528 /* App Icons: Add Version For Internal Releases */,
-				24E55D502CCC143F008D071D /* Build Acknowledgements Bundle */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
@@ -4971,7 +4970,6 @@
 			buildPhases = (
 				09607CE8281C9D0F002D2E5A /* [Lint] Check AppLocalizedString usage */,
 				FABB1FA92602FC2C00C8785C /* App Icons: Add Version For Internal Releases */,
-				245562402C5C3C5D00A15446 /* Build Acknowledgements Bundle */,
 				FABB1FAA2602FC2C00C8785C /* Resources */,
 				FABB20C22602FC2C00C8785C /* Sources */,
 				FABB261F2602FC2C00C8785C /* Frameworks */,
@@ -5614,48 +5612,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/../Scripts/BuildPhases/GenerateCredentials.sh\n";
-		};
-		245562402C5C3C5D00A15446 /* Build Acknowledgements Bundle */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/WordPress.xcworkspace/xcshareddata/swiftpm/Package.resolved",
-				"$(SRCROOT)/Scripts/BuildPhases/GenerateAcknowledgementsBundle.sh",
-			);
-			name = "Build Acknowledgements Bundle";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/package-list.json",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\nbash ../Scripts/BuildPhases/GenerateAcknowledgementsBundle.sh\n";
-		};
-		24E55D502CCC143F008D071D /* Build Acknowledgements Bundle */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/WordPress.xcworkspace/xcshareddata/swiftpm/Package.resolved",
-				"$(SRCROOT)/Scripts/BuildPhases/GenerateAcknowledgementsBundle.sh",
-			);
-			name = "Build Acknowledgements Bundle";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/package-list.json",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\nbash ../Scripts/BuildPhases/GenerateAcknowledgementsBundle.sh\n";
 		};
 		3F47AC4E2A7206C900208F0D /* Set up Simulator */ = {
 			isa = PBXShellScriptBuildPhase;
