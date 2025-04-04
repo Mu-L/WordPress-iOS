@@ -26,12 +26,10 @@
 		0107E0DE28F97D5000DE87DB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F526C4F2538CF2A0069706C /* SwiftUI.framework */; };
 		0107E0DF28F97D5000DE87DB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F526C4D2538CF2A0069706C /* WidgetKit.framework */; };
 		0107E0E228F97D5000DE87DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F526C552538CF2B0069706C /* Assets.xcassets */; };
-		0107E0EE28F97E6900DE87DB /* JetpackStatsWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0107E0EA28F97D5000DE87DB /* JetpackStatsWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0107E13B28FE9DB200DE87DB /* Sites.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3F46AB0225BF5D6300CE2E98 /* Sites.intentdefinition */; settings = {ATTRIBUTES = (codegen, ); }; };
 		0107E13E28FE9DB200DE87DB /* SitesDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1482CDF2575BDA4007E4DD6 /* SitesDataProvider.swift */; };
 		0107E14928FE9DB200DE87DB /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F163C025658B4D003DC13B /* IntentHandler.swift */; };
 		0107E14D28FE9DB200DE87DB /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433840C622C2BA5B00CB13F8 /* AppImages.xcassets */; };
-		0107E15928FEB10E00DE87DB /* JetpackIntents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0107E15428FE9DB200DE87DB /* JetpackIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		011F52C62A15413800B04114 /* FreeToPaidPlansDashboardCardHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011F52C52A15413800B04114 /* FreeToPaidPlansDashboardCardHelperTests.swift */; };
 		01281E9C2A051EEA00464F8F /* MySiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01281E9B2A051EEA00464F8F /* MySiteTests.swift */; };
 		01281E9D2A051EEA00464F8F /* MySiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01281E9B2A051EEA00464F8F /* MySiteTests.swift */; };
@@ -322,7 +320,6 @@
 		73178C3521BEE9AC00E37C9A /* TitleSubtitleHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73178C3421BEE9AC00E37C9A /* TitleSubtitleHeaderTests.swift */; };
 		7320C8BD2190C9FC0082FED5 /* UITextView+SummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7320C8BC2190C9FC0082FED5 /* UITextView+SummaryTests.swift */; };
 		7335AC6021220D550012EF2D /* RemoteNotificationActionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335AC5F21220D550012EF2D /* RemoteNotificationActionParser.swift */; };
-		7358E6BF210BD318002323EB /* WordPressNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7358E6B8210BD318002323EB /* WordPressNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		73768B6B212B4E4F005136A1 /* UNNotificationContent+RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73768B6A212B4E4F005136A1 /* UNNotificationContent+RemoteNotification.swift */; };
 		7396FE66210F730600496D0D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7396FE65210F730600496D0D /* NotificationService.swift */; };
 		73B6693A21CAD960008456C3 /* ErrorStateViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B6693921CAD960008456C3 /* ErrorStateViewTests.swift */; };
@@ -332,7 +329,6 @@
 		73F6DD42212BA54700CE447D /* RichNotificationContentFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6DD41212BA54700CE447D /* RichNotificationContentFormatter.swift */; };
 		73F6DD45212C714F00CE447D /* RichNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6DD43212C714F00CE447D /* RichNotificationViewModel.swift */; };
 		741AF3A5202F3E2A00C771A5 /* Tracks+DraftAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741AF3A4202F3E2A00C771A5 /* Tracks+DraftAction.swift */; };
-		7457667C202B558C00F42E40 /* WordPressDraftActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 74576672202B558C00F42E40 /* WordPressDraftActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		74585B991F0D58F300E7E667 /* DomainsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74585B981F0D58F300E7E667 /* DomainsServiceTests.swift */; };
 		74585B9C1F0D591D00E7E667 /* domain-service-valid-domains.json in Resources */ = {isa = PBXBuildFile; fileRef = 74585B9A1F0D591D00E7E667 /* domain-service-valid-domains.json */; };
 		74585B9D1F0D591D00E7E667 /* domain-service-all-domain-types.json in Resources */ = {isa = PBXBuildFile; fileRef = 74585B9B1F0D591D00E7E667 /* domain-service-all-domain-types.json */; };
@@ -383,10 +379,8 @@
 		8070EB3E28D807CB005C6513 /* InMemoryUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070EB3D28D807CB005C6513 /* InMemoryUserDefaults.swift */; };
 		8096210628E540D700940A5D /* Tracks+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B504F5F41C9C2BD000F8B1C6 /* Tracks+ShareExtension.swift */; };
 		8096211828E540D700940A5D /* WordPressShare.js in Resources */ = {isa = PBXBuildFile; fileRef = E1AFA8C21E8E34230004A323 /* WordPressShare.js */; };
-		8096212528E5411400940A5D /* JetpackShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8096212328E540D700940A5D /* JetpackShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8096215C28E55C9400940A5D /* Tracks+DraftAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741AF3A4202F3E2A00C771A5 /* Tracks+DraftAction.swift */; };
 		8096217A28E55C9400940A5D /* WordPressShare.js in Resources */ = {isa = PBXBuildFile; fileRef = E1AFA8C21E8E34230004A323 /* WordPressShare.js */; };
-		8096218E28E55F8600940A5D /* JetpackDraftActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8096218528E55C9400940A5D /* JetpackDraftActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8096219328E5613700940A5D /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 433840C622C2BA5B00CB13F8 /* AppImages.xcassets */; };
 		8096219428E561A800940A5D /* AppImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FABB286B2603086900C8785C /* AppImages.xcassets */; };
 		809A91032A7A4C710063D4FA /* NotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809A91022A7A4C710063D4FA /* NotificationTests.swift */; };
@@ -404,7 +398,6 @@
 		80F6D04828EE866A00953C1A /* RichNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6DD43212C714F00CE447D /* RichNotificationViewModel.swift */; };
 		80F6D04928EE866A00953C1A /* RemoteNotificationStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EDC709212E5D6700E5E3ED /* RemoteNotificationStyles.swift */; };
 		80F6D04D28EE866A00953C1A /* Noticons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5A34D0C25DF2F7700C9654B /* Noticons.ttf */; };
-		80F6D05D28EE88FC00953C1A /* JetpackNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 80F6D05428EE866A00953C1A /* JetpackNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		82301B8F1E787420009C9C4E /* AppRatingUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82301B8E1E787420009C9C4E /* AppRatingUtilityTests.swift */; };
 		8332DD2829259BEB00802F7D /* DataMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8332DD2729259BEB00802F7D /* DataMigratorTests.swift */; };
 		83BFAE502A6EBF9900C7B683 /* DashboardJetpackSocialCardCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFAE4F2A6EBF9900C7B683 /* DashboardJetpackSocialCardCellTests.swift */; };
@@ -443,7 +436,6 @@
 		931D26F719ED7F7500114F17 /* ReaderPostServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE8A0401912D95B00B2FF59 /* ReaderPostServiceTest.m */; };
 		931D270019EDAE8600114F17 /* CoreDataMigrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 931D26FF19EDAE8600114F17 /* CoreDataMigrationTests.m */; };
 		931DF4D618D09A2F00540BDD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 931DF4D818D09A2F00540BDD /* InfoPlist.strings */; };
-		932225B11C7CE50300443B02 /* WordPressShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 932225A71C7CE50300443B02 /* WordPressShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		932645A41E7C206600134988 /* GutenbergSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932645A31E7C206600134988 /* GutenbergSettingsTests.swift */; };
 		933D1F471EA64108009FB462 /* TestingAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D1F461EA64108009FB462 /* TestingAppDelegate.m */; };
 		933D1F6C1EA7A3AB009FB462 /* TestingMode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 933D1F6B1EA7A3AB009FB462 /* TestingMode.storyboard */; };
@@ -715,20 +707,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0107E0EC28F97E6100DE87DB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0107E0B128F97D5000DE87DB;
-			remoteInfo = JetpackStatsWidgets;
-		};
-		0107E15628FEA03800DE87DB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0107E13828FE9DB200DE87DB;
-			remoteInfo = JetpackIntents;
-		};
 		0C1201262D9EF31700C69EBA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -869,54 +847,12 @@
 			remoteGlobalIDString = 4AD953B32C21451700D0EEFA;
 			remoteInfo = WordPressAuthenticator;
 		};
-		7358E6BD210BD318002323EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7358E6B7210BD318002323EB;
-			remoteInfo = WordPressNotificationServiceExtension;
-		};
-		7457667A202B558C00F42E40 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 74576671202B558C00F42E40;
-			remoteInfo = WordPressDraftActionExtension;
-		};
-		8096212628E5411400940A5D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 809620CF28E540D700940A5D;
-			remoteInfo = JetpackShareExtension;
-		};
-		8096218F28E55F8600940A5D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8096213028E55C9400940A5D;
-			remoteInfo = JetpackDraftActionExtension;
-		};
-		80F6D05E28EE88FC00953C1A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 80F6D01F28EE866A00953C1A;
-			remoteInfo = JetpackNotificationServiceExtension;
-		};
 		8511CFBB1C607A7000B7CEED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
 			remoteInfo = WordPress;
-		};
-		932225AF1C7CE50300443B02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 932225A61C7CE50300443B02;
-			remoteInfo = WordPressShare;
 		};
 		E16AB93E14D978520047A2E5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1147,34 +1083,6 @@
 				3F608F882D2D1A9E008ACD86 /* yoga.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93E5284E19A7741A003A1A9C /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				7457667C202B558C00F42E40 /* WordPressDraftActionExtension.appex in Embed Foundation Extensions */,
-				7358E6BF210BD318002323EB /* WordPressNotificationServiceExtension.appex in Embed Foundation Extensions */,
-				932225B11C7CE50300443B02 /* WordPressShareExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FABB26402602FC2C00C8785C /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				8096212528E5411400940A5D /* JetpackShareExtension.appex in Embed Foundation Extensions */,
-				0107E0EE28F97E6900DE87DB /* JetpackStatsWidgets.appex in Embed Foundation Extensions */,
-				80F6D05D28EE88FC00953C1A /* JetpackNotificationServiceExtension.appex in Embed Foundation Extensions */,
-				0107E15928FEB10E00DE87DB /* JetpackIntents.appex in Embed Foundation Extensions */,
-				8096218E28E55F8600940A5D /* JetpackDraftActionExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -4496,15 +4404,11 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				93E5284E19A7741A003A1A9C /* Embed Foundation Extensions */,
 				4AD953C92C21451800D0EEFA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				932225B01C7CE50300443B02 /* PBXTargetDependency */,
-				7457667B202B558C00F42E40 /* PBXTargetDependency */,
-				7358E6BE210BD318002323EB /* PBXTargetDependency */,
 				4AD953C62C21451700D0EEFA /* PBXTargetDependency */,
 				3F0FD9FF2D9B92F700CD05D6 /* PBXTargetDependency */,
 				0C12012B2D9EF32000C69EBA /* PBXTargetDependency */,
@@ -4824,17 +4728,11 @@
 				FABB1FAA2602FC2C00C8785C /* Resources */,
 				FABB20C22602FC2C00C8785C /* Sources */,
 				FABB261F2602FC2C00C8785C /* Frameworks */,
-				FABB26402602FC2C00C8785C /* Embed Foundation Extensions */,
 				4AD9555E2C21716A00D0EEFA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0107E15728FEA03800DE87DB /* PBXTargetDependency */,
-				0107E0ED28F97E6100DE87DB /* PBXTargetDependency */,
-				8096212728E5411400940A5D /* PBXTargetDependency */,
-				8096219028E55F8600940A5D /* PBXTargetDependency */,
-				80F6D05F28EE88FC00953C1A /* PBXTargetDependency */,
 				4AD9555D2C21716A00D0EEFA /* PBXTargetDependency */,
 				3F0FDA032D9B930100CD05D6 /* PBXTargetDependency */,
 				0C1201272D9EF31700C69EBA /* PBXTargetDependency */,
@@ -6067,16 +5965,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0107E0ED28F97E6100DE87DB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0107E0B128F97D5000DE87DB /* JetpackStatsWidgets */;
-			targetProxy = 0107E0EC28F97E6100DE87DB /* PBXContainerItemProxy */;
-		};
-		0107E15728FEA03800DE87DB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0107E13828FE9DB200DE87DB /* JetpackIntents */;
-			targetProxy = 0107E15628FEA03800DE87DB /* PBXContainerItemProxy */;
-		};
 		0C1201272D9EF31700C69EBA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0CED016F2D95B897003015CF /* Keystone */;
@@ -6177,40 +6065,10 @@
 			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
 			targetProxy = 4AD9555C2C21716A00D0EEFA /* PBXContainerItemProxy */;
 		};
-		7358E6BE210BD318002323EB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7358E6B7210BD318002323EB /* WordPressNotificationServiceExtension */;
-			targetProxy = 7358E6BD210BD318002323EB /* PBXContainerItemProxy */;
-		};
-		7457667B202B558C00F42E40 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 74576671202B558C00F42E40 /* WordPressDraftActionExtension */;
-			targetProxy = 7457667A202B558C00F42E40 /* PBXContainerItemProxy */;
-		};
-		8096212728E5411400940A5D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 809620CF28E540D700940A5D /* JetpackShareExtension */;
-			targetProxy = 8096212628E5411400940A5D /* PBXContainerItemProxy */;
-		};
-		8096219028E55F8600940A5D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8096213028E55C9400940A5D /* JetpackDraftActionExtension */;
-			targetProxy = 8096218F28E55F8600940A5D /* PBXContainerItemProxy */;
-		};
-		80F6D05F28EE88FC00953C1A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 80F6D01F28EE866A00953C1A /* JetpackNotificationServiceExtension */;
-			targetProxy = 80F6D05E28EE88FC00953C1A /* PBXContainerItemProxy */;
-		};
 		8511CFBC1C607A7000B7CEED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
 			targetProxy = 8511CFBB1C607A7000B7CEED /* PBXContainerItemProxy */;
-		};
-		932225B01C7CE50300443B02 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 932225A61C7CE50300443B02 /* WordPressShareExtension */;
-			targetProxy = 932225AF1C7CE50300443B02 /* PBXContainerItemProxy */;
 		};
 		E16AB93F14D978520047A2E5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
