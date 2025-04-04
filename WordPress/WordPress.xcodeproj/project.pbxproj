@@ -134,6 +134,38 @@
 		0C77A5B32CDE7924005BC0DA /* ReaderPostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C77A5B22CDE7924005BC0DA /* ReaderPostTests.swift */; };
 		0C7D481A2A4DB9300023CF84 /* blaze-search-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C7D48192A4DB9300023CF84 /* blaze-search-response.json */; };
 		0C896DE72A3A832B00D7D4E7 /* SiteVisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C896DE62A3A832B00D7D4E7 /* SiteVisibilityTests.swift */; };
+		0C8B4BFC2DA018C000E73DDE /* Gutenberg.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3902D2C4BA3008ACD86 /* Gutenberg.xcframework */; };
+		0C8B4BFD2DA018C000E73DDE /* Gutenberg.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3902D2C4BA3008ACD86 /* Gutenberg.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4BFE2DA018C000E73DDE /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3922D2C4BA3008ACD86 /* hermes.xcframework */; };
+		0C8B4BFF2DA018C000E73DDE /* hermes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3922D2C4BA3008ACD86 /* hermes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C002DA018C000E73DDE /* React.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D38F2D2C4BA3008ACD86 /* React.xcframework */; };
+		0C8B4C012DA018C000E73DDE /* React.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D38F2D2C4BA3008ACD86 /* React.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C022DA018C000E73DDE /* RNTAztecView.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3912D2C4BA3008ACD86 /* RNTAztecView.xcframework */; };
+		0C8B4C032DA018C000E73DDE /* RNTAztecView.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3912D2C4BA3008ACD86 /* RNTAztecView.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C042DA018C000E73DDE /* WordPress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CED01702D95B897003015CF /* WordPress.framework */; };
+		0C8B4C052DA018C000E73DDE /* WordPress.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CED01702D95B897003015CF /* WordPress.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C082DA018C000E73DDE /* WordPressAuthenticator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD953B42C21451700D0EEFA /* WordPressAuthenticator.framework */; };
+		0C8B4C092DA018C000E73DDE /* WordPressAuthenticator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD953B42C21451700D0EEFA /* WordPressAuthenticator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C0C2DA018C000E73DDE /* WordPressData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; };
+		0C8B4C0D2DA018C000E73DDE /* WordPressData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C102DA018C000E73DDE /* yoga.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3932D2C4BA4008ACD86 /* yoga.xcframework */; };
+		0C8B4C112DA018C000E73DDE /* yoga.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3932D2C4BA4008ACD86 /* yoga.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C132DA018C800E73DDE /* Gutenberg.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3902D2C4BA3008ACD86 /* Gutenberg.xcframework */; };
+		0C8B4C142DA018C800E73DDE /* Gutenberg.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3902D2C4BA3008ACD86 /* Gutenberg.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C152DA018C800E73DDE /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3922D2C4BA3008ACD86 /* hermes.xcframework */; };
+		0C8B4C162DA018C800E73DDE /* hermes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3922D2C4BA3008ACD86 /* hermes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C172DA018C800E73DDE /* React.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D38F2D2C4BA3008ACD86 /* React.xcframework */; };
+		0C8B4C182DA018C800E73DDE /* React.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D38F2D2C4BA3008ACD86 /* React.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C192DA018C800E73DDE /* RNTAztecView.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3912D2C4BA3008ACD86 /* RNTAztecView.xcframework */; };
+		0C8B4C1A2DA018C800E73DDE /* RNTAztecView.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3912D2C4BA3008ACD86 /* RNTAztecView.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C1B2DA018C800E73DDE /* WordPress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CED01702D95B897003015CF /* WordPress.framework */; };
+		0C8B4C1C2DA018C800E73DDE /* WordPress.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CED01702D95B897003015CF /* WordPress.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C1F2DA018C800E73DDE /* WordPressAuthenticator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD953B42C21451700D0EEFA /* WordPressAuthenticator.framework */; };
+		0C8B4C202DA018C800E73DDE /* WordPressAuthenticator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD953B42C21451700D0EEFA /* WordPressAuthenticator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C232DA018C800E73DDE /* WordPressData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; };
+		0C8B4C242DA018C800E73DDE /* WordPressData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C8B4C272DA018C800E73DDE /* yoga.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3932D2C4BA4008ACD86 /* yoga.xcframework */; };
+		0C8B4C282DA018C800E73DDE /* yoga.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F60D3932D2C4BA4008ACD86 /* yoga.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0C8FC9AA2A8C57000059DCE4 /* ItemProviderMediaExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8FC9A92A8C57000059DCE4 /* ItemProviderMediaExporterTests.swift */; };
 		0C8FC9AC2A8C57930059DCE4 /* test-webp.webp in Resources */ = {isa = PBXBuildFile; fileRef = 0C8FC9AB2A8C57930059DCE4 /* test-webp.webp */; };
 		0C9CD79D2B9A6ABF0045BE03 /* PostRepositorySaveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9CD79C2B9A6ABF0045BE03 /* PostRepositorySaveTests.swift */; };
@@ -804,6 +836,48 @@
 			remoteGlobalIDString = 4AD953B32C21451700D0EEFA;
 			remoteInfo = WordPressAuthenticator;
 		};
+		0C8B4C062DA018C000E73DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CED016F2D95B897003015CF;
+			remoteInfo = Keystone;
+		};
+		0C8B4C0A2DA018C000E73DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AD953B32C21451700D0EEFA;
+			remoteInfo = WordPressAuthenticator;
+		};
+		0C8B4C0E2DA018C000E73DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3F7AE0B42D9B30A100AB4892;
+			remoteInfo = WordPressData;
+		};
+		0C8B4C1D2DA018C800E73DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CED016F2D95B897003015CF;
+			remoteInfo = Keystone;
+		};
+		0C8B4C212DA018C800E73DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AD953B32C21451700D0EEFA;
+			remoteInfo = WordPressAuthenticator;
+		};
+		0C8B4C252DA018C800E73DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3F7AE0B42D9B30A100AB4892;
+			remoteInfo = WordPressData;
+		};
 		0CED2AE32D95BB46003015CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1078,6 +1152,42 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0C8B4C122DA018C000E73DDE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0C8B4C012DA018C000E73DDE /* React.xcframework in Embed Frameworks */,
+				0C8B4C032DA018C000E73DDE /* RNTAztecView.xcframework in Embed Frameworks */,
+				0C8B4C092DA018C000E73DDE /* WordPressAuthenticator.framework in Embed Frameworks */,
+				0C8B4BFD2DA018C000E73DDE /* Gutenberg.xcframework in Embed Frameworks */,
+				0C8B4C0D2DA018C000E73DDE /* WordPressData.framework in Embed Frameworks */,
+				0C8B4C052DA018C000E73DDE /* WordPress.framework in Embed Frameworks */,
+				0C8B4BFF2DA018C000E73DDE /* hermes.xcframework in Embed Frameworks */,
+				0C8B4C112DA018C000E73DDE /* yoga.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C8B4C292DA018C800E73DDE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0C8B4C182DA018C800E73DDE /* React.xcframework in Embed Frameworks */,
+				0C8B4C1A2DA018C800E73DDE /* RNTAztecView.xcframework in Embed Frameworks */,
+				0C8B4C202DA018C800E73DDE /* WordPressAuthenticator.framework in Embed Frameworks */,
+				0C8B4C142DA018C800E73DDE /* Gutenberg.xcframework in Embed Frameworks */,
+				0C8B4C242DA018C800E73DDE /* WordPressData.framework in Embed Frameworks */,
+				0C8B4C1C2DA018C800E73DDE /* WordPress.framework in Embed Frameworks */,
+				0C8B4C162DA018C800E73DDE /* hermes.xcframework in Embed Frameworks */,
+				0C8B4C282DA018C800E73DDE /* yoga.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A0274882C224FB000290D8B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1266,6 +1376,8 @@
 		0C77A5B22CDE7924005BC0DA /* ReaderPostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderPostTests.swift; sourceTree = "<group>"; };
 		0C7D48192A4DB9300023CF84 /* blaze-search-response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "blaze-search-response.json"; sourceTree = "<group>"; };
 		0C896DE62A3A832B00D7D4E7 /* SiteVisibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteVisibilityTests.swift; sourceTree = "<group>"; };
+		0C8B4BCC2DA0187900E73DDE /* WPApp1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WPApp1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C8B4BE62DA0189200E73DDE /* WPApp2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WPApp2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8FC9A92A8C57000059DCE4 /* ItemProviderMediaExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemProviderMediaExporterTests.swift; sourceTree = "<group>"; };
 		0C8FC9AB2A8C57930059DCE4 /* test-webp.webp */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-webp.webp"; sourceTree = "<group>"; };
 		0C96AC202D92FC17000779B8 /* Common.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.release.xcconfig; sourceTree = "<group>"; };
@@ -2048,6 +2160,20 @@
 			);
 			target = 0CED016F2D95B897003015CF /* Keystone */;
 		};
+		0C8B4BE02DA0187A00E73DDE /* Exceptions for "WPApp1" folder in "WPApp1" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0C8B4BCB2DA0187900E73DDE /* WPApp1 */;
+		};
+		0C8B4BF72DA0189400E73DDE /* Exceptions for "WPApp2" folder in "WPApp2" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0C8B4BE52DA0189200E73DDE /* WPApp2 */;
+		};
 		3F7AE0D02D9B30A200AB4892 /* Exceptions for "WordPressData" folder in "WordPressData" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
@@ -2106,6 +2232,22 @@
 				0C5C47012D9839DE00F2CD55 /* Exceptions for "Keystone" folder in "Keystone" target */,
 			);
 			path = Keystone;
+			sourceTree = "<group>";
+		};
+		0C8B4BCD2DA0187900E73DDE /* WPApp1 */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0C8B4BE02DA0187A00E73DDE /* Exceptions for "WPApp1" folder in "WPApp1" target */,
+			);
+			path = WPApp1;
+			sourceTree = "<group>";
+		};
+		0C8B4BE72DA0189200E73DDE /* WPApp2 */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0C8B4BF72DA0189400E73DDE /* Exceptions for "WPApp2" folder in "WPApp2" target */,
+			);
+			path = WPApp2;
 			sourceTree = "<group>";
 		};
 		0CED35262D959427003015CF /* Misc */ = {
@@ -2168,6 +2310,36 @@
 				0C5A8A842D9B22F100C25301 /* yoga.xcframework in Frameworks */,
 				0C5A8A7C2D9B22F100C25301 /* React.xcframework in Frameworks */,
 				0C5A8A7E2D9B22F100C25301 /* RNTAztecView.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C8B4BC92DA0187900E73DDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C8B4C002DA018C000E73DDE /* React.xcframework in Frameworks */,
+				0C8B4C022DA018C000E73DDE /* RNTAztecView.xcframework in Frameworks */,
+				0C8B4C082DA018C000E73DDE /* WordPressAuthenticator.framework in Frameworks */,
+				0C8B4BFC2DA018C000E73DDE /* Gutenberg.xcframework in Frameworks */,
+				0C8B4C0C2DA018C000E73DDE /* WordPressData.framework in Frameworks */,
+				0C8B4C042DA018C000E73DDE /* WordPress.framework in Frameworks */,
+				0C8B4BFE2DA018C000E73DDE /* hermes.xcframework in Frameworks */,
+				0C8B4C102DA018C000E73DDE /* yoga.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C8B4BE32DA0189200E73DDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C8B4C172DA018C800E73DDE /* React.xcframework in Frameworks */,
+				0C8B4C192DA018C800E73DDE /* RNTAztecView.xcframework in Frameworks */,
+				0C8B4C1F2DA018C800E73DDE /* WordPressAuthenticator.framework in Frameworks */,
+				0C8B4C132DA018C800E73DDE /* Gutenberg.xcframework in Frameworks */,
+				0C8B4C232DA018C800E73DDE /* WordPressData.framework in Frameworks */,
+				0C8B4C1B2DA018C800E73DDE /* WordPress.framework in Frameworks */,
+				0C8B4C152DA018C800E73DDE /* hermes.xcframework in Frameworks */,
+				0C8B4C272DA018C800E73DDE /* yoga.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2600,6 +2772,8 @@
 				0C5A3F8C2D9B1E3700C25301 /* Reader.app */,
 				3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */,
 				3F7AE0BC2D9B30A200AB4892 /* WordPressDataTests.xctest */,
+				0C8B4BCC2DA0187900E73DDE /* WPApp1.app */,
+				0C8B4BE62DA0189200E73DDE /* WPApp2.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2636,6 +2810,8 @@
 				FF2716901CAAC87B0006E2D4 /* UITests */,
 				8511CFB71C607A7000B7CEED /* WordPressScreenshotGeneration */,
 				FAF64BC82637DF0600E8A1DF /* JetpackScreenshotGeneration */,
+				0C8B4BCD2DA0187900E73DDE /* WPApp1 */,
+				0C8B4BE72DA0189200E73DDE /* WPApp2 */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				93FA0F0118E451A80007903B /* LICENSE */,
@@ -4377,6 +4553,58 @@
 			productReference = 0C5A3F8C2D9B1E3700C25301 /* Reader.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0C8B4BCB2DA0187900E73DDE /* WPApp1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C8B4BE12DA0187A00E73DDE /* Build configuration list for PBXNativeTarget "WPApp1" */;
+			buildPhases = (
+				0C8B4BC82DA0187900E73DDE /* Sources */,
+				0C8B4BC92DA0187900E73DDE /* Frameworks */,
+				0C8B4BCA2DA0187900E73DDE /* Resources */,
+				0C8B4C122DA018C000E73DDE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0C8B4C072DA018C000E73DDE /* PBXTargetDependency */,
+				0C8B4C0B2DA018C000E73DDE /* PBXTargetDependency */,
+				0C8B4C0F2DA018C000E73DDE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				0C8B4BCD2DA0187900E73DDE /* WPApp1 */,
+			);
+			name = WPApp1;
+			packageProductDependencies = (
+			);
+			productName = WPApp1;
+			productReference = 0C8B4BCC2DA0187900E73DDE /* WPApp1.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0C8B4BE52DA0189200E73DDE /* WPApp2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C8B4BF82DA0189400E73DDE /* Build configuration list for PBXNativeTarget "WPApp2" */;
+			buildPhases = (
+				0C8B4BE22DA0189200E73DDE /* Sources */,
+				0C8B4BE32DA0189200E73DDE /* Frameworks */,
+				0C8B4BE42DA0189200E73DDE /* Resources */,
+				0C8B4C292DA018C800E73DDE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0C8B4C1E2DA018C800E73DDE /* PBXTargetDependency */,
+				0C8B4C222DA018C800E73DDE /* PBXTargetDependency */,
+				0C8B4C262DA018C800E73DDE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				0C8B4BE72DA0189200E73DDE /* WPApp2 */,
+			);
+			name = WPApp2;
+			packageProductDependencies = (
+			);
+			productName = WPApp2;
+			productReference = 0C8B4BE62DA0189200E73DDE /* WPApp2.app */;
+			productType = "com.apple.product-type.application";
+		};
 		0CED016F2D95B897003015CF /* Keystone */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0CED017C2D95B897003015CF /* Build configuration list for PBXNativeTarget "Keystone" */;
@@ -4821,11 +5049,17 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = WordPress;
 				TargetAttributes = {
 					0C5A3F8B2D9B1E3700C25301 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					0C8B4BCB2DA0187900E73DDE = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					0C8B4BE52DA0189200E73DDE = {
 						CreatedOnToolsVersion = 16.1;
 					};
 					0CED016F2D95B897003015CF = {
@@ -5006,6 +5240,8 @@
 				0CED016F2D95B897003015CF /* Keystone */,
 				3F7AE0B42D9B30A100AB4892 /* WordPressData */,
 				3F7AE0BB2D9B30A200AB4892 /* WordPressDataTests */,
+				0C8B4BCB2DA0187900E73DDE /* WPApp1 */,
+				0C8B4BE52DA0189200E73DDE /* WPApp2 */,
 			);
 		};
 /* End PBXProject section */
@@ -5030,6 +5266,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0C5A3F8A2D9B1E3700C25301 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C8B4BCA2DA0187900E73DDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C8B4BE42DA0189200E73DDE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5532,6 +5782,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0C5A3F882D9B1E3700C25301 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C8B4BC82DA0187900E73DDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C8B4BE22DA0189200E73DDE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -6134,6 +6398,36 @@
 			isa = PBXTargetDependency;
 			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
 			targetProxy = 0C5A8A822D9B22F100C25301 /* PBXContainerItemProxy */;
+		};
+		0C8B4C072DA018C000E73DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CED016F2D95B897003015CF /* Keystone */;
+			targetProxy = 0C8B4C062DA018C000E73DDE /* PBXContainerItemProxy */;
+		};
+		0C8B4C0B2DA018C000E73DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
+			targetProxy = 0C8B4C0A2DA018C000E73DDE /* PBXContainerItemProxy */;
+		};
+		0C8B4C0F2DA018C000E73DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3F7AE0B42D9B30A100AB4892 /* WordPressData */;
+			targetProxy = 0C8B4C0E2DA018C000E73DDE /* PBXContainerItemProxy */;
+		};
+		0C8B4C1E2DA018C800E73DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CED016F2D95B897003015CF /* Keystone */;
+			targetProxy = 0C8B4C1D2DA018C800E73DDE /* PBXContainerItemProxy */;
+		};
+		0C8B4C222DA018C800E73DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
+			targetProxy = 0C8B4C212DA018C800E73DDE /* PBXContainerItemProxy */;
+		};
+		0C8B4C262DA018C800E73DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3F7AE0B42D9B30A100AB4892 /* WordPressData */;
+			targetProxy = 0C8B4C252DA018C800E73DDE /* PBXContainerItemProxy */;
 		};
 		0CED2AE42D95BB46003015CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6747,6 +7041,314 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.reader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
+			};
+			name = "Release-Alpha";
+		};
+		0C8B4BDD2DA0187A00E73DDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WPApp1/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.WPApp1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0C8B4BDE2DA0187A00E73DDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WPApp1/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.WPApp1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0C8B4BDF2DA0187A00E73DDE /* Release-Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WPApp1/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.WPApp1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-Alpha";
+		};
+		0C8B4BF92DA0189400E73DDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WPApp2/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.WPApp2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0C8B4BFA2DA0189400E73DDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WPApp2/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.WPApp2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0C8B4BFB2DA0189400E73DDE /* Release-Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WPApp2/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.WPApp2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Release-Alpha";
 		};
@@ -8217,7 +8819,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -8508,7 +9110,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wno-quoted-include-in-framework-header";
@@ -8564,7 +9166,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -9141,6 +9743,26 @@
 				0C5A3F9D2D9B1E3A00C25301 /* Debug */,
 				0C5A3F9E2D9B1E3A00C25301 /* Release */,
 				0C5A3F9F2D9B1E3A00C25301 /* Release-Alpha */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0C8B4BE12DA0187A00E73DDE /* Build configuration list for PBXNativeTarget "WPApp1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C8B4BDD2DA0187A00E73DDE /* Debug */,
+				0C8B4BDE2DA0187A00E73DDE /* Release */,
+				0C8B4BDF2DA0187A00E73DDE /* Release-Alpha */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0C8B4BF82DA0189400E73DDE /* Build configuration list for PBXNativeTarget "WPApp2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C8B4BF92DA0189400E73DDE /* Debug */,
+				0C8B4BFA2DA0189400E73DDE /* Release */,
+				0C8B4BFB2DA0189400E73DDE /* Release-Alpha */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
