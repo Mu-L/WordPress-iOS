@@ -7202,7 +7202,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = WordPress.entitlements;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -7217,7 +7217,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
-				PROVISIONING_PROFILE_SPECIFIER = "WordPress Development";
 			};
 			name = Debug;
 		};
@@ -7228,8 +7227,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = WordPress.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -7244,7 +7242,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.wordpress";
 			};
 			name = Release;
 		};
@@ -8508,8 +8505,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = "WordPress-Alpha.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -8524,7 +8520,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress.alpha;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
-				PROVISIONING_PROFILE_SPECIFIER = "match InHouse org.wordpress.alpha";
 			};
 			name = "Release-Alpha";
 		};
@@ -9022,7 +9017,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = Jetpack/JetpackDebug.entitlements;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -9035,9 +9030,7 @@
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.jetpack;
-				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Jetpack iOS Development";
 			};
 			name = Debug;
 		};
@@ -9048,8 +9041,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = Jetpack/JetpackRelease.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Automattic, Inc. (PZYM8XX95Q)";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -9062,9 +9054,7 @@
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.jetpack;
-				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.automattic.jetpack";
 			};
 			name = Release;
 		};
@@ -9075,8 +9065,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_ENTITLEMENTS = "Jetpack/JetpackRelease-Alpha.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Automattic, Inc.";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -9089,9 +9078,7 @@
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jetpack.alpha;
-				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.jetpack.alpha";
 			};
 			name = "Release-Alpha";
 		};
