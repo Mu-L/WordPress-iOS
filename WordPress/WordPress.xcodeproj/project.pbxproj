@@ -6982,14 +6982,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(VERSION_SHORT)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"iconv\"",
-					"-l\"sqlite3.0\"",
-					"-l\"z\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
@@ -7029,14 +7021,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(VERSION_SHORT)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"iconv\"",
-					"-l\"sqlite3.0\"",
-					"-l\"z\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
@@ -8440,14 +8424,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(VERSION_SHORT)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"iconv\"",
-					"-l\"sqlite3.0\"",
-					"-l\"z\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.wordpress.alpha;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
@@ -8991,14 +8967,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"iconv\"",
-					"-l\"sqlite3.0\"",
-					"-l\"z\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.jetpack;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9037,14 +9005,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"iconv\"",
-					"-l\"sqlite3.0\"",
-					"-l\"z\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.jetpack;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9083,14 +9043,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"iconv\"",
-					"-l\"sqlite3.0\"",
-					"-l\"z\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jetpack.alpha;
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
