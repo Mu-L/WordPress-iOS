@@ -4497,7 +4497,6 @@
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				93E5284E19A7741A003A1A9C /* Embed Foundation Extensions */,
-				E1C5456F219F10E000896227 /* Copy Gutenberg JS */,
 				4AD953C92C21451800D0EEFA /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -4826,7 +4825,6 @@
 				FABB20C22602FC2C00C8785C /* Sources */,
 				FABB261F2602FC2C00C8785C /* Frameworks */,
 				FABB26402602FC2C00C8785C /* Embed Foundation Extensions */,
-				FABB264C2602FC2C00C8785C /* Copy Gutenberg JS */,
 				4AD9555E2C21716A00D0EEFA /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -5453,25 +5451,6 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/sh\n\n# This script adds the version number to the icon of internal releases.\n\nexport PATH=/opt/local/bin/:/opt/local/sbin:$PATH:/usr/local/bin:\nif [ \"${CONFIGURATION}\" != \"Release-Internal\" ]; then\nexit 0;\nfi\n\nsh ../Scripts/BuildPhases/AddVersionToIcons.sh\n";
 		};
-		E1C5456F219F10E000896227 /* Copy Gutenberg JS */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				$SRCROOT/../Scripts/BuildPhases/CopyGutenbergJS.inputs.xcfilelist,
-			);
-			name = "Copy Gutenberg JS";
-			outputFileListPaths = (
-				$SRCROOT/../Scripts/BuildPhases/CopyGutenbergJS.outputs.xcfilelist,
-			);
-			outputPaths = (
-				"",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/../Scripts/BuildPhases/CopyGutenbergJS.sh\"\n";
-		};
 		FABB1FA92602FC2C00C8785C /* App Icons: Add Version For Internal Releases */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5485,26 +5464,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/sh\n\n# This script adds the version number to the icon of internal releases.\n\nexport PATH=/opt/local/bin/:/opt/local/sbin:$PATH:/usr/local/bin:\nif [ \"${CONFIGURATION}\" != \"Release-Internal\" ]; then\nexit 0;\nfi\n\nsh ../Scripts/BuildPhases/AddVersionToIcons.sh\n";
-		};
-		FABB264C2602FC2C00C8785C /* Copy Gutenberg JS */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				$SRCROOT/../Scripts/BuildPhases/CopyGutenbergJS.inputs.xcfilelist,
-			);
-			inputPaths = (
-			);
-			name = "Copy Gutenberg JS";
-			outputFileListPaths = (
-				$SRCROOT/../Scripts/BuildPhases/CopyGutenbergJS.outputs.xcfilelist,
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/../Scripts/BuildPhases/CopyGutenbergJS.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
