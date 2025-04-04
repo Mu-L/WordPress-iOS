@@ -187,8 +187,6 @@
 		1DE9F2B32BA30E820044AA53 /* GutenbergFileUploadProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE9F2B22BA30E820044AA53 /* GutenbergFileUploadProcessorTests.swift */; };
 		1DF7A0D32BA0B1810003CBA3 /* GutenbergContentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF7A0D22BA0B1810003CBA3 /* GutenbergContentParser.swift */; };
 		2422A2C02C5846DB00402A81 /* Blog+RestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2422A2BF2C5846DB00402A81 /* Blog+RestAPITests.swift */; };
-		24351254264DCA08009BB2B6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24351253264DCA08009BB2B6 /* Secrets.swift */; };
-		24351255264DCA08009BB2B6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24351253264DCA08009BB2B6 /* Secrets.swift */; };
 		246D0A0325E97D5D0028B83F /* Blog+ObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 246D0A0225E97D5D0028B83F /* Blog+ObjcTests.m */; };
 		2481B1D5260D4E8B00AE59DB /* AccountBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2481B1D4260D4E8B00AE59DB /* AccountBuilder.swift */; };
 		2481B1E8260D4EAC00AE59DB /* WPAccount+LookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2481B1E7260D4EAC00AE59DB /* WPAccount+LookupTests.swift */; };
@@ -5723,7 +5721,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F46AAFE25BF5D6300CE2E98 /* Sites.intentdefinition in Sources */,
-				24351254264DCA08009BB2B6 /* Secrets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6225,7 +6222,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24351255264DCA08009BB2B6 /* Secrets.swift in Sources */,
 				FABB23A32602FC2C00C8785C /* Sites.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
