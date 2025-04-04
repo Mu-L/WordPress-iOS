@@ -1345,7 +1345,6 @@
 		24C69AC12612467C00312D9A /* UserSettingsTestsObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserSettingsTestsObjc.m; sourceTree = "<group>"; };
 		24CDE3402C5863A1005E5E43 /* TestKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeychain.swift; sourceTree = "<group>"; };
 		24E55D4D2CC9A5C8008D071D /* ImagePlayground.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePlayground.framework; path = System/Library/Frameworks/ImagePlayground.framework; sourceTree = SDKROOT; };
-		28A0AAE50D9B0CCF005BE974 /* WordPress_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordPress_Prefix.pch; sourceTree = "<group>"; };
 		296890770FE971DC00770264 /* Security.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		321955C024BE4EBF00E3F316 /* ReaderSelectInterestsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderSelectInterestsCoordinatorTests.swift; sourceTree = "<group>"; };
 		3236F7A024B61B950088E8F3 /* ReaderInterestsDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderInterestsDataSourceTests.swift; sourceTree = "<group>"; };
@@ -1976,7 +1975,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				System/main.swift,
-				"System/WordPress-Bridging-Header.h",
 			);
 			publicHeaders = (
 				"Categories/Media+Extensions.h",
@@ -2655,7 +2653,6 @@
 				24AE9EF5264B3D8E00AC7F15 /* Derived Sources */,
 				934F1B3119ACCE5600E9E63E /* WordPress.entitlements */,
 				8546B44E1BEAD48900193C07 /* WordPress-Alpha.entitlements */,
-				28A0AAE50D9B0CCF005BE974 /* WordPress_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -6967,7 +6964,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = WordPress_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
@@ -6986,7 +6982,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "WordPress Development";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7006,7 +7001,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = WordPress_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
@@ -7025,7 +7019,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.wordpress";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8409,7 +8402,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = WordPress_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
@@ -8428,7 +8420,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse org.wordpress.alpha";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8952,7 +8943,6 @@
 				CURRENT_PROJECT_VERSION = "${VERSION_LONG}";
 				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = WordPress_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
@@ -8971,7 +8961,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Jetpack iOS Development";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8990,7 +8979,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "${VERSION_LONG}";
 				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = WordPress_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
@@ -9009,7 +8997,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.automattic.jetpack";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -9028,7 +9015,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "${VERSION_LONG}";
 				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = WordPress_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
@@ -9047,7 +9033,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.jetpack.alpha";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/System/WordPress-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
