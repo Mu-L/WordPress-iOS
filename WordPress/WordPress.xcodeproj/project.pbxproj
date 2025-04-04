@@ -6840,10 +6840,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wno-quoted-include-in-framework-header",
-				);
 			};
 			name = Debug;
 		};
@@ -6900,10 +6896,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wno-quoted-include-in-framework-header",
-				);
 			};
 			name = Release;
 		};
@@ -6960,10 +6952,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wno-quoted-include-in-framework-header",
-				);
 			};
 			name = "Release-Alpha";
 		};
@@ -6994,12 +6982,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(VERSION_SHORT)";
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					"-Wno-format-security",
-					"-DDEBUG",
-					"-Wno-format",
-				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -7047,11 +7029,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(VERSION_SHORT)";
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					"-Wno-format-security",
-					"-Wno-format",
-				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -7146,10 +7123,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wno-quoted-include-in-framework-header",
-				);
 			};
 			name = Debug;
 		};
@@ -7206,10 +7179,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wno-quoted-include-in-framework-header",
-				);
 			};
 			name = Release;
 		};
@@ -7266,10 +7235,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WARNING_CFLAGS = (
-					"$(inherited)",
-					"-Wno-quoted-include-in-framework-header",
-				);
 			};
 			name = "Release-Alpha";
 		};
@@ -8430,6 +8395,7 @@
 				OTHER_CFLAGS = (
 					"-Wno-incomplete-umbrella",
 					"-Wno-format-security",
+					"-Wno-format",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -8442,6 +8408,7 @@
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "-Wno-quoted-include-in-framework-header";
 			};
 			name = "Release-Alpha";
 		};
@@ -8473,11 +8440,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "$(VERSION_SHORT)";
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					"-Wno-format-security",
-					"-Wno-format",
-				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -8739,6 +8701,7 @@
 				OTHER_CFLAGS = (
 					"-Wno-incomplete-umbrella",
 					"-Wno-format-security",
+					"-Wno-format",
 					"-DDEBUG",
 				);
 				OTHER_LDFLAGS = (
@@ -8752,6 +8715,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_VERSION = 5.0;
+				WARNING_CFLAGS = "-Wno-quoted-include-in-framework-header";
 			};
 			name = Debug;
 		};
@@ -8794,6 +8758,7 @@
 				OTHER_CFLAGS = (
 					"-Wno-incomplete-umbrella",
 					"-Wno-format-security",
+					"-Wno-format",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -8806,6 +8771,7 @@
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "-Wno-quoted-include-in-framework-header";
 			};
 			name = Release;
 		};
@@ -9025,12 +8991,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					"-Wno-format-security",
-					"-DDEBUG",
-					"-Wno-format",
-				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -9077,11 +9037,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					"-Wno-format-security",
-					"-Wno-format",
-				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -9128,11 +9083,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "${VERSION_SHORT}";
-				OTHER_CFLAGS = (
-					"$(inherited)",
-					"-Wno-format-security",
-					"-Wno-format",
-				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
