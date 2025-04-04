@@ -7535,7 +7535,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "WordPress Development";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 			};
 			name = Debug;
 		};
@@ -7569,7 +7568,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.wordpress";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 			};
 			name = Release;
 		};
@@ -8857,7 +8855,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = WordPress;
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse org.wordpress.alpha";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 			};
 			name = "Release-Alpha";
 		};
@@ -9378,7 +9375,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Jetpack iOS Development";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 			};
 			name = Debug;
 		};
@@ -9411,7 +9407,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.automattic.jetpack";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 			};
 			name = Release;
 		};
@@ -9444,7 +9439,6 @@
 				PRODUCT_MODULE_NAME = WordPressApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.jetpack.alpha";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 			};
 			name = "Release-Alpha";
 		};
