@@ -23,6 +23,7 @@ FOUNDATION_EXPORT const unsigned char WordPressDataVersionString[];
 #import <WordPressData/PostServiceOptions.h>
 #import <WordPressData/PostTag.h>
 #import <WordPressData/PostType.h>
+#import <WordPressData/ReaderGapMarker.h>
 #import <WordPressData/ReaderPost.h>
 #import <WordPressData/SourcePostAttribution.h>
 #import <WordPressData/Theme.h>
