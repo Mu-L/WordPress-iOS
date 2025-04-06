@@ -222,6 +222,8 @@
 		3F759FBA2A2DA93B0039A845 /* WPAccount+Fixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F759FB92A2DA93B0039A845 /* WPAccount+Fixture.swift */; };
 		3F759FBC2A2DB2CF0039A845 /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F759FBB2A2DB2CF0039A845 /* TestError.swift */; };
 		3F759FBE2A2DB3280039A845 /* AccountSettingsRemoteInterfaceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F759FBD2A2DB3280039A845 /* AccountSettingsRemoteInterfaceStub.swift */; };
+		3F78A77F2DA337AB0052F1BF /* WordPressData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; };
+		3F78A7802DA337AB0052F1BF /* WordPressData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3F7AE0BD2D9B30A200AB4892 /* WordPressData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */; };
 		3F86A83729D19C15005D20C0 /* SignupEpilogueTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F86A83629D19C15005D20C0 /* SignupEpilogueTableViewControllerTests.swift */; };
 		3FB6D13D2AD0F67300768C07 /* CachedAnnouncementsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6D13C2AD0F67300768C07 /* CachedAnnouncementsStoreTests.swift */; };
@@ -825,6 +827,13 @@
 			remoteGlobalIDString = 3F47AC482A7206BE00208F0D;
 			remoteInfo = ConfigureSimulatorForUITesting;
 		};
+		3F78A7812DA337AB0052F1BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3F7AE0B42D9B30A100AB4892;
+			remoteInfo = WordPressData;
+		};
 		3F7AE0BE2D9B30A200AB4892 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1060,6 +1069,17 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F78A7832DA337AB0052F1BF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3F78A7802DA337AB0052F1BF /* WordPressData.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1357,6 +1377,7 @@
 		3F759FB92A2DA93B0039A845 /* WPAccount+Fixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WPAccount+Fixture.swift"; sourceTree = "<group>"; };
 		3F759FBB2A2DB2CF0039A845 /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		3F759FBD2A2DB3280039A845 /* AccountSettingsRemoteInterfaceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsRemoteInterfaceStub.swift; sourceTree = "<group>"; };
+		3F78A7732DA337860052F1BF /* Experiment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Experiment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WordPressData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F7AE0BC2D9B30A200AB4892 /* WordPressDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordPressDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F86A83629D19C15005D20C0 /* SignupEpilogueTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupEpilogueTableViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2593,6 +2614,11 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		3F78A7742DA337860052F1BF /* Experiment */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Experiment;
+			sourceTree = "<group>";
+		};
 		3F7AE0B62D9B30A100AB4892 /* WordPressData */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -2698,6 +2724,14 @@
 				B5AA54D51A8E7510003BDD12 /* WebKit.framework in Frameworks */,
 				93F2E5401E9E5A180050D489 /* libsqlite3.tbd in Frameworks */,
 				FF4DEAD8244B56E300ACA032 /* CoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F78A7702DA337860052F1BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F78A77F2DA337AB0052F1BF /* WordPressData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3071,6 +3105,7 @@
 				0C5A3F8C2D9B1E3700C25301 /* Reader.app */,
 				3F7AE0B52D9B30A100AB4892 /* WordPressData.framework */,
 				3F7AE0BC2D9B30A200AB4892 /* WordPressDataTests.xctest */,
+				3F78A7732DA337860052F1BF /* Experiment.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3107,6 +3142,7 @@
 				FF2716901CAAC87B0006E2D4 /* UITests */,
 				8511CFB71C607A7000B7CEED /* WordPressScreenshotGeneration */,
 				FAF64BC82637DF0600E8A1DF /* JetpackScreenshotGeneration */,
+				3F78A7742DA337860052F1BF /* Experiment */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				93FA0F0118E451A80007903B /* LICENSE */,
@@ -4916,6 +4952,30 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* WordPress.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3F78A7722DA337860052F1BF /* Experiment */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F78A77E2DA337870052F1BF /* Build configuration list for PBXNativeTarget "Experiment" */;
+			buildPhases = (
+				3F78A76F2DA337860052F1BF /* Sources */,
+				3F78A7702DA337860052F1BF /* Frameworks */,
+				3F78A7712DA337860052F1BF /* Resources */,
+				3F78A7832DA337AB0052F1BF /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3F78A7822DA337AB0052F1BF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3F78A7742DA337860052F1BF /* Experiment */,
+			);
+			name = Experiment;
+			packageProductDependencies = (
+			);
+			productName = Experiment;
+			productReference = 3F78A7732DA337860052F1BF /* Experiment.app */;
+			productType = "com.apple.product-type.application";
+		};
 		3F7AE0B42D9B30A100AB4892 /* WordPressData */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3F7AE0D12D9B30A200AB4892 /* Build configuration list for PBXNativeTarget "WordPressData" */;
@@ -5299,7 +5359,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = WordPress;
 				TargetAttributes = {
@@ -5332,6 +5392,10 @@
 					};
 					3F47AC482A7206BE00208F0D = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					3F78A7722DA337860052F1BF = {
+						CreatedOnToolsVersion = 16.3;
+						LastSwiftMigration = 1630;
 					};
 					3F7AE0B42D9B30A100AB4892 = {
 						CreatedOnToolsVersion = 16.2;
@@ -5484,6 +5548,7 @@
 				0CED016F2D95B897003015CF /* Keystone */,
 				3F7AE0B42D9B30A100AB4892 /* WordPressData */,
 				3F7AE0BB2D9B30A200AB4892 /* WordPressDataTests */,
+				3F78A7722DA337860052F1BF /* Experiment */,
 			);
 		};
 /* End PBXProject section */
@@ -5534,6 +5599,13 @@
 				5D69DBC4165428CA00A2D1F7 /* n.caf in Resources */,
 				4A690C152BA791B100A8E0C5 /* PrivacyInfo.xcprivacy in Resources */,
 				B51535D41BBB16AA0029B84B /* Launch Screen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F78A7712DA337860052F1BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6070,6 +6142,13 @@
 			files = (
 				3F46AAFE25BF5D6300CE2E98 /* Sites.intentdefinition in Sources */,
 				24351254264DCA08009BB2B6 /* Secrets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F78A76F2DA337860052F1BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6668,6 +6747,11 @@
 			isa = PBXTargetDependency;
 			target = 3F47AC482A7206BE00208F0D /* ConfigureSimulatorForUITesting */;
 			targetProxy = 3F47AC512A72074800208F0D /* PBXContainerItemProxy */;
+		};
+		3F78A7822DA337AB0052F1BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3F7AE0B42D9B30A100AB4892 /* WordPressData */;
+			targetProxy = 3F78A7812DA337AB0052F1BF /* PBXContainerItemProxy */;
 		};
 		3F7AE0BF2D9B30A200AB4892 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7628,6 +7712,167 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release-Alpha";
+		};
+		3F78A77B2DA337870052F1BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Experiment;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Experiment/Experiment-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3F78A77C2DA337870052F1BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Experiment;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Experiment/Experiment-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3F78A77D2DA337870052F1BF /* Release-Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Experiment;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Experiment/Experiment-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Release-Alpha";
 		};
@@ -10113,6 +10358,16 @@
 				3F47AC492A7206C000208F0D /* Debug */,
 				3F47AC4A2A7206C000208F0D /* Release */,
 				3F47AC4C2A7206C000208F0D /* Release-Alpha */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F78A77E2DA337870052F1BF /* Build configuration list for PBXNativeTarget "Experiment" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F78A77B2DA337870052F1BF /* Debug */,
+				3F78A77C2DA337870052F1BF /* Release */,
+				3F78A77D2DA337870052F1BF /* Release-Alpha */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
