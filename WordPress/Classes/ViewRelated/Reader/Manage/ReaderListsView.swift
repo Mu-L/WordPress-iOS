@@ -3,28 +3,30 @@ import SwiftUI
 import Combine
 import WordPressUI
 
-struct ReaderFollowingListsView: View {
-    let viewModel: ReaderFollowingViewModel
-
+struct ReaderListsView: View {
     @FetchRequest(
         sortDescriptors: [SortDescriptor(\.title, order: .forward)]
     )
     private var lists: FetchedResults<ReaderListTopic>
 
+    var onSelection: (ReaderListTopic) -> Void
+
     var body: some View {
-        if lists.isEmpty {
-            EmptyStateView(Strings.emptyTitle, systemImage: "list.clipboard", description: Strings.emptyDetails)
-                .frame(height: 420)
-                .listRowSeparator(.hidden)
-        } else {
-            items
+        List {
+            if lists.isEmpty {
+                EmptyStateView(Strings.emptyTitle, systemImage: "list.clipboard", description: Strings.emptyDetails)
+                    .frame(height: 420)
+                    .listRowSeparator(.hidden)
+            } else {
+                items
+            }
         }
     }
 
     private var items: some View {
         ForEach(lists, id: \.self) { list in
             Button {
-                viewModel.navigate(to: .topic(list))
+                onSelection(list)
             } label: {
                 Label {
                     Text(list.title)
