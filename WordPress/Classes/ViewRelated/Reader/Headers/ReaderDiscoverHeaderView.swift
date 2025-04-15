@@ -56,6 +56,11 @@ final class ReaderDiscoverHeaderView: ReaderBaseHeaderView, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func configureForReaderAppMode() {
+        titleView.removeFromSuperview()
+        channelsStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
 

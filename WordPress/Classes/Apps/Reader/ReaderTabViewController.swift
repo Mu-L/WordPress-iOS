@@ -51,8 +51,43 @@ final class ReaderTabViewController: UITabBarController, UITabBarControllerDeleg
         let home = UITab(title: SharedStrings.Reader.home, image: UIImage(named: "reader-menu-home"), identifier: "home") { [unowned self] _ in
             self.makeHomeViewController()
         }
+        let library = UITab(title: SharedStrings.Reader.library, image: UIImage(named: "reader-menu-subscriptions"), identifier: "library") { [unowned self] _ in
+            self.makeLibraryViewController()
+        }
+        let discover = UITab(title: SharedStrings.Reader.discover, image: UIImage(named: "reader-menu-explorer"), identifier: "discover") { [unowned self] _ in
+            self.makeDiscoverViewController()
+        }
+
+        let notifications = UITab(title: SharedStrings.Reader.activity, image: UIImage(named: "tab-bar-notifications"), identifier: "activity") { [unowned self] _ in
+            self.makeActivityViewController()
+        }
+        notificationsButtonViewModel.$counter.sink { [weak notifications] count in
+            notifications?.badgeValue = count == 0 ? nil : "1"
+        }.store(in: &cancellables)
+
+        let me = UITab(title: SharedStrings.Reader.me, image: UIImage(named: "tab-bar-me"), identifier: "me") { [unowned self] _ in
+            self.makeMeViewController()
+        }
+        // TODO: (reader) observe gravatar updates
+        if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext),
+           let avatarURL = account.avatarURL.flatMap(URL.init) {
+            Task { @MainActor [weak me] in
+                do {
+                    let image = try await ImageDownloader.shared.image(from: avatarURL)
+                    me?.image = image.gravatarIcon(size: 26.0)
+//                    meVC?.tabBarItem.configureGravatarImage(image)
+                } catch {
+                    // Do nothing
+                }
+            }
+        }
+
         tabs = [
-            home
+            home,
+            library,
+            discover,
+            notifications,
+            me
         ]
     }
 
@@ -64,12 +99,58 @@ final class ReaderTabViewController: UITabBarController, UITabBarControllerDeleg
             selectedImage: nil
         )
 
+        let libraryVC = makeLibraryViewController()
+        libraryVC.tabBarItem = UITabBarItem(
+            title: SharedStrings.Reader.library,
+            image: UIImage(named: "reader-menu-subscriptions"),
+            selectedImage: nil
+        )
+
+        let discoverVC = makeDiscoverViewController()
+        discoverVC.tabBarItem = UITabBarItem(
+            title: SharedStrings.Reader.discover,
+            image: UIImage(named: "reader-menu-explorer"),
+            selectedImage: nil
+        )
+
+        let activityVC = makeActivityViewController()
+        activityVC.tabBarItem = UITabBarItem(
+            title: SharedStrings.Reader.activity,
+            image: UIImage(named: "tab-bar-notifications"),
+            selectedImage: UIImage(named: "tab-bar-notifications")
+        )
+
+        notificationsButtonViewModel.$counter.sink { [weak activityVC] count in
+            let image = UIImage(named: count == 0 ? "tab-bar-notifications" : "tab-bar-notifications-unread")
+            activityVC?.tabBarItem.image = image
+            activityVC?.tabBarItem.selectedImage = image
+        }.store(in: &cancellables)
+
+        let meVC = makeMeViewController()
+        meVC.tabBarItem = UITabBarItem(
+            title: SharedStrings.Reader.me,
+            image: UIImage(named: "tab-bar-me"),
+            selectedImage: UIImage(named: "tab-bar-me")
+        )
+        // TODO: (reader) observe gravatar updates
+        if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext),
+           let avatarURL = account.avatarURL.flatMap(URL.init) {
+            Task { @MainActor [weak meVC] in
+                do {
+                    let image = try await ImageDownloader.shared.image(from: avatarURL)
+                    meVC?.tabBarItem.configureGravatarImage(image)
+                } catch {
+                    // Do nothing
+                }
+            }
+        }
+
         self.viewControllers = [
             homeVC,
-            makeLibraryViewController(),
-            makeDiscoverViewController(),
-            makeNotificationsViewController(),
-            makeMeViewController()
+            libraryVC,
+            discoverVC,
+            activityVC,
+            meVC
         ]
     }
 
@@ -91,11 +172,7 @@ final class ReaderTabViewController: UITabBarController, UITabBarControllerDeleg
 
     private func makeLibraryViewController() -> UIViewController {
         let libraryVC = library.sidebar
-        libraryVC.tabBarItem = UITabBarItem(
-            title: SharedStrings.Reader.library,
-            image: UIImage(named: "reader-menu-subscriptions"),
-            selectedImage: nil
-        )
+
         libraryVC.tabBarItem.scrollEdgeAppearance = {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
@@ -113,11 +190,7 @@ final class ReaderTabViewController: UITabBarController, UITabBarControllerDeleg
                 UIViewController()
             }
         }()
-        discoverVC.tabBarItem = UITabBarItem(
-            title: Strings.discover,
-            image: UIImage(named: "reader-menu-explorer"),
-            selectedImage: nil
-        )
+
         discoverVC.tabBarItem.scrollEdgeAppearance = {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
@@ -128,47 +201,20 @@ final class ReaderTabViewController: UITabBarController, UITabBarControllerDeleg
         return navigationVC
     }
 
-    private func makeNotificationsViewController() -> UIViewController {
+    private func makeActivityViewController() -> UIViewController {
         let notificationsVC = UIStoryboard(name: "Notifications", bundle: nil)
             .instantiateInitialViewController() as! NotificationsViewController
-        notificationsVC.tabBarItem = UITabBarItem(
-            title: Strings.notifications,
-            image: UIImage(named: "tab-bar-notifications"),
-            selectedImage: UIImage(named: "tab-bar-notifications")
-        )
+
+        notificationsVC.title = SharedStrings.Reader.activity
         notificationsVC.isReaderAppModeEnabled = true
         let navigationVC = UINavigationController(rootViewController: notificationsVC)
         notificationsVC.enableLargeTitles()
-
-        notificationsButtonViewModel.$counter.sink { [weak notificationsVC] count in
-            let image = UIImage(named: count == 0 ? "tab-bar-notifications" : "tab-bar-notifications-unread")
-            notificationsVC?.tabBarItem.image = image
-            notificationsVC?.tabBarItem.selectedImage = image
-        }.store(in: &cancellables)
 
         return navigationVC
     }
 
     private func makeMeViewController() -> UIViewController {
         let meVC = ReaderProfileViewController()
-        // TODO: (reader) display your profile icons
-        meVC.tabBarItem = UITabBarItem(
-            title: Strings.me,
-            image: UIImage(named: "tab-bar-me"),
-            selectedImage: UIImage(named: "tab-bar-me")
-        )
-        // TODO: (reader) observe gravatar updates
-        if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext),
-           let avatarURL = account.avatarURL.flatMap(URL.init) {
-            Task { @MainActor [weak meVC] in
-                do {
-                    let image = try await ImageDownloader.shared.image(from: avatarURL)
-                    meVC?.tabBarItem.configureGravatarImage(image)
-                } catch {
-                    // Do nothing
-                }
-            }
-        }
         return UINavigationController(rootViewController: meVC)
     }
 
@@ -188,10 +234,4 @@ private extension UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-}
-
-private enum Strings {
-    static let discover = NSLocalizedString("readerApp.tabBar.discover", value: "Discover", comment: "Reader app primary navigation tab bar")
-    static let notifications = NSLocalizedString("readerApp.tabBar.notifications", value: "Notifications", comment: "Reader app primary navigation tab bar")
-    static let me = NSLocalizedString("readerApp.tabBar.me", value: "Me", comment: "Reader app primary navigation tab bar")
 }

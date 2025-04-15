@@ -5,7 +5,7 @@ import WordPressKit
 import WordPressShared
 
 class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDelegate {
-    private let headerView = ReaderDiscoverHeaderView()
+    let headerView = ReaderDiscoverHeaderView()
     private var selectedChannel: ReaderDiscoverChannel = .recommended
     private let topic: ReaderAbstractTopic
     private var streamVC: ReaderStreamViewController?
@@ -50,7 +50,7 @@ class ReaderDiscoverViewController: UIViewController, ReaderDiscoverHeaderViewDe
         setupNotificationsBarButtonItem()
     }
 
-    private func setupNavigation() {
+    func setupNavigation() {
         navigationItem.largeTitleDisplayMode = .never
         setupNotificationsBarButtonItem()
     }

@@ -45,5 +45,7 @@ enum SharedStrings {
         static let tags = NSLocalizedString("reader.tags.title", value: "Tags", comment: "Used in multiple contexts, usually as a screen title")
         static let lists = NSLocalizedString("reader.lists.title", value: "Lists", comment: "Used in multiple contexts, usually as a screen title")
         static let search = NSLocalizedString("reader.search.title", value: "Search", comment: "Used in multiple contexts, usually as a screen title")
+        static let activity = NSLocalizedString("reader.activity.title", value: "Activity", comment: "Used in multiple contexts, usually as a screen title")
+        static let me = NSLocalizedString("reader.me.title", value: "Me", comment: "Used in multiple contexts, usually as a screen title")
     }
 }

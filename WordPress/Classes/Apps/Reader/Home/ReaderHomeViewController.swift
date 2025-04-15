@@ -15,18 +15,11 @@ final class ReaderHomeViewController: ReaderStreamViewController {
     }
 
     override func configureTitleForTopic() {
-        // Do nothing – use standard title
-
-//        titleView.textLabel.text = SharedStrings.Reader.home
-//        navigationItem.titleView = titleView
+        // Do nothing
     }
 
-    override func headerForStream(_ topic: ReaderAbstractTopic?, container: UITableViewController) -> UIView? {
+    @objc override func headerForStream(_ topic: ReaderAbstractTopic?, container: UITableViewController) -> UIView? {
         nil
-//        let view = ReaderHeaderView()
-//        view.titleView.titleLabel.text = SharedStrings.Reader.home
-//        view.titleView.detailsTextView.text = Strings.homeDetails
-//        return view
     }
 
     @objc private func buttonCreatePostTapped() {
@@ -51,8 +44,4 @@ final class ReaderHomeViewController: ReaderStreamViewController {
         editorVC.entryPoint = .dashboard
         present(editorVC, animated: true)
     }
-}
-
-private enum Strings {
-    static let homeDetails = NSLocalizedString("reader.home.header.details", value: "Stay current with the blogs you've subscribed to.", comment: "Screen header details")
 }
