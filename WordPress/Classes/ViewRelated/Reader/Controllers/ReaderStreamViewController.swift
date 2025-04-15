@@ -563,7 +563,7 @@ import AutomatticTracks
         }
     }
 
-    private func configureTitleForTopic() {
+    func configureTitleForTopic() {
         guard let topic = readerTopic else {
             if contentType == .saved {
                 title = SharedStrings.Reader.saved

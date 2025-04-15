@@ -39,8 +39,33 @@ final class ReaderTabViewController: UITabBarController, UITabBarControllerDeleg
     }
 
     private func setupViewControllers() {
+        if #available(iOS 18, *) {
+            setupModernTabBarItems()
+        } else {
+            setupLegacyTabBarItems()
+        }
+    }
+
+    @available(iOS 18, *)
+    private func setupModernTabBarItems() {
+        let home = UITab(title: SharedStrings.Reader.home, image: UIImage(named: "reader-menu-home"), identifier: "home") { [unowned self] _ in
+            self.makeHomeViewController()
+        }
+        tabs = [
+            home
+        ]
+    }
+
+    private func setupLegacyTabBarItems() {
+        let homeVC = makeHomeViewController()
+        homeVC.tabBarItem = UITabBarItem(
+            title: SharedStrings.Reader.home,
+            image: UIImage(named: "reader-menu-home"),
+            selectedImage: nil
+        )
+
         self.viewControllers = [
-            makeHomeViewController(),
+            homeVC,
             makeLibraryViewController(),
             makeDiscoverViewController(),
             makeNotificationsViewController(),
@@ -54,11 +79,7 @@ final class ReaderTabViewController: UITabBarController, UITabBarControllerDeleg
         let homeVC = ReaderHomeViewController()
         // TODO: (reader) refactor to not require `topic`
         homeVC.readerTopic = ReaderSidebarViewModel().getTopic(for: .following)
-        homeVC.tabBarItem = UITabBarItem(
-            title: SharedStrings.Reader.home,
-            image: UIImage(named: "reader-menu-home"),
-            selectedImage: nil
-        )
+
         // TODO: (reader) remove it; had to use due to how ghosts are implemented (separate table)
         homeVC.tabBarItem.scrollEdgeAppearance = {
             let appearance = UITabBarAppearance()

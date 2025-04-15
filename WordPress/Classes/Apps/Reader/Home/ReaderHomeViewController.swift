@@ -7,22 +7,26 @@ final class ReaderHomeViewController: ReaderStreamViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupNavigationItems()
+        title = SharedStrings.Reader.home
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "wpl-add-card")?.resized(to: CGSize(width: 28, height: 28)), style: .plain, target: self, action: #selector(buttonCreatePostTapped))
+
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
-    private func setupNavigationItems() {
-        title = SharedStrings.Reader.home
-        titleView.textLabel.text = SharedStrings.Reader.home
-        navigationItem.titleView = titleView
+    override func configureTitleForTopic() {
+        // Do nothing – use standard title
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "wpl-add-card")?.resized(to: CGSize(width: 28, height: 28)), style: .plain, target: self, action: #selector(buttonCreatePostTapped))
+//        titleView.textLabel.text = SharedStrings.Reader.home
+//        navigationItem.titleView = titleView
     }
 
     override func headerForStream(_ topic: ReaderAbstractTopic?, container: UITableViewController) -> UIView? {
-        let view = ReaderHeaderView()
-        view.titleView.titleLabel.text = SharedStrings.Reader.home
-        view.titleView.detailsTextView.text = Strings.homeDetails
-        return view
+        nil
+//        let view = ReaderHeaderView()
+//        view.titleView.titleLabel.text = SharedStrings.Reader.home
+//        view.titleView.detailsTextView.text = Strings.homeDetails
+//        return view
     }
 
     @objc private func buttonCreatePostTapped() {
