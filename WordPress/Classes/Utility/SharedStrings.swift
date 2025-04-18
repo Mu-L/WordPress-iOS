@@ -39,5 +39,11 @@ enum SharedStrings {
         static let discover = NSLocalizedString("reader.discover.title", value: "Discover", comment: "Used in multiple contexts, usually as a screen title")
         static let saved = NSLocalizedString("reader.saved.title", value: "Saved", comment: "Used in multiple contexts, usually as a screen title")
         static let likes = NSLocalizedString("reader.likes.title", value: "Likes", comment: "Used in multiple contexts, usually as a screen title")
+        static let home = NSLocalizedString("reader.home.title", value: "Home", comment: "Used in multiple contexts, usually as a screen title")
+        static let library = NSLocalizedString("reader.library.title", value: "Library", comment: "Used in multiple contexts, usually as a screen title")
+        static let subscriptions = NSLocalizedString("reader.subscriptions.title", value: "Subscriptions", comment: "Used in multiple contexts, usually as a screen title")
+        static let tags = NSLocalizedString("reader.tags.title", value: "Tags", comment: "Used in multiple contexts, usually as a screen title")
+        static let lists = NSLocalizedString("reader.lists.title", value: "Lists", comment: "Used in multiple contexts, usually as a screen title")
+        static let search = NSLocalizedString("reader.search.title", value: "Search", comment: "Used in multiple contexts, usually as a screen title")
     }
 }

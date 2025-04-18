@@ -317,7 +317,7 @@ open class JetpackSettingsViewController: UITableViewController {
     // MARK: - Footer handler
 
     @objc fileprivate func handleLearnMoreTap(_ sender: UITapGestureRecognizer) {
-        guard let url =  URL(string: JetpackSettingsViewController.learnMoreUrl) else {
+        guard let url = URL(string: JetpackSettingsViewController.learnMoreUrl) else {
             return
         }
         let webViewController = WebViewControllerFactory.controller(url: url, source: "jetpack_settings_learn_more")
@@ -358,7 +358,7 @@ open class JetpackSettingsViewController: UITableViewController {
 }
 
 extension JetpackSettingsViewController: JetpackConnectionDelegate {
-    func jetpackDisconnectedForBlog(_ blog: Blog) {
+    public func jetpackDisconnectedForBlog(_ blog: Blog) {
         if blog == self.blog {
             navigationController?.popToRootViewController(animated: true)
         }

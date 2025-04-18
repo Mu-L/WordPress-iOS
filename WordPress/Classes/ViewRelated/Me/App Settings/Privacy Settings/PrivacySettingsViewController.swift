@@ -1,6 +1,7 @@
 import Gridicons
 import UIKit
 import AutomatticTracks
+import WordPressUI
 
 class PrivacySettingsViewController: UITableViewController {
     fileprivate var handler: ImmuTableViewHandler!
@@ -158,11 +159,12 @@ class PrivacySettingsViewController: UITableViewController {
     private func persistTrackingUpdateRemotely(_ enabled: Bool) {
         let result = ContextManager.shared.performQuery { context -> (NSNumber, WordPressComRestApi)? in
             guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context),
+                  let userID = account.userID,
                   let wordPressComRestApi = account.wordPressComRestApi
             else {
                 return nil
             }
-            return (account.userID, wordPressComRestApi)
+            return (userID, wordPressComRestApi)
         }
 
         if let (accountID, wordPressComRestApi) = result {

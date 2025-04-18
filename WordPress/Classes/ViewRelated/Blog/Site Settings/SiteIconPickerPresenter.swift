@@ -42,7 +42,7 @@ final class SiteIconPickerPresenter: NSObject {
     }
 
     fileprivate func showErrorLoadingImageMessage() {
-        SVProgressHUD.showDismissibleError(withStatus: NSLocalizedString("Unable to load the image. Please choose a different one or try again later.",
+        SVProgressHUD.showDismissibleError(status: NSLocalizedString("Unable to load the image. Please choose a different one or try again later.",
                                                                          comment: "Text displayed in HUD if there was an error attempting to load a media image."))
     }
 
@@ -61,8 +61,8 @@ final class SiteIconPickerPresenter: NSObject {
                 if !modified, let media = self.originalMedia {
                     self.onCompletion?(media, nil)
                 } else {
-                    let mediaService = MediaService(managedObjectContext: ContextManager.sharedInstance().mainContext)
-                    let importService = MediaImportService(coreDataStack: ContextManager.sharedInstance())
+                    let mediaService = MediaService(managedObjectContext: ContextManager.shared.mainContext)
+                    let importService = MediaImportService(coreDataStack: ContextManager.shared)
 
                     WPAnalytics.track(.siteSettingsSiteIconCropped)
 

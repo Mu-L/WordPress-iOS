@@ -1,6 +1,10 @@
 #import "WPError.h"
 #import "WPAccount.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressShared;
 @import WordPressKit;
@@ -90,7 +94,7 @@ NSInteger const SupportButtonIndex = 0;
         DDLogError(@"wp.com API error: %@: %@", error.userInfo[WordPressComRestApi.ErrorKeyErrorCode],
                    [error localizedDescription]);
         if (error.code == WordPressComRestApiErrorCodeInvalidToken || error.code == WordPressComRestApiErrorCodeAuthorizationRequired) {
-            [WordPressAuthenticationManager showSigninForWPComFixingAuthToken];
+            [ObjCBridge showSigninForWPComFixingAuthToken];
             return YES;
         }
     }
@@ -134,8 +138,7 @@ NSInteger const SupportButtonIndex = 0;
         if (showSupport) {
             NSString *supportText = NSLocalizedString(@"Need Help?", @"'Need help?' button label, links off to the WP for iOS FAQ.");
             UIAlertAction *action = [UIAlertAction actionWithTitle:supportText style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull __unused action) {
-                SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
-                [supportVC showFromTabBar];
+                [ObjCBridge showSupportTableViewController];
                 [WPError internalInstance].alertShowing = NO;
             }];
             [alertController addAction:action];

@@ -1,19 +1,23 @@
 #import <Foundation/Foundation.h>
-#import "CoreDataService.h"
+#import "CoreDataStack.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnullability-completeness"
 
-@import WordPressKit;
-@import WordPressSharedObjC;
-
 @class ReaderPost;
 @class ReaderAbstractTopic;
+@class WordPressComRestApi;
 
 extern NSString * const ReaderPostServiceErrorDomain;
 extern NSString * const ReaderPostServiceToggleSiteFollowingState;
 
-@interface ReaderPostService : CoreDataService
+@interface ReaderPostService : NSObject
+
+@property (nonatomic, strong, readonly) id<CoreDataStack> coreDataStack;
+
+- (nonnull instancetype)initWithCoreDataStack:(id<CoreDataStack>)coreDataStack NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 /**
  Fetches and saves the posts for the specified topic

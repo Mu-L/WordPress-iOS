@@ -1,6 +1,7 @@
 import UIKit
 @preconcurrency import WebKit
 import WordPressShared
+import WordPressUI
 
 protocol WebKitAuthenticatable {
     var authenticator: RequestAuthenticator? { get }
@@ -591,6 +592,9 @@ extension WebKitViewController: WKUIDelegate {
         } else {
             DDLogError("WebView \(webView) didFailProvisionalNavigation: \(error.localizedDescription)")
         }
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     }
 }
 

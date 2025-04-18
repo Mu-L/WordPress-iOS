@@ -1,7 +1,7 @@
 import UIKit
 import Combine
-
 import WordPressShared
+import WordPressUI
 
 // MARK: - PeopleViewController
 
@@ -81,7 +81,7 @@ class PeopleViewController: UITableViewController {
     }
 
     private var viewContext: NSManagedObjectContext {
-        ContextManager.sharedInstance().mainContext
+        ContextManager.shared.mainContext
     }
 
     /// Core Data FRC
@@ -110,6 +110,15 @@ class PeopleViewController: UITableViewController {
     ///
     @IBOutlet
     private var footerActivityIndicator: UIActivityIndicatorView!
+
+    class func controllerWithBlog(_ blog: Blog) -> PeopleViewController? {
+        let storyboard = UIStoryboard(name: "People", bundle: .keystone)
+        guard let viewController = storyboard.instantiateInitialViewController() as? PeopleViewController else {
+            return nil
+        }
+        viewController.blog = blog
+        return viewController
+    }
 
     // MARK: UITableViewDataSource
 
@@ -207,7 +216,7 @@ class PeopleViewController: UITableViewController {
             return
         }
 
-        WPAppAnalytics.track(.openedPeople, with: blog)
+        WPAppAnalytics.track(.openedPeople, blog: blog)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -265,9 +274,9 @@ extension PeopleViewController: NetworkStatusDelegate {
 extension PeopleViewController {
     enum Filter: String, CaseIterable, FilterTabBarItem {
 
-        case users      = "users"
-        case followers  = "followers"
-        case viewers    = "viewers"
+        case users = "users"
+        case followers = "followers"
+        case viewers = "viewers"
 
         static var defaultFilters: [Filter] {
             return [.users, .followers]
@@ -540,24 +549,8 @@ private extension PeopleViewController {
         setupFilterBar()
         setupTableView()
     }
-}
 
-// MARK: - Objective-C support
-
-@objc
-extension PeopleViewController {
-    class func controllerWithBlog(_ blog: Blog) -> PeopleViewController? {
-        let storyboard = UIStoryboard(name: "People", bundle: nil)
-        guard let viewController = storyboard.instantiateInitialViewController() as? PeopleViewController else {
-            return nil
-        }
-
-        viewController.blog = blog
-
-        return viewController
-    }
-
-    func selectedFilterDidChange(_ filterBar: FilterTabBar) {
+    @objc private func selectedFilterDidChange(_ filterBar: FilterTabBar) {
         let selectedFilter = Filter.allCases[filterBar.selectedIndex]
         filter = selectedFilter
 
@@ -570,7 +563,7 @@ extension PeopleViewController {
 
 extension PeopleViewController {
     class func controllerWithBlog(_ blog: Blog, selectedFilter: Filter) -> PeopleViewController? {
-        let storyboard = UIStoryboard(name: "People", bundle: nil)
+        let storyboard = UIStoryboard(name: "People", bundle: .keystone)
         guard let viewController = storyboard.instantiateInitialViewController() as? PeopleViewController else {
             return nil
         }

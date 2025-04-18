@@ -1,5 +1,6 @@
 import UIKit
 import WordPressFlux
+import WordPressUI
 
 class SiteStatsInsightsDetailsTableViewController: SiteStatsBaseTableViewController {
 
@@ -25,7 +26,7 @@ class SiteStatsInsightsDetailsTableViewController: SiteStatsBaseTableViewControl
     private var postID: Int?
 
     private lazy var mainContext: NSManagedObjectContext = {
-        return ContextManager.sharedInstance().mainContext
+        return ContextManager.shared.mainContext
     }()
 
     override func viewDidLoad() {
@@ -80,7 +81,7 @@ extension SiteStatsInsightsDetailsTableViewController: StatsForegroundObservable
 
 private extension SiteStatsInsightsDetailsTableViewController {
     private func updateHeader() {
-        guard let siteStatsTableHeaderView = Bundle.main.loadNibNamed("SiteStatsTableHeaderView", owner: nil, options: nil)?.first as? SiteStatsTableHeaderView else {
+        guard let siteStatsTableHeaderView = Bundle.keystone.loadNibNamed("SiteStatsTableHeaderView", owner: nil, options: nil)?.first as? SiteStatsTableHeaderView else {
             return
         }
 

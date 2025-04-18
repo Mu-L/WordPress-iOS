@@ -8,7 +8,7 @@ extension PostService {
                           failure: @escaping (Error?) -> Void) {
         guard let blogId = post.blog.dotComID,
             let postId = post.postID,
-            let api = post.blog.wordPressComRestApi() else {
+            let api = post.blog.wordPressComRestApi else {
                 failure(nil)
                 return
         }
@@ -23,7 +23,7 @@ extension PostService {
                                             for: postId.intValue,
                                             with: blogId.intValue
                                         )
-                                        ContextManager.sharedInstance().save(self.managedObjectContext, completion: success, on: .main)
+                                        ContextManager.shared.save(self.managedObjectContext, completion: success, on: .main)
                                     }
         }, failure: failure)
     }

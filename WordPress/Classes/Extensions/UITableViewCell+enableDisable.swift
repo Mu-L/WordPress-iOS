@@ -1,8 +1,10 @@
+import UIKit
 import WordPressShared
+import WordPressUI
 
 extension UITableViewCell {
     /// Enable cell interaction
-    @objc func enable() {
+    @objc public func enable() {
         isUserInteractionEnabled = true
         textLabel?.isEnabled = true
         textLabel?.textColor = .label
@@ -10,7 +12,7 @@ extension UITableViewCell {
     }
 
     /// Disable cell interaction
-    @objc func disable() {
+    @objc public func disable() {
         accessoryType = .none
         isUserInteractionEnabled = false
         textLabel?.isEnabled = false

@@ -10,11 +10,11 @@ extension WPAccount {
     /// If there's more than one blog in each group with local drafts, those will be reassigned
     /// to the remaining blog.
     ///
-    @objc(deduplicateBlogs)
-    func deduplicateBlogs() {
+    @objc
+    public func deduplicateBlogs() {
         let context = managedObjectContext!
         // Group all the account blogs by ID so it's easier to find duplicates
-        let blogsById = Dictionary(grouping: blogs, by: { $0.dotComID?.intValue ?? 0 })
+        let blogsById = Dictionary(grouping: blogs ?? [], by: { $0.dotComID?.intValue ?? 0 })
         // For any group with more than one blog, remove duplicates
         for (blogID, group) in blogsById where group.count > 1 {
             assert(blogID > 0, "There should not be a Blog without ID if it has an account")

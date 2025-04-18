@@ -20,6 +20,7 @@ WORDPRESS_RELEASE_NOTES_PATH = File.join(PROJECT_ROOT_FOLDER, 'WordPress', 'Reso
 JETPACK_RELEASE_NOTES_PATH = File.join(PROJECT_ROOT_FOLDER, 'WordPress', 'Jetpack', 'Resources', 'release_notes.txt')
 WORDPRESS_BETA_APP_DESCRIPTION_PATH = File.join(PROJECT_ROOT_FOLDER, 'WordPress', 'Resources', 'beta_app_description.txt')
 JETPACK_BETA_APP_DESCRIPTION_PATH = File.join(PROJECT_ROOT_FOLDER, 'WordPress', 'Jetpack', 'Resources', 'beta_app_description.txt')
+BETA_APP_DESCRIPTION_PATH_READER = File.join(PROJECT_ROOT_FOLDER, 'fastlane', 'reader_metadata', 'default', 'beta_app_description.txt')
 
 # Env file paths to load
 ENV_FILE_NAME = '.wpios-env.default'
@@ -46,6 +47,10 @@ JETPACK_EXTENSIONS_BUNDLE_IDENTIFIERS = %w[
   JetpackIntents
 ].map { |suffix| "#{JETPACK_BUNDLE_IDENTIFIER}.#{suffix}" }
 ALL_JETPACK_BUNDLE_IDENTIFIERS = [JETPACK_BUNDLE_IDENTIFIER, *JETPACK_EXTENSIONS_BUNDLE_IDENTIFIERS].freeze
+
+READER_BUNDLE_IDENTIFIER = 'com.automattic.reader'
+# Redundant but handy for consistency, especially in codesign.rb
+ALL_READER_BUNDLE_IDENTIFIERS = [READER_BUNDLE_IDENTIFIER].freeze
 
 # Environment Variables — used by lanes but also potentially actions
 Dotenv.load(USER_ENV_FILE_PATH)
@@ -154,31 +159,6 @@ def build_code_next
 end
 
 ########################################################################
-# Group buildkite logs by action
-########################################################################
-
-# A module that defines methods to be used as overrides to `Fastlane::Actions`
-# module methods.
-module FastlaneActionLogGroup
-  def print_group(action_name)
-    return if %w[is_ci].include?(action_name)
-
-    puts "~~~ :fastlane: #{ENV.fetch('FASTLANE_LANE_NAME', '[root]')} >> #{action_name}"
-  end
-
-  def execute_action(action_name)
-    print_group(action_name)
-    super
-  end
-end
-
-if ENV.key?('BUILDKITE')
-  Fastlane::Actions.singleton_class.class_eval do
-    prepend FastlaneActionLogGroup
-  end
-end
-
-########################################################################
 # Imports domain-specific lanes
 ########################################################################
 
@@ -239,4 +219,10 @@ end
 
 def editorial_branch_name(version: release_version_current)
   "release_notes/#{version}"
+end
+
+def pull_request_number
+  # Buildkite sets this env var to the PR number if on a PR, but to 'false' (and not nil) if not on a PR
+  pr_num = ENV.fetch('BUILDKITE_PULL_REQUEST', 'false')
+  pr_num == 'false' ? nil : Integer(pr_num)
 end

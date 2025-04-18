@@ -2,8 +2,11 @@
 #import "Blog.h"
 #import "BlogService.h"
 #import "SharingConnectionsViewController.h"
-#import "SVProgressHUD+Dismiss.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressUI;
 @import WordPressShared;
@@ -311,7 +314,7 @@ static NSString *const CellIdentifier = @"CellIdentifier";
         }
 
         case SharingSectionSharingButtons:
-            controller = [[SharingButtonsViewController alloc] initWithBlog:self.blog];
+            controller = [ObjCBridge makeSharingButtonsViewControllerWithBlog:self.blog];
             [WPAppAnalytics track:WPAnalyticsStatSharingOpenedSharingButtonSettings withBlog:self.blog];
             break;
 

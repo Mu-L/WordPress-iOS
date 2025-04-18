@@ -1,4 +1,5 @@
 import Foundation
+import SVProgressHUD
 import WordPressFlux
 import WordPressUI
 import WordPressShared
@@ -60,7 +61,7 @@ extension PublishingEditor {
                 guard let context = self.post.managedObjectContext else {
                     return
                 }
-                ContextManager.sharedInstance().save(context)
+                ContextManager.shared.save(context)
             }
         }
     }
@@ -155,7 +156,7 @@ extension PublishingEditor {
         let postTypeValue = post is Page ? "page" : "post"
 
         guard stat != .editorSavedDraft && stat != .editorQuickSavedDraft else {
-            WPAppAnalytics.track(stat, withProperties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource, WPAppAnalyticsKeyPostType: postTypeValue], with: post.blog)
+            WPAppAnalytics.track(stat, properties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource, WPAppAnalyticsKeyPostType: postTypeValue], blog: post.blog)
             return
         }
 
@@ -175,7 +176,7 @@ extension PublishingEditor {
             }
         }
 
-        WPAppAnalytics.track(stat, withProperties: properties, with: post)
+        WPAppAnalytics.track(stat, properties: properties, post: post)
     }
 
     // MARK: - Close button handling
@@ -218,7 +219,7 @@ extension PublishingEditor {
             return
         }
 
-        WPAppAnalytics.track(.editorDiscardedChanges, withProperties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], with: post)
+        WPAppAnalytics.track(.editorDiscardedChanges, properties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], post: post)
 
         // Cancel upload of only newly inserted media items
         if let previous = post.original {
@@ -277,7 +278,7 @@ extension PublishingEditor {
     func dismissOrPopView(presentBloggingReminders: Bool = false) {
         stopEditing()
 
-        WPAppAnalytics.track(.editorClosed, withProperties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], with: post)
+        WPAppAnalytics.track(.editorClosed, properties: [WPAppAnalyticsKeyEditorSource: analyticsEditorSource], post: post)
 
         if let onClose {
             // if this closure exists, the presentation of the Blogging Reminders flow (if needed)
@@ -337,7 +338,7 @@ extension PublishingEditor {
             post = post // Update the UI
         }
 
-        ContextManager.sharedInstance().save(managedObjectContext)
+        ContextManager.shared.save(managedObjectContext)
     }
 
     var uploadFailureNoticeTag: Notice.Tag {

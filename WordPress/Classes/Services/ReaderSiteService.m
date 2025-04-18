@@ -1,17 +1,29 @@
 #import "ReaderSiteService.h"
 
 #import "AccountService.h"
-#import "CoreDataStack.h"
 #import "ReaderPostService.h"
 #import "ReaderPost.h"
 #import "WPAccount.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 #import "WPAppAnalytics.h"
 @import WordPressKit;
 
 NSString * const ReaderSiteServiceErrorDomain = @"ReaderSiteServiceErrorDomain";
 
 @implementation ReaderSiteService
+
+- (instancetype)initWithCoreDataStack:(id<CoreDataStack>)coreDataStack
+{
+    self = [super init];
+    if (self) {
+        _coreDataStack = coreDataStack;
+    }
+    return self;
+}
 
 - (void)followSiteByURL:(NSURL *)siteURL success:(void (^)(void))success failure:(void(^)(NSError *error))failure
 {
@@ -147,21 +159,7 @@ NSString * const ReaderSiteServiceErrorDomain = @"ReaderSiteServiceErrorDomain";
     } failure:failure];
 }
 
-- (void)syncPostsForFollowedSites
-{
-    [self.coreDataStack performAndSaveUsingBlock:^(NSManagedObjectContext *context) {
-        ReaderAbstractTopic *followedSites = [ReaderAbstractTopic lookupFollowedSitesTopicInContext:context];
-        if (!followedSites) {
-            return;
-        }
-
-        ReaderPostService *postService = [[ReaderPostService alloc] initWithCoreDataStack:self.coreDataStack];
-        [postService fetchPostsForTopic:followedSites earlierThan:[NSDate date] success:nil failure:nil];
-    }];
-}
-
 #pragma mark - Private Methods
-
 
 /**
  Fetch the topic after a site is followed

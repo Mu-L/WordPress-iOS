@@ -1,9 +1,11 @@
 #import "Theme.h"
 #import "Blog.h"
-#import "CoreDataStack.h"
 #import "WPAccount.h"
-#import "AccountService.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressShared;
 
@@ -44,25 +46,6 @@ static NSString* const ThemeUrlDetails = @"https://wordpress.com/themes/%@/%@/?p
 }
 
 #pragma mark - Links
-
-- (NSString *)customizeUrl
-{
-    NSString *themePath = [self themePathForCustomization];
-    NSString *path = [NSString stringWithFormat:ThemeAdminUrlCustomize, themePath];
-    
-    return [self.blog adminUrlWithPath:path];
-}
-
-- (NSString *)themePathForCustomization {
-    if ([self.blog supports:BlogFeatureCustomThemes]) {
-        if (self.custom) {
-            return self.themeId;
-        } else {
-            return [ThemeIdHelper themeIdWithWPComSuffix:self.themeId];
-        }
-    }
-    return self.stylesheet;
-}
 
 - (NSString *)detailsUrl
 {

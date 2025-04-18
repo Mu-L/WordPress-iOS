@@ -1,7 +1,8 @@
 import Foundation
+import BuildSettingsKit
 
 @objc
-enum RemoteFeatureFlag: Int, CaseIterable {
+public enum RemoteFeatureFlag: Int, CaseIterable {
     case jetpackFeaturesRemovalPhaseOne
     case jetpackFeaturesRemovalPhaseTwo
     case jetpackFeaturesRemovalPhaseThree
@@ -29,6 +30,8 @@ enum RemoteFeatureFlag: Int, CaseIterable {
     case inAppUpdates
     case gravatarQuickEditor
     case dotComWebLogin
+    case newGutenberg
+    case newGutenbergPlugins
 
     var defaultValue: Bool {
         switch self {
@@ -83,8 +86,12 @@ enum RemoteFeatureFlag: Int, CaseIterable {
         case .inAppUpdates:
             return false
         case .gravatarQuickEditor:
-            return BuildConfiguration.current ~= [.localDeveloper, .a8cBranchTest, .a8cPrereleaseTesting]
+            return BuildConfiguration.current.isInternal
         case .dotComWebLogin:
+            return false
+        case .newGutenberg:
+            return false
+        case .newGutenbergPlugins:
             return false
         }
     }
@@ -146,10 +153,14 @@ enum RemoteFeatureFlag: Int, CaseIterable {
             return "gravatar_quick_editor"
         case .dotComWebLogin:
             return "jp_wpcom_web_login"
+        case .newGutenberg:
+            return "gutenberg_kit"
+        case .newGutenbergPlugins:
+            return "gutenberg_kit_plugins"
         }
     }
 
-    var description: String {
+    public var description: String {
         switch self {
         case .jetpackMigrationPreventDuplicateNotifications:
             return "Jetpack Migration prevent duplicate WordPress app notifications when Jetpack is installed"
@@ -205,6 +216,10 @@ enum RemoteFeatureFlag: Int, CaseIterable {
             return "Gravatar Quick Editor"
         case .dotComWebLogin:
             return "Log in to WordPress.com from web browser"
+        case .newGutenberg:
+            return "Experimental Block Editor"
+        case .newGutenbergPlugins:
+            return "Experimental Block Editor Plugins"
         }
     }
 
@@ -241,9 +256,9 @@ extension RemoteFeatureFlag: OverridableFlag {
 /// Objective-C bridge for RemoteFeatureFlag.
 ///
 /// Since we can't expose properties on Swift enums we use a class instead
-class RemoteFeature: NSObject {
+public class RemoteFeature: NSObject {
     /// Returns a boolean indicating if the feature is enabled
-    @objc static func enabled(_ feature: RemoteFeatureFlag) -> Bool {
-        return feature.enabled()
+    @objc public static func enabled(_ feature: RemoteFeatureFlag) -> Bool {
+        feature.enabled()
     }
 }

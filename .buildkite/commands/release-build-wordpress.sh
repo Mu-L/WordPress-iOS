@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 
+<<<<<<< HEAD
 echo "--- :beer: Installing Homebrew Dependencies"
 # Sentry CLI needs to be up-to-date
 brew upgrade sentry-cli
@@ -11,6 +12,10 @@ brew install imagemagick
 brew install ghostscript
 
 "$(dirname "${BASH_SOURCE[0]}")/shared-set-up.sh"
+=======
+"$(dirname "${BASH_SOURCE[0]}")/shared-set-up.sh"
+"$(dirname "${BASH_SOURCE[0]}")/shared-set-up-distribution.sh"
+>>>>>>> trunk
 
 echo "--- :closed_lock_with_key: Installing Secrets"
 bundle exec fastlane run configure_apply

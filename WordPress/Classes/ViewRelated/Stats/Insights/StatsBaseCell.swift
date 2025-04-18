@@ -1,4 +1,5 @@
 import UIKit
+import WordPressShared
 
 class StatsBaseCell: UITableViewCell {
 
@@ -154,7 +155,7 @@ class StatsBaseCell: UITableViewCell {
 
     private func captureAnalyticsEvent(_ event: WPAnalyticsStat) {
         if let blogIdentifier = SiteStatsInformation.sharedInstance.siteID {
-            WPAppAnalytics.track(event, withBlogID: blogIdentifier)
+            WPAppAnalytics.track(event, blogID: blogIdentifier)
         } else {
             WPAppAnalytics.track(event)
         }
@@ -164,7 +165,7 @@ class StatsBaseCell: UITableViewCell {
         let properties: [String: String] = ["type": statSection.analyticsProperty]
 
         if let blogId = SiteStatsInformation.sharedInstance.siteID,
-           let blog = Blog.lookup(withID: blogId, in: ContextManager.sharedInstance().mainContext) {
+           let blog = Blog.lookup(withID: blogId, in: ContextManager.shared.mainContext) {
             WPAnalytics.track(event, properties: properties, blog: blog)
         } else {
             WPAnalytics.track(event, properties: properties)

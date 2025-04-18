@@ -1,3 +1,5 @@
+import Foundation
+
 // MARK: Generated accessors for contentDiffs
 //
 extension RevisionDiff {
@@ -30,7 +32,7 @@ extension RevisionDiff {
     @NSManaged public func removeFromTitleDiffs(_ values: NSSet)
 }
 
-extension RevisionDiff {
+public extension RevisionDiff {
     func remove<T: DiffAbstractValue>(_ type: T.Type) -> RevisionDiff {
         guard let set = (type is DiffContentValue.Type ? contentDiffs : titleDiffs) else {
             return self

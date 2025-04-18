@@ -1,9 +1,10 @@
 import UIKit
 import WordPressAuthenticator
+import WordPressUI
 
 // MARK: - EpilogueUserInfoCell
 //
-class EpilogueUserInfoCell: UITableViewCell {
+class EpilogueUserInfoCell: UITableViewCell, NibLoadable {
 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var gravatarActivityIndicator: UIActivityIndicatorView!
@@ -135,7 +136,7 @@ private extension EpilogueUserInfoCell {
         gravatarAddIcon.backgroundColor = .systemBackground
 
         fullNameLabel.textColor = .label
-        fullNameLabel.font = AppStyleGuide.epilogueTitleFont
+        fullNameLabel.font = AppStyleGuide.current.epilogueTitleFont
 
         usernameLabel.textColor = .secondaryLabel
         usernameLabel.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .headline).pointSize, weight: .regular)

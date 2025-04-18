@@ -2,10 +2,40 @@ import Foundation
 import UIKit
 import WordPressShared
 import WordPressAuthenticator
+import WordPressUI
+import WordPressAPIInternal
+
+protocol JetpackConnectionSupport: AnyObject {
+    init?(blog: Blog)
+
+    var blog: Blog { get set }
+
+    var promptType: JetpackLoginPromptType { get set }
+
+    var completionBlock: (() -> Void)? { get set }
+
+    func refreshUI()
+}
+
+typealias ConnectJetpackViewController = UIViewController & JetpackConnectionSupport
+
+extension UIViewController {
+    static func jetpackConnection(blog: Blog) -> ConnectJetpackViewController {
+        // `RESTAPIJetpackLoginViewController` use REST API to connect sites to Jetpack, which provides a much better
+        // UX than `JetpackLoginViewController` which connects sites via web-views.
+        return RESTAPIJetpackLoginViewController(blog: blog) ?? JetpackLoginViewController(blog: blog)
+    }
+}
+
+extension JetpackLoginViewController: JetpackConnectionSupport {
+    func refreshUI() {
+        updateMessageAndButton()
+    }
+}
 
 /// A view controller that presents a Jetpack login form.
 ///
-class JetpackLoginViewController: UIViewController {
+public class JetpackLoginViewController: UIViewController {
 
     // MARK: - Constants
 
@@ -24,7 +54,7 @@ class JetpackLoginViewController: UIViewController {
     // Defaulting to stats because since that one is written in ObcC we don't have access to the enum there.
     var promptType: JetpackLoginPromptType = .stats
 
-    typealias CompletionBlock = () -> Void
+    public typealias CompletionBlock = () -> Void
     /// This completion handler closure is executed when the authentication process handled
     /// by this VC is completed.
     ///
@@ -44,24 +74,24 @@ class JetpackLoginViewController: UIViewController {
     ///
     /// - Parameter blog: The current blog
     ///
-    @objc init(blog: Blog) {
+    @objc public required init(blog: Blog) {
         self.blog = blog
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "JetpackLoginViewController", bundle: .keystone)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         preconditionFailure("Jetpack Login View Controller must be initialized by code")
     }
 
     // MARK: - LifeCycle Methods
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         WPStyleGuide.configureColors(view: view, tableView: nil)
         setupControls()
     }
 
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    public override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         toggleHidingImageView(for: newCollection)
     }
@@ -174,7 +204,7 @@ class JetpackLoginViewController: UIViewController {
         }
 
         if let blog {
-            WPAppAnalytics.track(stat, withProperties: properties, with: blog)
+            WPAppAnalytics.track(stat, properties: properties, blog: blog)
         } else {
             WPAnalytics.track(stat, withProperties: properties)
         }
@@ -269,6 +299,15 @@ public enum JetpackLoginPromptType {
             return UIImage(named: "wp-illustration-stats")
         case .notifications:
             return UIImage(named: "wp-illustration-notifications")
+        }
+    }
+
+    var imageName: String {
+        switch self {
+        case .stats:
+            return "wp-illustration-stats"
+        case .notifications:
+            return "wp-illustration-notifications"
         }
     }
 

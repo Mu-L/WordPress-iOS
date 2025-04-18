@@ -1,8 +1,10 @@
+import WordPressShared
+
 /// Encapsulates logic that configures `ListTableViewCell` with `Comment` models.
 ///
 extension ListTableViewCell {
     /// Configures the cell based on the provided `Comment` object.
-    @objc func configureWithComment(_ comment: Comment) {
+    @objc public func configureWithComment(_ comment: Comment) {
         // indicator view
         indicatorColor = Style.pendingIndicatorColor
         showsIndicator = (comment.status == CommentStatusType.pending.description)

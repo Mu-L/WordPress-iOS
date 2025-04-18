@@ -10,7 +10,9 @@ final class ReaderMenuStore: ReaderMenuStoreProtocol {
 
     private var isLoading = false
 
-    init(context: NSManagedObjectContext = ContextManager.sharedInstance().mainContext,
+    var onCompletion: (() -> Void)?
+
+    init(context: NSManagedObjectContext = ContextManager.shared.mainContext,
          service: ReaderTopicService? = nil) {
         self.context = context
         self.service = service ?? ReaderTopicService(coreDataStack: ContextManager.shared)
@@ -45,5 +47,6 @@ final class ReaderMenuStore: ReaderMenuStoreProtocol {
             DDLogError("Could not sync sites: \(String(describing: error))")
             self?.isLoading = false
         })
+        onCompletion?()
     }
 }

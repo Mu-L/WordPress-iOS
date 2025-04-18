@@ -1,3 +1,5 @@
+import WordPressShared
+
 /// Takes care of storing and accessing Gutenberg settings.
 ///
 class GutenbergSettings {
@@ -33,7 +35,7 @@ class GutenbergSettings {
 
     // MARK: - Internal variables
     private let database: KeyValueDatabase
-    private var coreDataStack: CoreDataStack {
+    private var coreDataStack: CoreDataStackSwift {
         AppEnvironment.current.contextManager
     }
 
@@ -213,19 +215,19 @@ class GutenbergSettings {
 }
 
 @objc(GutenbergSettings)
-class GutenbergSettingsBridge: NSObject {
+public class GutenbergSettingsBridge: NSObject {
     @objc(setGutenbergEnabled:forBlog:)
-    static func setGutenbergEnabled(_ isEnabled: Bool, for blog: Blog) {
+    public static func setGutenbergEnabled(_ isEnabled: Bool, for blog: Blog) {
         GutenbergSettings().setGutenbergEnabled(isEnabled, for: blog, source: .viaSiteSettings)
     }
 
     @objc(postSettingsToRemoteForBlog:)
-    static func postSettingsToRemote(for blog: Blog) {
+    public static func postSettingsToRemote(for blog: Blog) {
         GutenbergSettings().postSettingsToRemote(for: blog)
     }
 
     @objc(isSimpleWPComSite:)
-    static func isSimpleWPComSite(_ blog: Blog) -> Bool {
+    public static func isSimpleWPComSite(_ blog: Blog) -> Bool {
         return GutenbergSettings().isSimpleWPComSite(blog)
     }
 }

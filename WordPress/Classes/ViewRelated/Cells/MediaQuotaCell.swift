@@ -1,22 +1,22 @@
 import Foundation
 import UIKit
 import WordPressShared
+import WordPressUI
 
 // MARK: - View Model
 
-@objc class MediaQuotaCell: WPTableViewCell {
+@objc public class MediaQuotaCell: UITableViewCell, NibLoadable {
 
-    @objc static let height: Float = 66.0
+    @objc public static let height: Float = 66.0
 
-    @objc static let defaultReuseIdentifier = "MediaQuotaCell"
+    @objc public static let defaultReuseIdentifier = "MediaQuotaCell"
 
-    @objc static let nib: UINib = {
-        let nib = UINib(nibName: "MediaQuotaCell", bundle: Bundle(for: MediaQuotaCell.self))
-        return nib
+    @objc public static let nib: UINib = {
+        MediaQuotaCell.defaultNib
     }()
 
     // MARK: - Public interface
-    @objc var value: String? {
+    @objc public var value: String? {
         get {
             return valueLabel.text
         }
@@ -25,7 +25,7 @@ import WordPressShared
         }
     }
 
-    @objc var title: String? {
+    @objc public var title: String? {
         get {
             return titleLabel.text
         }
@@ -34,7 +34,7 @@ import WordPressShared
         }
     }
 
-    @objc var percentage: NSNumber? {
+    @objc public var percentage: NSNumber? {
         get {
             return NSNumber(value: progressView.progress)
         }
@@ -49,7 +49,7 @@ import WordPressShared
 
     // MARK: - Private properties
 
-    @objc func customizeAppearance() {
+    @objc public func customizeAppearance() {
         titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
         titleLabel.textColor = .label
         valueLabel.font = UIFont.preferredFont(forTextStyle: .callout)
@@ -59,7 +59,7 @@ import WordPressShared
     }
 
     // MARK: - UIKit bindings
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         customizeAppearance()
     }

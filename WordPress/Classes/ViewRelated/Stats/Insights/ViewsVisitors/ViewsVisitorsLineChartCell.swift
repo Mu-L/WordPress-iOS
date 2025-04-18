@@ -1,4 +1,5 @@
 import UIKit
+import WordPressShared
 
 struct StatsSegmentedControlData: Equatable {
     var segmentTitle: String
@@ -288,7 +289,7 @@ private extension ViewsVisitorsLineChartCell {
         let properties: [String: String] = ["value": statsInsightsFilterDimension.analyticsProperty]
 
         if let blogId = SiteStatsInformation.sharedInstance.siteID,
-           let blog = Blog.lookup(withID: blogId, in: ContextManager.sharedInstance().mainContext) {
+           let blog = Blog.lookup(withID: blogId, in: ContextManager.shared.mainContext) {
             WPAnalytics.track(.statsInsightsViewsVisitorsToggled, properties: properties, blog: blog)
         } else {
             WPAnalytics.track(.statsInsightsViewsVisitorsToggled, properties: properties)

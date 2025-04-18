@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "LocalCoreDataService.h"
-#import "PostServiceOptions.h"
 
 @class AbstractPost;
 @class Blog;
@@ -9,6 +8,7 @@
 @class RemotePost;
 @class RemoteUser;
 @class PostServiceRemoteFactory;
+@class PostServiceSyncOptions;
 
 NS_ASSUME_NONNULL_BEGIN
 

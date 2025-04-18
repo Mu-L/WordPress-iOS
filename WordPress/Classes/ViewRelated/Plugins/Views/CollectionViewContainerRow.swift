@@ -1,3 +1,6 @@
+import UIKit
+import WordPressUI
+
 /// A `ImmuTableRow` that contains a `UICollectionView`.
 /// Currently the `CollectionViewContainerCell` is fairly specific to needs of Plugin Directory,
 /// but it should be possible to make it more generic in the future if there's a need to — it was deliberately
@@ -70,9 +73,9 @@ struct CollectionViewContainerRow<CollectionViewCellType: UICollectionViewCell, 
 
         cell.noResultsView = noResultsView
 
-        if nil != Bundle.main.path(forResource: String(describing: CollectionViewCellType.self), ofType: "nib") {
-            cell.collectionView.register(UINib(nibName: String(describing: CollectionViewCellType.self), bundle: nil),
-                                         forCellWithReuseIdentifier: CollectionViewHandler.CellReuseIdentifier)
+        let bundle = Bundle(for: BundleToken.self)
+        if nil != bundle.path(forResource: String(describing: CollectionViewCellType.self), ofType: "nib") {
+            cell.collectionView.register(UINib(nibName: String(describing: CollectionViewCellType.self), bundle: bundle), forCellWithReuseIdentifier: CollectionViewHandler.CellReuseIdentifier)
         } else {
             cell.collectionView.register(CollectionViewCellType.self, forCellWithReuseIdentifier: CollectionViewHandler.CellReuseIdentifier)
         }
@@ -80,8 +83,9 @@ struct CollectionViewContainerRow<CollectionViewCellType: UICollectionViewCell, 
         cell.collectionView.delegate = helper
         cell.collectionView.dataSource = helper
     }
-
 }
+
+private final class BundleToken: NSObject {}
 
 /// Generic Swift classes can't be made `@objc`, so we're using this helper object to be a `UICollectionView[DataSource|Delegate]`
 @objc private class CollectionViewHandler: NSObject, UICollectionViewDelegate, UICollectionViewDataSource {

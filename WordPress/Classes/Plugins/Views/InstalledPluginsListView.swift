@@ -125,8 +125,8 @@ private enum Strings {
     static let addPluginButton = NSLocalizedString("site.plugins.empty.addButton", value: "Add Plugin", comment: "Button label to add a new plugin when no plugins are installed")
     static let filterTitle: String = NSLocalizedString("site.plugins.filter.title", value: "Filter", comment: "Title of the plugin filter picker")
     static let filterOptionAll: String = NSLocalizedString("site.plugins.filter.option.all", value: "All", comment: "The plugin fillter option for displaying all plugins")
-    static let filterOptionActive: String = NSLocalizedString("site.plugins.filter.option.all", value: "Active", comment: "The plugin fillter option for displaying active plugins")
-    static let filterOptionInactive: String = NSLocalizedString("site.plugins.filter.option.all", value: "Inactive", comment: "The plugin fillter option for displaying inactive plugins")
+    static let filterOptionActive: String = NSLocalizedString("site.plugins.filter.option.active", value: "Active", comment: "The plugin fillter option for displaying active plugins")
+    static let filterOptionInactive: String = NSLocalizedString("site.plugins.filter.option.inactive", value: "Inactive", comment: "The plugin fillter option for displaying inactive plugins")
 }
 
 private struct ListSection: Hashable, Identifiable {
@@ -222,7 +222,7 @@ private final class InstalledPluginsListViewModel: ObservableObject {
         do {
             try await self.service.fetchInstalledPlugins()
         } catch {
-            self.error = (error as? WpApiError)?.errorMessage ?? error.localizedDescription
+            self.error = error.localizedDescription
         }
     }
 
@@ -256,7 +256,7 @@ private final class InstalledPluginsListViewModel: ObservableObject {
                 .sorted(using: KeyPathComparator(\ListSection.filter.rawValue))
         case let .failure(error):
             self.showNoPluginsView = false
-            self.error = (error as? WpApiError)?.errorMessage ?? error.localizedDescription
+            self.error = error.localizedDescription
         }
     }
 

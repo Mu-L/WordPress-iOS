@@ -1,5 +1,6 @@
 import UIKit
 import PhotosUI
+import WordPressUI
 
 protocol SiteMediaCollectionViewControllerDelegate: AnyObject {
     func siteMediaViewController(_ viewController: SiteMediaCollectionViewController, didUpdateSelection selection: [Media])
@@ -471,7 +472,7 @@ final class SiteMediaCollectionViewController: UIViewController, NSFetchedResult
             case .failed, .pushing, .processing:
                 showRetryOptions(for: media)
             case .sync:
-                WPAppAnalytics.track(.mediaLibraryPreviewedItem, with: blog)
+                WPAppAnalytics.track(.mediaLibraryPreviewedItem, blog: blog)
 
                 let viewController = SiteMediaPageViewController(media: media, delegate: self)
                 self.navigationController?.pushViewController(viewController, animated: true)

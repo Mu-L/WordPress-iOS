@@ -1,8 +1,10 @@
-import WordPressAuthenticator
 import AutomatticTracks
+import BuildSettingsKit
+import WordPressAuthenticator
+import WordPressShared
 
 @objc extension WordPressAppDelegate {
-    internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
 
         let redactedURL = LoggingURLRedactor.redactedURL(url)
         DDLogInfo("Application launched with URL: \(redactedURL)")
@@ -29,7 +31,11 @@ import AutomatticTracks
             return JetpackNotificationMigrationService.shared.handleNotificationMigrationOnWordPress()
         }
 
-        guard url.scheme == WPComScheme else {
+        if WordPressDotComAuthenticator.handleAppOpeningURL(url) {
+            return true
+        }
+
+        guard url.scheme == BuildSettings.current.appURLScheme else {
             return false
         }
 
@@ -125,7 +131,7 @@ import AutomatticTracks
             return false
         }
 
-        if debugKey == ApiCredentials.debuggingKey, debugType == "force_crash" {
+        if debugKey == BuildSettings.current.secrets.debuggingKey, debugType == "force_crash" {
             WordPressAppDelegate.crashLogging?.crash()
         }
 
@@ -149,7 +155,7 @@ import AutomatticTracks
         let title = params.value(of: NewPostKey.title)
         let tags = params.value(of: NewPostKey.tags)
 
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         guard let blog = Blog.lastUsedOrFirst(in: context) else {
             return false
         }
@@ -186,7 +192,7 @@ import AutomatticTracks
 
         let title = params.value(of: NewPostKey.title)
 
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         guard let blog = Blog.lastUsedOrFirst(in: context) else {
             return false
         }

@@ -11,7 +11,7 @@ public extension SiteSettingsViewController {
     @objc func confirmExportContent() {
         tableView.deselectSelectedRowWithAnimation(true)
 
-        WPAppAnalytics.track(.siteSettingsExportSiteAccessed, with: self.blog)
+        WPAppAnalytics.track(.siteSettingsExportSiteAccessed, blog: self.blog)
         present(confirmExportController(), animated: true)
     }
 
@@ -21,8 +21,13 @@ public extension SiteSettingsViewController {
     ///
     fileprivate func confirmExportController() -> UIAlertController {
         let confirmTitle = NSLocalizedString("Export Your Content", comment: "Title of Export Content confirmation alert")
-        let messageFormat = NSLocalizedString("Your posts, pages, and settings will be mailed to you at %@.", comment: "Message of Export Content confirmation alert; substitution is user's email address")
-        let message = String(format: messageFormat, blog.account!.email)
+        let message: String
+        if let email = blog.account?.email {
+            let messageFormat = NSLocalizedString("Your posts, pages, and settings will be mailed to you at %@.", comment: "Message of Export Content confirmation alert; substitution is user's email address")
+            message = String(format: messageFormat, email)
+        } else {
+            message = NSLocalizedString("Your posts, pages, and settings will be mailed to the account's email address.", comment: "Message of Export Content confirmation alert")
+        }
         let alertController = UIAlertController(title: confirmTitle, message: message, preferredStyle: .alert)
 
         let cancelTitle = NSLocalizedString("Cancel", comment: "Alert dismissal title")
@@ -46,27 +51,28 @@ public extension SiteSettingsViewController {
         SVProgressHUD.show(withStatus: status)
 
         let trackedBlog = blog
-        WPAppAnalytics.track(.siteSettingsExportSiteRequested, with: trackedBlog)
-        let service = SiteManagementService(coreDataStack: ContextManager.sharedInstance())
-        service.exportContentForBlog(blog,
-            success: {
-                WPAppAnalytics.track(.siteSettingsExportSiteResponseOK, with: trackedBlog)
-                let status = NSLocalizedString("Email sent!", comment: "Overlay message displayed when export content started")
-                SVProgressHUD.showDismissibleSuccess(withStatus: status)
-            },
-            failure: { error in
-                DDLogError("Error exporting content: \(error.localizedDescription)")
-                WPAppAnalytics.track(.siteSettingsExportSiteResponseError, with: trackedBlog)
-                SVProgressHUD.dismiss()
+        WPAppAnalytics.track(.siteSettingsExportSiteRequested, blog: trackedBlog)
 
-                let errorTitle = NSLocalizedString("Export Content Error", comment: "Title of alert when export content fails")
-                let alertController = UIAlertController(title: errorTitle, message: error.localizedDescription, preferredStyle: .alert)
+        let service = SiteManagementService(coreDataStack: ContextManager.shared)
+        service.exportContentForBlog(blog, success: {
+            WPAppAnalytics.track(.siteSettingsExportSiteResponseOK, blog: trackedBlog)
 
-                let okTitle = SharedStrings.Button.ok
-                _ = alertController.addDefaultActionWithTitle(okTitle, handler: nil)
+            let status = NSLocalizedString("Email sent!", comment: "Overlay message displayed when export content started")
+            SVProgressHUD.showDismissibleSuccess(status: status)
+        }, failure: { error in
+            DDLogError("Error exporting content: \(error.localizedDescription)")
+            WPAppAnalytics.track(.siteSettingsExportSiteResponseError, blog: trackedBlog)
 
-                alertController.presentFromRootViewController()
-            })
+            SVProgressHUD.dismiss()
+
+            let errorTitle = NSLocalizedString("Export Content Error", comment: "Title of alert when export content fails")
+            let alertController = UIAlertController(title: errorTitle, message: error.localizedDescription, preferredStyle: .alert)
+
+            let okTitle = SharedStrings.Button.ok
+            _ = alertController.addDefaultActionWithTitle(okTitle, handler: nil)
+
+            alertController.presentFromRootViewController()
+        })
     }
 
     /// Requests site purchases to determine whether site is deletable
@@ -77,8 +83,8 @@ public extension SiteSettingsViewController {
         let status = NSLocalizedString("Checking purchases…", comment: "Overlay message displayed while checking if site has premium purchases")
         SVProgressHUD.show(withStatus: status)
 
-        WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesRequested, with: blog)
-        let service = SiteManagementService(coreDataStack: ContextManager.sharedInstance())
+        WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesRequested, blog: blog)
+        let service = SiteManagementService(coreDataStack: ContextManager.shared)
         service.getActivePurchasesForBlog(blog,
             success: { [weak self] purchases in
                 SVProgressHUD.dismiss()
@@ -87,10 +93,10 @@ public extension SiteSettingsViewController {
                 }
 
                 if purchases.isEmpty {
-                    WPAppAnalytics.track(.siteSettingsDeleteSiteAccessed, with: strongSelf.blog)
+                    WPAppAnalytics.track(.siteSettingsDeleteSiteAccessed, blog: strongSelf.blog)
                     strongSelf.navigationController?.pushViewController(DeleteSiteViewController.controller(strongSelf.blog), animated: true)
                 } else {
-                    WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShown, with: strongSelf.blog)
+                    WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShown, blog: strongSelf.blog)
                     strongSelf.present(strongSelf.warnPurchasesController(), animated: true)
                 }
             },
@@ -122,7 +128,7 @@ public extension SiteSettingsViewController {
 
         let showTitle = NSLocalizedString("Show Purchases", comment: "Show site purchases action title")
         alertController.addDefaultActionWithTitle(showTitle, handler: { _ in
-            WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShowClicked, with: self.blog)
+            WPAppAnalytics.track(.siteSettingsDeleteSitePurchasesShowClicked, blog: self.blog)
             self.showPurchases()
         })
 

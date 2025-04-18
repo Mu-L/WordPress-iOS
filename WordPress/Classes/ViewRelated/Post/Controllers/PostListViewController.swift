@@ -2,6 +2,7 @@ import Foundation
 import WordPressShared
 import Gridicons
 import UIKit
+import WordPressUI
 
 final class PostListViewController: AbstractPostListViewController, InteractivePostViewDelegate {
     /// If set, when the post list appear it will show the tab for this status
@@ -9,7 +10,7 @@ final class PostListViewController: AbstractPostListViewController, InteractiveP
 
     // MARK: - Convenience constructors
 
-    @objc class func controllerWithBlog(_ blog: Blog) -> PostListViewController {
+    class func controllerWithBlog(_ blog: Blog) -> PostListViewController {
         let vc = PostListViewController()
         vc.blog = blog
         return vc
@@ -182,7 +183,7 @@ final class PostListViewController: AbstractPostListViewController, InteractiveP
         editor.modalPresentationStyle = .fullScreen
         editor.entryPoint = .postsList
         present(editor, animated: false, completion: nil)
-        WPAppAnalytics.track(.editorCreatedPost, withProperties: [WPAppAnalyticsKeyTapSource: "posts_view", WPAppAnalyticsKeyPostType: "post"], with: blog)
+        WPAppAnalytics.track(.editorCreatedPost, properties: [WPAppAnalyticsKeyTapSource: "posts_view", WPAppAnalyticsKeyPostType: "post"], blog: blog)
     }
 
     private func editPost(_ post: AbstractPost) {
@@ -236,7 +237,7 @@ final class PostListViewController: AbstractPostListViewController, InteractiveP
 
     func comments(_ post: AbstractPost) {
         WPAnalytics.track(.postListCommentsAction, properties: propertiesForAnalytics())
-        let contentCoordinator = DefaultContentCoordinator(controller: self, context: ContextManager.sharedInstance().mainContext)
+        let contentCoordinator = DefaultContentCoordinator(controller: self, context: ContextManager.shared.mainContext)
         try? contentCoordinator.displayCommentsWithPostId(post.postID, siteID: blog.dotComID, commentID: nil, source: .postsList)
     }
 

@@ -81,7 +81,7 @@ public extension Blog {
     /// - Returns: the blog if one was found, otherwise it returns nil
     static func lookup(xmlrpc: String, andRemoveDuplicateBlogsOf account: WPAccount, in context: NSManagedObjectContext) -> Blog? {
         let predicate = NSPredicate(format: "xmlrpc like %@", xmlrpc)
-        let foundBlogs = account.blogs.filter { predicate.evaluate(with: $0) }
+        let foundBlogs = account.blogs?.filter { predicate.evaluate(with: $0) } ?? Set()
 
         guard foundBlogs.count > 1 else {
             return foundBlogs.first
@@ -101,14 +101,8 @@ public extension Blog {
         return blogToReturn
     }
 
-    @objc(countInContext:)
     static func count(in context: NSManagedObjectContext) -> Int {
         BlogQuery().count(in: context)
-    }
-
-    @objc(wpComBlogCountInContext:)
-    static func wpComBlogCount(in context: NSManagedObjectContext) -> Int {
-        BlogQuery().hostedByWPCom(true).count(in: context)
     }
 
     static func hasAnyJetpackBlogs(in context: NSManagedObjectContext) throws -> Bool {
@@ -121,12 +115,6 @@ public extension Blog {
         return Blog.selfHosted(in: context)
             .filter { $0.jetpack?.isConnected == true }
             .count > 0
-    }
-
-    @available(swift, obsoleted: 1.0)
-    @objc(hasAnyJetpackBlogsInContext:)
-    static func objc_hasAnyJetpackBlogs(in context: NSManagedObjectContext) -> Bool {
-        (try? hasAnyJetpackBlogs(in: context)) == true
     }
 
     @objc(selfHostedInContext:)

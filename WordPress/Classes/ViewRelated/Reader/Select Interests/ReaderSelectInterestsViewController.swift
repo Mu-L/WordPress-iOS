@@ -71,7 +71,7 @@ class ReaderSelectInterestsViewController: UIViewController {
     init(configuration: ReaderSelectInterestsConfiguration = .default, topics: [ReaderTagTopic] = []) {
         self.configuration = configuration
         self.topics = topics
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "ReaderSelectInterestsViewController", bundle: .keystone)
     }
 
     required init?(coder: NSCoder) {
@@ -138,8 +138,7 @@ class ReaderSelectInterestsViewController: UIViewController {
 
     // MARK: - Private: Configuration
     private func configureCollectionView() {
-        let nib = UINib(nibName: String(describing: ReaderInterestsCollectionViewCell.self), bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: Constants.reuseIdentifier)
+        collectionView.register(ReaderInterestsCollectionViewCell.defaultNib, forCellWithReuseIdentifier: Constants.reuseIdentifier)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Constants.defaultCellIdentifier)
 
         guard let layout = collectionView.collectionViewLayout as? ReaderInterestsCollectionViewFlowLayout else {
@@ -447,5 +446,25 @@ extension ReaderSelectInterestsConfiguration {
             buttonTitle: (enabled: buttonTitleEnabled, disabled: buttonTitleDisabled),
             loading: loading
         )
+    }
+}
+
+extension ReaderSelectInterestsViewController {
+    static func show(
+        from presentingViewController: UIViewController,
+        viewContext: NSManagedObjectContext = ContextManager.shared.mainContext
+    ) {
+        let tags = viewContext.allObjects(
+            ofType: ReaderTagTopic.self,
+            matching: ReaderSidebarTagsSection.predicate,
+            sortedBy: [NSSortDescriptor(SortDescriptor<ReaderTagTopic>(\.title, order: .forward))]
+        )
+        let interestsVC = ReaderSelectInterestsViewController(topics: tags)
+        interestsVC.didSaveInterests = { [weak interestsVC] _ in
+            interestsVC?.presentingViewController?.dismiss(animated: true)
+        }
+        let navigationVC = UINavigationController(rootViewController: interestsVC)
+        navigationVC.modalPresentationStyle = .formSheet
+        presentingViewController.present(navigationVC, animated: true, completion: nil)
     }
 }

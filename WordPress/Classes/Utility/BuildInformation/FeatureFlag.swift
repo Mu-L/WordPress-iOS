@@ -1,7 +1,15 @@
+import BuildSettingsKit
+
 /// FeatureFlag exposes a series of features to be conditionally enabled on
 /// different builds.
 @objc
-enum FeatureFlag: Int, CaseIterable {
+public enum FeatureFlag: Int, CaseIterable {
+    case signUp
+    case customAppIcons
+    case domainRegistration
+    case selfHostedSites
+    case whatsNew
+    case qrCodeLogin
     case bloggingPrompts
     case jetpackDisconnect
     case siteIconCreator
@@ -13,24 +21,42 @@ enum FeatureFlag: Int, CaseIterable {
     case authenticateUsingApplicationPassword
     case newGutenberg
     case newGutenbergThemeStyles
-    case newGutenbergPlugins
     case selfHostedSiteUserManagement
     case readerGutenbergCommentComposer
     case pluginManagementOverhaul
+    case nativeJetpackConnection
 
-    /// Returns a boolean indicating if the feature is enabled
+    /// Returns a boolean indicating if the feature is enabled.
+    ///
+    /// - warning: If the feature is unconditionally enabled, it doesn't mean
+    /// that the flag can be removed. It provides a capability of conditionally
+    /// disabling a feature if necessary. Use your best judgmenet.
     var enabled: Bool {
         if let overriddenValue = FeatureFlagOverrideStore().overriddenValue(for: self) {
             return overriddenValue
         }
 
+        let app = BuildSettings.current.brand
+
         switch self {
+        case .signUp:
+            return true
+        case .customAppIcons:
+            return true
+        case .domainRegistration:
+            return app == .jetpack || app == .reader
+        case .selfHostedSites:
+            return app != .reader
+        case .whatsNew:
+            return true
+        case .qrCodeLogin:
+            return app == .jetpack
         case .bloggingPrompts:
-            return AppConfiguration.isJetpack
+            return app == .jetpack || app == .reader
         case .jetpackDisconnect:
-            return BuildConfiguration.current == .localDeveloper
+            return BuildConfiguration.current == .debug
         case .siteIconCreator:
-            return BuildConfiguration.current != .appStore
+            return BuildConfiguration.current.isInternal
         case .betaSiteDesigns:
             return false
         case .commentModerationUpdate:
@@ -40,14 +66,12 @@ enum FeatureFlag: Int, CaseIterable {
         case .googleDomainsCard:
             return false
         case .voiceToContent:
-            return AppConfiguration.isJetpack && BuildConfiguration.current ~= [.localDeveloper, .a8cBranchTest]
+            return app == .jetpack && BuildConfiguration.current.isInternal
         case .authenticateUsingApplicationPassword:
             return false
         case .newGutenberg:
-            return false
+            return app == .reader
         case .newGutenbergThemeStyles:
-            return false
-        case .newGutenbergPlugins:
             return false
         case .selfHostedSiteUserManagement:
             return false
@@ -55,6 +79,8 @@ enum FeatureFlag: Int, CaseIterable {
             return false
         case .pluginManagementOverhaul:
             return false
+        case .nativeJetpackConnection:
+            return BuildConfiguration.current == .debug
         }
     }
 
@@ -66,17 +92,23 @@ enum FeatureFlag: Int, CaseIterable {
 /// Objective-C bridge for FeatureFlag.
 ///
 /// Since we can't expose properties on Swift enums we use a class instead
-class Feature: NSObject {
+public class Feature: NSObject {
     /// Returns a boolean indicating if the feature is enabled
-    @objc static func enabled(_ feature: FeatureFlag) -> Bool {
+    @objc public static func enabled(_ feature: FeatureFlag) -> Bool {
         return feature.enabled
     }
 }
 
 extension FeatureFlag {
     /// Descriptions used to display the feature flag override menu in debug builds
-    var description: String {
+    public var description: String {
         return switch self {
+        case .signUp: "Sign Up"
+        case .customAppIcons: "Custom App Icons"
+        case .domainRegistration: "Domain Registration"
+        case .selfHostedSites: "Self-Hosted Sites"
+        case .whatsNew: "What's New"
+        case .qrCodeLogin: "QR Code Login"
         case .bloggingPrompts: "Blogging Prompts"
         case .jetpackDisconnect: "Jetpack disconnect"
         case .siteIconCreator: "Site Icon Creator"
@@ -88,10 +120,10 @@ extension FeatureFlag {
         case .authenticateUsingApplicationPassword: "Application Passwords for self-hosted sites"
         case .newGutenberg: "Experimental Block Editor"
         case .newGutenbergThemeStyles: "Experimental Block Editor Styles"
-        case .newGutenbergPlugins: "Experimental Block Editor Plugins"
         case .selfHostedSiteUserManagement: "Self-hosted Site User Management"
         case .pluginManagementOverhaul: "Plugin Management Overhaul"
         case .readerGutenbergCommentComposer: "Gutenberg Comment Composer"
+        case .nativeJetpackConnection: "Native Jetpack Connection"
         }
     }
 }

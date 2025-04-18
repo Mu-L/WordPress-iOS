@@ -1,12 +1,13 @@
-import Foundation
-import UIKit
-import SwiftUI
 import Combine
+import Foundation
+import SwiftUI
+import UIKit
+import WordPressData
 import WordPressUI
 
 /// Manages top-level Reader navigation.
-final class ReaderPresenter: NSObject, SplitViewDisplayable {
-    private let sidebarViewModel = ReaderSidebarViewModel()
+public final class ReaderPresenter: NSObject, SplitViewDisplayable {
+    private let sidebarViewModel: ReaderSidebarViewModel
 
     // The view controllers used during split view presentation.
     let sidebar: ReaderSidebarViewController
@@ -22,7 +23,12 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
 
     private var selectionObserver: AnyCancellable?
 
-    override init() {
+    public convenience override init() {
+        self.init(viewModel: ReaderSidebarViewModel())
+    }
+
+    init(viewModel: ReaderSidebarViewModel) {
+        sidebarViewModel = viewModel
         secondary = UINavigationController()
         sidebar = ReaderSidebarViewController(viewModel: sidebarViewModel)
         sidebar.navigationItem.largeTitleDisplayMode = .automatic
@@ -35,7 +41,7 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
     }
 
     // TODO: (reader) update to allow seamless transitions between split view and tabs
-    @objc func prepareForTabBarPresentation() -> UINavigationController {
+    @objc public func prepareForTabBarPresentation() -> UINavigationController {
         guard AccountHelper.isDotcomAvailable() else {
             return UINavigationController(rootViewController: ReaderLoggedOutViewController())
         }
@@ -48,6 +54,24 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
         mainNavigationController = UINavigationController(rootViewController: sidebar) // Loads sidebar lazily
         mainNavigationController.navigationBar.prefersLargeTitles = true
         sidebar.navigationItem.backButtonDisplayMode = .minimal
+        return mainNavigationController
+    }
+
+    // TODO: (reader) rework
+    /// Returns the sidebar screen updated to act a a "Library" tab in the
+    /// standalone Reader app.
+    func prepareForLibraryPresentation() -> UIViewController {
+        sidebarViewModel.isCompact = true
+        sidebar.onViewDidLoad = { [weak self] in
+            self?.showInitialSelection()
+        }
+        mainNavigationController = UINavigationController(rootViewController: sidebar) // Loads sidebar lazily
+        mainNavigationController.navigationBar.prefersLargeTitles = true
+
+        sidebar.title = SharedStrings.Reader.library
+        sidebar.navigationItem.largeTitleDisplayMode = .always
+        mainNavigationController.navigationBar.prefersLargeTitles = true
+
         return mainNavigationController
     }
 
@@ -123,6 +147,12 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
             return ReaderStreamViewController.controllerForContentType(.saved)
         case .search:
             return ReaderSearchViewController()
+        case .subscrtipions:
+            return makeAllSubscriptionsViewController()
+        case .tags:
+            return makeTagsViewController()
+        case .lists:
+            return makeListsViewController()
         }
     }
 
@@ -132,7 +162,29 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
             self?.push(streamVC)
         }.environment(\.managedObjectContext, viewContext)
         let hostVC = UIHostingController(rootView: view)
-        hostVC.title = ReaderSubscriptionsView.navigationTitle
+        hostVC.title = SharedStrings.Reader.subscriptions
+        if sidebarViewModel.isCompact {
+            hostVC.navigationItem.largeTitleDisplayMode = .never
+        }
+        return hostVC
+    }
+
+    private func makeTagsViewController() -> UIViewController {
+        let tagsVC = ReaderTagsTableViewController(style: .plain)
+        tagsVC.title = SharedStrings.Reader.tags
+        if sidebarViewModel.isCompact {
+            tagsVC.navigationItem.largeTitleDisplayMode = .never
+        }
+        return tagsVC
+    }
+
+    private func makeListsViewController() -> UIViewController {
+        let view = ReaderListsView() { [weak self] selection in
+            let streamVC = ReaderStreamViewController.controllerWithTopic(selection)
+            self?.push(streamVC)
+        }.environment(\.managedObjectContext, viewContext)
+        let hostVC = UIHostingController(rootView: view)
+        hostVC.title = SharedStrings.Reader.lists
         if sidebarViewModel.isCompact {
             hostVC.navigationItem.largeTitleDisplayMode = .never
         }
@@ -151,18 +203,7 @@ final class ReaderPresenter: NSObject, SplitViewDisplayable {
             addTagVC.preferredContentSize = CGSize(width: 420, height: preferredHeight)
             sidebar.present(addTagVC, animated: true, completion: nil)
         case .discoverTags:
-            let tags = viewContext.allObjects(
-                ofType: ReaderTagTopic.self,
-                matching: ReaderSidebarTagsSection.predicate,
-                sortedBy: [NSSortDescriptor(SortDescriptor<ReaderTagTopic>(\.title, order: .forward))]
-            )
-            let interestsVC = ReaderSelectInterestsViewController(topics: tags)
-            interestsVC.didSaveInterests = { [weak self] _ in
-                self?.sidebar.dismiss(animated: true)
-            }
-            let navigationVC = UINavigationController(rootViewController: interestsVC)
-            navigationVC.modalPresentationStyle = .formSheet
-            sidebar.present(navigationVC, animated: true, completion: nil)
+            ReaderSelectInterestsViewController.show(from: sidebar)
         }
     }
 

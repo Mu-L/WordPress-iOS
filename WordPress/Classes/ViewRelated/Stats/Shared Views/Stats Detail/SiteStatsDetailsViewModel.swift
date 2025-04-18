@@ -1,6 +1,7 @@
 import Foundation
 import WordPressFlux
 import Combine
+import WordPressShared
 
 /// The view model used by SiteStatsDetailTableViewController to show
 /// all data for a selected stat.
@@ -888,7 +889,7 @@ private extension SiteStatsDetailsViewModel {
         var detailDataRows = [DetailDataRow]()
 
         for (idx, rowData) in rowsData.enumerated() {
-            let isLastRow = idx == rowsData.endIndex-1 && status != .loading
+            let isLastRow = idx == rowsData.endIndex - 1 && status != .loading
             detailDataRows.append(DetailDataRow(rowData: rowData,
                                                 detailsDelegate: detailsDelegate,
                                                 hideIndentedSeparator: isLastRow,
@@ -915,7 +916,7 @@ private extension SiteStatsDetailsViewModel {
                 return false
             }()
 
-            let isLastRow = idx == rowsData.endIndex-1 && status != .loading
+            let isLastRow = idx == rowsData.endIndex - 1 && status != .loading
 
             // Toggle the indented separator line based on expanded states.
             // If the current row is expanded, hide the separator.
@@ -935,7 +936,7 @@ private extension SiteStatsDetailsViewModel {
 
             // Add child rows
             for (idx, childRowData) in childRowsData.enumerated() {
-                let isLastRow = idx == childRowsData.endIndex-1
+                let isLastRow = idx == childRowsData.endIndex - 1
 
                 // If this is the last child row, toggle the full separator based on
                 // next parent's expanded state to prevent duplicate lines.
@@ -982,7 +983,7 @@ private extension SiteStatsDetailsViewModel {
 
                     // If this is the last grandchild row, toggle the full separator based on
                     // next child's expanded state to prevent duplicate lines.
-                    let hideFullSeparator = (idx == grandChildRowsData.endIndex-1) ? nextChildExpanded : true
+                    let hideFullSeparator = (idx == grandChildRowsData.endIndex - 1) ? nextChildExpanded : true
 
                     detailDataRows.append(childRow(rowData: grandChildRowData,
                                                    hideFullSeparator: hideFullSeparator,

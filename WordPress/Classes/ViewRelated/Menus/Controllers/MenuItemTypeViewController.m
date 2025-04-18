@@ -2,8 +2,13 @@
 #import "MenuItemTypeSelectionView.h"
 #import "BlogService.h"
 #import "Blog.h"
+#import "MenuItem.h"
 #import "PostType.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @interface MenuItemTypeViewController () <MenuItemTypeViewDelegate>
 

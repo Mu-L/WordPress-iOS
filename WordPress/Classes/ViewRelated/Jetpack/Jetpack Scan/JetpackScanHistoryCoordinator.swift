@@ -1,4 +1,5 @@
 import Foundation
+import WordPressShared
 
 class JetpackScanHistoryCoordinator {
     private let service: JetpackScanService
@@ -35,7 +36,7 @@ class JetpackScanHistoryCoordinator {
     init(blog: Blog,
          view: JetpackScanHistoryView,
          service: JetpackScanService? = nil,
-         coreDataStack: CoreDataStack = ContextManager.shared) {
+         coreDataStack: CoreDataStackSwift = ContextManager.shared) {
 
         self.service = service ?? JetpackScanService(coreDataStack: coreDataStack)
         self.blog = blog
@@ -88,14 +89,13 @@ class JetpackScanHistoryCoordinator {
         threatsDidChange()
     }
 
-    private func refreshDidFail(with error: Error? = nil) {
+    private func refreshDidFail(
+        with error: Error? = nil,
+        connectionAvailable: Bool = ReachabilityUtils.connectionAvailable
+    ) {
         isLoading = false
 
-        let appDelegate = WordPressAppDelegate.shared
-
-        guard
-            let connectionAvailable = appDelegate?.connectionAvailable, connectionAvailable == true
-        else {
+        guard connectionAvailable else {
             view.showNoConnectionError()
             actionButtonState = .tryAgain
 

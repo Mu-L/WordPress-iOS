@@ -1,6 +1,7 @@
 import UIKit
 import Gridicons
 import WordPressShared
+import WordPressUI
 
 /// Displays a list of available keyring connection accounts that can be used to
 /// forge a publicize connection.
@@ -10,7 +11,7 @@ import WordPressShared
     @objc var keyringConnections: [KeyringConnection]
     @objc var existingPublicizeConnections: [PublicizeConnection]?
     @objc var immutableHandler: ImmuTableViewHandler!
-    @objc weak var delegate: SharingAccountSelectionDelegate?
+    @objc public weak var delegate: SharingAccountSelectionDelegate?
     private let keyringAccountHelper = KeyringAccountHelper()
 
     fileprivate lazy var noResultsViewController: NoResultsViewController = {
@@ -24,7 +25,7 @@ import WordPressShared
 
     // MARK: - Lifecycle Methods
 
-    @objc init(service: PublicizeService, connections: [KeyringConnection], existingConnections: [PublicizeConnection]?) {
+    @objc public init(service: PublicizeService, connections: [KeyringConnection], existingConnections: [PublicizeConnection]?) {
         publicizeService = service
         keyringConnections = connections
         existingPublicizeConnections = existingConnections
@@ -128,7 +129,7 @@ import WordPressShared
             return nil
         }
 
-        var title =  NSLocalizedString("Connecting %@", comment: "Connecting is a verb. Title of Publicize account selection. The %@ is a placeholder for the service's name")
+        var title = NSLocalizedString("Connecting %@", comment: "Connecting is a verb. Title of Publicize account selection. The %@ is a placeholder for the service's name")
         title = NSString(format: title as NSString, publicizeService.label) as String
 
         let manyAccountFooter = NSLocalizedString("Select the account you would like to authorize. Note that your posts will be automatically shared to the selected account.", comment: "Instructional text about the Sharing feature.")
@@ -240,7 +241,7 @@ import WordPressShared
 
 /// Delegate protocol.
 ///
-@objc protocol SharingAccountSelectionDelegate: NSObjectProtocol {
+@objc public protocol SharingAccountSelectionDelegate: NSObjectProtocol {
     func didDismissSharingAccountViewController(_ controller: SharingAccountViewController)
     func sharingAccountViewController(_ controller: SharingAccountViewController, selectedKeyringConnection keyringConnection: KeyringConnection, externalID: String?)
 }

@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 VERSION_LONG = 25.8.0.1
+=======
+VERSION_LONG = 25.8.0.2
+>>>>>>> trunk
 VERSION_SHORT = 25.8

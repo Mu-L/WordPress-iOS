@@ -1,5 +1,7 @@
 import Foundation
+import WordPressData
 import WordPressFlux
+import WordPressShared
 
 import class AutomatticTracks.CrashLogging
 import enum Alamofire.AFError
@@ -428,9 +430,7 @@ class MediaCoordinator: NSObject {
         }
 
         let properties = info.properties(for: media)
-        WPAppAnalytics.track(event,
-                             withProperties: properties,
-                             with: media.blog)
+        WPAppAnalytics.track(event, properties: properties, blog: media.blog)
     }
 
     private func trackRetryUploadOf(_ media: Media, analyticsInfo: MediaAnalyticsInfo?) {
@@ -440,9 +440,7 @@ class MediaCoordinator: NSObject {
         }
 
         let properties = info.properties(for: media)
-        WPAppAnalytics.track(event,
-                             withProperties: properties,
-                             with: media.blog)
+        WPAppAnalytics.track(event, properties: properties, blog: media.blog)
     }
 
     func trackPausedUploadOf(_ media: Media, analyticsInfo: MediaAnalyticsInfo?) {
@@ -452,7 +450,7 @@ class MediaCoordinator: NSObject {
 
         let event = info.pausedEvent
         let properties = info.properties(for: media)
-        WPAppAnalytics.track(event, withProperties: properties, with: media.blog)
+        WPAppAnalytics.track(event, properties: properties, blog: media.blog)
     }
 
     // MARK: - Progress

@@ -1,4 +1,5 @@
 import UIKit
+import WordPressShared
 
 class SelectPostViewController: UITableViewController {
 
@@ -75,7 +76,7 @@ class SelectPostViewController: UITableViewController {
 extension SelectPostViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let count =  fetchController.sections?.count else {
+        guard let count = fetchController.sections?.count else {
             return 0
         }
 

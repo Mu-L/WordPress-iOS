@@ -1,14 +1,17 @@
 #import "ReaderPostService.h"
 
 #import "AccountService.h"
-#import "CoreDataStack.h"
 #import "ReaderGapMarker.h"
 #import "ReaderPost.h"
 #import "ReaderSiteService.h"
 #import "SourcePostAttribution.h"
 #import "WPAccount.h"
 #import "WPAppAnalytics.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressKit;
 @import WordPressShared;
@@ -26,6 +29,15 @@ NSString * const ReaderPostServiceToggleSiteFollowingState = @"ReaderPostService
 static NSString * const ReaderPostGlobalIDKey = @"globalID";
 
 @implementation ReaderPostService
+
+- (instancetype)initWithCoreDataStack:(id<CoreDataStack>)coreDataStack
+{
+    self = [super init];
+    if (self) {
+        _coreDataStack = coreDataStack;
+    }
+    return self;
+}
 
 #pragma mark - Fetch Methods
 
@@ -348,19 +360,19 @@ static NSString * const ReaderPostGlobalIDKey = @"globalID";
 
     // Define success block
     void (^successBlock)(void) = ^void() {
-        
+
         // Update subscription count
         NSInteger oldSubscriptionCount = [WPAnalytics subscriptionCount];
         NSInteger newSubscriptionCount = follow ? oldSubscriptionCount + 1 : oldSubscriptionCount - 1;
         [WPAnalytics setSubscriptionCount:newSubscriptionCount];
-        
+
         if (shouldRefreshFollowedPosts) {
             [self refreshPostsForFollowedTopic];
         }
         if (success) {
             success(follow);
         }
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             //Notifiy Settings view controller a site's following state has changed
             [[NSNotificationCenter defaultCenter] postNotificationName:ReaderPostServiceToggleSiteFollowingState object:nil];
@@ -672,20 +684,20 @@ static NSString * const ReaderPostGlobalIDKey = @"globalID";
 - (NSError *)validatePostForSeenToggle:(ReaderPost *)post
 {
     NSString *description = nil;
-    
+
     if (post.isWPCom && post.postID == nil) {
         DDLogError(@"Could not toggle Seen: missing postID.");
         description = NSLocalizedString(@"Could not toggle Seen: missing postID.", @"An error description explaining that Seen could not be toggled due to a missing postID.");
-        
+
     } else if (!post.isWPCom && post.feedItemID == nil) {
         DDLogError(@"Could not toggle Seen: missing feedItemID.");
         description = NSLocalizedString(@"Could not toggle Seen: missing feedItemID.", @"An error description explaining that Seen could not be toggled due to a missing feedItemID.");
     }
-    
+
     if (description == nil) {
         return nil;
     }
-    
+
     NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : description };
     NSError *error = [NSError errorWithDomain:ReaderPostServiceErrorDomain code:0 userInfo:userInfo];
     return error;
@@ -1076,7 +1088,7 @@ static NSString * const ReaderPostGlobalIDKey = @"globalID";
 
 /**
  Delete posts that are flagged as belonging to a blocked site.
- 
+
  The managed object context is not saved.
  */
 - (void)deletePostsFromBlockedSites

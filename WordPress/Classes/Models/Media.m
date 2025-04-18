@@ -1,6 +1,9 @@
 #import "Media.h"
-#import "CoreDataStack.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @implementation Media
 
@@ -187,19 +190,6 @@
         DDLogInfo(@"Error removing media files:%@", error);
     }
     [super prepareForDeletion];
-}
-
-- (void)remove
-{
-    [self.managedObjectContext performBlockAndWait:^{
-        [self.managedObjectContext deleteObject:self];
-        [[ContextManager sharedInstance] saveContextAndWait:self.managedObjectContext];
-    }];
-}
-
-- (void)save
-{
-    [[ContextManager sharedInstance] saveContext:self.managedObjectContext];
 }
 
 - (BOOL)hasRemote {

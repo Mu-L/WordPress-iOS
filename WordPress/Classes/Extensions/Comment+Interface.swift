@@ -1,3 +1,5 @@
+import Foundation
+
 /// Allows comment objects to be sectioned by relative date.
 ///
 /// This implementation is copied from Notification+Interface.swift. It pains me having to copy paste code,
@@ -9,7 +11,7 @@ extension Comment {
     /// readable, and you should use the *descriptionForSectionIdentifier* method
     /// as well!
     ///
-    @objc func relativeDateSectionIdentifier() -> String? {
+    @objc public func relativeDateSectionIdentifier() -> String? {
         guard let dateCreated else {
             return nil
         }
@@ -44,7 +46,7 @@ extension Comment {
 
     /// Translates a relative date section identifier into a human-readable string.
     ///
-    @objc static func descriptionForSectionIdentifier(_ identifier: String) -> String {
+    @objc public static func descriptionForSectionIdentifier(_ identifier: String) -> String {
         guard let section = Sections(rawValue: identifier) else {
             return String()
         }
@@ -55,11 +57,11 @@ extension Comment {
     // MARK: - Private Helpers
 
     private enum Sections: String {
-        case Months     = "0"
-        case Weeks      = "2"
-        case Days       = "4"
-        case Yesterday  = "5"
-        case Today      = "6"
+        case Months = "0"
+        case Weeks = "2"
+        case Days = "4"
+        case Yesterday = "5"
+        case Today = "6"
 
         var description: String {
             switch self {

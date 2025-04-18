@@ -1,5 +1,6 @@
 import UIKit
 import Lottie
+import WordPressUI
 
 class JetpackFullscreenOverlayViewController: UIViewController {
 
@@ -60,7 +61,7 @@ class JetpackFullscreenOverlayViewController: UIViewController {
 
     init(with viewModel: JetpackFullscreenOverlayViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "JetpackFullscreenOverlayViewController", bundle: .keystone)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -1,7 +1,7 @@
 import Foundation
 import WordPressShared
 
-open class ReaderBlockedSiteCell: UITableViewCell {
+open class ReaderBlockedSiteCell: UITableViewCell, NibLoadable {
     @IBOutlet fileprivate weak var borderedContentView: UIView!
     @IBOutlet fileprivate weak var label: UILabel!
 
@@ -38,4 +38,19 @@ open class ReaderBlockedSiteCell: UITableViewCell {
         label.attributedText = attrStr
     }
 
+}
+
+private extension NSAttributedString.Key {
+    /// Converts a collection of NSAttributedString Attributes, with 'String' instances as 'Keys', into an equivalent
+    /// collection that uses the new 'NSAttributedStringKey' enum as keys.
+    ///
+    static func convertFromRaw(attributes: [String: Any]) -> [NSAttributedString.Key: Any] {
+        var output = [NSAttributedString.Key: Any]()
+        for (key, value) in attributes {
+            let wrappedKey = NSAttributedString.Key(key)
+            output[wrappedKey] = value
+        }
+
+        return output
+    }
 }

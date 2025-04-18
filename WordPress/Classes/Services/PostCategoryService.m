@@ -1,8 +1,11 @@
 #import "PostCategoryService.h"
 #import "PostCategory.h"
 #import "Blog.h"
-#import "CoreDataStack.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 @import WordPressKit;
 
 NS_ASSUME_NONNULL_BEGIN

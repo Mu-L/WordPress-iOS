@@ -1,8 +1,8 @@
 import Foundation
+import BuildSettingsKit
 import SVProgressHUD
-import WordPressShared
 import WordPressFlux
-import AsyncImageKit
+import WordPressShared
 import UIKit
 import Combine
 import WordPressUI
@@ -137,7 +137,7 @@ import AutomatticTracks
             if let newTopic = readerTopic,
                let context = newTopic.managedObjectContext {
                 newTopic.inUse = true
-                ContextManager.sharedInstance().save(context)
+                ContextManager.shared.save(context)
             }
 
             if readerTopic != nil && readerTopic != oldValue {
@@ -198,6 +198,8 @@ import AutomatticTracks
             didChangeIsCompact(isCompact)
         }
     }
+
+    private let isStandaloneAppModeEnabled = BuildSettings.current.brand == .reader
 
     private var emptyStateView: UIView? {
         didSet {
@@ -275,7 +277,7 @@ import AutomatticTracks
     deinit {
         if let topic = readerTopic {
             topic.inUse = false
-            ContextManager.sharedInstance().save(topic.managedObjectContext!)
+            ContextManager.shared.save(topic.managedObjectContext!)
         }
 
         NotificationCenter.default.removeObserver(self)
@@ -332,7 +334,7 @@ import AutomatticTracks
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        let mainContext = ContextManager.sharedInstance().mainContext
+        let mainContext = ContextManager.shared.mainContext
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NSManagedObjectContextDidSave, object: mainContext)
 
         bumpStats()
@@ -410,7 +412,7 @@ import AutomatticTracks
             isFeed: isFeed,
             success: { [weak self] (objectID: NSManagedObjectID?, isFollowing: Bool) in
 
-                let context = ContextManager.sharedInstance().mainContext
+                let context = ContextManager.shared.mainContext
                 guard let objectID,
                       let topic = (try? context.existingObject(with: objectID)) as? ReaderAbstractTopic else {
                     DDLogError("Reader: Error retriving an existing site topic by its objectID")
@@ -436,23 +438,21 @@ import AutomatticTracks
         if isViewLoaded {
             displayLoadingStream()
         }
-        assert(tagSlug != nil, "A tag slug is requred before fetching a tag topic")
+        guard let tagSlug else {
+            return wpAssertionFailure("tag slug is missing")
+        }
         let service = ReaderTopicService(coreDataStack: ContextManager.shared)
-        service.tagTopicForTag(withSlug: tagSlug,
-            success: { [weak self] (objectID: NSManagedObjectID?) in
-
-                let context = ContextManager.sharedInstance().mainContext
-                guard let objectID, let topic = (try? context.existingObject(with: objectID)) as? ReaderAbstractTopic else {
-                    DDLogError("Reader: Error retriving an existing tag topic by its objectID")
-                    self?.displayLoadingStreamFailed()
-                    return
-                }
-                self?.readerTopic = topic
-
-            },
-            failure: { [weak self] (error: Error?) in
+        service.tagTopicForTag(withSlug: tagSlug, success: { [weak self] objectID in
+            let context = ContextManager.shared.mainContext
+            guard let objectID, let topic = (try? context.existingObject(with: objectID)) as? ReaderAbstractTopic else {
+                DDLogError("Reader: Error retriving an existing tag topic by its objectID")
                 self?.displayLoadingStreamFailed()
-            })
+                return
+            }
+            self?.readerTopic = topic
+        }, failure: { [weak self] _ in
+            self?.displayLoadingStreamFailed()
+        })
     }
 
     // MARK: - Setup
@@ -481,6 +481,8 @@ import AutomatticTracks
     }
 
     private func setupButtonScrollToTop() {
+        guard !isStandaloneAppModeEnabled else { return }
+
         view.addSubview(buttonScrollToTop)
         buttonScrollToTop.pinEdges([.leading, .bottom], to: view.safeAreaLayoutGuide, insets: isCompact ? UIEdgeInsets(horizontal: 8, vertical: 16) : UIEdgeInsets(.all, 20))
     }
@@ -634,20 +636,20 @@ import AutomatticTracks
 
     private func removeBlockedPosts() {
         // Fetch account
-        guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: viewContext) else {
+        guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: viewContext), let userID = account.userID else {
             return
         }
 
         // Author Predicate
         var predicates = [NSPredicate]()
-        let blockedAuthors = BlockedAuthor.find(.accountID(account.userID), context: viewContext).map { $0.authorID }
+        let blockedAuthors = BlockedAuthor.find(.accountID(userID), context: viewContext).map { $0.authorID }
         if !blockedAuthors.isEmpty {
             predicates.append(NSPredicate(format: "\(#keyPath(ReaderPost.authorID)) IN %@", blockedAuthors))
         }
 
         // Site Predicate
         if let topic = readerTopic as? ReaderSiteTopic,
-           let blocked = BlockedSite.findOne(accountID: account.userID, blogID: topic.siteID, context: viewContext) {
+           let blocked = BlockedSite.findOne(accountID: userID, blogID: topic.siteID, context: viewContext) {
             predicates.append(NSPredicate(format: "\(#keyPath(ReaderPost.siteID)) = %@", blocked.blogID))
         }
 
@@ -791,21 +793,17 @@ import AutomatticTracks
     ///     - objectID: The objectID of the topic that was synced.
     ///
     private func updateLastSyncedForTopic(_ objectID: NSManagedObjectID) {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         guard let topic = (try? context.existingObject(with: objectID)) as? ReaderAbstractTopic else {
             DDLogError("Failed to retrive an existing topic when updating last sync date.")
             return
         }
         topic.lastSynced = Date()
-        ContextManager.sharedInstance().save(context)
+        ContextManager.shared.save(context)
     }
 
     private func canSync() -> Bool {
         return (readerTopic != nil || isLoadingDiscover) && connectionAvailable()
-    }
-
-    @objc func connectionAvailable() -> Bool {
-        return WordPressAppDelegate.shared?.connectionAvailable ?? false
     }
 
     /// Kicks off a "background" sync without updating the UI if certain conditions
@@ -1450,12 +1448,6 @@ extension ReaderStreamViewController: WPTableViewHandlerDelegate {
 
         if let topic = post.topic, ReaderHelpers.isTopicSearchTopic(topic) {
             WPAppAnalytics.track(.readerSearchResultTapped)
-
-            // We can use `if let` when `ReaderPost` adopts nullability.
-            let railcar = post.railcarDictionary()
-            if railcar != nil {
-                WPAppAnalytics.trackTrainTracksInteraction(.readerSearchResultTapped, withProperties: railcar)
-            }
         }
 
         let controller = ReaderDetailViewController.controllerWithPost(post)

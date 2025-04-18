@@ -11,13 +11,13 @@ class MediaNoticeNavigationCoordinator {
     }
 
     static func presentEditor(for blog: Blog, source: String, media: [Media]) {
-        WPAppAnalytics.track(.notificationsUploadMediaSuccessWritePost, with: blog)
+        WPAppAnalytics.track(.notificationsUploadMediaSuccessWritePost, blog: blog)
 
         let editor = EditPostViewController(blog: blog)
         editor.modalPresentationStyle = .fullScreen
         editor.insertedMedia = media
         RootViewCoordinator.sharedPresenter.rootViewController.present(editor, animated: false)
-        WPAppAnalytics.track(.editorCreatedPost, withProperties: [WPAppAnalyticsKeyTapSource: source, WPAppAnalyticsKeyPostType: "post"], with: blog)
+        WPAppAnalytics.track(.editorCreatedPost, properties: [WPAppAnalyticsKeyTapSource: source, WPAppAnalyticsKeyPostType: "post"], blog: blog)
     }
 
     static func navigateToMediaLibrary(with userInfo: NSDictionary) {
@@ -32,7 +32,7 @@ class MediaNoticeNavigationCoordinator {
     }
 
     private static func blog(from userInfo: NSDictionary) -> Blog? {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         guard let blogID = userInfo[MediaNoticeUserInfoKey.blogID] as? String,
             let URIRepresentation = URL(string: blogID),
@@ -54,7 +54,7 @@ class MediaNoticeNavigationCoordinator {
     }
 
     private static func media(from userInfo: NSDictionary, withKey key: String) -> [Media] {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         if let mediaIDs = userInfo[key] as? [String] {
             let media = mediaIDs.compactMap({ mediaID -> Media? in

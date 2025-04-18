@@ -1,7 +1,8 @@
 import Foundation
+import BuildSettingsKit
+import WordPressShared
 
 extension WPAnalytics {
-
     /// Checks if the Domain Purchasing Feature Flag is enabled.
     private static var domainPurchasingEnabled: Bool {
         RemoteFeatureFlag.plansInSiteCreation.enabled()
@@ -52,4 +53,11 @@ extension WPAnalytics {
 enum DomainsAnalyticsWebViewOrigin: String {
     case siteCreation = "site_creation"
     case menu
+}
+
+// TODO: remove when WPAppAnalyticsTests get rewritten, preferably in Swift
+@objc final class WPAnalyticsTesting: NSObject {
+    @objc static var eventNamePrefix: String?
+    @objc static var explatPlatform: String?
+    @objc static var appURLScheme: String?
 }

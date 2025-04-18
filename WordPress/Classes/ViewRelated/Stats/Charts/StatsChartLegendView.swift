@@ -1,5 +1,6 @@
-
 import UIKit
+import WordPressUI
+import WordPressShared
 
 // MARK: StatsChartLegendView
 
@@ -8,12 +9,12 @@ class StatsChartLegendView: UIView {
     // MARK: Properties
 
     private struct Constants {
-        static let capsuleCornerRadius  = CGFloat(2)
-        static let capsuleHeight        = CGFloat(8)
-        static let capsuleWidth         = CGFloat(16)
-        static let intrinsicHeight      = CGFloat(16)
-        static let intrinsicWidth       = CGFloat(72)
-        static let spacing              = CGFloat(8)
+        static let capsuleCornerRadius = CGFloat(2)
+        static let capsuleHeight = CGFloat(8)
+        static let capsuleWidth = CGFloat(16)
+        static let intrinsicHeight = CGFloat(16)
+        static let intrinsicWidth = CGFloat(72)
+        static let spacing = CGFloat(8)
     }
 
     private let capsule: UIView

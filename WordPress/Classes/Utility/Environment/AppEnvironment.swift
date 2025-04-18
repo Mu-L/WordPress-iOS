@@ -1,4 +1,3 @@
-
 import Foundation
 import WordPressKit
 
@@ -8,11 +7,8 @@ struct AppEnvironment {
 
     // MARK: - Globals
 
-    /// A type that helps tracking whether or not a user should be prompted for an app review
-    let appRatingUtility: AppRatingUtilityType
-
     /// A type to create derived context, save context, etc...
-    let contextManager: CoreDataStack
+    let contextManager: CoreDataStackSwift
 
     /// The base url to use for WP.com api requests
     let wordPressComApiBase: URL
@@ -32,11 +28,9 @@ struct AppEnvironment {
     // MARK: - Initialization
 
     private init(
-        appRatingUtility: AppRatingUtilityType = AppRatingUtility.shared,
-        contextManager: CoreDataStack = ContextManager.shared,
+        contextManager: CoreDataStackSwift = ContextManager.shared,
         wordPressComApiBase: URL = WordPressComRestApi.apiBaseURL) {
 
-        self.appRatingUtility = appRatingUtility
         self.contextManager = contextManager
         self.wordPressComApiBase = wordPressComApiBase
     }
@@ -47,12 +41,10 @@ extension AppEnvironment {
     ///
     @discardableResult
     static func replaceEnvironment(
-        appRatingUtility: AppRatingUtilityType = AppEnvironment.current.appRatingUtility,
-        contextManager: CoreDataStack = AppEnvironment.current.contextManager,
+        contextManager: CoreDataStackSwift = AppEnvironment.current.contextManager,
         wordPressComApiBase: URL = AppEnvironment.current.wordPressComApiBase) -> AppEnvironment {
 
         current = AppEnvironment(
-            appRatingUtility: appRatingUtility,
             contextManager: contextManager,
             wordPressComApiBase: wordPressComApiBase
         )

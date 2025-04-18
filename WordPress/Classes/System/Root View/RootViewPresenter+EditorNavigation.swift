@@ -1,4 +1,5 @@
 import Foundation
+import WordPressShared
 
 extension RootViewPresenter {
     func currentOrLastBlog() -> Blog? {
@@ -34,7 +35,7 @@ extension RootViewPresenter {
         editor.afterDismiss = afterDismiss
 
         let properties = [WPAppAnalyticsKeyTapSource: "create_button", WPAppAnalyticsKeyPostType: "post"]
-        WPAppAnalytics.track(.editorCreatedPost, withProperties: properties, with: blog)
+        WPAppAnalytics.track(.editorCreatedPost, properties: properties, blog: blog)
         rootViewController.present(editor, animated: false)
     }
 

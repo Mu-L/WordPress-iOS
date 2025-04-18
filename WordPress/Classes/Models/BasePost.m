@@ -1,6 +1,5 @@
 #import "BasePost.h"
 #import "Media.h"
-#import "CoreDataStack.h"
 
 @import WordPressShared;
 

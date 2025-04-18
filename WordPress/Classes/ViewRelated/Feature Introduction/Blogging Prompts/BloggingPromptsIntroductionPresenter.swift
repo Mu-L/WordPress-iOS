@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import WordPressShared
 
 /// Presents the BloggingPromptsFeatureIntroduction with actionable buttons
 /// and directs the flow according to which action button is tapped.
@@ -24,7 +25,7 @@ class BloggingPromptsIntroductionPresenter: NSObject {
 
     private lazy var accountSites: [Blog]? = {
         let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)
-        return account?.blogs.filter { $0.isAccessibleThroughWPCom() }
+        return account?.blogs?.filter { $0.isAccessibleThroughWPCom() }
     }()
 
     private lazy var accountHasMultipleSites: Bool = {
@@ -123,9 +124,7 @@ private extension BloggingPromptsIntroductionPresenter {
     }
 
     func trackPostEditorShown(_ blog: Blog) {
-        WPAppAnalytics.track(.editorCreatedPost,
-                             withProperties: [WPAppAnalyticsKeyTapSource: "blogging_prompts_feature_introduction", WPAppAnalyticsKeyPostType: "post"],
-                             with: blog)
+        WPAppAnalytics.track(.editorCreatedPost, properties: [WPAppAnalyticsKeyTapSource: "blogging_prompts_feature_introduction", WPAppAnalyticsKeyPostType: "post"], blog: blog)
     }
 
     // MARK: Prompt Fetching

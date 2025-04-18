@@ -1,4 +1,5 @@
 import Foundation
+import BuildSettingsKit
 import WordPressAuthenticator
 import WordPressKit
 import WordPressShared
@@ -41,14 +42,14 @@ protocol ZendeskUtilsProtocol {
 /// This class provides the functionality to communicate with Zendesk for Help Center and support ticket interaction,
 /// as well as displaying views for the Help Center, new tickets, and ticket list.
 ///
-@objc class ZendeskUtils: NSObject, ZendeskUtilsProtocol {
+class ZendeskUtils: NSObject, ZendeskUtilsProtocol {
     // MARK: - Public Properties
 
     static var sharedInstance: ZendeskUtils = ZendeskUtils(contextManager: ContextManager.shared)
     static var zendeskEnabled = false
-    @objc static var unreadNotificationsCount = 0
+    static var unreadNotificationsCount = 0
 
-    @objc static var showSupportNotificationIndicator: Bool {
+    static var showSupportNotificationIndicator: Bool {
         return unreadNotificationsCount > 0
     }
 
@@ -99,7 +100,7 @@ protocol ZendeskUtilsProtocol {
         self.contextManager = contextManager
     }
 
-    @objc static func setup() {
+    static func setup() {
         guard getZendeskCredentials() else {
             return
         }
@@ -449,9 +450,9 @@ private extension ZendeskUtils {
 
     static func getZendeskCredentials() -> Bool {
 
-        let zdAppID = ApiCredentials.zendeskAppId
-        let zdUrl = ApiCredentials.zendeskUrl
-        let zdClientId = ApiCredentials.zendeskClientId
+        let zdAppID = BuildSettings.current.secrets.zendesk.appId
+        let zdUrl = BuildSettings.current.secrets.zendesk.url
+        let zdClientId = BuildSettings.current.secrets.zendesk.clientId
 
         guard
             !zdAppID.isEmpty,
@@ -528,7 +529,7 @@ private extension ZendeskUtils {
          2. If not, use selected site.
          */
 
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         // 1. Check for WP account
         if let defaultAccount = try? WPAccount.lookupDefaultWordPressComAccount(in: context) {
@@ -643,12 +644,12 @@ private extension ZendeskUtils {
 
     static func getUserInformationFrom(wpAccount: WPAccount) {
 
-        guard let api = wpAccount.wordPressComRestApi else {
+        guard let api = wpAccount.wordPressComRestApi, let userID = wpAccount.userID else {
             DDLogInfo("Zendesk: No wordPressComRestApi.")
             return
         }
 
-        let service = AccountSettingsService(userID: wpAccount.userID.intValue, api: api)
+        let service = AccountSettingsService(userID: userID.intValue, api: api)
 
         guard let accountSettings = service.settings else {
             DDLogInfo("Zendesk: No accountSettings.")
@@ -753,22 +754,22 @@ private extension ZendeskUtils {
     }
 
     static func getCurrentSiteDescription() -> String {
-        guard let blog = Blog.lastUsed(in: ContextManager.sharedInstance().mainContext) else {
+        guard let blog = Blog.lastUsed(in: ContextManager.shared.mainContext) else {
             return Constants.noValue
         }
 
         let url = blog.url ?? Constants.unknownValue
-        return "\(url) (\(blog.stateDescription()))"
+        return "\(url) (\(blog.stateDescription)"
     }
 
     static func getBlogInformation() -> String {
-        let allBlogs = (try? BlogQuery().blogs(in: ContextManager.sharedInstance().mainContext)) ?? []
+        let allBlogs = (try? BlogQuery().blogs(in: ContextManager.shared.mainContext)) ?? []
         guard allBlogs.count > 0 else {
             return Constants.noValue
         }
 
         let blogInfo: [String] = allBlogs.map {
-            var desc = $0.supportDescription()
+            var desc = $0.supportDescription
             if let blogID = $0.dotComID, let plan = ZendeskUtils.sharedInstance.sitePlansCache[blogID.intValue] {
                 desc = desc + "<Unlocalized Plan: \(plan.name) (\(plan.planID))>" // Do not localize this. :)
             }
@@ -779,7 +780,7 @@ private extension ZendeskUtils {
 
     static func getTags() -> [String] {
 
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         let allBlogs = (try? BlogQuery().blogs(in: context)) ?? []
         var tags = [String]()
 
@@ -1107,7 +1108,6 @@ private extension ZendeskUtils {
         static let unknownValue = "unknown"
         static let noValue = "none"
         static let platformTag = "iOS"
-        static let ticketSubject = AppConstants.Zendesk.ticketSubject
         static let blogSeperator = "\n----------\n"
         static let jetpackTag = "jetpack"
         static let wpComTag = "wpcom"
@@ -1118,9 +1118,20 @@ private extension ZendeskUtils {
         static let profileNameKey = "name"
         static let userDefaultsZendeskUnreadNotifications = "wp_zendesk_unread_notifications"
         static let nameFieldCharacterLimit = 50
-        static let sourcePlatform = AppConstants.zendeskSourcePlatform
+        static var sourcePlatform = BuildSettings.current.zendeskSourcePlatform
         static let gutenbergIsDefault = "mobile_gutenberg_is_default"
         static let mobileSelfHosted = "selected_site_self_hosted"
+
+        static var ticketSubject: String {
+            switch BuildSettings.current.brand {
+            case .wordpress:
+                NSLocalizedString("WordPress for iOS Support", comment: "Subject of new Zendesk ticket.")
+            case .jetpack:
+                NSLocalizedString("Jetpack for iOS Support", comment: "Subject of new Zendesk ticket.")
+            case .reader:
+                NSLocalizedString("support.zendesk.readerAppTicketSubject", value: "Reader for iOS Support", comment: "Subject of new Zendesk ticket.")
+            }
+        }
     }
 
     enum TicketFieldIDs {

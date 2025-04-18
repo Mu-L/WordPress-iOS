@@ -1,4 +1,6 @@
-class PluginListCell: UITableViewCell {
+import UIKit
+
+class PluginListCell: UITableViewCell, NibLoadable {
 
     @IBOutlet var accessoryViewContainer: UIView!
     @IBOutlet var nameLabel: UILabel!

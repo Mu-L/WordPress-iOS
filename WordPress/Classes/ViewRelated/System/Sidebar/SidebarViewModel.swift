@@ -1,6 +1,8 @@
-import Foundation
 import Combine
+import Foundation
+import WordPressData
 import WordPressKit
+import WordPressShared
 
 enum SidebarSelection: Hashable {
     case welcome

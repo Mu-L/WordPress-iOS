@@ -1,9 +1,10 @@
 import Foundation
 import CoreData
+import WordPressShared
 
 // MARK: - NSManagedObject Default entityName Helper
 //
-extension NSManagedObject {
+public extension NSManagedObject {
 
     /// Returns the Entity Name, if available, as specified in the NSEntityDescription. Otherwise, will return
     /// the subclass name.
@@ -29,7 +30,7 @@ extension NSManagedObject {
 
 // MARK: - NSManagedObjectContext Helpers!
 //
-extension NSManagedObjectContext {
+public extension NSManagedObjectContext {
 
     /// Returns all of the entities that match with a given predicate.
     ///
@@ -190,7 +191,7 @@ extension ContextManager.ContextManagerError: LocalizedError, CustomDebugStringC
     }
 }
 
-extension CoreDataStack {
+public extension CoreDataStack {
     /// Perform a query using the `mainContext` and return the result.
     ///
     /// - Warning: Do not return `NSManagedObject` instances from the closure.
@@ -356,7 +357,7 @@ extension CoreDataStack {
     }
 
     private func migrateDatabaseIfNecessary(at databaseLocation: URL) throws {
-        guard let modelFileURL = Bundle.main.url(forResource: "WordPress", withExtension: "momd"),
+        guard let modelFileURL = Bundle(for: ContextManager.self).url(forResource: "WordPress", withExtension: "momd"),
               let objectModel = NSManagedObjectModel(contentsOf: modelFileURL) else {
             return
         }
@@ -386,7 +387,7 @@ extension CoreDataStack {
 ///     return account.username
 /// }
 /// ```
-extension CoreDataStack {
+public extension CoreDataStack {
     @available(*, deprecated, message: "Returning `NSManagedObject` instances may introduce Core Data concurrency issues.")
     func performQuery<T>(_ block: @escaping (NSManagedObjectContext) -> T) -> T where T: NSManagedObject {
         mainContext.performAndWait { [mainContext] in

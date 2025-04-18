@@ -4,7 +4,7 @@ import UIKit
 
 extension MediaPickerMenu {
     func makeStockPhotos(blog: Blog, delegate: ExternalMediaPickerViewDelegate) -> UIAction? {
-        guard blog.supports(.stockPhotos) else {
+        guard MediaPickerSource.freePhotos(blog: blog).isEnabled else {
             return nil
         }
         return UIAction(
@@ -17,7 +17,7 @@ extension MediaPickerMenu {
 
     func showStockPhotosPicker(blog: Blog, delegate: ExternalMediaPickerViewDelegate) {
         guard let presentingViewController,
-              let api = blog.wordPressComRestApi() else {
+              let api = blog.wordPressComRestApi else {
             return
         }
 
@@ -39,7 +39,7 @@ extension MediaPickerMenu {
 
 extension MediaPickerMenu {
     func makeFreeGIFAction(blog: Blog, delegate: ExternalMediaPickerViewDelegate) -> UIAction? {
-        guard blog.supports(.tenor) else {
+        guard MediaPickerSource.freePhotos(blog: blog).isEnabled else {
             return nil
         }
         return UIAction(

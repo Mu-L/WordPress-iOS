@@ -1,8 +1,9 @@
 import UIKit
 import Gridicons
 import WordPressKit
+import WordPressShared
 
-final class SiteSegmentsCell: UITableViewCell, ModelSettableCell {
+final class SiteSegmentsCell: UITableViewCell, ModelSettableCell, NibLoadable {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subtitle: UILabel!

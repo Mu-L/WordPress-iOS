@@ -1,6 +1,7 @@
-import Gridicons
+import UIKit
 import WebKit
 import WordPressShared
+import WordPressUI
 
 /// An augmentation of WebKitViewController to provide Previewing for different devices
 class PreviewWebKitViewController: WebKitViewController {
@@ -269,7 +270,7 @@ extension PreviewWebKitViewController {
         webView.evaluateJavaScript(selectedDevice.viewportScript, completionHandler: nil)
     }
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    override func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIView.animate(withDuration: 0.2) {
             self.webView.alpha = 1
         }

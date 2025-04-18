@@ -1,4 +1,5 @@
 import UIKit
+import WordPressShared
 
 class OnboardingEnableNotificationsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
@@ -11,7 +12,7 @@ class OnboardingEnableNotificationsViewController: UIViewController {
 
     init(completion: @escaping () -> Void) {
         self.completion = completion
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "OnboardingEnableNotificationsViewController", bundle: .keystone)
     }
 
     required init?(coder: NSCoder) {

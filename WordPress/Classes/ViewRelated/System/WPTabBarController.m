@@ -1,13 +1,16 @@
 #import "WPTabBarController.h"
 
 #import "AccountService.h"
-#import "CoreDataStack.h"
 #import "BlogService.h"
 #import "Blog.h"
 
 #import "BlogDetailsViewController.h"
 #import "WPAppAnalytics.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import Gridicons;
 @import WordPressShared;
@@ -154,7 +157,7 @@ static NSInteger const WPTabBarIconOffsetiPhone = 5;
     if (self.shouldUseStaticScreens) {
         rootViewController = [[MovedToJetpackViewController alloc] initWithSource:MovedToJetpackSourceNotifications];
     } else {
-        UIStoryboard *notificationsStoryboard = [UIStoryboard storyboardWithName:@"Notifications" bundle:nil];
+        UIStoryboard *notificationsStoryboard = [UIStoryboard storyboardWithName:@"Notifications" bundle:NSBundle.keystone];
         self.notificationsViewController = [notificationsStoryboard instantiateInitialViewController];
         rootViewController = self.notificationsViewController;
     }
@@ -267,14 +270,6 @@ static NSInteger const WPTabBarIconOffsetiPhone = 5;
     [self.notificationsNavigationController popToRootViewControllerAnimated:NO];
 }
 
-- (void)switchNotificationsTabToNotificationSettings
-{
-    [self showNotificationsTab];
-    [self.notificationsNavigationController popToRootViewControllerAnimated:NO];
-
-    [self.notificationsViewController showNotificationSettings];
-}
-
 - (NSString *)currentlySelectedScreen
 {
     // Check which tab is currently selected
@@ -362,7 +357,7 @@ static NSInteger const WPTabBarIconOffsetiPhone = 5;
     }
 
     // Discount Zendesk unread notifications when determining if we need to show the notificationsTabBarImageUnread.
-    NSInteger count = [[UIApplication sharedApplication] applicationIconBadgeNumber] - [ZendeskUtils unreadNotificationsCount];
+    NSInteger count = [[UIApplication sharedApplication] applicationIconBadgeNumber] - ObjCBridge.unreadNotificationsCount;
     if (count > 0 || ![self welcomeNotificationSeen]) {
         notificationsTabBarItem.image = self.notificationsTabBarImageUnread;
         notificationsTabBarItem.accessibilityLabel = NSLocalizedString(@"Notifications Unread", @"Notifications tab bar item accessibility label, unread notifications state");

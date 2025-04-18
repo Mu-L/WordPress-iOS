@@ -1,7 +1,8 @@
-import Foundation
+import UIKit
+import WordPressShared
 
 @objc
-protocol JetpackConnectionDelegate {
+public protocol JetpackConnectionDelegate {
     func jetpackDisconnectedForBlog(_ blog: Blog)
 }
 
@@ -29,7 +30,7 @@ open class JetpackConnectionViewController: UITableViewController {
 
     // MARK: - Public Properties
 
-    @objc weak var delegate: JetpackConnectionDelegate?
+    @objc public weak var delegate: JetpackConnectionDelegate?
 
     // MARK: - Initializer
 
@@ -106,7 +107,7 @@ open class JetpackConnectionViewController: UITableViewController {
                                                success: { [weak self] in
                                                    self?.stopLoading()
                                                    if let blog = self?.blog {
-                                                       let service = BlogService(coreDataStack: ContextManager.sharedInstance())
+                                                       let service = BlogService(coreDataStack: ContextManager.shared)
                                                        service.remove(blog)
                                                        self?.delegate?.jetpackDisconnectedForBlog(blog)
                                                    } else {

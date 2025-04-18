@@ -1,8 +1,9 @@
 import UIKit
-import WordPressKit
 import Gridicons
+import WordPressKit
+import WordPressShared
 
-class PluginDirectoryCollectionViewCell: UICollectionViewCell {
+class PluginDirectoryCollectionViewCell: UICollectionViewCell, NibLoadable {
 
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!

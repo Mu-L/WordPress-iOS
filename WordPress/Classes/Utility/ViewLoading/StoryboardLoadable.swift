@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 /// Protocol to conform for views that can be loaded from storyboards.
 public protocol StoryboardLoadable {
@@ -20,7 +20,7 @@ public extension StoryboardLoadable where Self: UIViewController {
     }
 
     static var defaultBundle: Bundle {
-        return Bundle.main
+        return Bundle.keystone
     }
 
     /// Loads view from storyboard and allows initializer injection.

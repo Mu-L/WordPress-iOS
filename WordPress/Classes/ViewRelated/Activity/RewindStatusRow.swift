@@ -1,10 +1,11 @@
+import UIKit
 
 struct RewindStatusRow: ImmuTableRow {
 
     typealias CellType = RewindStatusTableViewCell
 
     static let cell: ImmuTableCell = {
-        let nib = UINib(nibName: "RewindStatusTableViewCell", bundle: Bundle(for: CellType.self))
+        let nib = UINib(nibName: "RewindStatusTableViewCell", bundle: Bundle.keystone)
         return ImmuTableCell.nib(nib, CellType.self)
     }()
 

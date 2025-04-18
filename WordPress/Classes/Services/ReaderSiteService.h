@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "CoreDataService.h"
-#import "ReaderTopicService.h"
+#import "CoreDataStack.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, ReaderSiteServiceError) {
     ReaderSiteServiceErrorNotLoggedIn,
@@ -9,7 +10,13 @@ typedef NS_ENUM(NSUInteger, ReaderSiteServiceError) {
 
 extern NSString * const ReaderSiteServiceErrorDomain;
 
-@interface ReaderSiteService : CoreDataService
+@interface ReaderSiteService : NSObject
+
+@property (nonatomic, strong, readonly) id<CoreDataStack> coreDataStack;
+
+- (instancetype)initWithCoreDataStack:(id<CoreDataStack>)coreDataStack NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 /**
  Follow a site by its URL.
@@ -68,10 +75,6 @@ extern NSString * const ReaderSiteServiceErrorDomain;
                   success:(void(^)(void))success
                   failure:(void(^)(NSError *error))failure;
 
-/**
- Sync posts for the 'sites I follow endpoint if it exists. Maybe called whenever
- a site/feed is followed or unfollowed.
- */
-- (void)syncPostsForFollowedSites;
-
 @end
+
+NS_ASSUME_NONNULL_END

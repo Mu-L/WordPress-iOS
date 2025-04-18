@@ -23,7 +23,7 @@ extension WPStyleGuide {
     }
 
     public class var navigationBarStandardFont: UIFont {
-        return AppStyleGuide.navigationBarStandardFont
+        return AppStyleGuide.current.navigationBarStandardFont
     }
 
     /// Style the navigation appearance using Muriel colors
@@ -51,7 +51,7 @@ extension WPStyleGuide {
             .foregroundColor: UIColor.label
         ]
         appearance.largeTitleTextAttributes = [
-            .font: AppStyleGuide.navigationBarLargeFont
+            .font: AppStyleGuide.current.navigationBarLargeFont
         ]
     }
 
@@ -64,7 +64,7 @@ extension WPStyleGuide {
         viewController.navigationItem.compactScrollEdgeAppearance = standardAppearance
     }
 
-    @objc class func configureTabBar(_ tabBar: UITabBar) {
+    @objc public class func configureTabBar(_ tabBar: UITabBar) {
         tabBar.tintColor = UIAppColor.tint
         tabBar.unselectedItemTintColor = UIColor(named: "TabUnselected")
     }
@@ -72,10 +72,10 @@ extension WPStyleGuide {
     private static func setupFancyAlertAppearance() {
         let appearance = FancyAlertView.appearance()
 
-        appearance.titleTextColor = UIAppColor.neutral(.shade70)
+        appearance.wpTitleTextColor = UIAppColor.neutral(.shade70)
         appearance.titleFont = WPStyleGuide.fontForTextStyle(.title2, fontWeight: .semibold)
 
-        appearance.bodyTextColor = UIAppColor.neutral(.shade70)
+        appearance.wpBodyTextColor = UIAppColor.neutral(.shade70)
         appearance.bodyFont = WPStyleGuide.fontForTextStyle(.body)
         appearance.bodyBackgroundColor = UIAppColor.neutral(.shade0)
 
@@ -110,28 +110,6 @@ extension WPStyleGuide {
 }
 
 extension WPStyleGuide {
-    @objc(configureColorsForView:andTableView:)
-    open class func configureColors(view: UIView?, tableView: UITableView?) {
-        configureTableViewColors(view: view)
-        configureTableViewColors(tableView: tableView)
-    }
-
-    class func configureTableViewColors(view: UIView?) {
-        guard let view else {
-            return
-        }
-        view.backgroundColor = .systemBackground
-    }
-
-    class func configureTableViewColors(tableView: UITableView?) {
-        guard let tableView else {
-            return
-        }
-
-        tableView.backgroundColor = .systemGroupedBackground
-        tableView.separatorColor = UIAppColor.neutral(.shade10)
-    }
-
     class func configureColors(view: UIView, collectionView: UICollectionView) {
         configureTableViewColors(view: view)
         collectionView.backgroundView = nil
@@ -139,7 +117,7 @@ extension WPStyleGuide {
     }
 
     @objc
-    class func configureTableViewCell(_ cell: UITableViewCell?) {
+    public class func configureTableViewCell(_ cell: UITableViewCell?) {
         guard let cell else {
             return
         }
@@ -162,27 +140,16 @@ extension WPStyleGuide {
     }
 
     @objc
-    class func configureTableViewActionCell(_ cell: UITableViewCell?) {
+    public class func configureTableViewActionCell(_ cell: UITableViewCell?) {
         configureTableViewCell(cell)
         cell?.textLabel?.textColor = UIAppColor.primary
     }
 
     @objc
-    class func configureTableViewDestructiveActionCell(_ cell: UITableViewCell) {
+    public class func configureTableViewDestructiveActionCell(_ cell: UITableViewCell) {
         configureTableViewCell(cell)
 
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.textColor = UIAppColor.error
-    }
-
-    @objc
-    class func configureTableViewSectionFooter(_ footer: UIView) {
-        guard let footer = footer as? UITableViewHeaderFooterView,
-            let textLabel = footer.textLabel else {
-            return
-        }
-        if textLabel.isUserInteractionEnabled {
-            textLabel.textColor = UIAppColor.primary
-        }
     }
 }

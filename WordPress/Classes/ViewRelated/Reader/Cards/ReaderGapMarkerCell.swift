@@ -1,7 +1,8 @@
-import Foundation
+import UIKit
 import WordPressShared
+import WordPressUI
 
-open class ReaderGapMarkerCell: UITableViewCell {
+open class ReaderGapMarkerCell: UITableViewCell, NibLoadable {
     @IBOutlet fileprivate weak var tearBackgroundView: UIView!
     @IBOutlet fileprivate weak var tearMaskView: UIView!
     @IBOutlet fileprivate weak var activityViewBackgroundView: UIView!

@@ -1,5 +1,7 @@
+import UIKit
 import SVProgressHUD
 import WordPressAuthenticator
+import WordPressShared
 
 class SignupEpilogueViewController: UIViewController {
 
@@ -196,17 +198,18 @@ private extension SignupEpilogueViewController {
             return
         }
 
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         guard
             let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context),
+            let userID = account.userID,
             let api = account.wordPressComRestApi
         else {
             navigationController?.popViewController(animated: true)
             return
         }
 
-        let settingsService = AccountSettingsService(userID: account.userID.intValue, api: api)
+        let settingsService = AccountSettingsService(userID: userID.intValue, api: api)
         settingsService.changeUsername(to: newUsername, success: {
             WordPressAuthenticator.track(.signupEpilogueUsernameUpdateSucceeded, properties: self.tracksProperties())
 
@@ -219,14 +222,16 @@ private extension SignupEpilogueViewController {
     }
 
     func changeDisplayName(to newDisplayName: String, finished: @escaping (() -> Void)) {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         guard let defaultAccount = try? WPAccount.lookupDefaultWordPressComAccount(in: context),
-            let restApi = defaultAccount.wordPressComRestApi else {
-                finished()
-                return
+              let userID = defaultAccount.userID,
+              let restApi = defaultAccount.wordPressComRestApi
+        else {
+            finished()
+            return
         }
 
-        let accountSettingService = AccountSettingsService(userID: defaultAccount.userID.intValue, api: restApi)
+        let accountSettingService = AccountSettingsService(userID: userID.intValue, api: restApi)
 
         accountSettingService.updateDisplayName(newDisplayName) { (success, _) in
             let event: WPAnalyticsStat = success ? .signupEpilogueDisplayNameUpdateSucceeded : .signupEpilogueDisplayNameUpdateFailed
@@ -238,20 +243,21 @@ private extension SignupEpilogueViewController {
 
     func changePassword(to newPassword: String, finished: @escaping (_ success: Bool, _ error: Error?) -> Void) {
 
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         do {
             let defaultAccount = try WPAccount.lookupDefaultWordPressComAccount(in: context)
 
             guard
                 let account = defaultAccount,
+                let userID = account.userID,
                 let restApi = account.wordPressComRestApi
             else {
                 finished(false, nil)
                 return
             }
 
-            let accountSettingService = AccountSettingsService(userID: account.userID.intValue, api: restApi)
+            let accountSettingService = AccountSettingsService(userID: userID.intValue, api: restApi)
 
             accountSettingService.updatePassword(newPassword) { success, error in
                 if success {
@@ -281,13 +287,13 @@ private extension SignupEpilogueViewController {
     }
 
     func refreshAccountDetails(finished: @escaping () -> Void) {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context) else {
             self.dismissEpilogue()
             return
         }
-        AccountService(coreDataStack: ContextManager.sharedInstance()).updateUserDetails(for: account, success: { () in
+        AccountService(coreDataStack: ContextManager.shared).updateUserDetails(for: account, success: { () in
             finished()
         }, failure: { _ in
             finished()

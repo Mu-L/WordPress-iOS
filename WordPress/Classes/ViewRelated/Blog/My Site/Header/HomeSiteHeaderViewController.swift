@@ -55,7 +55,10 @@ final class HomeSiteHeaderViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if #available(iOS 17, *) {
-            if sitePickerTipObserver == nil, traitCollection.horizontalSizeClass == .compact, blog.account?.blogs.isEmpty == false {
+            if sitePickerTipObserver == nil,
+               traitCollection.horizontalSizeClass == .compact,
+               let blogs = blog.account?.blogs,
+               !blogs.isEmpty {
                 sitePickerTipObserver = registerTipPopover(
                     AppTips.SitePickerTip(),
                     sourceItem: blogDetailHeaderView.titleView.siteSwitcherButton,
@@ -240,7 +243,7 @@ extension HomeSiteHeaderViewController {
     }
 
     private func showViewSite() {
-        WPAppAnalytics.track(.openedViewSite, withProperties: [WPAppAnalyticsKeyTapSource: "link"], with: blog)
+        WPAppAnalytics.track(.openedViewSite, properties: [WPAppAnalyticsKeyTapSource: "link"], blog: blog)
 
         guard let urlString = blog.homeURL as String?,
               let url = URL(string: urlString) else {

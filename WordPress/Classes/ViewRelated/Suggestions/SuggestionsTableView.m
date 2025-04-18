@@ -1,7 +1,11 @@
 #import "SuggestionsTableView.h"
 #import "WPStyleGuide+Suggestions.h"
 #import "SuggestionsTableViewCell.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 CGFloat const STVDefaultMinHeaderHeight = 0.f;
 NSString * const CellIdentifier = @"SuggestionsTableViewCell";
@@ -231,11 +235,9 @@ CGFloat const STVSeparatorHeight = 1.f;
     [self.tableView setNeedsLayout];
     [self.tableView layoutIfNeeded];
     if (maxRows) {
-        self.heightConstraint.constant = [SuggestionsTableView maximumHeightForTableView:self.tableView
-                                                                maxNumberOfRowsToDisplay:maxRows];
+        self.heightConstraint.constant = [SuggestionsTableView maximumHeightForTableView:self.tableView maxNumberOfRowsToDisplay:maxRows];
     } else {
-        self.heightConstraint.constant = [SuggestionsTableView heightForTableView:self.tableView
-                                                                    maximumHeight:self.bounds.size.height - minimumHeaderHeight];
+        self.heightConstraint.constant = [SuggestionsTableView heightForTableView:self.tableView maximumHeight:self.bounds.size.height - minimumHeaderHeight];
     }
     [super updateConstraints];
 }

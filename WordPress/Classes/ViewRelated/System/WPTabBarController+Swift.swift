@@ -1,6 +1,13 @@
+import WordPressShared
+
 // MARK: - Tab Access Tracking
 
-fileprivate extension WPTab {
+@objc public enum WPTab: Int {
+    case mySites
+    case reader
+    case notifications
+    case me
+
     var hasStaticScreen: Bool {
         switch self {
         case .reader:
@@ -16,7 +23,7 @@ fileprivate extension WPTab {
 }
 
 extension WPTabBarController {
-    @objc class func readerLocalizedTitle() -> String {
+    @objc public class func readerLocalizedTitle() -> String {
         SharedStrings.Reader.title
     }
 
@@ -50,7 +57,7 @@ extension WPTabBarController {
         }
     }
 
-    @objc func startObserversForTabAccessTracking() {
+    @objc public func startObserversForTabAccessTracking() {
         let nc = NotificationCenter.default
         nc.addObserver(self,
                        selector: #selector(trackTabAccessOnAppDidBecomeActive),
@@ -62,14 +69,14 @@ extension WPTabBarController {
                        object: nil)
     }
 
-    @objc func trackTabAccessOnAppDidBecomeActive() {
+    @objc public func trackTabAccessOnAppDidBecomeActive() {
         trackTabAccessForTabIndex(selectedIndex)
     }
 
     /// Reset `shouldTrackTabAccessOnViewDidAppear` if the user has logged out.
     ///
     /// This allows us to track tab access on `-viewDidAppear` when the user logs back in again.
-    @objc func resetViewDidAppearFlagOnWPComAccountChange(_ notification: NSNotification) {
+    @objc public func resetViewDidAppearFlagOnWPComAccountChange(_ notification: NSNotification) {
         guard notification.object == nil else {
             return
         }
@@ -80,7 +87,7 @@ extension WPTabBarController {
     /// Track tab access on viewDidAppear but only once.
     ///
     /// This covers the scenario when the user has just logged in.
-    @objc func trackTabAccessOnViewDidAppear() {
+    @objc public func trackTabAccessOnViewDidAppear() {
         guard shouldTrackTabAccessOnViewDidAppear else {
             return
         }
@@ -97,7 +104,8 @@ extension WPTabBarController {
     /// - The app has been placed in the foreground
     /// - The user selected a different tab
     /// - After logging in (and this VC is shown)
-    @objc @discardableResult func trackTabAccessForTabIndex(_ tabIndex: Int) -> Bool {
+    @objc @discardableResult
+    public func trackTabAccessForTabIndex(_ tabIndex: Int) -> Bool {
         // Since this ViewController is a singleton, it can be active **behind** the login view.
         // The `isViewonScreen()` prevents us from tracking this. It also helps us in avoiding
         // tracking events if a modal dialog is shown and the app is placed in the background
@@ -127,7 +135,7 @@ extension WPTabBarController {
         return selectedViewController.supportedInterfaceOrientations
     }
 
-    @objc func animateSelectedItem(_ item: UITabBarItem, for tabBar: UITabBar) {
+    @objc public func animateSelectedItem(_ item: UITabBarItem, for tabBar: UITabBar) {
 
         // Order of subviews may not be guaranteed, so filter and sort them
         let tabBarButtons = tabBar.subviews
@@ -154,6 +162,12 @@ extension WPTabBarController {
         bounceAnimation.duration = TimeInterval(0.2)
         bounceAnimation.calculationMode = CAAnimationCalculationMode.cubic
         imageView.layer.add(bounceAnimation, forKey: nil)
+    }
+
+    @objc public func switchNotificationsTabToNotificationSettings() {
+        showNotificationsTab()
+        notificationsNavigationController?.popToRootViewController(animated: false)
+        notificationsViewController?.showNotificationSettings()
     }
 }
 

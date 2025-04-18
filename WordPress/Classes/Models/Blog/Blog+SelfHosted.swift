@@ -1,8 +1,9 @@
 import Foundation
 import CryptoKit
 import WordPressAPI
+import WordPressShared
 
-extension Blog {
+public extension Blog {
 
     enum BlogCredentialsError: Error {
         case blogUrlMissing
@@ -17,14 +18,17 @@ extension Blog {
 
     static func createRestApiBlog(
         with details: WpApiApplicationPasswordDetails,
+        restApiRootURL: URL,
+        xmlrpcEndpointURL: URL,
         in contextManager: ContextManager,
         using keychainImplementation: KeychainAccessible = KeychainUtils()
-    ) async throws -> String {
+    ) async throws -> TaggedManagedObjectID<Blog> {
         try await contextManager.performAndSave { context in
             let blog = Blog.createBlankBlog(in: context)
             blog.url = details.siteUrl
             blog.username = details.userLogin
-            try blog.setXMLRPCEndpoint(to: details.derivedXMLRPCRoot)
+            blog.restApiRootURL = restApiRootURL.absoluteString
+            blog.setXMLRPCEndpoint(to: xmlrpcEndpointURL)
             blog.setSiteIdentifier(details.derivedSiteId)
 
             // `url` and `xmlrpc` need to be set before setting passwords.
@@ -32,7 +36,7 @@ extension Blog {
             // Application token can also be used in XMLRPC.
             try blog.setPassword(to: details.password, using: keychainImplementation)
 
-            return details.derivedSiteId
+            return TaggedManagedObjectID(blog)
         }
     }
 
@@ -158,14 +162,7 @@ extension Blog {
     }
 }
 
-extension WpApiApplicationPasswordDetails {
-    var derivedXMLRPCRoot: URL {
-        get throws {
-            let url = try ParsedUrl.parse(input: siteUrl).asURL()
-            return url.appending(path: "xmlrpc.php")
-        }
-    }
-
+public extension WpApiApplicationPasswordDetails {
     var derivedSiteId: String {
         SHA256.hash(data: Data(siteUrl.localizedLowercase.utf8))
             .compactMap { String(format: "%02x", $0) }

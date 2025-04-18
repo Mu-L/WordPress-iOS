@@ -3,9 +3,12 @@
 #import "Media.h"
 #import "SettingsSelectionViewController.h"
 #import "SharingDetailViewController.h"
-#import "CoreDataStack.h"
 #import "MediaService.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import Gridicons;
 @import WordPressShared;
@@ -767,18 +770,6 @@ PostCategoriesViewControllerDelegate>
     return cell;
 }
 
-- (void)showPostAuthorSelector
-{
-    PostAuthorSelectorViewController *vc = [[PostAuthorSelectorViewController alloc] init:self.apost];
-    __weak PostAuthorSelectorViewController *weakVc = vc;
-    vc.completion = ^{
-        [WPAnalytics trackEvent:WPAnalyticsEventEditorPostAuthorChanged properties:@{@"via": @"settings"}];
-        [weakVc dismiss];
-        [self.tableView reloadData];
-    };
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 - (void)showPostFormatSelector
 {
     Post *post      = self.post;
@@ -957,22 +948,6 @@ PostCategoriesViewControllerDelegate>
                                                                                     selectionMode:CategoriesSelectionModePost];
     controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-
-- (void)showTagsPicker
-{
-    PostTagPickerViewController *tagsPicker = [[PostTagPickerViewController alloc] initWithTags:self.post.tags blog:self.post.blog];
-
-    tagsPicker.onValueChanged = ^(NSString * _Nonnull value) {
-        [WPAnalytics trackEvent:WPAnalyticsEventEditorPostTagsChanged properties:@{@"via": @"settings"}];
-
-        self.post.tags = value;
-    };
-
-    [WPAnalytics track:WPAnalyticsStatPostSettingsAddTagsShown];
-
-    [self.navigationController pushViewController:tagsPicker animated:YES];
 }
 
 #pragma mark - Jetpack Social

@@ -1,6 +1,7 @@
 import Foundation
-import WordPressShared
 import Gridicons
+import WordPressShared
+import WordPressUI
 
 struct NavigationItemRow: ImmuTableRow {
     static let cell = ImmuTableCell.class(WPTableViewCellValue1.self)
@@ -320,8 +321,7 @@ struct TextWithButtonRow: ImmuTableRow {
     typealias CellType = TextWithAccessoryButtonCell
 
     static let cell: ImmuTableCell = {
-        let nib = UINib(nibName: "TextWithAccessoryButtonCell", bundle: Bundle(for: CellType.self))
-        return ImmuTableCell.nib(nib, CellType.self)
+        return ImmuTableCell.nib(TextWithAccessoryButtonCell.defaultNib, CellType.self)
     }()
 
     let title: String
@@ -345,8 +345,7 @@ struct TextWithButtonIndicatingActivityRow: ImmuTableRow {
     typealias CellType = TextWithAccessoryButtonCell
 
     static let cell: ImmuTableCell = {
-        let nib = UINib(nibName: "TextWithAccessoryButtonCell", bundle: Bundle(for: CellType.self))
-        return ImmuTableCell.nib(nib, CellType.self)
+        return ImmuTableCell.nib(TextWithAccessoryButtonCell.defaultNib, CellType.self)
     }()
 
     let title: String
@@ -435,8 +434,7 @@ struct SwitchWithSubtitleRow: ImmuTableRow {
 
 class ExpandableRow: ImmuTableRow {
     static let cell: ImmuTableCell = {
-        let nib = UINib(nibName: "ExpandableCell", bundle: Bundle(for: CellType.self))
-        return ImmuTableCell.nib(nib, CellType.self)
+        return ImmuTableCell.nib(ExpandableCell.defaultNib, CellType.self)
     }()
 
     init(title: String,

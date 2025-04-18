@@ -1,8 +1,9 @@
 import Foundation
-import WordPressShared
 import WordPressReader
-import AsyncImageKit
+import WordPressShared
+import WordPressUI
 import Combine
+import WebKit
 
 class ReaderDetailCoordinator {
 
@@ -115,7 +116,7 @@ class ReaderDetailCoordinator {
     init(coreDataStack: CoreDataStack = ContextManager.shared,
          readerPostService: ReaderPostService = ReaderPostService(coreDataStack: ContextManager.shared),
          topicService: ReaderTopicService = ReaderTopicService(coreDataStack: ContextManager.shared),
-         postService: PostService = PostService(managedObjectContext: ContextManager.sharedInstance().mainContext),
+         postService: PostService = PostService(managedObjectContext: ContextManager.shared.mainContext),
          commentService: CommentService = CommentService(coreDataStack: ContextManager.shared),
          sharingController: PostSharingController = PostSharingController(),
          readerLinkRouter: UniversalLinkRouter = UniversalLinkRouter(routes: UniversalLinkRouter.readerRoutes),
@@ -167,7 +168,8 @@ class ReaderDetailCoordinator {
             guard let self else { return }
 
             var filteredUsers = users
-            if let userID = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)?.userID.int64Value,
+            if let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext),
+               let userID = account.userID?.int64Value,
                let userIndex = filteredUsers.firstIndex(where: { $0.userID == userID }) {
                 filteredUsers.remove(at: userIndex)
             }
@@ -652,10 +654,6 @@ class ReaderDetailCoordinator {
 
         // Track open
         WPAppAnalytics.track(.readerArticleOpened, withProperties: properties)
-
-        if let railcar = readerPost.railcarDictionary() {
-            WPAppAnalytics.trackTrainTracksInteraction(.readerArticleOpened, withProperties: railcar)
-        }
 
         // Track as significant event for App Rating calculations
         AppRatingUtility.shared.incrementSignificantEvent()

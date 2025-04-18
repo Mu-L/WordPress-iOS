@@ -1,3 +1,8 @@
+import UIKit
+import CoreData
+import WordPressUI
+import FormattableContentKit
+
 /// Base Notification Action Command.
 class DefaultNotificationActionCommand: FormattableContentActionCommand {
     var on: Bool
@@ -15,7 +20,7 @@ class DefaultNotificationActionCommand: FormattableContentActionCommand {
     }
 
     private(set) lazy var mainContext: NSManagedObjectContext? = {
-        return ContextManager.sharedInstance().mainContext
+        return ContextManager.shared.mainContext
     }()
 
     private(set) lazy var actionsService: NotificationActionsService? = {

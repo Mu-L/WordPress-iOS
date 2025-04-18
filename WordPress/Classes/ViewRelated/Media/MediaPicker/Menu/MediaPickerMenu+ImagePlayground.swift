@@ -1,5 +1,6 @@
 import UIKit
 import ImagePlayground
+import WordPressShared
 
 extension MediaPickerMenu {
     static var isImagePlaygroundAvailable: Bool {
@@ -14,7 +15,7 @@ extension MediaPickerMenu {
     }
 
     func makeImagePlaygroundAction(delegate: ImagePlaygroundPickerDelegate) -> UIAction? {
-        guard MediaPickerMenu.isImagePlaygroundAvailable else {
+        guard MediaPickerSource.playground.isEnabled else {
             return nil
         }
         return UIAction(

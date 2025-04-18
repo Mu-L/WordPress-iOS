@@ -6,8 +6,11 @@
 #import "MenuItemEditingFooterView.h"
 #import "MenuItemSourceViewController.h"
 #import "MenuItemTypeViewController.h"
-#import "CoreDataStack.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressShared;
 
@@ -59,7 +62,7 @@ typedef NS_ENUM(NSUInteger, MenuItemEditingViewControllerContentLayout) {
 {
     NSParameterAssert([blog isKindOfClass:[Blog class]]);
     NSParameterAssert([item isKindOfClass:[MenuItem class]]);
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MenuItemEditing" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MenuItemEditing" bundle:NSBundle.keystone];
     MenuItemEditingViewController *controller = [storyboard instantiateInitialViewController];
     [controller setupWithItem:item blog:blog];
     return controller;

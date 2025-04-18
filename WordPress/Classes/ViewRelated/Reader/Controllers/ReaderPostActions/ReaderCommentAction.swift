@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 /// Encapsulates a command to navigate to a post's comments
 final class ReaderCommentAction {
@@ -8,11 +8,9 @@ final class ReaderCommentAction {
         navigateToCommentID: Int? = nil,
         source: ReaderCommentsSource
     ) {
-        guard let commentsVC = ReaderCommentsViewController(post: post, source: source) else {
-            return
-        }
+        let commentsVC = ReaderCommentsViewController(post: post)
+        commentsVC.source = source
         commentsVC.navigateToCommentID = navigateToCommentID as NSNumber?
-        commentsVC.trackCommentsOpened()
         commentsVC.hidesBottomBarWhenPushed = true
 
         if origin.traitCollection.horizontalSizeClass == .compact {

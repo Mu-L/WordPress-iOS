@@ -1,5 +1,6 @@
 import UIKit
 import WordPressFlux
+import WordPressUI
 import Gridicons
 
 class PluginDirectoryViewController: UITableViewController {
@@ -112,7 +113,7 @@ extension PluginDirectoryViewController {
 
 extension PluginDirectoryViewController: UISearchControllerDelegate {
     func didPresentSearchController(_ searchController: UISearchController) {
-        WPAppAnalytics.track(.pluginSearchPerformed, withBlogID: viewModel.site.siteID as NSNumber)
+        WPAppAnalytics.track(.pluginSearchPerformed, blogID: viewModel.site.siteID as NSNumber)
     }
 }
 
@@ -180,21 +181,10 @@ extension PluginDirectoryViewController: PluginListPresenter {
             let properties = ["type": listType]
             let siteID: NSNumber? = (site.isSelfHostedWithoutJetpack ? nil : site.siteID) as NSNumber?
 
-            WPAppAnalytics.track(.openedPluginList, withProperties: properties, withBlogID: siteID)
+            WPAppAnalytics.track(.openedPluginList, properties: properties, blogID: siteID)
         }
 
         let listVC = PluginListViewController(site: site, query: query)
         navigationController?.pushViewController(listVC, animated: true)
-    }
-}
-
-extension BlogDetailsViewController {
-
-    @objc func makePluginDirectoryViewController(blog: Blog) -> PluginDirectoryViewController? {
-        guard let site = JetpackSiteRef(blog: blog) else {
-            return nil
-        }
-
-        return PluginDirectoryViewController(site: site)
     }
 }

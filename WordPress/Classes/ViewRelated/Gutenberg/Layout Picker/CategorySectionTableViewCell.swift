@@ -1,5 +1,6 @@
 import UIKit
 import Gutenberg
+import WordPressShared
 
 protocol CategorySectionTableViewCellDelegate: AnyObject {
     func didSelectItemAt(_ position: Int, forCell cell: CategorySectionTableViewCell, slug: String)
@@ -26,10 +27,9 @@ protocol CategorySection {
     var thumbnailSize: CGSize { get }
 }
 
-class CategorySectionTableViewCell: UITableViewCell {
+class CategorySectionTableViewCell: UITableViewCell, NibLoadable {
 
     static let cellReuseIdentifier = "\(CategorySectionTableViewCell.self)"
-    static let nib = UINib(nibName: "\(CategorySectionTableViewCell.self)", bundle: Bundle.main)
     static let defaultThumbnailSize = CGSize(width: 160, height: 240)
     static let cellVerticalPadding: CGFloat = 70
 
@@ -98,7 +98,7 @@ class CategorySectionTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        collectionView.register(CollapsableHeaderCollectionViewCell.nib, forCellWithReuseIdentifier: CollapsableHeaderCollectionViewCell.cellReuseIdentifier)
+        collectionView.register(CollapsableHeaderCollectionViewCell.defaultNib, forCellWithReuseIdentifier: CollapsableHeaderCollectionViewCell.cellReuseIdentifier)
         categoryTitle.font = categoryTitleFont ?? WPStyleGuide.serifFontForTextStyle(UIFont.TextStyle.headline, fontWeight: .semibold)
         categoryTitle.layer.masksToBounds = true
         categoryTitle.layer.cornerRadius = 4

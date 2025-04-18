@@ -2,7 +2,11 @@
 #import "MenusSelectionDetailView.h"
 #import "MenusSelectionItemView.h"
 #import "Menu+ViewDesign.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressShared;
 
@@ -26,10 +30,6 @@
     self.backgroundColor = [UIColor murielListForeground];
     self.layer.borderColor = [[UIColor murielNeutral10] CGColor];
     self.layer.borderWidth = MenusDesignStrokeWidth;
-    if (![WPDeviceIdentification isRetina]) {
-        // Increase the stroke width on non-retina screens.
-        self.layer.borderWidth = MenusDesignStrokeWidth * 2;
-    }
 
     _items = [NSMutableArray arrayWithCapacity:5];
     _itemViews = [NSMutableArray array];

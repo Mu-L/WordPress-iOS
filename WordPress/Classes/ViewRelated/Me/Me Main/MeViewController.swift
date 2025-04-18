@@ -1,8 +1,9 @@
 import UIKit
+import BuildSettingsKit
 import WordPressShared
 import AutomatticAbout
 
-class MeViewController: UITableViewController {
+public class MeViewController: UITableViewController {
     var handler: ImmuTableViewHandler!
     var isSidebarModeEnabled = false
 
@@ -10,24 +11,24 @@ class MeViewController: UITableViewController {
 
     // MARK: - Table View Controller
 
-    override init(style: UITableView.Style) {
+    public override init(style: UITableView.Style) {
         super.init(style: style)
         navigationItem.title = NSLocalizedString("Me", comment: "Me page title")
         clearsSelectionOnViewWillAppear = false
     }
 
-    required convenience init() {
+    public required convenience init() {
         self.init(style: .insetGrouped)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(refreshModelWithNotification(_:)), name: .ZendeskPushNotificationReceivedNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(refreshModelWithNotification(_:)), name: .ZendeskPushNotificationClearedNotification, object: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         if isSidebarModeEnabled {
@@ -37,6 +38,7 @@ class MeViewController: UITableViewController {
         }
 
         ImmuTable.registerRows([
+            VerifyEmailRow.self,
             NavigationItemRow.self,
             IndicatorNavigationItemRow.self,
             ButtonRow.self,
@@ -47,6 +49,7 @@ class MeViewController: UITableViewController {
         WPStyleGuide.configureAutomaticHeightRows(for: tableView)
 
         NotificationCenter.default.addObserver(self, selector: #selector(MeViewController.accountDidChange), name: NSNotification.Name.WPAccountDefaultWordPressComAccountChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MeViewController.refreshAccountDetailsAndSettings), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         WPStyleGuide.configureColors(view: view, tableView: tableView)
         tableView.accessibilityIdentifier = "Me Table"
@@ -54,26 +57,26 @@ class MeViewController: UITableViewController {
         reloadViewModel()
     }
 
-    override func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         tableView.layoutHeaderView()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         refreshAccountDetailsAndSettings()
         animateDeselectionInteractively()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         registerUserActivity()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         // Required to update the tableview cell disclosure indicators
@@ -114,8 +117,12 @@ class MeViewController: UITableViewController {
 
     fileprivate func tableViewModel(with account: WPAccount?) -> ImmuTable {
         let accessoryType: UITableViewCell.AccessoryType = .disclosureIndicator
-
         let loggedIn = account != nil
+
+        var verificationSection: ImmuTableSection?
+        if let account, account.verificationStatus == .unverified {
+            verificationSection = ImmuTableSection(rows: [VerifyEmailRow()])
+        }
 
         let myProfile = NavigationItemRow(
             title: RowTitles.myProfile,
@@ -160,9 +167,16 @@ class MeViewController: UITableViewController {
 
         let wordPressComAccount = HeaderTitles.wpAccount
 
-        let shouldShowQRLoginRow = AppConfiguration.qrLoginEnabled && !(account?.settings?.twoStepEnabled ?? false)
+        let shouldShowQRLoginRow = FeatureFlag.qrCodeLogin.enabled && !(account?.settings?.twoStepEnabled ?? false)
 
-        var sections: [ImmuTableSection] = [
+        var sections: [ImmuTableSection] = []
+
+        // Add verification section first if it exists
+        if let verificationSection {
+            sections.append(verificationSection)
+        }
+
+        sections.append(contentsOf: [
             ImmuTableSection(rows: {
                 var rows: [ImmuTableRow] = [appSettingsRow]
                 if loggedIn {
@@ -176,10 +190,9 @@ class MeViewController: UITableViewController {
                 return rows
             }()),
             ImmuTableSection(rows: [helpAndSupportIndicator]),
-        ]
+        ])
 
-#if IS_JETPACK
-        if RemoteFeatureFlag.domainManagement.enabled() && loggedIn && !isSidebarModeEnabled {
+        if BuildSettings.current.brand == .jetpack, RemoteFeatureFlag.domainManagement.enabled() && loggedIn && !isSidebarModeEnabled {
             sections.append(.init(rows: [
                 NavigationItemRow(
                     title: AllDomainsListViewController.Strings.title,
@@ -195,7 +208,6 @@ class MeViewController: UITableViewController {
             ])
             )
         }
-#endif
 
         sections.append(
             ImmuTableSection(rows: [
@@ -226,7 +238,7 @@ class MeViewController: UITableViewController {
 
     // MARK: - UITableViewDelegate
 
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    public override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let isNewSelection = (indexPath != tableView.indexPathForSelectedRow)
 
         if isNewSelection {
@@ -317,7 +329,7 @@ class MeViewController: UITableViewController {
                 return
             }
 
-            self.sharePresenter.present(for: AppConstants.shareAppName, in: self, source: .me, sourceView: selectedCell)
+            self.sharePresenter.present(for: BuildSettings.current.shareAppName, in: self, source: .me, sourceView: selectedCell)
         }
     }
 
@@ -335,29 +347,21 @@ class MeViewController: UITableViewController {
         }
     }
 
-    /// Selects the My Profile row and pushes the Support view controller
-    ///
-    @objc public func navigateToMyProfile() {
-        navigateToTarget(for: RowTitles.myProfile)
-    }
-
     /// Selects the Account Settings row and pushes the Account Settings view controller
     ///
-    @objc public func navigateToAccountSettings() {
+    func navigateToAccountSettings() {
         navigateToTarget(for: RowTitles.accountSettings)
     }
 
     /// Selects the All Domains row and pushes the All Domains view controller
     ///
     public func navigateToAllDomains() {
-    #if IS_JETPACK
         navigateToTarget(for: AllDomainsListViewController.Strings.title)
-    #endif
     }
 
     /// Selects the App Settings row and pushes the App Settings view controller
     ///
-    @objc public func navigateToAppSettings(completion: ((AppSettingsViewController) -> Void)? = nil) {
+    func navigateToAppSettings(completion: ((AppSettingsViewController) -> Void)? = nil) {
         self.selectRowForTitle(appSettingsRow.title)
         WPAppAnalytics.track(.openedAppSettings)
         let destination = AppSettingsViewController()
@@ -368,7 +372,7 @@ class MeViewController: UITableViewController {
 
     /// Selects the Help & Support row and pushes the Support view controller
     ///
-    @objc public func navigateToHelpAndSupport() {
+    func navigateToHelpAndSupport() {
         navigateToTarget(for: RowTitles.support)
     }
 
@@ -405,6 +409,7 @@ class MeViewController: UITableViewController {
             }
             return false
         }
+
         guard let sections = handler?.viewModel.sections,
               let section = sections.firstIndex(where: { $0.rows.contains(where: matchRow) }),
               let row = sections[section].rows.firstIndex(where: matchRow) else {
@@ -432,14 +437,14 @@ class MeViewController: UITableViewController {
         return try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)
     }
 
-    fileprivate func refreshAccountDetailsAndSettings() {
-        guard let account = defaultAccount(), let api = account.wordPressComRestApi else {
+    @objc fileprivate func refreshAccountDetailsAndSettings() {
+        guard let account = defaultAccount(), let userID = account.userID, let api = account.wordPressComRestApi else {
             reloadViewModel()
             return
         }
 
-        let accountService = AccountService(coreDataStack: ContextManager.sharedInstance())
-        let accountSettingsService = AccountSettingsService(userID: account.userID.intValue, api: api)
+        let accountService = AccountService(coreDataStack: ContextManager.shared)
+        let accountSettingsService = AccountSettingsService(userID: userID.intValue, api: api)
 
         Task {
             do {
@@ -477,7 +482,7 @@ class MeViewController: UITableViewController {
     // MARK: - LogOut
 
     private func displayLogOutAlert() {
-        let alert  = UIAlertController(title: logOutAlertTitle, message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: logOutAlertTitle, message: nil, preferredStyle: .alert)
         alert.addActionWithTitle(LogoutAlert.cancelAction, style: .cancel)
         alert.addActionWithTitle(LogoutAlert.logoutAction, style: .destructive) { [weak self] _ in
             self?.dismiss(animated: true) {
@@ -489,7 +494,7 @@ class MeViewController: UITableViewController {
     }
 
     private var logOutAlertTitle: String {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         let count = AbstractPost.countLocalPosts(in: context)
 
         guard count > 0 else {
@@ -522,15 +527,15 @@ class MeViewController: UITableViewController {
 // MARK: - SearchableActivity Conformance
 
 extension MeViewController: SearchableActivityConvertable {
-    var activityType: String {
+    public var activityType: String {
         return WPActivityType.me.rawValue
     }
 
-    var activityTitle: String {
+    public var activityTitle: String {
         return NSLocalizedString("Me", comment: "Title of the 'Me' tab - used for spotlight indexing on iOS.")
     }
 
-    var activityKeywords: Set<String>? {
+    public var activityKeywords: Set<String>? {
         let keyWordString = NSLocalizedString("wordpress, me, settings, account, notification log out, logout, log in, login, help, support",
                                               comment: "This is a comma separated list of keywords used for spotlight indexing of the 'Me' tab.")
         let keywordArray = keyWordString.arrayOfTags()
@@ -545,7 +550,7 @@ extension MeViewController: SearchableActivityConvertable {
 
 // MARK: - Constants
 
-private extension MeViewController {
+extension MeViewController {
     enum RowTitles {
         static let appSettings = NSLocalizedString("App Settings", comment: "Link to App Settings section")
         static let myProfile = NSLocalizedString("My Profile", comment: "Link to My Profile section")
@@ -554,7 +559,16 @@ private extension MeViewController {
         static let support = NSLocalizedString("Help & Support", comment: "Link to Help section")
         static let logIn = NSLocalizedString("Log In", comment: "Label for logging in to WordPress.com account")
         static let logOut = NSLocalizedString("Log Out", comment: "Label for logging out from WordPress.com account")
-        static let about = AppConstants.Settings.aboutTitle
+        static var about: String {
+            switch BuildSettings.current.brand {
+            case .wordpress:
+                NSLocalizedString("About WordPress", comment: "Link to About screen for WordPress for iOS")
+            case .jetpack:
+                NSLocalizedString("About Jetpack for iOS", comment: "Link to About screen for Jetpack for iOS")
+            case .reader:
+                NSLocalizedString("About Reader for iOS", comment: "Link to About screen for Jetpack for iOS")
+            }
+        }
     }
 
     enum HeaderTitles {
@@ -562,7 +576,17 @@ private extension MeViewController {
     }
 
     enum LogoutAlert {
-        static let defaultTitle = AppConstants.Logout.alertTitle
+        static var defaultTitle: String {
+            switch BuildSettings.current.brand {
+            case .wordpress:
+                NSLocalizedString("Log out of WordPress?", comment: "LogOut confirmation text, whenever there are no local changes")
+            case .jetpack:
+                NSLocalizedString("Log out of Jetpack?", comment: "LogOut confirmation text, whenever there are no local changes")
+            case .reader:
+                NSLocalizedString("Log out of Reader?", comment: "LogOut confirmation text, whenever there are no local changes")
+            }
+        }
+
         static let unsavedTitleSingular = NSLocalizedString("You have changes to %d post that hasn't been uploaded to your site. Logging out now will delete those changes. Log out anyway?",
                                                             comment: "Warning displayed before logging out. The %d placeholder will contain the number of local posts (SINGULAR!)")
         static let unsavedTitlePlural = NSLocalizedString("You have changes to %d posts that haven’t been uploaded to your site. Logging out now will delete those changes. Log out anyway?",
@@ -592,7 +616,7 @@ extension MeViewController: ShareAppContentPresenterDelegate {
 // MARK: - Jetpack powered badge
 extension MeViewController {
 
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard section == handler.viewModel.sections.count - 1,
               JetpackBrandingVisibility.all.enabled else {
             return nil

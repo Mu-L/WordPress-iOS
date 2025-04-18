@@ -2,8 +2,9 @@ import UIKit
 import WordPressShared
 import Gridicons
 import CoreGraphics
+import WordPressUI
 
-class ExpandableCell: WPReusableTableViewCell {
+class ExpandableCell: WPReusableTableViewCell, NibLoadable {
 
     // MARK: - Initializers
 
@@ -34,7 +35,7 @@ class ExpandableCell: WPReusableTableViewCell {
                 transform = CGAffineTransform(rotationAngle: CGFloat.pi)
                 alpha = 1
             } else {
-                transform =  CGAffineTransform.identity
+                transform = CGAffineTransform.identity
                 alpha = 0
             }
 

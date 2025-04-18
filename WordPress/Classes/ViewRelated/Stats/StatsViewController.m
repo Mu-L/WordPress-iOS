@@ -1,9 +1,12 @@
 #import "StatsViewController.h"
 #import "Blog.h"
 #import "WPAccount.h"
-#import "CoreDataStack.h"
 #import "BlogService.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 #import "WPAppAnalytics.h"
 
 @import WordPressShared;
@@ -43,7 +46,7 @@
     self.view.backgroundColor = [UIColor systemGroupedBackgroundColor];
     self.navigationItem.title = NSLocalizedString(@"Stats", @"Stats window title");
     
-    UINavigationController *statsNavVC = [[UIStoryboard storyboardWithName:@"SiteStatsDashboard" bundle:nil] instantiateInitialViewController];
+    UINavigationController *statsNavVC = [[UIStoryboard storyboardWithName:@"SiteStatsDashboard" bundle:NSBundle.keystone] instantiateInitialViewController];
     self.siteStatsDashboardVC = statsNavVC.viewControllers.firstObject;
     
     self.noResultsViewController = [NoResultsViewController controller];
@@ -64,16 +67,16 @@
         self.title = self.blog.settings.name;
     }
 
-    WordPressAppDelegate *appDelegate = [WordPressAppDelegate shared];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:appDelegate.internetReachability];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kTMReachabilityChangedNotification object:ReachabilityUtils.internetReachability];
 
     [self initStats];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    // Track as significant event for App Rating calculations
-    [[AppRatingUtility shared] incrementSignificantEvent];
+    [super viewDidAppear:animated];
+
+    [ObjCBridge incrementSignificantEvent];
 }
 
 - (void)setBlog:(Blog *)blog
@@ -135,19 +138,12 @@
         return;
     }
     self.showingJetpackLogin = YES;
-    JetpackLoginViewController *controller = [[JetpackLoginViewController alloc] initWithBlog:self.blog];
-    __weak JetpackLoginViewController *safeController = controller;
-    [controller setCompletionBlock:^(){
-            [safeController.view removeFromSuperview];
-            [safeController removeFromParentViewController];
-            self.showingJetpackLogin = NO;
-            [self initStats];
-    }];
 
-    [self addChildViewController:controller];
-    [self.view addSubview:controller.view];
-    controller.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view pinSubviewToAllEdges:controller.view];
+    __weak __typeof(self) weakSelf = self;
+    [self showJetpackConnectionViewWithCompletion:^{
+        weakSelf.showingJetpackLogin = NO;
+        [weakSelf initStats];
+    }];
 }
 
 - (IBAction)doneButtonTapped:(id)sender

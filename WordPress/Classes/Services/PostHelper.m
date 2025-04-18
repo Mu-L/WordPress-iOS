@@ -1,6 +1,10 @@
 #import "PostHelper.h"
 #import "AbstractPost.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressKit;
 @import NSObject_SafeExpectations;
@@ -30,6 +34,7 @@
     post.content = remotePost.content;
     post.status = remotePost.status;
     post.password = remotePost.password;
+    post.order = remotePost.order;
 
     if (remotePost.postThumbnailID != nil) {
         post.featuredImage = [Media existingOrStubMediaWithMediaID: remotePost.postThumbnailID inBlog:post.blog];

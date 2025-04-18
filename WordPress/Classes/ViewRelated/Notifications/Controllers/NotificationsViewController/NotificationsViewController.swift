@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import CoreData
 import WordPressShared
+import FormattableContentKit
 import Gridicons
 import UIKit
 import WordPressUI
@@ -82,7 +83,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
 
     /// JetpackLoginVC being presented.
     ///
-    internal var jetpackLoginViewController: JetpackLoginViewController? = nil
+    internal var jetpackLoginViewController: ConnectJetpackViewController? = nil
 
     /// Timestamp of the most recent note before updates
     /// Used to count notifications to show the second notifications prompt
@@ -113,11 +114,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     }()
 
     var isSidebarModeEnabled = false
+    var isReaderAppModeEnabled = false
 
     // MARK: - View Lifecycle
 
     static func showInPopover(from presentingVC: UIViewController, sourceItem: UIPopoverPresentationControllerSourceItem) {
-        let notificationsVC = UIStoryboard(name: "Notifications", bundle: nil).instantiateInitialViewController() as! NotificationsViewController
+        let notificationsVC = Notifications.instantiateInitialViewController()
         notificationsVC.isSidebarModeEnabled = true
 
         let navigationVC = UINavigationController(rootViewController: notificationsVC)
@@ -202,7 +204,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidAppear(animated)
 
         defer {
-            if AppConfiguration.showsWhatIsNew {
+            if FeatureFlag.whatsNew.enabled {
                 RootViewCoordinator.shared.presentWhatIsNew(on: self)
             }
         }
@@ -412,9 +414,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         }
 
         let action = UIContextualAction(style: .normal, title: actionTitle, handler: { (_, _, completionHandler) in
-            WPAppAnalytics.track(approveAction.on ? .notificationsCommentUnapproved : .notificationsCommentApproved,
-                                 withProperties: [Stats.sourceKey: Stats.sourceValue],
-                                 withBlogID: block.metaSiteID)
+            WPAppAnalytics.track(approveAction.on ? .notificationsCommentUnapproved : .notificationsCommentApproved, properties: [Stats.sourceKey: Stats.sourceValue], blogID: block.metaSiteID)
 
             let actionContext = ActionContext(block: block)
             approveAction.execute(context: actionContext)
@@ -451,8 +451,10 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
 private extension NotificationsViewController {
 
     func setupNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .never
+        if !isReaderAppModeEnabled {
+            navigationController?.navigationBar.prefersLargeTitles = false
+            navigationItem.largeTitleDisplayMode = .never
+        }
 
         // Don't show 'Notifications' in the next-view back button
         // we are using a space character because we need a non-empty string to ensure a smooth
@@ -543,7 +545,7 @@ private extension NotificationsViewController {
         tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
 
         // UITableView
-        tableView.accessibilityIdentifier  = "notifications-table"
+        tableView.accessibilityIdentifier = "notifications-table"
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.estimatedSectionHeaderHeight = UITableView.automaticDimension
         tableView.backgroundColor = .systemBackground
@@ -1335,7 +1337,7 @@ extension NotificationsViewController {
 //
 extension NotificationsViewController: WPTableViewHandlerDelegate {
     func managedObjectContext() -> NSManagedObjectContext {
-        return ContextManager.sharedInstance().mainContext
+        return ContextManager.shared.mainContext
     }
 
     func fetchRequest() -> NSFetchRequest<NSFetchRequestResult>? {
@@ -1756,7 +1758,7 @@ extension NotificationsViewController: SearchableActivityConvertable {
 //
 private extension NotificationsViewController {
     var mainContext: NSManagedObjectContext {
-        return ContextManager.sharedInstance().mainContext
+        return ContextManager.shared.mainContext
     }
 
     var userDefaults: UserPersistentRepository {

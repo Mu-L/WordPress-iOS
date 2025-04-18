@@ -1,11 +1,12 @@
 import Foundation
+import WordPressData
 import WordPressShared
 import WordPressKit
 
 /// SharingService is responsible for wrangling publicize services, publicize
 /// connections, and keyring connections.
 ///
-@objc class SharingService: NSObject {
+@objc public class SharingService: NSObject {
     let SharingAPIErrorNotFound = "not_found"
 
     private let coreDataStack: CoreDataStackSwift
@@ -14,7 +15,7 @@ import WordPressKit
     ///
     /// Using `ContextManager` as the argument becuase `CoreDataStackSwift` is not accessible from Objective-C code.
     @objc
-    init(contextManager: ContextManager) {
+    public init(contextManager: ContextManager) {
         self.coreDataStack = contextManager
     }
 
@@ -31,7 +32,7 @@ import WordPressKit
     ///     - success: An optional success block accepting no parameters
     ///     - failure: An optional failure block accepting an `NSError` parameter
     ///
-    @objc func syncPublicizeServicesForBlog(_ blog: Blog, success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
+    @objc public func syncPublicizeServicesForBlog(_ blog: Blog, success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
         guard let remote = remoteForBlog(blog),
               let blogID = blog.dotComID else {
             failure?(nil)
@@ -52,7 +53,7 @@ import WordPressKit
     ///     - success: An optional success block accepting an array of `KeyringConnection` objects
     ///     - failure: An optional failure block accepting an `NSError` parameter
     ///
-    @objc func fetchKeyringConnectionsForBlog(_ blog: Blog, success: (([KeyringConnection]) -> Void)?, failure: ((NSError?) -> Void)?) {
+    @objc public func fetchKeyringConnectionsForBlog(_ blog: Blog, success: (([KeyringConnection]) -> Void)?, failure: ((NSError?) -> Void)?) {
         guard let remote = remoteForBlog(blog) else {
             return
         }
@@ -73,7 +74,7 @@ import WordPressKit
     ///     - success: An optional success block accepting a `PublicizeConnection` parameter.
     ///     - failure: An optional failure block accepting an NSError parameter.
     ///
-    @objc func createPublicizeConnectionForBlog(_ blog: Blog,
+    @objc public func createPublicizeConnectionForBlog(_ blog: Blog,
         keyring: KeyringConnection,
         externalUserID: String?,
         success: ((PublicizeConnection) -> Void)?,
@@ -91,7 +92,7 @@ import WordPressKit
                 let properties = [
                     "service": keyring.service
                 ]
-                WPAppAnalytics.track(.sharingPublicizeConnected, withProperties: properties, withBlogID: dotComID)
+                WPAppAnalytics.track(.sharingPublicizeConnected, properties: properties, blogID: dotComID)
 
                 self.coreDataStack.performAndSave({ context -> NSManagedObjectID in
                     try self.createOrReplacePublicizeConnectionForBlogWithObjectID(blogObjectID, remoteConnection: remoteConnection, in: context)
@@ -125,7 +126,7 @@ import WordPressKit
     ///     - success: An optional success block accepting no parameters.
     ///     - failure: An optional failure block accepting an NSError parameter.
     ///
-    @objc func updateSharedForBlog(
+    @objc public func updateSharedForBlog(
         _ blog: Blog,
         shared: Bool,
         forPublicizeConnection pubConn: PublicizeConnection,
@@ -164,7 +165,7 @@ import WordPressKit
                             "service": value.service,
                             "is_site_wide": NSNumber(value: shared).stringValue
                         ]
-                        WPAppAnalytics.track(.sharingPublicizeConnectionAvailableToAllChanged, withProperties: properties, withBlogID: value.siteID)
+                        WPAppAnalytics.track(.sharingPublicizeConnectionAvailableToAllChanged, properties: properties, blogID: value.siteID)
 
                         self.coreDataStack.performAndSave({ context in
                             try self.createOrReplacePublicizeConnectionForBlogWithObjectID(blogObjectID, remoteConnection: remoteConnection, in: context)
@@ -202,7 +203,7 @@ import WordPressKit
     ///     - success: An optional success block accepting no parameters.
     ///     - failure: An optional failure block accepting an NSError parameter.
     ///
-    @objc func updateExternalID(_ externalID: String,
+    @objc public func updateExternalID(_ externalID: String,
         forBlog blog: Blog,
         forPublicizeConnection pubConn: PublicizeConnection,
         success: (() -> Void)?,
@@ -245,7 +246,7 @@ import WordPressKit
     ///     - success: An optional success block accepting no parameters.
     ///     - failure: An optional failure block accepting an NSError parameter.
     ///
-    @objc func deletePublicizeConnectionForBlog(_ blog: Blog, pubConn: PublicizeConnection, success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
+    @objc public func deletePublicizeConnectionForBlog(_ blog: Blog, pubConn: PublicizeConnection, success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
         // optimistically delete the connection locally.
         coreDataStack.performAndSave({ context in
             let blogInContext = try context.existingObject(with: blog.objectID) as! Blog
@@ -264,7 +265,7 @@ import WordPressKit
                         let properties = [
                             "service": service
                         ]
-                        WPAppAnalytics.track(.sharingPublicizeDisconnected, withProperties: properties, withBlogID: siteID)
+                        WPAppAnalytics.track(.sharingPublicizeDisconnected, properties: properties, blogID: siteID)
                         success?()
                     },
                     failure: { (error: NSError?) in
@@ -373,7 +374,7 @@ import WordPressKit
     ///     - success: An optional success block accepting no parameters.
     ///     - failure: An optional failure block accepting an `NSError` parameter.
     ///
-    @objc func syncSharingButtonsForBlog(_ blog: Blog, success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
+    @objc public func syncSharingButtonsForBlog(_ blog: Blog, success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
         let blogObjectID = blog.objectID
         guard let remote = remoteForBlog(blog) else {
             return
@@ -394,7 +395,7 @@ import WordPressKit
     ///     - success: An optional success block accepting no parameters.
     ///     - failure: An optional failure block accepting an `NSError` parameter.
     ///
-    @objc func updateSharingButtonsForBlog(_ blog: Blog, sharingButtons: [SharingButton], success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
+    @objc public func updateSharingButtonsForBlog(_ blog: Blog, sharingButtons: [SharingButton], success: (() -> Void)?, failure: ((NSError?) -> Void)?) {
 
         let blogObjectID = blog.objectID
         guard let remote = remoteForBlog(blog) else {
@@ -494,7 +495,7 @@ import WordPressKit
     /// - Parameter blog: The blog to use for the rest api.
     ///
     private func remoteForBlog(_ blog: Blog) -> SharingServiceRemote? {
-        guard let api = blog.wordPressComRestApi() else {
+        guard let api = blog.wordPressComRestApi else {
             return nil
         }
 

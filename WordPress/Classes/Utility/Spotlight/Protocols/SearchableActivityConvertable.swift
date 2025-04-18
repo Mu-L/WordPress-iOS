@@ -1,3 +1,4 @@
+import UIKit
 import CoreSpotlight
 import Intents
 import MobileCoreServices
@@ -5,15 +6,15 @@ import UniformTypeIdentifiers
 
 /// Custom NSUSerActivity types for the WPiOS. Primarily used for navigation points.
 ///
-enum WPActivityType: String {
-    case siteList               = "org.wordpress.mysites"
-    case siteDetails            = "org.wordpress.mysites.details"
-    case reader                 = "org.wordpress.reader"
-    case me                     = "org.wordpress.me"
-    case appSettings            = "org.wordpress.me.appsettings"
-    case notificationSettings   = "org.wordpress.me.notificationsettings"
-    case support                = "org.wordpress.me.support"
-    case notifications          = "org.wordpress.notifications"
+public enum WPActivityType: String {
+    case siteList = "org.wordpress.mysites"
+    case siteDetails = "org.wordpress.mysites.details"
+    case reader = "org.wordpress.reader"
+    case me = "org.wordpress.me"
+    case appSettings = "org.wordpress.me.appsettings"
+    case notificationSettings = "org.wordpress.me.notificationsettings"
+    case support = "org.wordpress.me.support"
+    case notifications = "org.wordpress.notifications"
 }
 
 extension WPActivityType {
@@ -41,11 +42,11 @@ extension WPActivityType {
 
 /// NSUserActivity userInfo keys
 ///
-enum WPActivityUserInfoKeys: String {
+public enum WPActivityUserInfoKeys: String {
     case siteId = "siteid"
 }
 
-@objc protocol SearchableActivityConvertable {
+@objc public protocol SearchableActivityConvertable {
     /// Type name used to uniquly indentify this activity.
     ///
     @objc var activityType: String {get}
@@ -74,8 +75,8 @@ enum WPActivityUserInfoKeys: String {
     @objc optional var activityDescription: String? {get}
 }
 
-extension SearchableActivityConvertable where Self: UIViewController {
-    internal func registerUserActivity() {
+public extension SearchableActivityConvertable where Self: UIViewController {
+    func registerUserActivity() {
         let activity = NSUserActivity(activityType: activityType)
         activity.title = activityTitle
 

@@ -1,5 +1,6 @@
 #import "MenuItemAbstractPostsViewController.h"
 #import "PostService.h"
+#import "PostServiceOptions.h"
 #import "AbstractPost.h"
 @import WordPressKit;
 
@@ -107,7 +108,7 @@
 
 - (Class)entityClass
 {
-    AssertSubclassMethod();
+    NSAssert(NO, @"You must override %@ in a subclass", NSStringFromSelector(_cmd));
     return nil;
 }
 

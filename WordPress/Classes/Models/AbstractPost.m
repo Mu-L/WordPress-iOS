@@ -1,7 +1,10 @@
 #import "AbstractPost.h"
 #import "Media.h"
-#import "CoreDataStack.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 #import "BasePost.h"
 
 @import WordPressKit;
@@ -23,6 +26,7 @@
 @dynamic autosaveModifiedDate;
 @dynamic autosaveIdentifier;
 @dynamic foreignID;
+@dynamic order;
 @synthesize voiceContent;
 
 #pragma mark - Life Cycle Methods

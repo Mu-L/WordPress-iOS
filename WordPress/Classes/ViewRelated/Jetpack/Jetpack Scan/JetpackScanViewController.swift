@@ -1,5 +1,6 @@
 import UIKit
 import WordPressFlux
+import WordPressUI
 
 class JetpackScanViewController: UIViewController, JetpackScanView {
     private let blog: Blog
@@ -18,7 +19,7 @@ class JetpackScanViewController: UIViewController, JetpackScanView {
     // MARK: - Initializers
     @objc init(blog: Blog) {
         self.blog = blog
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "JetpackScanViewController", bundle: .keystone)
     }
 
     required init?(coder: NSCoder) {

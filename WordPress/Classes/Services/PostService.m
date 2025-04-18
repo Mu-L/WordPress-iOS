@@ -1,12 +1,13 @@
+#import "Blog.h"
 #import "PostService.h"
-#import "Coordinate.h"
+#import "PostServiceOptions.h"
 #import "PostCategory.h"
-#import "PostCategoryService.h"
-#import "CoreDataStack.h"
-#import "CommentService.h"
-#import "MediaService.h"
 #import "Media.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 #import "PostHelper.h"
 @import WordPressKit;
 @import WordPressShared;
@@ -26,7 +27,7 @@ const NSUInteger PostServiceDefaultNumberToSync = 40;
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
     return [self initWithManagedObjectContext:context
-                     postServiceRemoteFactory:[PostServiceRemoteFactory.alloc init]];
+                     postServiceRemoteFactory:[[PostServiceRemoteFactory alloc] init]];
 }
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context

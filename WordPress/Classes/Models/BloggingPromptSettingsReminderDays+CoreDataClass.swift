@@ -4,7 +4,7 @@ import WordPressKit
 
 public class BloggingPromptSettingsReminderDays: NSManagedObject {
 
-    func configure(with remoteReminderDays: RemoteBloggingPromptsSettings.ReminderDays) {
+    public func configure(with remoteReminderDays: RemoteBloggingPromptsSettings.ReminderDays) {
         self.monday = remoteReminderDays.monday
         self.tuesday = remoteReminderDays.tuesday
         self.wednesday = remoteReminderDays.wednesday
@@ -13,22 +13,4 @@ public class BloggingPromptSettingsReminderDays: NSManagedObject {
         self.saturday = remoteReminderDays.saturday
         self.sunday = remoteReminderDays.sunday
     }
-
-    func getActiveWeekdays() -> [BloggingRemindersScheduler.Weekday] {
-        return [
-            sunday,
-            monday,
-            tuesday,
-            wednesday,
-            thursday,
-            friday,
-            saturday
-        ].enumerated().compactMap { (index: Int, isReminderActive: Bool) in
-            guard isReminderActive else {
-                return nil
-            }
-            return BloggingRemindersScheduler.Weekday(rawValue: index)
-        }
-    }
-
 }

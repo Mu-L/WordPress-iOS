@@ -1,5 +1,7 @@
+import UIKit
 import SVProgressHUD
 import WordPressAuthenticator
+import WordPressUI
 
 class SignupUsernameTableViewController: UITableViewController, SearchTableViewCellDelegate {
     open var currentUsername: String?
@@ -243,10 +245,11 @@ extension SignupUsernameTableViewController {
 
         isSearching = true
 
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         guard
             let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context),
+            let userID = account.userID,
             let api = account.wordPressComRestApi
         else {
             return
@@ -254,7 +257,7 @@ extension SignupUsernameTableViewController {
 
         showLoader()
 
-        let service = AccountSettingsService(userID: account.userID.intValue, api: api)
+        let service = AccountSettingsService(userID: userID.intValue, api: api)
         service.suggestUsernames(base: searchTerm) { [weak self] (newSuggestions) in
             if newSuggestions.count == 0 {
                 WordPressAuthenticator.track(.signupEpilogueUsernameSuggestionsFailed)

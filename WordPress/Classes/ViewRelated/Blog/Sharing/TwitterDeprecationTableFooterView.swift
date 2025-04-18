@@ -1,13 +1,16 @@
+import UIKit
+import WordPressUI
+
 /// A subclass implementation of `UITableViewHeaderFooterView` that displays a text with a tappable link.
 /// Specifically used for Twitter deprecation purposes.
 ///
-@objc class TwitterDeprecationTableFooterView: UITableViewHeaderFooterView {
+@objc public class TwitterDeprecationTableFooterView: UITableViewHeaderFooterView {
 
     // The view controller that will present the web view.
-    @objc weak var presentingViewController: UIViewController? = nil
+    @objc public weak var presentingViewController: UIViewController? = nil
 
     // For tracking purposes. See https://wp.me/pctCYC-OI#tracks
-    @objc var source: String? = nil
+    @objc public var source: String? = nil
 
     private let label: UILabel = {
         let label = UILabel()
@@ -40,12 +43,12 @@
 
     // MARK: Methods
 
-    override public init(reuseIdentifier: String?) {
+    public override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupSubviews()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupSubviews()
     }

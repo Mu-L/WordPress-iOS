@@ -1,4 +1,5 @@
 import Foundation
+import WordPressShared
 
 protocol JetpackRestoreWarningView {
     func showNoInternetConnection()
@@ -24,7 +25,7 @@ class JetpackRestoreWarningCoordinator {
          rewindID: String?,
          view: JetpackRestoreWarningView,
          service: JetpackRestoreService? = nil,
-         coreDataStack: CoreDataStack = ContextManager.shared) {
+         coreDataStack: CoreDataStackSwift = ContextManager.shared) {
         self.service = service ?? JetpackRestoreService(coreDataStack: coreDataStack)
         self.site = site
         self.rewindID = rewindID

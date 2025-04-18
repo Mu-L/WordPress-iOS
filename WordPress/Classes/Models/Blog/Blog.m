@@ -1,11 +1,13 @@
 #import "Blog.h"
 #import "WPAccount.h"
-#import "AccountService.h"
-#import "CoreDataStack.h"
-#import "Constants.h"
-#import "WPUserAgent.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
+@import SFHFKeychainUtils;
+@import WordPressShared;
 @import NSObject_SafeExpectations;
 @import NSURL_IDN;
 
@@ -44,6 +46,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 @dynamic blogID;
 @dynamic url;
 @dynamic xmlrpc;
+@dynamic restApiRootURL;
 @dynamic apiKey;
 @dynamic organizationID;
 @dynamic hasOlderPosts;
@@ -151,7 +154,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 
 - (NSNumber *)organizationID {
     NSNumber *organizationID = [self primitiveValueForKey:@"organizationID"];
-    
+
     if (organizationID == nil) {
         return @0;
     } else {
@@ -184,7 +187,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         DDLogInfo(@"Blog display URL is nil");
         return nil;
     }
-    
+
     NSError *error = nil;
     NSRegularExpression *protocol = [NSRegularExpression regularExpressionWithPattern:@"http(s?)://" options:NSRegularExpressionCaseInsensitive error:&error];
     NSString *result = [NSString stringWithFormat:@"%@", [protocol stringByReplacingMatchesInString:self.url options:0 range:NSMakeRange(0, [self.url length]) withTemplate:@""]];
@@ -302,7 +305,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
 }
 
 - (NSArray *)sortedPostFormatNames
-{    
+{
     return [[self sortedPostFormats] wp_map:^id(NSString *key) {
         return self.postFormats[key];
     }];
@@ -565,9 +568,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         case BlogFeatureStats:
             return [self supportsRestApi] && [self isViewingStatsAllowed];
         case BlogFeatureStockPhotos:
-            return [self supportsRestApi] && [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
-        case BlogFeatureTenor:
-            return [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled];
+            return [self supportsRestApi];
         case BlogFeatureSharing:
             return [self supportsSharing];
         case BlogFeatureOAuth2Login:
@@ -584,7 +585,7 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         case BlogFeatureJetpackImageSettings:
             return [self supportsJetpackImageSettings];
         case BlogFeatureJetpackSettings:
-            return [self supportsJetpackSettings];
+            return [self supportsRestApi] && ![self isHostedAtWPcom] && [self isAdmin];
         case BlogFeaturePushNotifications:
             return [self supportsPushNotifications];
         case BlogFeatureThemeBrowsing:
@@ -760,14 +761,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     return [self hasRequiredJetpackVersion:requiredJetpackVersion] || self.isHostedAtWPcom;
 }
 
-- (BOOL)supportsJetpackSettings
-{
-    return [JetpackFeaturesRemovalCoordinator jetpackFeaturesEnabled]
-    && [self supportsRestApi]
-    && ![self isHostedAtWPcom]
-    && [self isAdmin];
-}
-
 - (BOOL)accountIsDefaultAccount
 {
     return [[self account] isDefaultWordPressComAccount];
@@ -800,23 +793,8 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
     if (!allowedFileTypes || allowedFileTypes.count == 0) {
         return nil;
     }
-    
+
     return [NSSet setWithArray:allowedFileTypes];
-}
-
-- (void)setOptions:(NSDictionary *)options
-{
-    [self willChangeValueForKey:@"options"];
-    [self setPrimitiveValue:options forKey:@"options"];
-    [self didChangeValueForKey:@"options"];
-
-    self.siteVisibility = (SiteVisibility)([[self getOptionValue:@"blog_public"] integerValue]);
-    // HACK:Sergio Estevao (2015-08-31): Because there is no direct way to
-    // know if a user has permissions to change the options we check if the blog title property is read only or not.
-    // (Moved from BlogService, 2016-01-28 by aerych)
-    if ([self.options numberForKeyPath:@"blog_title.readonly"]) {
-        self.isAdmin = ![[self.options numberForKeyPath:@"blog_title.readonly"] boolValue];
-    }
 }
 
 + (NSSet *)keyPathsForValuesAffectingJetpack
@@ -833,65 +811,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         extra = [NSString stringWithFormat:@" jetpack: %@", [self.jetpack description]];
     }
     return [NSString stringWithFormat:@"<Blog Name: %@ URL: %@ XML-RPC: %@%@ ObjectID: %@>", self.settings.name, self.url, self.xmlrpc, extra, self.objectID.URIRepresentation];
-}
-
-- (NSString *)supportDescription
-{
-    // Gather information
-    
-    NSString *blogType = [NSString stringWithFormat:@"Type: (%@)", [self stateDescription]];
-    NSString *urlType = [self wordPressComRestApi] ? @"REST" : @"Self-hosted";
-    NSString *url = [NSString stringWithFormat:@"URL: %@", self.url];
-
-    NSString *username;
-    NSString *planDescription;
-    if (self.account) {
-        planDescription = [NSString stringWithFormat:@"Plan: %@ (%@)", self.planTitle, self.planID];
-    } else {
-        username = [self.jetpack connectedUsername];
-    }
-    
-    NSString *jetpackVersion;
-    if ([self.jetpack isInstalled]) {
-        jetpackVersion = [NSString stringWithFormat:@"Jetpack-version: %@", [self.jetpack version]];
-    }
-    
-    // Add information to array in the order we want to display it.
-    
-    NSMutableArray *blogInformation = [[NSMutableArray alloc] init];
-    [blogInformation addObject:blogType];
-    if (username) {
-        [blogInformation addObject:username];
-    }
-    [blogInformation addObject:urlType];
-    [blogInformation addObject:url];
-    if (planDescription) {
-        [blogInformation addObject:planDescription];
-    }
-    if (jetpackVersion) {
-        [blogInformation addObject:jetpackVersion];
-    }
-    
-    // Combine and return.
-    return [NSString stringWithFormat:@"<%@>", [blogInformation componentsJoinedByString:@" "]];
-}
-
-- (NSString *)stateDescription
-{
-    if (self.account) {
-        return @"wpcom";
-    }
-    
-    if ([self.jetpack isConnected]) {
-        NSString *apiType = [self wordPressComRestApi] ? @"REST" : @"XML-RPC";
-        return [NSString stringWithFormat:@"jetpack_connected - %@", apiType];
-    }
-    
-    if ([self.jetpack isInstalled]) {
-        return @"self-hosted - jetpack_installed";
-    }
-    
-    return @"self_hosted";
 }
 
 #pragma mark - api accessor
@@ -914,18 +833,6 @@ NSString * const OptionsKeyIsWPForTeams = @"is_wpforteams_site";
         _selfHostedSiteRestApi = self.account == nil ? [[WordPressOrgRestApi alloc] initWithBlog:self] : nil;
     }
     return _selfHostedSiteRestApi;
-}
-
-- (WordPressComRestApi *)wordPressComRestApi
-{
-    if (self.account) {
-        return self.account.wordPressComRestApi;
-    }
-    return nil;
-}
-
-- (BOOL)isAccessibleThroughWPCom {
-    return self.wordPressComRestApi != nil;
 }
 
 - (BOOL)supportsRestApi {

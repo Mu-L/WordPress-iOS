@@ -1,4 +1,6 @@
 import UIKit
+import WordPressUI
+import WordPressShared
 
 private struct Row: ImmuTableRow {
     static let cell = ImmuTableCell.class(CheckmarkTableViewCell.self)
@@ -211,7 +213,7 @@ extension ParentPageSettingsViewController: UITableViewDelegate {
 //
 extension ParentPageSettingsViewController {
     class func make(with pages: [Page], selectedPage: Page) -> UIViewController {
-        let storyboard = UIStoryboard(name: "Pages", bundle: Bundle.main)
+        let storyboard = UIStoryboard(name: "Pages", bundle: Bundle.keystone)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "ParentPageSettings") as? ParentPageSettingsViewController else {
             fatalError("A ParentPageSettingsViewController view controller is required for Parent Page Settings")
         }

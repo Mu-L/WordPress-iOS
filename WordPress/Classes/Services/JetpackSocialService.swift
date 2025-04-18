@@ -1,7 +1,8 @@
-import WordPressKit
 import CoreData
+import WordPressData
+import WordPressKit
 
-@objc class JetpackSocialService: NSObject {
+@objc public class JetpackSocialService: NSObject {
 
     // MARK: Properties
 
@@ -18,7 +19,7 @@ import CoreData
 
     /// Init method for Objective-C.
     ///
-    @objc init(contextManager: ContextManager) {
+    @objc public init(contextManager: ContextManager) {
         self.coreDataStack = contextManager
     }
 
@@ -76,7 +77,7 @@ import CoreData
     ///   - dotComID: The WP.com ID of the blog.
     ///   - success: Closure called when the sync process succeeds.
     ///   - failure: Closure called when the sync process fails.
-    @objc func syncSharingLimit(dotComID: NSNumber?,
+    @objc public func syncSharingLimit(dotComID: NSNumber?,
                                 success: (() -> Void)?,
                                 failure: ((NSError?) -> Void)?) {
         guard let blogID = dotComID?.intValue else {

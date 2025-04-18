@@ -1,10 +1,30 @@
 # frozen_string_literal: true
 
+# The names for WordPress and Jetpack are currently set but unused.
+# They will be once we'll the split build step from the upload step in CI.
+APP_STORE_CONNECT_BUILD_NAME_WORDPRESS = 'WordPress'
+APP_STORE_CONNECT_BUILD_NAME_JETPACK = 'Jetpack'
+APP_STORE_CONNECT_BUILD_NAME_READER = 'Reader'
+
 SENTRY_ORG_SLUG = 'a8c'
 SENTRY_PROJECT_SLUG_WORDPRESS = 'wordpress-ios'
 SENTRY_PROJECT_SLUG_JETPACK = 'jetpack-ios'
-APPCENTER_OWNER_NAME = 'automattic'
-APPCENTER_OWNER_TYPE = 'organization'
+
+# Prototype Builds in Firebase App Distribution
+PROTOTYPE_BUILD_XCODE_CONFIGURATION = 'Release-Alpha'
+FIREBASE_APP_CONFIG_WORDPRESS = {
+  app_name: 'WordPress',
+  app_icon: ':wordpress:', # Use Buildkite emoji
+  app_id: '1:124902176124:ios:ff9714d0b53aac821620f9',
+  testers_group: 'wordpress-ios---prototype-builds'
+}.freeze
+FIREBASE_APP_CONFIG_JETPACK = {
+  app_name: 'Jetpack',
+  app_icon: ':jetpack:', # Use Buildkite emoji
+  app_id: '1:124902176124:ios:121c494b82f283ec1620f9',
+  testers_group: 'jetpack-ios---prototype-builds'
+}.freeze
+
 CONCURRENT_SIMULATORS = 2
 
 # Shared options to use when invoking `build_app` (`gym`).
@@ -126,22 +146,19 @@ platform :ios do
 
   # Builds the WordPress app and uploads it to TestFlight, for beta-testing or final release
   #
-  # @option [Boolean] skip_confirm (default: false) If true, avoids any interactive prompt
-  # @option [Boolean] skip_prechecks (default: false) If true, don't run the prechecks and ios_build_preflight
-  # @option [Boolean] create_release If true, creates a GitHub Release draft after the upload, with zipped xcarchive as artefact
-  # @option [Boolean] beta_release If true, the GitHub release will be marked as being a pre-release
+  # @param [Boolean] skip_confirm (default: false) If true, avoids any interactive prompt
+  # @param [Boolean] skip_prechecks (default: false) If true, don't run the prechecks and ios_build_preflight
+  # @param [Boolean] create_release If true, creates a GitHub Release draft after the upload, with zipped xcarchive as artefact
+  # @param [Boolean] beta_release If true, the GitHub release will be marked as being a pre-release
   #
-  # @called_by CI
-  #
-  desc 'Builds and uploads for distribution to App Store Connect'
-  lane :build_and_upload_app_store_connect do |options|
-    unless options[:skip_prechecks]
+  lane :build_and_upload_app_store_connect do |skip_confirm: false, skip_prechecks: false, create_release: false, beta_release: false|
+    unless skip_prechecks
       ensure_git_status_clean unless is_ci
       ios_build_preflight
     end
 
     UI.important("Building version #{release_version_current} (#{build_code_current}) and uploading to TestFlight")
-    UI.user_error!('Aborted by user request') unless options[:skip_confirm] || UI.confirm('Do you want to continue?')
+    UI.user_error!('Aborted by user request') unless skip_confirm || UI.confirm('Do you want to continue?')
 
     sentry_check_cli_installed
 
@@ -152,12 +169,14 @@ platform :ios do
       workspace: WORKSPACE_PATH,
       clean: true,
       output_directory: BUILD_PRODUCTS_PATH,
+      output_name: APP_STORE_CONNECT_BUILD_NAME_WORDPRESS,
       derived_data_path: DERIVED_DATA_PATH,
       export_team_id: get_required_env('EXT_EXPORT_TEAM_ID'),
       export_options: { **COMMON_EXPORT_OPTIONS, method: 'app-store' }
     )
 
     upload_build_to_testflight(
+      ipa_path: lane_context[SharedValues::IPA_OUTPUT_PATH],
       whats_new_path: WORDPRESS_RELEASE_NOTES_PATH,
       distribution_groups: ['Internal a8c Testers', 'Public Beta Testers'],
       beta_app_description_path: WORDPRESS_BETA_APP_DESCRIPTION_PATH
@@ -177,7 +196,7 @@ platform :ios do
       app_identifier: WORDPRESS_BUNDLE_IDENTIFIER
     )
 
-    next unless options[:create_release]
+    next unless create_release
 
     archive_zip_path = File.join(PROJECT_ROOT_FOLDER, 'WordPress.xarchive.zip')
     zip(path: lane_context[SharedValues::XCODEBUILD_ARCHIVE], output_path: archive_zip_path)
@@ -185,13 +204,14 @@ platform :ios do
     build_code = build_code_current
     release_version = release_version_current
 
-    version = options[:beta_release] ? build_code : release_version
+    version = beta_release ? build_code : release_version
     release_url = create_github_release(
       repository: GITHUB_REPO,
       version: version,
       release_notes_file_path: WORDPRESS_RELEASE_NOTES_PATH,
       release_assets: archive_zip_path.to_s,
-      prerelease: options[:beta_release]
+      prerelease: beta_release, # Beta = prerelease, Final = normal Release
+      is_draft: !beta_release # Beta = publish immediately, Final = Draft (only publish after Apple approval)
     )
 
     send_slack_message(
@@ -219,11 +239,13 @@ platform :ios do
       clean: true,
       export_team_id: get_required_env('EXT_EXPORT_TEAM_ID'),
       output_directory: BUILD_PRODUCTS_PATH,
+      output_name: APP_STORE_CONNECT_BUILD_NAME_JETPACK,
       derived_data_path: DERIVED_DATA_PATH,
       export_options: { **COMMON_EXPORT_OPTIONS, method: 'app-store' }
     )
 
     upload_build_to_testflight(
+      ipa_path: lane_context[SharedValues::IPA_OUTPUT_PATH],
       whats_new_path: JETPACK_RELEASE_NOTES_PATH,
       distribution_groups: ['Beta Testers'],
       beta_app_description_path: JETPACK_BETA_APP_DESCRIPTION_PATH
@@ -253,7 +275,49 @@ platform :ios do
     )
   end
 
-  # Builds the WordPress app for a Prototype Build ("WordPress Alpha" scheme), and uploads it to App Center
+  lane :build_for_app_store_connect_reader do |build_number: ENV.fetch('BUILDKITE_BUILD_NUMBER', nil)|
+    UI.user_error!('No build number provided and BUILDKITE_BUILD_NUMBER environment variable is not set') if build_number.nil?
+
+    sentry_check_cli_installed
+
+    update_certs_and_profiles_app_store_reader
+
+    build_app(
+      scheme: 'Reader',
+      workspace: WORKSPACE_PATH,
+      clean: true,
+      export_team_id: get_required_env('EXT_EXPORT_TEAM_ID'),
+      output_directory: BUILD_PRODUCTS_PATH,
+      output_name: APP_STORE_CONNECT_BUILD_NAME_READER,
+      derived_data_path: DERIVED_DATA_PATH,
+      xcargs: { VERSION_LONG: build_number, VERSION_SHORT: '0.0' }.compact,
+      export_options: { **COMMON_EXPORT_OPTIONS, method: 'app-store' }
+    )
+  end
+
+  lane :upload_to_app_store_connect_reader do
+    # Eventually, this will be replaced with a real release notes file. Or maybe not.
+    temp_release_notes = File.join(Dir.tmpdir, 'reader_release_notes.md')
+
+    begin
+      File.write(temp_release_notes, 'Thank you for testing the new Reader app. Please get in touch with any feedback or suggestions.')
+
+      upload_build_to_testflight(
+        ipa_path: File.join(BUILD_PRODUCTS_PATH, "#{APP_STORE_CONNECT_BUILD_NAME_READER}.ipa"),
+        whats_new_path: temp_release_notes,
+        # The action fails with "Cannot add internal group to a build," despite the build having been added to the internal group.
+        #
+        # Groups are required when distributing to external testers, but maybe they are not when it's only internal?
+        # distribution_groups: ['Internal Automattic Testers Automatic Distribution'],
+        distribution_groups: [],
+        beta_app_description_path: BETA_APP_DESCRIPTION_PATH_READER
+      )
+    ensure
+      FileUtils.rm_rf(temp_release_notes)
+    end
+  end
+
+  # Builds the WordPress app for a Prototype Build ("WordPress Alpha" scheme), and uploads it to Firebase App Distribution
   #
   # @called_by CI
   #
@@ -264,16 +328,15 @@ platform :ios do
     update_certs_and_profiles_wordpress_enterprise
 
     build_and_upload_prototype_build(
-      scheme: 'WordPress Alpha',
+      scheme: 'WordPress',
       output_app_name: 'WordPress Alpha',
-      appcenter_app_name: 'WPiOS-One-Offs',
-      app_icon: ':wordpress:', # Use Buildkite emoji
+      firebase_app_config: FIREBASE_APP_CONFIG_WORDPRESS,
       sentry_project_slug: SENTRY_PROJECT_SLUG_WORDPRESS,
       app_identifier: 'org.wordpress.alpha'
     )
   end
 
-  # Builds the Jetpack app for a Prototype Build ("Jetpack" scheme), and uploads it to App Center
+  # Builds the Jetpack app for a Prototype Build ("Jetpack" scheme), and uploads it to Firebase App Distribution
   #
   # @called_by CI
   #
@@ -286,8 +349,7 @@ platform :ios do
     build_and_upload_prototype_build(
       scheme: 'Jetpack',
       output_app_name: 'Jetpack Alpha',
-      appcenter_app_name: 'jetpack-installable-builds',
-      app_icon: ':jetpack:', # Use Buildkite emoji
+      firebase_app_config: FIREBASE_APP_CONFIG_JETPACK,
       sentry_project_slug: SENTRY_PROJECT_SLUG_JETPACK,
       app_identifier: 'com.jetpack.alpha'
     )
@@ -308,49 +370,19 @@ platform :ios do
   # Helper Functions
   #################################################
 
-
-  # Generates a build number for Prototype Builds, based on the PR number and short commit SHA1
+  # Builds a Prototype Build for WordPress or Jetpack, then uploads it to Firebase App Distribution and comment with a link to it on the PR.
   #
-  # @note This function uses Buildkite-specific ENV vars
-  #
-  def generate_prototype_build_number
-    if ENV['BUILDKITE']
-      commit = ENV.fetch('BUILDKITE_COMMIT', nil)[0, 7]
-      branch = ENV.fetch('BUILDKITE_BRANCH', nil)
-      pr_num = ENV.fetch('BUILDKITE_PULL_REQUEST', nil)
-
-      pr_num == 'false' ? "#{branch}-#{commit}" : "pr#{pr_num}-#{commit}"
-    else
-      repo = Git.open(PROJECT_ROOT_FOLDER)
-      commit = repo.current_branch
-      branch = repo.revparse('HEAD')[0, 7]
-
-      "#{branch}-#{commit}"
-    end
-  end
-
-  # Builds a Prototype Build for WordPress or Jetpack, then uploads it to App Center and comment with a link to it on the PR.
-  #
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/ParameterLists
-  def build_and_upload_prototype_build(scheme:, output_app_name:, appcenter_app_name:, app_icon:, sentry_project_slug:, app_identifier:)
-    configuration = 'Release-Alpha'
-
-    # Get the current build version, and update it if needed
-    version_config_path = File.join(PROJECT_ROOT_FOLDER, 'config', 'Version.public.xcconfig')
-    versions = Xcodeproj::Config.new(File.new(version_config_path)).to_hash
-    build_number = generate_prototype_build_number
-    UI.message("Updating build version to #{build_number}")
-    versions['VERSION_LONG'] = build_number
-    new_config = Xcodeproj::Config.new(versions)
-    new_config.save_as(Pathname.new(version_config_path))
+  def build_and_upload_prototype_build(scheme:, output_app_name:, firebase_app_config:, sentry_project_slug:, app_identifier:)
+    build_number = ENV.fetch('BUILDKITE_BUILD_NUMBER', '0')
+    pr_or_branch = pull_request_number&.then { |num| "PR ##{num}" } || ENV.fetch('BUILDKITE_BRANCH', nil)
 
     # Build
     build_app(
       scheme: scheme,
       workspace: WORKSPACE_PATH,
-      configuration: configuration,
+      configuration: PROTOTYPE_BUILD_XCODE_CONFIGURATION,
       clean: true,
+      xcargs: { VERSION_LONG: build_number, VERSION_SHORT: pr_or_branch }.compact,
       output_directory: BUILD_PRODUCTS_PATH,
       output_name: output_app_name,
       derived_data_path: DERIVED_DATA_PATH,
@@ -359,21 +391,8 @@ platform :ios do
       export_options: { **COMMON_EXPORT_OPTIONS, method: 'enterprise' }
     )
 
-    # Upload to App Center
-    commit = ENV.fetch('BUILDKITE_COMMIT', 'Unknown')
-    pr = ENV.fetch('BUILDKITE_PULL_REQUEST', nil)
-    release_notes = <<~NOTES
-      - Branch: `#{ENV.fetch('BUILDKITE_BRANCH', 'Unknown')}`\n
-      - Commit: [#{commit[0...7]}](https://github.com/#{GITHUB_REPO}/commit/#{commit})\n
-      - Pull Request: [##{pr}](https://github.com/#{GITHUB_REPO}/pull/#{pr})\n
-    NOTES
-
-    upload_build_to_app_center(
-      name: appcenter_app_name,
-      file: lane_context[SharedValues::IPA_OUTPUT_PATH],
-      dsym: lane_context[SharedValues::DSYM_OUTPUT_PATH],
-      release_notes: release_notes,
-      distribute_to_everyone: false
+    upload_build_to_firebase_app_distribution(
+      firebase_app_config: firebase_app_config
     )
 
     # Upload dSYMs to Sentry
@@ -390,33 +409,7 @@ platform :ios do
       build_version: build_number,
       app_identifier: app_identifier
     )
-
-    # Post PR Comment
-    comment_body = prototype_build_details_comment(
-      app_display_name: output_app_name,
-      app_icon: app_icon,
-      app_center_org_name: APPCENTER_OWNER_NAME,
-      metadata: { Configuration: configuration },
-      fold: true
-    )
-
-    comment_on_pr(
-      project: GITHUB_REPO,
-      pr_number: Integer(ENV.fetch('BUILDKITE_PULL_REQUEST', nil)),
-      reuse_identifier: "prototype-build-link-#{appcenter_app_name}",
-      body: comment_body
-    )
-
-    # Attach version information as Buildkite metadata and annotation
-    appcenter_id = lane_context.dig(SharedValues::APPCENTER_BUILD_INFORMATION, 'id')
-    metadata = versions.merge(build_type: 'Prototype', 'appcenter:id': appcenter_id)
-    buildkite_metadata(set: metadata)
-    appcenter_install_url = "https://install.appcenter.ms/orgs/#{APPCENTER_OWNER_NAME}/apps/#{appcenter_app_name}/releases/#{appcenter_id}"
-    list = metadata.map { |k, v| " - **#{k}**: #{v}" }.join("\n")
-    buildkite_annotate(context: "appcenter-info-#{output_app_name}", style: 'info', message: "#{output_app_name} [App Center Build](#{appcenter_install_url}) Info:\n\n#{list}")
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/ParameterLists
 
   def inject_buildkite_analytics_environment(xctestrun_path:)
     require 'plist'
@@ -440,13 +433,18 @@ platform :ios do
     ENV.fetch('BUILDKITE', false)
   end
 
-  def upload_build_to_testflight(whats_new_path:, distribution_groups:, beta_app_description_path:)
+  def upload_build_to_testflight(ipa_path:, whats_new_path:, distribution_groups:, beta_app_description_path:)
+    # Explicitly disable distributing to external testers if there are no external groups.
+    distribute_external = distribution_groups.empty? == false
+
     upload_to_testflight(
       team_id: get_required_env('FASTLANE_ITC_TEAM_ID'),
       api_key_path: APP_STORE_CONNECT_KEY_PATH,
+      ipa: ipa_path,
       beta_app_description: File.read(beta_app_description_path),
       changelog: File.read(whats_new_path),
-      distribute_external: true,
+      distribute_external: distribute_external,
+      notify_external_testers: distribute_external,
       groups: distribution_groups,
       # If there is a build waiting for beta review, we ~~want~~ would like to to reject that so the new build can be submitted instead.
       reject_build_waiting_for_review: true
@@ -469,23 +467,39 @@ platform :ios do
     )
   end
 
-  def upload_build_to_app_center(
-    name:,
-    file:,
-    dsym:,
-    release_notes:,
-    distribute_to_everyone:
-  )
-    appcenter_upload(
-      api_token: get_required_env('APPCENTER_API_TOKEN'),
-      owner_name: APPCENTER_OWNER_NAME,
-      owner_type: APPCENTER_OWNER_TYPE,
-      app_name: name,
-      file: file,
-      dsym: dsym,
+  # Uploads a build to Firebase App Distribution and post the corresponding PR comment
+  #
+  # @param [Hash<Symbol, String>] firebase_app_config A hash with the app name as the key and the Firebase app ID and testers group as the value
+  #   Typically one of FIREBASE_APP_CONFIG_WORDPRESS or FIREBASE_APP_CONFIG_JETPACK
+  #
+  def upload_build_to_firebase_app_distribution(firebase_app_config:)
+    release_notes = <<~NOTES
+      Pull Request: ##{pull_request_number || 'N/A'}
+      Branch: `#{ENV.fetch('BUILDKITE_BRANCH', 'N/A')}`
+      Commit: #{ENV.fetch('BUILDKITE_COMMIT', 'N/A')[0...7]}
+    NOTES
+
+    firebase_app_distribution(
+      app: firebase_app_config[:app_id],
+      service_credentials_json_data: get_required_env('FIREBASE_APP_DISTRIBUTION_ACCOUNT_KEY'),
       release_notes: release_notes,
-      destinations: distribute_to_everyone ? '*' : 'Collaborators',
-      notify_testers: false
+      groups: firebase_app_config[:testers_group]
+    )
+
+    return if pull_request_number.nil?
+
+    # PR Comment
+    comment_body = prototype_build_details_comment(
+      app_display_name: firebase_app_config[:app_name],
+      app_icon: firebase_app_config[:app_icon],
+      metadata: { Configuration: PROTOTYPE_BUILD_XCODE_CONFIGURATION },
+      fold: true
+    )
+    comment_on_pr(
+      project: GITHUB_REPO,
+      pr_number: pull_request_number,
+      reuse_identifier: "prototype-build-link-#{firebase_app_config[:app_id]}",
+      body: comment_body
     )
   end
 

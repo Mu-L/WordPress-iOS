@@ -11,12 +11,12 @@ struct GravatarQuickEditorPresenter {
     let emailVerificationStatus: WPAccount.VerificationStatus
 
     init?(email: String) {
-        let context = ContextManager.sharedInstance().mainContext
-        guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context) else {
+        let context = ContextManager.shared.mainContext
+        guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context), let authToken = account.authToken else {
             return nil
         }
         self.email = email
-        self.authToken = account.authToken
+        self.authToken = authToken
         self.emailVerificationStatus = account.verificationStatus
     }
 

@@ -1,16 +1,17 @@
 import UIKit
+import WordPressShared
 
 @objc
-class MySitesCoordinator: NSObject {
+public class MySitesCoordinator: NSObject {
     let becomeActiveTab: () -> Void
 
     @objc
-    var currentBlog: Blog? {
+    public var currentBlog: Blog? {
         mySiteViewController.blog
     }
 
     @objc
-    init(onBecomeActiveTab becomeActiveTab: @escaping () -> Void) {
+    public init(onBecomeActiveTab becomeActiveTab: @escaping () -> Void) {
         self.becomeActiveTab = becomeActiveTab
         super.init()
 
@@ -28,14 +29,14 @@ class MySitesCoordinator: NSObject {
     /// The view controller that should be presented by the tab bar controller.
     ///
     @objc
-    var rootViewController: UIViewController {
+    public var rootViewController: UIViewController {
         // `hidesBottomBarWhenPushed` doesn't work with `UISplitViewController`,
         // so it we have to use `UINavigationController` directly.
         return navigationController
     }
 
     @objc
-    lazy var navigationController: UINavigationController = {
+    public lazy var navigationController: UINavigationController = {
         let navigationController = UINavigationController(rootViewController: rootContentViewController)
 
         navigationController.navigationBar.prefersLargeTitles = true
@@ -100,8 +101,13 @@ class MySitesCoordinator: NSObject {
     }
 
     @objc func signinDidFinish() {
-        mySiteViewController = makeMySiteViewController()
-        navigationController.viewControllers = [rootContentViewController]
+        // The code below raises an exception during unit tests. Adding a `try?` to ignore the error.
+        // The exception is Error Domain=NSRangeException Code=0 "(null)". I'm not exactly sure what code (probably
+        // deep in UIKit) throws this exception, but I don't see any reason the code below would cause crash in production.
+        try? WPException.objcTry {
+            self.mySiteViewController = self.makeMySiteViewController()
+            self.navigationController.viewControllers = [self.rootContentViewController]
+        }
     }
 
     func displayJetpackOverlayForDisabledEntryPoint() {

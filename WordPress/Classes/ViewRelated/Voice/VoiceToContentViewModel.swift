@@ -1,6 +1,7 @@
 import Foundation
 import AVFoundation
 import WordPressKit
+import WordPressShared
 
 final class VoiceToContentViewModel: NSObject, ObservableObject, AVAudioRecorderDelegate {
     @Published private(set) var title: String = ""
@@ -86,7 +87,7 @@ final class VoiceToContentViewModel: NSObject, ObservableObject, AVAudioRecorder
         self.loadingState = .loading
         self.subtitle = Strings.subtitleRequestsAvailable // Showing spinner instead of a number
 
-        guard let api = blog.wordPressComRestApi() else {
+        guard let api = blog.wordPressComRestApi else {
             wpAssertionFailure("API not available")
             return
         }
@@ -226,7 +227,7 @@ final class VoiceToContentViewModel: NSObject, ObservableObject, AVAudioRecorder
     private func process(fileURL: URL) async {
         loadingState = .loading
 
-        guard let api = blog.wordPressComRestApi() else {
+        guard let api = blog.wordPressComRestApi else {
             wpAssertionFailure("only available for .com sites")
             return
         }

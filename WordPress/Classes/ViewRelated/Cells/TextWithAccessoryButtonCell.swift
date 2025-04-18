@@ -1,7 +1,8 @@
 import UIKit
 import WordPressAuthenticator
+import WordPressUI
 
-class TextWithAccessoryButtonCell: WPReusableTableViewCell {
+class TextWithAccessoryButtonCell: WPReusableTableViewCell, NibLoadable {
     var buttonText: String? {
         get {
             return button?.title(for: .normal)

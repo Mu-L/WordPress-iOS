@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 // MARK: - Content summary support
 
@@ -21,9 +21,9 @@ extension UITextView {
 extension UITextView {
     func frameForTextInRange(_ range: NSRange) -> CGRect {
         guard
-            let firstPosition   = position(from: beginningOfDocument, offset: range.location),
-            let lastPosition    = position(from: beginningOfDocument, offset: range.location + range.length),
-            let textRange       = self.textRange(from: firstPosition, to: lastPosition)
+            let firstPosition = position(from: beginningOfDocument, offset: range.location),
+            let lastPosition = position(from: beginningOfDocument, offset: range.location + range.length),
+            let textRange = self.textRange(from: firstPosition, to: lastPosition)
             else {
                 return .zero
         }

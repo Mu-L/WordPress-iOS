@@ -103,6 +103,14 @@ final class MeHeaderView: UIView {
         infoStackView.alignment = .leading
         setIconSize(40)
     }
+
+    func configureReaderMode() {
+        infoStackView.alignment = .leading
+        setIconSize(60)
+        titleLabel.font = AppStyleGuide.current.navigationBarLargeFont
+        infoStackView.spacing = 0
+        detailsLabel.isHidden = true
+    }
 }
 
 struct MeHeaderViewModel {
@@ -112,7 +120,7 @@ struct MeHeaderViewModel {
 
     init(account: WPAccount) {
         self.gravatarEmail = account.email
-        let username = account.username ?? ""
+        let username = account.username
         self.username = "\(username.contains("@") ? "" : "@")\(username)"
         self.displayName = account.displayName ?? ""
     }

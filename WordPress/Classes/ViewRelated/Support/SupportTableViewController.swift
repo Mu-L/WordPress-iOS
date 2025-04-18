@@ -1,5 +1,7 @@
 import UIKit
 import WordPressAuthenticator
+import WordPressShared
+import WordPressUI
 
 class SupportTableViewController: UITableViewController {
 
@@ -40,10 +42,6 @@ class SupportTableViewController: UITableViewController {
     required convenience init(dismissTapped: (() -> ())?) {
         self.init(configuration: .init(), style: .insetGrouped)
         self.dismissTapped = dismissTapped
-    }
-
-    @objc public convenience init() {
-        self.init(configuration: .init(), style: .insetGrouped)
     }
 
     // MARK: - View
@@ -92,7 +90,7 @@ class SupportTableViewController: UITableViewController {
     }
 
     // TODO: Refactor this method to use the general `show(from:)` method
-    @objc func showFromTabBar() {
+    func showFromTabBar() {
         let navigationController = UINavigationController.init(rootViewController: self)
 
         if WPDeviceIdentification.isiPad() {

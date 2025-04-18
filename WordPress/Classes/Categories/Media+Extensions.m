@@ -1,8 +1,12 @@
 #import "Media+Extensions.h"
 #import "MediaService.h"
 #import "Blog.h"
-#import "CoreDataStack.h"
+@import WordPressShared;
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @implementation Media (Extensions)
 

@@ -1,5 +1,6 @@
 import UIKit
 import SwiftUI
+import WordPressShared
 
 /// This class simply exists to coordinate the display of various sections of
 /// the app in response to actions taken by the user from Post notifications.
@@ -59,7 +60,7 @@ class PostNoticeNavigationCoordinator {
     }
 
     private static func post(from userInfo: NSDictionary) -> AbstractPost? {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         guard let postID = userInfo[PostNoticeUserInfoKey.postID] as? String,
             let URIRepresentation = URL(string: postID),

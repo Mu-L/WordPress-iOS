@@ -3,16 +3,17 @@
 #import "AccountService.h"
 #import "BlogService.h"
 #import "CommentsViewController.h"
-#import "CoreDataStack.h"
-#import "ReachabilityUtils.h"
 #import "SiteSettingsViewController.h"
 #import "SharingViewController.h"
 #import "StatsViewController.h"
 #import "WPAccount.h"
 #import "WPAppAnalytics.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 #import "MenusViewController.h"
-#import "NSMutableArray+NullableObjects.h"
 
 @import Gridicons;
 @import Reachability;
@@ -39,9 +40,17 @@ NSString * const HideWPAdminDate = @"2015-09-07T00:00:00Z";
 CGFloat const BlogDetailReminderSectionHeaderHeight = 8.0;
 CGFloat const BlogDetailReminderSectionFooterHeight = 1.0;
 
-NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
-
 #pragma mark - Helper Classes for Blog Details view model.
+
+@implementation NSMutableArray (NullableObjects)
+
+- (void)addNullableObject:(nullable id)anObject {
+    if (anObject != nil) {
+        [self addObject:anObject];
+    }
+}
+
+@end
 
 @implementation BlogDetailsRow
 
@@ -227,13 +236,11 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
 
 #pragma mark -
 
-@interface BlogDetailsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIAdaptivePresentationControllerDelegate>
+@interface BlogDetailsViewController () <UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSArray *headerViewHorizontalConstraints;
 @property (nonatomic, strong) NSArray<BlogDetailsSection *> *tableSections;
 @property (nonatomic, strong) BlogService *blogService;
-@property (nonatomic, strong) SiteIconPickerPresenter *siteIconPickerPresenter;
-@property (nonatomic, strong) ImageCropViewController *imageCropViewController;
 
 /// Used to restore the tableview selection during state restoration, and
 /// also when switching between a collapsed and expanded split view controller presentation
@@ -241,8 +248,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
 @property (nonatomic) BlogDetailsSectionCategory selectedSectionCategory;
 
 @property (nonatomic) BOOL hasLoggedDomainCreditPromptShownEvent;
-
-@property (nonatomic, weak) UIViewController *presentedSiteSettingsViewController;
 
 @end
 
@@ -355,7 +360,7 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     }
 
     if ([self shouldShowBlaze]) {
-        [BlazeEventsTracker trackEntryPointDisplayedFor:BlazeSourceMenuItem];
+        [ObjCBridge trackBlazeEntryPointDisplayedWithSource:BlazeSourceMenuItem];
     }
 }
 
@@ -638,14 +643,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     _restorableSelectedIndexPath = nil;
 }
 
-- (SiteIconPickerPresenter *)siteIconPickerPresenter
-{
-    if (!_siteIconPickerPresenter) {
-        _siteIconPickerPresenter = [[SiteIconPickerPresenter alloc]initWithBlog:self.blog];
-    }
-    return _siteIconPickerPresenter;
-}
-
 #pragma mark - iOS 10 bottom padding
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)sectionNum {
@@ -767,7 +764,7 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
 {
     __weak __typeof(self) weakSelf = self;
 
-    NSString *title = [AppConfiguration isWordPress]
+    NSString *title = ObjCBridge.isWordPress
     ? NSLocalizedString(@"Sharing", @"Noun. Title. Links to a blog's sharing options.")
     : [BlogDetailsViewControllerStrings socialRowTitle];
 
@@ -1002,7 +999,7 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
         [marr addNullableObject:[self homeSectionViewModel]];
     }
 
-    if ([AppConfiguration isWordPress]) {
+    if (ObjCBridge.isWordPress) {
         if ([self shouldAddJetpackSection]) {
             [marr addNullableObject:[self jetpackSectionViewModel]];
         }
@@ -1201,19 +1198,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     if ([self shouldShowBlaze]) {
         [rows addObject:[self blazeRow]];
     }
-
-// Temporarily disabled
-//    if ([self.blog supports:BlogFeaturePlans] && ![self.blog isWPForTeams]) {
-//        BlogDetailsRow *plansRow = [[BlogDetailsRow alloc] initWithTitle:NSLocalizedString(@"Plans", @"Action title. Noun. Links to a blog's Plans screen.")
-//                                                         identifier:BlogDetailsPlanCellIdentifier
-//                                                              image:[UIImage gridiconOfType:GridiconTypePlans]
-//                                                           callback:^{
-//                                                               [weakSelf showPlansFromSource:BlogDetailsNavigationSourceRow];
-//                                                           }];
-//
-//        plansRow.detail = self.blog.planTitle;
-//        [rows addObject:plansRow];
-//    }
 
     if (rows.count == 0) {
         return nil;
@@ -1634,47 +1618,16 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
 
 #pragma mark - Private methods
 
-- (void)trackEvent:(WPAnalyticsStat)event fromSource:(BlogDetailsNavigationSource)source {
-
-    NSString *sourceString = [self propertiesStringForSource:source];
-
-    [WPAppAnalytics track:event withProperties:@{WPAppAnalyticsKeyTapSource: sourceString, WPAppAnalyticsKeyTabSource: @"site_menu"} withBlog:self.blog];
-}
-
-- (NSString *)propertiesStringForSource:(BlogDetailsNavigationSource)source {
-    switch (source) {
-        case BlogDetailsNavigationSourceRow:
-            return @"row";
-        case BlogDetailsNavigationSourceLink:
-            return @"link";
-        case BlogDetailsNavigationSourceButton:
-            return @"button";
-        case BlogDetailsNavigationSourceWidget:
-            return @"widget";
-        case BlogDetailsNavigationSourceOnboarding:
-            return @"onboarding";
-        case BlogDetailsNavigationSourceNotification:
-            return @"notification";
-        case BlogDetailsNavigationSourceShortcut:
-            return @"shortcut";
-        case BlogDetailsNavigationSourceTodayStatsCard:
-            return @"todays_stats_card";
-        default:
-            return @"";
-    }
-}
-
 - (void)preloadBlogData
 {
-    WordPressAppDelegate *appDelegate = [WordPressAppDelegate shared];
-    BOOL isOnWifi = [appDelegate.internetReachability isReachableViaWiFi];
-
     // only preload on wifi
-    if (isOnWifi) {
-        [self preloadComments];
-        [self preloadMetadata];
-        [self preloadDomains];
+    if ([ReachabilityUtils.internetReachability isReachableViaWiFi] == false) {
+        return;
     }
+
+    [self preloadComments];
+    [self preloadMetadata];
+    [self preloadDomains];
 }
 
 - (void)preloadComments
@@ -1707,277 +1660,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
                                 failure:nil];
 }
 
-- (void)showCommentsFromSource:(BlogDetailsNavigationSource)source
-{
-    [self trackEvent:WPAnalyticsStatOpenedComments fromSource:source];
-    CommentsViewController *commentsVC = [CommentsViewController controllerWithBlog:self.blog];
-    commentsVC.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-
-    if (self.isSidebarModeEnabled) {
-        commentsVC.isSidebarModeEnabled = YES;
-
-        UISplitViewController *splitVC = [[UISplitViewController alloc] initWithStyle:UISplitViewControllerStyleDoubleColumn];
-        splitVC.presentsWithGesture = NO;
-        splitVC.preferredDisplayMode = UISplitViewControllerDisplayModeOneBesideSecondary;
-        [splitVC setPreferredPrimaryColumnWidth:320];
-        [splitVC setMinimumPrimaryColumnWidth:375];
-        [splitVC setMaximumPrimaryColumnWidth:400];
-        [splitVC setViewController:commentsVC forColumn:UISplitViewControllerColumnPrimary];
-
-        UIViewController *noSelectionVC = [UIViewController new];
-        noSelectionVC.view.backgroundColor = [UIColor systemBackgroundColor];
-        [splitVC setViewController:noSelectionVC forColumn:UISplitViewControllerColumnSecondary];
-
-        [self.presentationDelegate presentBlogDetailsViewController:splitVC];
-    } else {
-        [self.presentationDelegate presentBlogDetailsViewController:commentsVC];
-    }
-}
-
-- (void)showPostListFromSource:(BlogDetailsNavigationSource)source
-{
-    [self trackEvent:WPAnalyticsStatOpenedPosts fromSource:source];
-    PostListViewController *controller = [PostListViewController controllerWithBlog:self.blog];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showPageListFromSource:(BlogDetailsNavigationSource)source
-{
-    [self trackEvent:WPAnalyticsStatOpenedPages fromSource:source];
-    PageListViewController *controller = [PageListViewController controllerWithBlog:self.blog];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showMediaLibraryFromSource:(BlogDetailsNavigationSource)source {
-    [self showMediaLibraryFromSource:source showPicker:false];
-}
-
-- (void)showMediaLibraryFromSource:(BlogDetailsNavigationSource)source showPicker:(BOOL)showPicker
-{
-    [self trackEvent:WPAnalyticsStatOpenedMediaLibrary fromSource:source];
-    SiteMediaViewController *controller = [[SiteMediaViewController alloc] initWithBlog:self.blog showPicker:showPicker];
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (MeViewController *)showMe
-{
-    MeViewController *controller = [[MeViewController alloc] init];
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-    return controller;
-}
-
-- (void)showPeople
-{
-    UIViewController *controller = [PeopleViewController withJPBannerForBlog:self.blog];
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showPlugins
-{
-    [WPAppAnalytics track:WPAnalyticsStatOpenedPluginDirectory withBlog:self.blog];
-
-    if ([Feature enabled:FeatureFlagPluginManagementOverhaul]) {
-        [self showManagePluginsScreen];
-        return;
-    }
-
-    PluginDirectoryViewController *controller = [self makePluginDirectoryViewControllerWithBlog:self.blog];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showPlansFromSource:(BlogDetailsNavigationSource)source
-{
-    [self trackEvent:WPAnalyticsStatOpenedPlans fromSource:source];
-    PlanListViewController *controller = [[PlanListViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showSettingsFromSource:(BlogDetailsNavigationSource)source
-{
-    [self trackEvent:WPAnalyticsStatOpenedSiteSettings fromSource:source];
-    SiteSettingsViewController *controller = [[SiteSettingsViewController alloc] initWithBlog:self.blog];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    if (self.isSidebarModeEnabled) {
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-        __weak BlogDetailsViewController *weakSelf = self;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-parameter"
-        controller.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone primaryAction:[UIAction actionWithHandler:^(__kindof UIAction * _Nonnull action) {
-            [weakSelf.tableView deselectSelectedRowWithAnimation:YES];
-            [weakSelf dismissViewControllerAnimated:YES completion:nil];
-        }]];
-#pragma clang diagnostic pop
-        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:navigationController animated:YES completion:nil];
-        self.presentedSiteSettingsViewController = navigationController;
-        navigationController.presentationController.delegate = self;
-    } else {
-        [self.presentationDelegate presentBlogDetailsViewController:controller];
-    }
-}
-
-- (void)showDomainsFromSource:(BlogDetailsNavigationSource)source
-{
-    [DomainsDashboardCoordinator presentDomainsDashboardWithPresenter:self.presentationDelegate
-                                                               source:[self propertiesStringForSource:source]
-                                                                 blog:self.blog];
-}
-
--(void)showJetpackSettings
-{
-    JetpackSettingsViewController *controller = [[JetpackSettingsViewController alloc] initWithBlog:self.blog];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showSharingFromSource:(BlogDetailsNavigationSource)source
-{
-    UIViewController *controller;
-    if (![self.blog supportsPublicize]) {
-        // if publicize is disabled, show the sharing buttons settings.
-        controller = [[SharingButtonsViewController alloc] initWithBlog:self.blog];
-
-    } else {
-        controller = [[SharingViewController alloc] initWithBlog:self.blog delegate:nil];
-    }
-
-    [self trackEvent:WPAnalyticsStatOpenedSharingManagement fromSource:source];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showStatsFromSource:(BlogDetailsNavigationSource)source
-{
-    [self trackEvent:WPAnalyticsStatStatsAccessed fromSource:source];
-    UIViewController *statsView = [self viewControllerForStats];
-
-    // Calling `showDetailViewController:sender:` should do this automatically for us,
-    // but when showing stats from our 3D Touch shortcut iOS sometimes incorrectly
-    // presents the stats view controller as modal instead of pushing it. As a
-    // workaround for now, we'll manually decide whether to push or use `showDetail`.
-    // @frosty 2016-09-05
-    if (self.splitViewController.isCollapsed) {
-        [self.navigationController pushViewController:statsView animated:YES];
-    } else {
-        [self.presentationDelegate presentBlogDetailsViewController:statsView];
-    }
-}
-
-- (void)showDashboard
-{
-    if (self.isSidebarModeEnabled) {
-        MySiteViewController *controller = [MySiteViewController makeForBlog:self.blog isSidebarModeEnabled:true];
-        [self.presentationDelegate presentBlogDetailsViewController:controller];
-    } else {
-        BlogDashboardViewController *controller = [[BlogDashboardViewController alloc] initWithBlog:self.blog embeddedInScrollView:NO];
-        controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-        controller.extendedLayoutIncludesOpaqueBars = YES;
-        [self.presentationDelegate presentBlogDetailsViewController:controller];
-    }
-}
-
-- (void)showActivity
-{
-    JetpackActivityLogViewController *controller = [[JetpackActivityLogViewController alloc] initWithBlog:self.blog];
-    controller.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-
-    [WPAnalytics track:WPAnalyticsStatActivityLogViewed
-                 withProperties:@{WPAppAnalyticsKeyTapSource: @"site_menu"}];
-}
-
-- (void)showBlaze
-{
-    [BlazeEventsTracker trackEntryPointTappedFor:BlazeSourceMenuItem];
-
-    if ([RemoteFeature enabled:RemoteFeatureFlagBlazeManageCampaigns]) {
-        BlazeCampaignsViewController *controller =  [BlazeCampaignsViewController makeWithSource:BlazeSourceMenuItem
-                                                                                            blog:self.blog];
-        [self.presentationDelegate presentBlogDetailsViewController:controller];
-    } else {
-        [BlazeFlowCoordinator presentBlazeInViewController:self
-                                                    source:BlazeSourceMenuItem
-                                                      blog:self.blog
-                                                      post:nil];
-    }
-}
-
-- (void)showScan
-{
-    UIViewController *controller = [JetpackScanViewController withJPBannerForBlog:self.blog];
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showBackup
-{
-    UIViewController *controller = [BackupListViewController withJPBannerForBlog:self.blog];
-    [self.presentationDelegate presentBlogDetailsViewController:controller];
-}
-
-- (void)showThemes
-{
-    [WPAppAnalytics track:WPAnalyticsStatThemesAccessedThemeBrowser withBlog:self.blog];
-    ThemeBrowserViewController *viewController = [ThemeBrowserViewController browserWithBlog:self.blog];
-    viewController.hidesBottomBarWhenPushed = YES;
-    UIViewController *jpWrappedViewController = [viewController withJPBanner];
-    [self.presentationDelegate presentBlogDetailsViewController:jpWrappedViewController];
-}
-
-- (void)showMenus
-{
-    [WPAppAnalytics track:WPAnalyticsStatMenusAccessed withBlog:self.blog];
-    UIViewController *viewController = [MenusViewController withJPBannerForBlog:self.blog];
-    [self.presentationDelegate presentBlogDetailsViewController:viewController];
-}
-
-- (void)showViewSiteFromSource:(BlogDetailsNavigationSource)source
-{
-    [self trackEvent:WPAnalyticsStatOpenedViewSite fromSource:source];
-
-    NSURL *targetURL = [NSURL URLWithString:self.blog.homeURL];
-
-    UIViewController *webViewController = [WebViewControllerFactory controllerWithUrl:targetURL
-                                                                                 blog:self.blog
-                                                                               source:@"my_site_view_site"
-                                                                      withDeviceModes:true
-                                                                              onClose:nil];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
-    if (self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        navController.modalPresentationStyle = UIModalPresentationFullScreen;
-    }
-
-    [self presentViewController:navController
-                       animated:YES
-                     completion:nil];
-}
-
-- (void)showViewAdmin
-{
-    [WPAppAnalytics track:WPAnalyticsStatOpenedViewAdmin withBlog:self.blog];
-
-    NSString *dashboardUrl;
-    if (self.blog.isHostedAtWPcom) {
-        dashboardUrl = [NSString stringWithFormat:@"%@%@", WPCalypsoDashboardPath, self.blog.hostname];
-    } else {
-        dashboardUrl = [self.blog adminUrlWithPath:@""];
-    }
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:dashboardUrl] options:nil completionHandler:nil];
-}
-
-- (BOOL)shouldShowJetpackInstallCard
-{
-    return ![WPDeviceIdentification isiPad] && [JetpackInstallPluginHelper shouldShowCardFor:self.blog];
-}
-
-- (BOOL)shouldShowBlaze
-{
-    return [BlazeHelper isBlazeFlagEnabled] && [self.blog supports:BlogFeatureBlaze];
-}
-
 #pragma mark - Remove Site
 
 - (void)showRemoveSiteAlert
@@ -1998,24 +1680,6 @@ NSString * const WPCalypsoDashboardPath = @"https://wordpress.com/home/";
     }];
 
     [self presentViewController:alertController animated:YES completion:nil];
-}
-
-- (void)confirmRemoveSite
-{
-    BlogService *blogService = [[BlogService alloc] initWithCoreDataStack:[ContextManager sharedInstance]];
-    [blogService removeBlog:self.blog];
-    [[WordPressAppDelegate shared] trackLogoutIfNeeded];
-
-    if ([AppConfiguration isWordPress]) {
-        [ContentMigrationCoordinator.shared cleanupExportedDataIfNeeded];
-    }
-
-    // Delete local data after removing the last site
-    if (!AccountHelper.isLoggedIn) {
-        [AccountHelper deleteAccountData];
-    }
-
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Notification handlers

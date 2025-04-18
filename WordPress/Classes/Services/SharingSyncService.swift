@@ -5,14 +5,20 @@ import WordPressKit
 /// SharingService is responsible for wrangling publicize services, publicize
 /// connections, and keyring connections.
 ///
-@objc class SharingSyncService: CoreDataService {
+@objc public class SharingSyncService: NSObject {
+
+    let coreDataStack: CoreDataStack
+
+    @objc public init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
 
     /// Returns the remote to use with the service.
     ///
     /// - Parameter blog: The blog to use for the rest api.
     ///
     private func remoteForBlog(_ blog: Blog) -> SharingServiceRemote? {
-        guard let api = blog.wordPressComRestApi() else {
+        guard let api = blog.wordPressComRestApi else {
             return nil
         }
 
@@ -114,5 +120,4 @@ import WordPressKit
     enum Error: Swift.Error {
         case siteWithNoRemote
     }
-
 }

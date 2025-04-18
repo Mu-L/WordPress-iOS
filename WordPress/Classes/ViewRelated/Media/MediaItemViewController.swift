@@ -287,7 +287,7 @@ final class MediaItemViewController: UITableViewController {
             do {
                 try await repository.delete(mediaID)
 
-                WPAppAnalytics.track(.mediaLibraryDeletedItems, withProperties: ["number_of_items_deleted": 1], with: self.media.blog)
+                WPAppAnalytics.track(.mediaLibraryDeletedItems, properties: ["number_of_items_deleted": 1], blog: self.media.blog)
                 SVProgressHUD.showSuccess(withStatus: NSLocalizedString("Deleted!", comment: "Text displayed in HUD after successfully deleting a media item"))
             } catch {
                 SVProgressHUD.showError(withStatus: NSLocalizedString("Unable to delete media item.", comment: "Text displayed in HUD if there was an error attempting to delete a media item."))
@@ -298,9 +298,10 @@ final class MediaItemViewController: UITableViewController {
     private func saveChanges() {
         mediaMetadata.update(media)
 
-        let service = MediaService(managedObjectContext: ContextManager.sharedInstance().mainContext)
+        let service = MediaService(managedObjectContext: ContextManager.shared.mainContext)
         service.update(media, success: { [weak self] in
-            WPAppAnalytics.track(.mediaLibraryEditedItemMetadata, with: self?.media.blog)
+            guard let blog = self?.media.blog else { return }
+            WPAppAnalytics.track(.mediaLibraryEditedItemMetadata, blog: blog)
         }, failure: { _ in
             SVProgressHUD.showError(withStatus: NSLocalizedString("Unable to save media item.", comment: "Text displayed in HUD when a media item's metadata (title, etc) couldn't be saved."))
         })
@@ -335,7 +336,7 @@ final class MediaItemViewController: UITableViewController {
             let editableRow = row as! EditableTextRow
             self?.pushSettingsController(for: editableRow, hint: NSLocalizedString("Image Description", comment: "Hint for image description on image settings."),
                                         onValueChanged: { value in
-                self?.mediaMetadata.desc  = value
+                self?.mediaMetadata.desc = value
                 self?.reloadViewModel()
             })
         }
@@ -346,7 +347,7 @@ final class MediaItemViewController: UITableViewController {
             let editableRow = row as! EditableTextRow
             self?.pushSettingsController(for: editableRow, hint: NSLocalizedString("Image Alt", comment: "Hint for image alt on image settings."),
                                          onValueChanged: { value in
-                                            self?.mediaMetadata.alt  = value
+                                            self?.mediaMetadata.alt = value
                                             self?.reloadViewModel()
             })
         }
@@ -370,8 +371,8 @@ final class MediaItemViewController: UITableViewController {
         activityController.modalPresentationStyle = .popover
         activityController.popoverPresentationController?.barButtonItem = sender
         activityController.completionWithItemsHandler = { [weak self] _, completed, _, _ in
-            if completed {
-                WPAppAnalytics.track(.mediaLibrarySharedItemLink, with: self?.media.blog)
+            if completed, let blog = self?.media.blog {
+                WPAppAnalytics.track(.mediaLibrarySharedItemLink, blog: blog)
             }
         }
         present(activityController, animated: true)

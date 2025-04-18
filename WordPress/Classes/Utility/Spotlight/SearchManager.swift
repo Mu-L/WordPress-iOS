@@ -296,7 +296,7 @@ fileprivate extension SearchManager {
     func fetchBlog(_ blogID: NSNumber,
                    onSuccess: @escaping (_ blog: Blog) -> Void,
                    onFailure: @escaping () -> Void) {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
 
         guard let blog = Blog.lookup(withID: blogID, in: context) else {
             onFailure()
@@ -308,7 +308,7 @@ fileprivate extension SearchManager {
     func fetchSelfHostedBlog(_ blogXMLRpcString: String,
                              onSuccess: @escaping (_ blog: Blog) -> Void,
                              onFailure: @escaping () -> Void) {
-        let context = ContextManager.sharedInstance().mainContext
+        let context = ContextManager.shared.mainContext
         guard let blog = Blog.selfHosted(in: context).first(where: { $0.xmlrpc == blogXMLRpcString }) else {
             onFailure()
             return
@@ -374,7 +374,7 @@ fileprivate extension SearchManager {
     }
 
     func navigateToScreen(for post: Post, isDotCom: Bool) {
-        WPAppAnalytics.track(.spotlightSearchOpenedPost, with: post)
+        WPAppAnalytics.track(.spotlightSearchOpenedPost, post: post)
         let postIsPublishedOrScheduled = (post.status == .publish || post.status == .scheduled)
         if postIsPublishedOrScheduled && isDotCom {
             openReader(for: post, onFailure: {
@@ -389,7 +389,7 @@ fileprivate extension SearchManager {
     }
 
     func navigateToScreen(for page: Page, isDotCom: Bool) {
-        WPAppAnalytics.track(.spotlightSearchOpenedPage, with: page)
+        WPAppAnalytics.track(.spotlightSearchOpenedPage, post: page)
         let pageIsPublishedOrScheduled = (page.status == .publish || page.status == .scheduled)
         if pageIsPublishedOrScheduled && isDotCom {
             openReader(for: page, onFailure: {

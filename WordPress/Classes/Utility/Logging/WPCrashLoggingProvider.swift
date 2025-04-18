@@ -1,4 +1,5 @@
 import UIKit
+import BuildSettingsKit
 import Combine
 import AutomatticTracks
 import AutomatticEncryptedLogs
@@ -39,18 +40,21 @@ struct WPLoggingStack {
 
 struct WPCrashLoggingDataProvider: CrashLoggingDataProvider {
     private let contextManager: ContextManager
+    let sentryDSN: String
 
-    init(contextManager: ContextManager = .shared) {
+    init(
+        contextManager: ContextManager = .shared,
+        sentryDSN: String = BuildSettings.current.secrets.sentryDSN
+    ) {
         self.contextManager = contextManager
+        self.sentryDSN = sentryDSN
     }
-
-    let sentryDSN: String = ApiCredentials.sentryDSN
 
     var userHasOptedOut: Bool {
         return UserSettings.userHasOptedOutOfCrashLogging
     }
 
-    var buildType: String = BuildConfiguration.current.rawValue
+    var buildType: String { BuildConfiguration.current.rawValue }
 
     var shouldEnableAutomaticSessionTracking: Bool {
         return !UserSettings.userHasOptedOutOfCrashLogging
@@ -60,10 +64,12 @@ struct WPCrashLoggingDataProvider: CrashLoggingDataProvider {
 
     var currentUser: TracksUser? {
         return contextManager.performQuery { context -> TracksUser? in
-            guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context) else {
+            guard let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context),
+                  let userID = account.userID
+            else {
                 return nil
             }
-            return TracksUser(userID: account.userID.stringValue, email: account.email, username: account.username)
+            return TracksUser(userID: userID.stringValue, email: account.email, username: account.username)
         }
     }
 }

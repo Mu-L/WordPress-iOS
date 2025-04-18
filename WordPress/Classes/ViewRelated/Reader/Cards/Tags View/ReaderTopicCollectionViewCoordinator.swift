@@ -1,5 +1,6 @@
 import UIKit
 import WordPressReader
+import WordPressShared
 
 enum ReaderTopicCollectionViewState {
     case collapsed
@@ -84,7 +85,7 @@ class ReaderTopicCollectionViewCoordinator: NSObject {
 
         collectionView.contentInset = .zero
 
-        let nib = UINib(nibName: String(describing: ReaderInterestsCollectionViewCell.self), bundle: nil)
+        let nib = ReaderInterestsCollectionViewCell.defaultNib
 
         // Register the main cell
         collectionView.register(nib, forCellWithReuseIdentifier: Constants.reuseIdentifier)
@@ -207,7 +208,7 @@ extension ReaderTopicCollectionViewCoordinator: UICollectionViewDelegateFlowLayo
 
         WPAnalytics.trackReader(.readerChipsMoreToggled)
 
-        delegate?.coordinator(self, didChangeState: layout.isExpanded ? .expanded: .collapsed)
+        delegate?.coordinator(self, didChangeState: layout.isExpanded ? .expanded : .collapsed)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

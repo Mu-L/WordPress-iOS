@@ -2,6 +2,7 @@ import UIKit
 import SVProgressHUD
 import WordPressShared
 import Gridicons
+import WordPressUI
 
 /// DeleteSiteViewController allows user delete their site.
 ///
@@ -12,7 +13,7 @@ open class DeleteSiteViewController: UITableViewController {
     /// - Parameter blog: A Blog instance.
     ///
     @objc class func controller(_ blog: Blog) -> DeleteSiteViewController {
-        let storyboard = UIStoryboard(name: "DeleteSite", bundle: Bundle.main)
+        let storyboard = UIStoryboard(name: "DeleteSite", bundle: Bundle.keystone)
         let controller = storyboard.instantiateViewController(withIdentifier: "DeleteSiteViewController") as! DeleteSiteViewController
         controller.blog = blog
         return controller
@@ -175,7 +176,7 @@ open class DeleteSiteViewController: UITableViewController {
     @IBAction func contactSupport(_ sender: Any) {
         tableView.deselectSelectedRowWithAnimation(true)
 
-        WPAppAnalytics.track(.siteSettingsStartOverContactSupportClicked, with: blog)
+        WPAppAnalytics.track(.siteSettingsStartOverContactSupportClicked, blog: blog)
 
         let supportViewController = SupportTableViewController()
         supportViewController.sourceTag = .deleteSite
@@ -213,25 +214,28 @@ open class DeleteSiteViewController: UITableViewController {
         SVProgressHUD.show(withStatus: status)
 
         let trackedBlog = blog
-        WPAppAnalytics.track(.siteSettingsDeleteSiteRequested, with: trackedBlog)
-        let service = SiteManagementService(coreDataStack: ContextManager.sharedInstance())
+        WPAppAnalytics.track(.siteSettingsDeleteSiteRequested, blog: trackedBlog)
+
+        let service = SiteManagementService(coreDataStack: ContextManager.shared)
         service.deleteSiteForBlog(blog, success: { [weak self] in
-            WPAppAnalytics.track(.siteSettingsDeleteSiteResponseOK, with: trackedBlog)
+            WPAppAnalytics.track(.siteSettingsDeleteSiteResponseOK, blog: trackedBlog)
+
             let status = NSLocalizedString("Site deleted", comment: "Overlay message displayed when site successfully deleted")
-            SVProgressHUD.showDismissibleSuccess(withStatus: status)
+            SVProgressHUD.showDismissibleSuccess(status: status)
 
             self?.updateNavigationStackAfterSiteDeletion()
 
             let context = ContextManager.shared.mainContext
             let account = try? WPAccount.lookupDefaultWordPressComAccount(in: context)
             if let account {
-                AccountService(coreDataStack: ContextManager.sharedInstance()).updateUserDetails(for: account,
+                AccountService(coreDataStack: ContextManager.shared).updateUserDetails(for: account,
                                                                                                  success: {},
                                                                                                  failure: { _ in })
             }
         }, failure: { error in
             DDLogError("Error deleting site: \(error.localizedDescription)")
-            WPAppAnalytics.track(.siteSettingsDeleteSiteResponseError, with: trackedBlog)
+            WPAppAnalytics.track(.siteSettingsDeleteSiteResponseError, blog: trackedBlog)
+
             SVProgressHUD.dismiss()
 
             let errorTitle = NSLocalizedString("Delete Site Error", comment: "Title of alert when site deletion fails")
@@ -260,6 +264,9 @@ open class DeleteSiteViewController: UITableViewController {
 
             // Pop the primary navigation controller back to the sites list
             primaryNavigationController.popToRootViewController(animated: true)
+        } else if let presentingViewController {
+            // This view is presented as a modal on iPad.
+            presentingViewController.dismiss(animated: true)
         }
     }
 

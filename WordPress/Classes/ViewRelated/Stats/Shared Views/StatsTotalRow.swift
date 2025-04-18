@@ -1,5 +1,6 @@
 import UIKit
 import AsyncImageKit
+import WordPressShared
 
 struct StatsTotalRowData: Equatable {
     var id: UUID?
@@ -479,7 +480,7 @@ private extension StatsTotalRow {
         }
 
         if let blogIdentifier = SiteStatsInformation.sharedInstance.siteID {
-            WPAppAnalytics.track(event, withBlogID: blogIdentifier)
+            WPAppAnalytics.track(event, blogID: blogIdentifier)
         } else {
             WPAppAnalytics.track(event)
         }

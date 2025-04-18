@@ -1,4 +1,5 @@
 import Foundation
+import WordPressShared
 
 /// Delete invalid rows in the database whose required blog properties are NULL
 ///
@@ -32,7 +33,8 @@ import Foundation
 
         store.set(currentBuildVersion(), forKey: Self.lastSanitizationVersionNumber)
 
-        let entityNamesWithRequiredBlogProperties = [
+        // FIXME: Not sure why it's necessary to define [String] as the type. Without it, the NSFetchRequest<NSManagedObject>(entityName: entityName) below does not compile.
+        let entityNamesWithRequiredBlogProperties: [String] = [
             Post.entityName(),
             Page.entityName(),
             Media.entityName(),

@@ -1,17 +1,18 @@
 import Foundation
+import WordPressUI
 
 // Empty states for Stats
 
 extension NoResultsViewController {
 
-    @objc func configureForStatsModuleDisabled() {
+    @objc public func configureForStatsModuleDisabled() {
         configure(title: Strings.statsModuleDisabled.title,
                   buttonTitle: Strings.statsModuleDisabled.buttonTitle,
                   subtitle: Strings.statsModuleDisabled.subtitle,
                   image: Constants.statsImageName)
     }
 
-    @objc func configureForActivatingStatsModule() {
+    @objc public func configureForActivatingStatsModule() {
         configure(title: Strings.activatingStatsModule.title, accessoryView: NoResultsViewController.loadingAccessoryView())
         view.layoutIfNeeded()
     }

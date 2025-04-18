@@ -1,8 +1,9 @@
-import Foundation
+import UIKit
 import Gridicons
 import WordPressShared
+import WordPressUI
 
-open class ActivityTableViewCell: WPTableViewCell, NibReusable {
+open class ActivityTableViewCell: UITableViewCell, NibReusable {
 
     var actionButtonHandler: ((UIButton) -> Void)?
 
@@ -48,7 +49,7 @@ open class ActivityTableViewCell: WPTableViewCell, NibReusable {
         }
 
         contentView.backgroundColor = Style.backgroundColor()
-        actionButtonContainer.isHidden  = !activity.isRewindable || displaysDate
+        actionButtonContainer.isHidden = !activity.isRewindable || displaysDate
         actionButton.setImage(actionGridicon, for: .normal)
         actionButton.tintColor = .secondaryLabel
         actionButton.accessibilityIdentifier = "activity-cell-action-button"

@@ -1,16 +1,6 @@
 import CoreData
 import WordPressShared
 
-public extension Blog {
-    /// Only WordPress.com hosted sites we administer may be managed
-    ///
-    /// - Returns: Whether site management is permitted
-    ///
-    @objc func supportsSiteManagementServices() -> Bool {
-        return isHostedAtWPcom && isAdmin
-    }
-}
-
 /// Site Deletion Notification
 ///
 extension NSNotification.Name {
@@ -103,7 +93,7 @@ open class SiteManagementService: NSObject {
     /// - Returns: Remote service for site management
     ///
     @objc func siteManagementServiceRemoteForBlog(_ blog: Blog) -> SiteManagementServiceRemote? {
-        guard let api = blog.wordPressComRestApi() else {
+        guard let api = blog.wordPressComRestApi else {
             return nil
         }
 

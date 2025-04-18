@@ -1,4 +1,5 @@
 import Foundation
+import WordPressShared
 
 protocol JetpackScanView {
     func render()
@@ -65,7 +66,7 @@ class JetpackScanCoordinator {
     init(blog: Blog,
          view: JetpackScanView,
          service: JetpackScanService? = nil,
-         coreDataStack: CoreDataStack = ContextManager.shared) {
+         coreDataStack: CoreDataStackSwift = ContextManager.shared) {
 
         self.service = service ?? JetpackScanService(coreDataStack: coreDataStack)
         self.blog = blog
@@ -269,12 +270,11 @@ class JetpackScanCoordinator {
         togglePolling()
     }
 
-    private func refreshDidFail(with error: Error? = nil) {
-        let appDelegate = WordPressAppDelegate.shared
-
-        guard
-            let connectionAvailable = appDelegate?.connectionAvailable, connectionAvailable == true
-        else {
+    private func refreshDidFail(
+        with error: Error? = nil,
+        connectionAvailable: Bool = ReachabilityUtils.connectionAvailable
+    ) {
+        guard connectionAvailable else {
             view.showNoConnectionError()
             actionButtonState = .tryAgain
 

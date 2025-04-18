@@ -14,12 +14,14 @@ NS_ASSUME_NONNULL_BEGIN
 @class UserSuggestion;
 @class SiteSuggestion;
 @class PageTemplateCategory;
-@class JetpackFeaturesRemovalCoordinator;
 @class PublicizeInfo;
 
 extern NSString * const BlogEntityName;
 extern NSString * const PostFormatStandard;
 
+/// - warning: These flags are app-agnostic and define whether the _blog_ supports
+/// the given feature. If the app needs to determine whether to show a feature or
+/// not, it has to implement additional logic on top of it.
 typedef NS_ENUM(NSUInteger, BlogFeature) {
     /// Can the blog be removed?
     BlogFeatureRemovable,
@@ -79,8 +81,6 @@ typedef NS_ENUM(NSUInteger, BlogFeature) {
     BlogFeatureMediaDeletion,
     /// Does the blog support Stock Photos feature (free photos library)
     BlogFeatureStockPhotos,
-    /// Does the blog support Tenor feature (free GIF library)
-    BlogFeatureTenor,
     /// Does the blog support setting the homepage type and pages?
     BlogFeatureHomepageSettings,
     /// Does the blog support Jetpack contact info block?
@@ -125,6 +125,7 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
 /// WordPress.com site ID stored as signed 32-bit integer.
 @property (nonatomic, strong, readwrite, nullable) NSNumber *dotComID;
 @property (nonatomic, strong, readwrite, nullable) NSString *xmlrpc;
+@property (nonatomic, strong, readwrite, nullable) NSString *restApiRootURL;
 @property (nonatomic, strong, readwrite, nullable) NSString *apiKey;
 @property (nonatomic, strong, readwrite, nonnull) NSNumber *organizationID;
 @property (nonatomic, strong, readwrite, nullable) NSNumber *hasOlderPosts;
@@ -271,36 +272,6 @@ typedef NS_ENUM(NSInteger, SiteVisibility) {
  useful for support.
  */
 - (NSString *)logDescription;
-
-/**
- Returns formatted Blog information to send to Support when user creates a new ticket.
- */
-- (NSString *)supportDescription;
-
-/**
- Returns formatted Blog State information to send to Support when user creates a new ticket.
- */
-- (NSString *)stateDescription;
-
-/**
- Returns a REST API client if available
-
- If the blog is a WordPress.com one or it has Jetpack it will return a REST API
- client. Otherwise, the XML-RPC API should be used.
-
- @warning this method doesn't know if a Jetpack blog has the JSON API disabled
-
- @return a WordPressComRestApi object if available
- */
-- (nullable WordPressComRestApi *)wordPressComRestApi;
-
-/**
- Call this method to know if the blog is hosted at WPcom or accessed through Jetpack.
- 
- @return YES if the blog is hosted at WPcom or if it's connected through Jetpack.
-    NO otherwise.
- */
-- (BOOL)isAccessibleThroughWPCom;
 
 /**
  Check if there is already a basic auth credential stored for this blog/site.

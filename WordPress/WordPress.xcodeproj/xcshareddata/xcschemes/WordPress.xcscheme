@@ -4,7 +4,8 @@
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -38,11 +39,11 @@
       </MacroExpansion>
       <TestPlans>
          <TestPlanReference
-            reference = "container:WordPressTest/WordPressUnitTests.xctestplan"
-            default = "YES">
+            reference = "container:UITests/WordPressUITests.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:UITests/WordPressUITests.xctestplan">
+            reference = "container:../Tests/KeystoneTests/WordPressUnitTests.xctestplan"
+            default = "YES">
          </TestPlanReference>
       </TestPlans>
       <Testables>
@@ -75,6 +76,17 @@
                BlueprintIdentifier = "4A98A2FA2C22736F00A2CE58"
                BuildableName = "WordPressKitTests.xctest"
                BlueprintName = "WordPressKitTests"
+               ReferencedContainer = "container:WordPress.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3F7AE0BB2D9B30A200AB4892"
+               BuildableName = "WordPressDataTests.xctest"
+               BlueprintName = "WordPressDataTests"
                ReferencedContainer = "container:WordPress.xcodeproj">
             </BuildableReference>
          </TestableReference>

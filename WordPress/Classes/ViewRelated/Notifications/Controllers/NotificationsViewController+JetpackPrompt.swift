@@ -11,10 +11,10 @@ extension NotificationsViewController {
 
         if let controller = jetpackLoginViewController {
             controller.blog = blog
-            controller.updateMessageAndButton()
+            controller.refreshUI()
             configureControllerCompletion(controller, withBlog: blog)
         } else {
-            let controller = JetpackLoginViewController(blog: blog)
+            let controller = UIViewController.jetpackConnection(blog: blog)
             controller.promptType = .notifications
             addChild(controller)
             tableView.addSubview(withFadeAnimation: controller.view)
@@ -31,11 +31,11 @@ extension NotificationsViewController {
         }
     }
 
-    fileprivate func configureControllerCompletion(_ controller: JetpackLoginViewController, withBlog blog: Blog) {
+    fileprivate func configureControllerCompletion(_ controller: ConnectJetpackViewController, withBlog blog: Blog) {
         controller.completionBlock = { [weak self, weak controller] in
             if AccountHelper.isDotcomAvailable() {
                 self?.activityIndicator.stopAnimating()
-                WPAppAnalytics.track(.signedInToJetpack, withProperties: ["source": "notifications"], with: blog)
+                WPAppAnalytics.track(.signedInToJetpack, properties: ["source": "notifications"], blog: blog)
                 controller?.view.removeFromSuperview()
                 controller?.removeFromParent()
                 self?.jetpackLoginViewController = nil
@@ -43,7 +43,7 @@ extension NotificationsViewController {
                 self?.tableView.reloadData()
             } else {
                 self?.activityIndicator.stopAnimating()
-                controller?.updateMessageAndButton()
+                controller?.refreshUI()
             }
         }
     }

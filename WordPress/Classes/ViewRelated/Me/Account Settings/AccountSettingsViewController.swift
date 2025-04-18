@@ -1,14 +1,15 @@
-import Foundation
 import UIKit
 import SwiftUI
+import SVProgressHUD
 import WordPressShared
 import WordPressFlux
+import WordPressUI
 
 func AccountSettingsViewController(account: WPAccount) -> ImmuTableViewController? {
-    guard let api = account.wordPressComRestApi else {
+    guard let api = account.wordPressComRestApi, let userID = account.userID else {
         return nil
     }
-    let service = AccountSettingsService(userID: account.userID.intValue, api: api)
+    let service = AccountSettingsService(userID: userID.intValue, api: api)
     return AccountSettingsViewController(accountSettingsService: service)
 }
 
@@ -52,7 +53,7 @@ private class AccountSettingsController: SettingsController {
     private let alertHelper = DestructiveAlertHelper()
 
     init(accountSettingsService: AccountSettingsService,
-         accountService: AccountService = AccountService(coreDataStack: ContextManager.sharedInstance())) {
+         accountService: AccountService = AccountService(coreDataStack: ContextManager.shared)) {
         self.accountSettingsService = accountSettingsService
         self.accountService = accountService
         let notificationCenter = NotificationCenter.default
@@ -109,7 +110,7 @@ private class AccountSettingsController: SettingsController {
 
         // If the primary site has no Site Title, then show the displayURL.
         if primarySiteName.isEmpty {
-            let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.sharedInstance().mainContext)
+            let account = try? WPAccount.lookupDefaultWordPressComAccount(in: ContextManager.shared.mainContext)
             primarySiteName = account?.defaultBlog?.displayURL as String? ?? ""
         }
 
@@ -161,7 +162,7 @@ private class AccountSettingsController: SettingsController {
         return { row in
             let editableRow = row as! EditableTextRow
             let hint = NSLocalizedString("Will not be publicly displayed.", comment: "Help text when editing email address")
-            let settingsViewController =  self.controllerForEditableText(editableRow,
+            let settingsViewController = self.controllerForEditableText(editableRow,
                                                                          changeType: AccountSettingsChange.email,
                                                                          hint: hint,
                                                                          service: service)
@@ -285,7 +286,7 @@ private class AccountSettingsController: SettingsController {
             case .success:
                 WPAnalytics.track(.accountCloseCompleted, properties: ["status": "success"])
                 let status = NSLocalizedString("Account closed", comment: "Overlay message displayed when account successfully closed")
-                SVProgressHUD.showDismissibleSuccess(withStatus: status)
+                SVProgressHUD.showDismissibleSuccess(status: status)
                 AccountHelper.logOutDefaultWordPressComAccount()
             case .failure(let error):
                 let errorCode = self.errorCode(error) ?? "unknown"

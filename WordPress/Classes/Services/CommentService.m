@@ -1,12 +1,15 @@
 #import "CommentService.h"
 #import "AccountService.h"
 #import "Blog.h"
-#import "CoreDataStack.h"
 #import "ReaderPost.h"
 #import "WPAccount.h"
 #import "PostService.h"
 #import "AbstractPost.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 
 @import WordPressShared;
 
@@ -30,8 +33,9 @@ static NSTimeInterval const CommentsRefreshTimeoutInSeconds = 60 * 5; // 5 minut
 - (instancetype)initWithCoreDataStack:(id<CoreDataStack>)coreDataStack
           commentServiceRemoteFactory:(CommentServiceRemoteFactory *)remoteFactory
 {
-    self = [super initWithCoreDataStack:coreDataStack];
+    self = [super init];
     if (self) {
+        _coreDataStack = coreDataStack;
         self.remoteFactory = remoteFactory;
     }
     return self;

@@ -1,5 +1,6 @@
 import UIKit
 import WordPressFlux
+import WordPressUI
 
 @objc protocol SiteStatsDetailsDelegate {
     @objc optional func tabbedTotalsCellUpdated()
@@ -37,7 +38,7 @@ class SiteStatsDetailTableViewController: UITableViewController, StoryboardLoada
     private var postID: Int?
 
     private lazy var mainContext: NSManagedObjectContext = {
-        return ContextManager.sharedInstance().mainContext
+        return ContextManager.shared.mainContext
     }()
 
     // MARK: - View
@@ -95,7 +96,7 @@ class SiteStatsDetailTableViewController: UITableViewController, StoryboardLoada
             return nil
         }
 
-        guard let cell = Bundle.main.loadNibNamed("SiteStatsTableHeaderView", owner: nil, options: nil)?.first as? SiteStatsTableHeaderView else {
+        guard let cell = Bundle.keystone.loadNibNamed("SiteStatsTableHeaderView", owner: nil, options: nil)?.first as? SiteStatsTableHeaderView else {
             return nil
         }
 

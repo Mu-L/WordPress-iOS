@@ -71,6 +71,9 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
 
     private let overlaysCoordinator: MySiteOverlaysCoordinator
 
+    // TODO: (reader) factor if out of `MySiteVC` for a production version
+    var isReaderAppModeEnabled = false
+
     // MARK: - Initializers
 
     @objc class func make(forBlog blog: Blog, isSidebarModeEnabled: Bool = false) -> MySiteViewController {
@@ -196,7 +199,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
 
         workaroundLargeTitleCollapseBug()
 
-        if AppConfiguration.showsWhatIsNew {
+        if FeatureFlag.whatsNew.enabled {
             RootViewCoordinator.shared.presentWhatIsNew(on: self)
         }
 
@@ -204,7 +207,9 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
 
         trackNoSitesVisibleIfNeeded()
 
-        createFABIfNeeded()
+        if !isReaderAppModeEnabled {
+            createFABIfNeeded()
+        }
         fetchPrompt(for: blog)
 
         Task { @MainActor in
@@ -298,6 +303,9 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
     }
 
     private func configureNavBarAppearance(animated: Bool) {
+        guard !isReaderAppModeEnabled else {
+            return
+        }
         if scrollView.contentOffset.y >= 60 {
             if isNavigationBarHidden {
                 setNavigationBarHidden(false, animated: animated)
@@ -355,7 +363,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
         showSitePicker(for: blog)
         updateNavigationTitle(for: blog)
 
-        let section = isSidebarModeEnabled ? .dashboard : viewModel.getSection(
+        let section = (isSidebarModeEnabled || isReaderAppModeEnabled) ? .dashboard : viewModel.getSection(
             for: blog,
             jetpackFeaturesEnabled: JetpackFeaturesRemovalCoordinator.jetpackFeaturesEnabled(),
             splitViewControllerIsHorizontallyCompact: splitViewControllerIsHorizontallyCompact
@@ -731,6 +739,19 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
         embedChildInStackView(blogDashboardViewController)
         self.blogDashboardViewController = blogDashboardViewController
         stackView.sendSubviewToBack(blogDashboardViewController.view)
+
+        if isReaderAppModeEnabled, let account = blog.account {
+            let headerView = MeHeaderView()
+            headerView.update(with: .init(account: account))
+            headerView.configureReaderMode()
+            stackView.insertArrangedSubview(headerView, at: 0)
+
+            let spacerView = SpacerView(height: 8)
+            stackView.insertArrangedSubview(spacerView, at: 1)
+
+            let separator = SeparatorView.horizontal()
+            stackView.insertArrangedSubview(separator, at: 2)
+        }
     }
 
     // MARK: - Model Changes
@@ -798,7 +819,7 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
             return
         }
 
-        guard let blog = Blog.lastUsedOrFirst(in: ContextManager.sharedInstance().mainContext) else {
+        guard let blog = Blog.lastUsedOrFirst(in: ContextManager.shared.mainContext) else {
             return
         }
 
@@ -856,7 +877,7 @@ extension MySiteViewController: BlogDetailsPresentationDelegate {
     /// - Parameters:
     ///         - subsection: The specific subsection to show.
     ///
-    func showBlogDetailsSubsection(_ subsection: BlogDetailsSubsection, userInfo: [AnyHashable: Any] =  [:]) {
+    func showBlogDetailsSubsection(_ subsection: BlogDetailsSubsection, userInfo: [AnyHashable: Any] = [:]) {
         blogDetailsViewController?.showDetailView(for: subsection, userInfo: userInfo)
     }
 

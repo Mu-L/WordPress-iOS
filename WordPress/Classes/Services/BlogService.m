@@ -2,13 +2,16 @@
 #import "Blog.h"
 #import "WPAccount.h"
 #import "AccountService.h"
-#import "CoreDataStack.h"
 #import "WPError.h"
 #import "Media.h"
 #import "PostCategoryService.h"
 #import "CommentService.h"
 #import "PostService.h"
+#ifdef KEYSTONE
+#import "Keystone-Swift.h"
+#else
 #import "WordPress-Swift.h"
+#endif
 #import "PostType.h"
 @import WordPressKit;
 @import WordPressShared;
@@ -24,11 +27,20 @@ NSString *const WPBlogSettingsUpdatedNotification = @"WPBlogSettingsUpdatedNotif
 
 @implementation BlogService
 
+- (instancetype)initWithCoreDataStack:(id<CoreDataStack>)coreDataStack
+{
+    self = [super init];
+    if (self) {
+        _coreDataStack = coreDataStack;
+    }
+    return self;
+}
+
 - (void)syncBlogsForAccount:(WPAccount *)account
                     success:(void (^)(void))success
                     failure:(void (^)(NSError *error))failure
 {
-    DDLogMethod();
+    DDLogInfo(@"BlogService syncBlogsForAccount");
 
     id<AccountServiceRemote> remote = [self remoteForAccount:account];
     

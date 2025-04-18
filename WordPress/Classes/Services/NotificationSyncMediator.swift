@@ -1,5 +1,7 @@
 import Foundation
+import WordPressData
 import WordPressKit
+import WordPressShared
 
 /// Notes:
 ///
@@ -16,18 +18,6 @@ import WordPressKit
 // MARK: - Notifications
 //
 let NotificationSyncMediatorDidUpdateNotifications = "NotificationSyncMediatorDidUpdateNotifications"
-
-protocol NotificationSyncMediatorProtocol {
-    func updateLastSeen(_ timestamp: String, completion: ((Error?) -> Void)?)
-    func toggleLikeForPostNotification(isLike: Bool,
-                                       postID: UInt,
-                                       siteID: UInt,
-                                       completion: @escaping (Result<Bool, Swift.Error>) -> Void)
-    func toggleLikeForCommentNotification(isLike: Bool,
-                                          commentID: UInt,
-                                          siteID: UInt,
-                                          completion: @escaping (Result<Bool, Swift.Error>) -> Void)
-}
 
 // MARK: - NotificationSyncMediator
 //
@@ -78,7 +68,7 @@ final class NotificationSyncMediator: NotificationSyncMediatorProtocol {
     /// Designed Initializer
     ///
     convenience init?() {
-        let manager = ContextManager.sharedInstance()
+        let manager = ContextManager.shared
 
         guard let dotcomAPI = try? WPAccount.lookupDefaultWordPressComAccount(in: manager.mainContext)?.wordPressComRestApi else {
             return nil
