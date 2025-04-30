@@ -4,6 +4,14 @@ import WordPressShared
 // MARK: - BlogDetailsViewController (Misc)
 
 extension BlogDetailsViewController {
+    @objc public func makeSubscribersRow() -> BlogDetailsRow {
+        BlogDetailsRow(title: Strings.subscribers, image: UIImage(named: "wpl-mail") ?? UIImage()) { [weak self] in
+            guard let self else { return }
+            let vc = SubscribersViewController(blog: self.blog)
+            self.presentationDelegate?.presentBlogDetailsViewController(vc)
+        }
+    }
+
     @objc public func isDashboardEnabled() -> Bool {
         return JetpackFeaturesRemovalCoordinator.jetpackFeaturesEnabled() && blog.isAccessibleThroughWPCom()
     }
@@ -359,4 +367,8 @@ extension BlogDetailsViewController {
 
 private enum Constants {
     static let calypsoDashboardPath = "https://wordpress.com/home/"
+}
+
+private enum Strings {
+    static let subscribers = NSLocalizedString("mySite.menu.subscribers", value: "Subscribers", comment: "Title for the menu item")
 }

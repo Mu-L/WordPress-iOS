@@ -1065,6 +1065,9 @@ CGFloat const BlogDetailReminderSectionFooterHeight = 1.0;
         [rows addObject:[self statsRow]];
     }
 
+    // TODO: add rules
+    [rows addObject:[self makeSubscribersRow]];
+
     // Social row
     if ([self shouldAddSharingRow]) {
         [rows addObject:[self socialRow]];
