@@ -6,6 +6,7 @@ import WordPressUI
 // MARK: - PeopleViewController
 
 class PeopleViewController: UITableViewController {
+    private let isUsersOnly = FeatureFlag.newsletterSubscribers.enabled
 
     // MARK: Properties
 
@@ -156,6 +157,10 @@ class PeopleViewController: UITableViewController {
     }
 
     // MARK: UITableViewDelegate
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        nil
+    }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return .DS.Padding.single
@@ -526,6 +531,10 @@ private extension PeopleViewController {
     }
 
     func setupTableView() {
+        guard !isUsersOnly else {
+            return
+        }
+
         filterBar.translatesAutoresizingMaskIntoConstraints = false
 
         tableView.tableHeaderView = filterBar
@@ -538,7 +547,7 @@ private extension PeopleViewController {
     }
 
     func setupView() {
-        title = NSLocalizedString("People", comment: "Noun. Title of the people management feature.")
+        title = isUsersOnly ? Strings.title : NSLocalizedString("People", comment: "Noun. Title of the people management feature.")
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
@@ -573,4 +582,8 @@ extension PeopleViewController {
 
         return viewController
     }
+}
+
+private enum Strings {
+    static let title = NSLocalizedString("users.title", value: "Users", comment: "Screen title")
 }

@@ -824,18 +824,6 @@ CGFloat const BlogDetailReminderSectionFooterHeight = 1.0;
     return row;
 }
 
-- (BlogDetailsRow *)peopleRow
-{
-    __weak __typeof(self) weakSelf = self;
-    BlogDetailsRow *row = [[BlogDetailsRow alloc] initWithTitle:NSLocalizedString(@"People", @"Noun. Title. Links to the people management feature.")
-                                        accessibilityIdentifier:@"People Row"
-                                                          image:[UIImage imageNamed:@"site-menu-people"]
-                                                       callback:^{
-        [weakSelf showPeople];
-    }];
-    return row;
-}
-
 - (BlogDetailsRow *)usersRow
 {
     __weak __typeof(self) weakSelf = self;
@@ -1065,8 +1053,9 @@ CGFloat const BlogDetailReminderSectionFooterHeight = 1.0;
         [rows addObject:[self statsRow]];
     }
 
-    // TODO: add rules
-    [rows addObject:[self makeSubscribersRow]];
+    if ([self shouldShowSubscribersRow]) {
+        [rows addObject:[self makeSubscribersRow]];
+    }
 
     // Social row
     if ([self shouldAddSharingRow]) {
@@ -1112,7 +1101,7 @@ CGFloat const BlogDetailReminderSectionFooterHeight = 1.0;
 
     // The 2nd section
     if ([self shouldAddPeopleRow]) {
-        [secondSectionRows addObject:[self peopleRow]];
+        [secondSectionRows addObject:[self makePeopleRow]];
     }
     if ([self shouldAddUsersRow]) {
         [secondSectionRows addObject:[self usersRow]];
@@ -1339,12 +1328,7 @@ CGFloat const BlogDetailReminderSectionFooterHeight = 1.0;
     }
 
     if ([self shouldAddPeopleRow]) {
-        [rows addObject:[[BlogDetailsRow alloc] initWithTitle:NSLocalizedString(@"People", @"Noun. Title. Links to the people management feature.")
-                                      accessibilityIdentifier:@"People Row"
-                                                        image:[UIImage imageNamed:@"site-menu-people"]
-                                                     callback:^{
-                                                         [weakSelf showPeople];
-                                                     }]];
+        [rows addObject:[self makePeopleRow]];
     }
 
     if ([self shouldAddUsersRow]) {
