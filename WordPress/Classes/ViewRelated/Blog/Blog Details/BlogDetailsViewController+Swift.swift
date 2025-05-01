@@ -5,7 +5,8 @@ import WordPressShared
 
 extension BlogDetailsViewController {
     @objc public var shouldShowSubscribersRow: Bool {
-        FeatureFlag.newsletterSubscribers.enabled
+        // TODO: figure out correct criteria for showing these
+        FeatureFlag.newsletterSubscribers.enabled && blog.dotComID != nil
     }
 
     @objc public func makeSubscribersRow() -> BlogDetailsRow {
