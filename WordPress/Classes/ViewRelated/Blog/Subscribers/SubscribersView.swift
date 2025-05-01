@@ -21,33 +21,38 @@ private struct SubscribersView: View {
     @ObservedObject var viewModel: SubscribersViewModel
 
     var body: some View {
-        Group {
-            if viewModel.subscribers.isEmpty {
-                GeometryReader { proxy in
-                    ScrollView { // Makes it compatible with refreshable()
-                        stateView
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                    }
-                }
-            } else {
-                List {
-                    ForEach(viewModel.subscribers) { subscriber in
-                        Text(subscriber.title)
-                            .lineLimit(3)
-                    }
-
-                    footerView
-                        .listRowSeparator(.hidden)
-                }
-                .listStyle(.plain)
+        contentView
+            .onAppear {
+                viewModel.loadMore()
             }
-        }
-        .task {
-            await viewModel.loadMore()
-        }
+    }
 
-        // TODO: add refreshable
-        // TODO: add "load more on paging"
+    @ViewBuilder
+    private var contentView: some View {
+        if viewModel.items.isEmpty {
+            stateView
+        } else {
+            list
+        }
+    }
+
+    @ViewBuilder
+    private var list: some View {
+        List {
+            ForEach(viewModel.items) { subscriber in
+                Text(subscriber.title)
+                    .lineLimit(3)
+                    .onAppear {
+                        viewModel.onRowAppear(subscriber)
+                    }
+            }
+            footerView
+                .listRowSeparator(.hidden)
+        }
+        .listStyle(.plain)
+        .refreshable {
+            await viewModel.refresh()
+        }
     }
 
     @ViewBuilder
@@ -56,9 +61,7 @@ private struct SubscribersView: View {
             ProgressView()
         } else if let error = viewModel.error {
             EmptyStateView.failure(error: error) {
-                Task {
-                    await viewModel.loadMore()
-                }
+                viewModel.loadMore()
             }
         } else {
             EmptyStateView(Strings.empty, systemImage: "envelope")
@@ -69,17 +72,11 @@ private struct SubscribersView: View {
     private var footerView: some View {
         if viewModel.currentPage > 1 {
             if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
-            } else if let error = viewModel.error {
-                // TODO: update the UI
-                Button {
-                    Task {
-                        await viewModel.loadMore()
-                    }
-                } label: {
-                    Label(SharedStrings.Button.retry, systemImage: "exclamationmark.circle")
-                }
+                ListFooterView(state: .loading)
+            } else if viewModel.error != nil {
+                ListFooterView(state: .failed(onRetry: {
+                    viewModel.loadMore()
+                }))
             }
         }
     }

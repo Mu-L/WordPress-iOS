@@ -5,11 +5,11 @@ import WordPressKit
 final class SubscribersViewModel: ObservableObject {
     private let blog: Blog
 
-    @Published private(set) var subscribers: [SubscriberRowViewModel] = []
-    @Published private(set) var isLoading: Bool = false
-    @Published private(set) var error: Error? = nil
-    @Published private(set) var currentPage: Int = 1
-    @Published private(set) var hasMorePages: Bool = true
+    @Published private(set) var items: [SubscriberRowViewModel] = []
+    @Published private(set) var isLoading = false
+    @Published private(set) var error: Error?
+    @Published private(set) var currentPage = 1
+    @Published private(set) var hasMorePages = true
 
     private var task: Task<Void, Never>?
 
@@ -17,27 +17,62 @@ final class SubscribersViewModel: ObservableObject {
         self.blog = blog
     }
 
-    func loadMore() async {
-        guard !isLoading && hasMorePages else { return }
-
-        guard let api = blog.wordPressComRestApi,
-              let siteID = blog.dotComID?.intValue else {
-            self.error = URLError(.unknown)
+    func loadMore() {
+        guard !isLoading && hasMorePages else {
             return
         }
+        actuallyLoadMore()
+    }
 
-        self.isLoading = true
+    func onRowAppear(_ row: SubscriberRowViewModel) {
+        guard items.suffix(5).contains(where: { $0.id == row.id }) else {
+            return
+        }
+        if error == nil {
+            loadMore()
+        }
+    }
 
-        let service = PeopleServiceRemote(wordPressComRestApi: api)
+    func refresh() async {
+        task?.cancel()
+        currentPage = 1
+        hasMorePages = true
+
+        actuallyLoadMore()
+        await task?.value
+    }
+
+    private func actuallyLoadMore() {
+        isLoading = true
+        error = nil
+        task = Task { @MainActor [currentPage] in
+            await actuallyLoadMore(page: currentPage)
+        }
+    }
+
+    private func actuallyLoadMore(page: Int) async {
         do {
-            let response = try await service.getSubscribers(siteID: siteID, page: currentPage, perPage: 50)
-            currentPage += 1
-            hasMorePages = response.pages >= currentPage
-            subscribers += response.subscribers.map(SubscriberRowViewModel.init)
-            isLoading = false
+            guard let api = blog.wordPressComRestApi, let siteID = blog.dotComID?.intValue else {
+                throw URLError(.unknown)
+            }
+            let service = PeopleServiceRemote(wordPressComRestApi: api)
+            let response = try await service.getSubscribers(siteID: siteID, page: page, perPage: 50)
+
+            if !Task.isCancelled {
+                currentPage += 1
+                hasMorePages = response.page < response.pages
+                isLoading = false
+                items = {
+                    var items = response.page == 1 ? [] : self.items
+                    items += response.subscribers.map(SubscriberRowViewModel.init)
+                    return items.deduplicated(by: \.id)
+                }()
+            }
         } catch {
-            self.error = error
-            isLoading = false
+            if !Task.isCancelled {
+                self.error = error
+                isLoading = false
+            }
         }
     }
 }

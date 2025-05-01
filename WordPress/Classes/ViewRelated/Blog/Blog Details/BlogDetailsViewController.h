@@ -79,7 +79,7 @@ typedef NS_ENUM(NSUInteger, BlogDetailsSubsection) {
 
 - (instancetype _Nonnull)initWithTitle:(NSString * __nonnull)title
                                  image:(UIImage * __nonnull)image
-                              callback:(void(^)(void))callback;
+                              callback:(void(^_Nullable)(void))callback;
 
 - (instancetype _Nonnull)initWithTitle:(NSString * __nonnull)title
                             identifier:(NSString * __nonnull)identifier
