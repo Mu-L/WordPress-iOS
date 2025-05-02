@@ -72,11 +72,11 @@ private struct SubscribersView: View {
     private var footerView: some View {
         if viewModel.currentPage > 1 {
             if viewModel.isLoading {
-                ListFooterView(state: .loading)
+                ListFooterView(.loading)
             } else if viewModel.error != nil {
-                ListFooterView(state: .failed(onRetry: {
+                ListFooterView(.failure).onRetry {
                     viewModel.loadMore()
-                }))
+                }
             }
         }
     }
