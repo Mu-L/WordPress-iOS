@@ -47,7 +47,6 @@ private struct SubscribersView: View {
                     }
             }
             footerView
-                .listRowSeparator(.hidden)
         }
         .listStyle(.plain)
         .refreshable {
@@ -70,7 +69,7 @@ private struct SubscribersView: View {
 
     @ViewBuilder
     private var footerView: some View {
-        if viewModel.currentPage > 1 {
+        if !viewModel.items.isEmpty {
             if viewModel.isLoading {
                 ListFooterView(.loading)
             } else if viewModel.error != nil {

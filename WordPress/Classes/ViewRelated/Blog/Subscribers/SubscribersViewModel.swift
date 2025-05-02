@@ -8,9 +8,9 @@ final class SubscribersViewModel: ObservableObject {
     @Published private(set) var items: [SubscriberRowViewModel] = []
     @Published private(set) var isLoading = false
     @Published private(set) var error: Error?
-    @Published private(set) var currentPage = 1
-    @Published private(set) var hasMorePages = true
 
+    private var hasMorePages = true
+    private var currentPage = 1
     private var task: Task<Void, Never>?
 
     init(blog: Blog) {
