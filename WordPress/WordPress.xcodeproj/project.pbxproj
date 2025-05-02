@@ -1094,8 +1094,8 @@
 		0C73D1A22DAEFA9800CC0F3A /* Exceptions for "KeystoneTests" folder in "WordPressTest" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				KeystoneTests.xctestplan,
 				"WordPressTest-Info.plist",
-				WordPressUnitTests.xctestplan,
 			);
 			target = E16AB92914D978240047A2E5 /* WordPressTest */;
 		};
