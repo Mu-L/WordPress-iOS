@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import WordPressKit
 
 @MainActor
@@ -9,19 +10,44 @@ final class SubscribersViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var error: Error?
 
-    private var hasMorePages = true
-    private var currentPage = 1
-    private var task: Task<Void, Never>?
+    @Published var searchText = ""
+
+    private var response: SubscribersPaginatedResponse
+    private var criteria = SubscribersPaginatedResponse.Criteria()
+    private var task: Task<Void, Never>? {
+        didSet { isLoading = task != nil }
+    }
+
+    private var cancellables: [AnyCancellable] = []
 
     init(blog: Blog) {
         self.blog = blog
+        self.response = SubscribersPaginatedResponse(blog: blog, criteria: criteria)
+
+//        $searchText.debounce(for: 0.5, scheduler: RunLoop.main).sink { [weak self] _ in
+//            
+//        }.store(in: &cancellables)
     }
 
     func loadMore() {
-        guard !isLoading && hasMorePages else {
+        guard response.hasMore else {
             return
         }
-        actuallyLoadMore()
+        error = nil
+        task = Task {
+            defer { task = nil }
+            await _loadMore()
+        }
+    }
+
+    private func _loadMore() async {
+        do {
+            let items = try await response.next()
+            self.items += items.map(SubscriberRowViewModel.init)
+        } catch {
+            guard !(error is CancellationError) else { return }
+            self.error = error
+        }
     }
 
     func onRowAppear(_ row: SubscriberRowViewModel) {
@@ -34,45 +60,13 @@ final class SubscribersViewModel: ObservableObject {
     }
 
     func refresh() async {
-        task?.cancel()
-        currentPage = 1
-        hasMorePages = true
-
-        actuallyLoadMore()
-        await task?.value
-    }
-
-    private func actuallyLoadMore() {
-        isLoading = true
-        error = nil
-        task = Task { @MainActor [currentPage] in
-            await actuallyLoadMore(page: currentPage)
-        }
-    }
-
-    private func actuallyLoadMore(page: Int) async {
+        let response = SubscribersPaginatedResponse(blog: blog, criteria: criteria)
         do {
-            guard let api = blog.wordPressComRestApi, let siteID = blog.dotComID?.intValue else {
-                throw URLError(.unknown)
-            }
-            let service = PeopleServiceRemote(wordPressComRestApi: api)
-            let response = try await service.getSubscribers(siteID: siteID, page: page, perPage: 50)
-
-            if !Task.isCancelled {
-                currentPage += 1
-                hasMorePages = response.page < response.pages
-                isLoading = false
-                items = {
-                    var items = response.page == 1 ? [] : self.items
-                    items += response.subscribers.map(SubscriberRowViewModel.init)
-                    return items.deduplicated(by: \.id)
-                }()
-            }
+            let items = try await response.next()
+            self.response = response
+            self.items = items.map(SubscriberRowViewModel.init)
         } catch {
-            if !Task.isCancelled {
-                self.error = error
-                isLoading = false
-            }
+            Notice(error: error).post()
         }
     }
 }
