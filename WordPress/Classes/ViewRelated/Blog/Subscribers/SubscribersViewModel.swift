@@ -17,10 +17,9 @@ final class SubscribersViewModel: ObservableObject {
     }
 
     private var response: SubscribersPaginatedResponse
-    private var searchResponse: SubscribersPaginatedResponse?
 
     private var task: Task<Void, Never>? {
-        didSet { isLoading = task != nil }
+        didSet { oldValue?.cancel() }
     }
 
     init(blog: Blog) {
@@ -29,20 +28,13 @@ final class SubscribersViewModel: ObservableObject {
     }
 
     func loadMore() {
-        loadMore(for: searchResponse ?? response)
-    }
-
-    private func loadMore(for response: SubscribersPaginatedResponse) {
-        guard response.hasMore else {
+        guard response.hasMore && !isLoading else {
             return
         }
-        guard task == nil else {
-            return
-        }
+        isLoading = true
         error = nil
         task = Task {
-            // TODO: do not do this on cancellation
-            defer { task = nil }
+            // TODO: (kean) simplify this using `Result` type
             do {
                 let items = try await response.next()
                 self.items += items.map(SubscriberRowViewModel.init)
@@ -50,20 +42,21 @@ final class SubscribersViewModel: ObservableObject {
                 guard !(error is CancellationError) else { return }
                 self.error = error
             }
+            if !Task.isCancelled {
+                isLoading = false
+            }
         }
     }
 
     // TODO: (kean) how do we handle refresh for searchResponse?
     func refresh() async {
-        task?.cancel()
         task = Task {
-            defer { task = nil }
-            await _refresh()
+            await reload()
         }
         await task?.value
     }
 
-    private func _refresh() async {
+    private func reload() async {
         let response = SubscribersPaginatedResponse(
             blog: blog,
             parameters: .init(search: searchText)
@@ -78,8 +71,6 @@ final class SubscribersViewModel: ObservableObject {
         }
     }
 
-    // MARK: Events
-
     func onRowAppear(_ row: SubscriberRowViewModel) {
         guard items.suffix(5).contains(where: { $0.id == row.id }) else {
             return
@@ -90,12 +81,12 @@ final class SubscribersViewModel: ObservableObject {
     }
 
     private func didUpdateSearchText(_ searchText: String) {
-        task?.cancel()
-        // TODO: (kean) implement cancellation
         task = Task {
-            try? await Task.sleep(for: .milliseconds(500))
+            if !searchText.isEmpty {
+                try? await Task.sleep(for: .milliseconds(500))
+            }
             guard !Task.isCancelled else { return }
-            await _refresh()
+            await reload()
         }
     }
 }
@@ -107,6 +98,6 @@ final class SubscriberRowViewModel: Identifiable {
 
     init(_ subscriber: RemoteSubscriber) {
         self.subscriptionID = subscriber.subscriptionID
-        self.title = "\(subscriber)"
+        self.title = subscriber.emailAddress ?? "–"
     }
 }
