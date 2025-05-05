@@ -168,7 +168,12 @@ let package = Package(
         ),
         .testTarget(name: "JetpackStatsWidgetsCoreTests", dependencies: [.target(name: "JetpackStatsWidgetsCore")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .testTarget(name: "DesignSystemTests", dependencies: [.target(name: "DesignSystem")], swiftSettings: [.swiftLanguageMode(.v5)]),
-        .testTarget(name: "WordPressFluxTests", dependencies: ["WordPressFlux"], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .testTarget(
+            name: "WordPressFluxTests",
+            dependencies: ["WordPressFlux"],
+            exclude: ["WordPressFluxTests.xctestplan"],
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
         .testTarget(name: "AsyncImageKitTests", dependencies: [
             .target(name: "AsyncImageKit"),
             .target(name: "WordPressTesting"),
