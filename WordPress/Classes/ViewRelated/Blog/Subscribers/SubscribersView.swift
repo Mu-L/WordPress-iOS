@@ -22,6 +22,7 @@ private struct SubscribersView: View {
 
     var body: some View {
         contentView
+            .searchable(text: $viewModel.searchText)
             .onAppear {
                 viewModel.loadMore()
             }
