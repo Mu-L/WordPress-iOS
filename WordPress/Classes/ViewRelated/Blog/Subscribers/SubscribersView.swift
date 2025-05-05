@@ -23,35 +23,20 @@ private struct SubscribersView: View {
     var body: some View {
         contentView
             .searchable(text: $viewModel.searchText)
-            .onAppear {
-                viewModel.loadMore()
+            .task {
+                await viewModel.refresh()
             }
     }
 
     @ViewBuilder
     private var contentView: some View {
-        if viewModel.items.isEmpty {
-            stateView
+        if let list = viewModel.list {
+            SubscribersListView(viewModel: list)
+                .refreshable {
+                    await viewModel.refresh()
+                }
         } else {
-            list
-        }
-    }
-
-    @ViewBuilder
-    private var list: some View {
-        List {
-            ForEach(viewModel.items) { subscriber in
-                Text(subscriber.title)
-                    .lineLimit(3)
-                    .onAppear {
-                        viewModel.onRowAppear(subscriber)
-                    }
-            }
-            footerView
-        }
-        .listStyle(.plain)
-        .refreshable {
-            await viewModel.refresh()
+            stateView
         }
     }
 
@@ -61,22 +46,39 @@ private struct SubscribersView: View {
             ProgressView()
         } else if let error = viewModel.error {
             EmptyStateView.failure(error: error) {
-                viewModel.loadMore()
+                Task {
+                    await viewModel.refresh()
+                }
             }
         } else {
             EmptyStateView(Strings.empty, systemImage: "envelope")
         }
     }
+}
+
+private struct SubscribersListView: View {
+    @ObservedObject var viewModel: SubscribersListViewModel
+
+    var body: some View {
+        List {
+            ForEach(viewModel.items) { item in
+                Text(item.title)
+                    .onAppear {
+                        viewModel.onRowAppear(item)
+                    }
+            }
+            footerView
+        }
+        .listStyle(.plain)
+    }
 
     @ViewBuilder
     private var footerView: some View {
-        if !viewModel.items.isEmpty {
-            if viewModel.isLoading {
-                ListFooterView(.loading)
-            } else if viewModel.error != nil {
-                ListFooterView(.failure).onRetry {
-                    viewModel.loadMore()
-                }
+        if viewModel.isLoading {
+            ListFooterView(.loading)
+        } else if viewModel.error != nil {
+            ListFooterView(.failure).onRetry {
+                viewModel.loadMore()
             }
         }
     }
