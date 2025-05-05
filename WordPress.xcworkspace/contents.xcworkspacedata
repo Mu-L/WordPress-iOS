@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ModulesAlterantive">
+      location = "group:Modules">
    </FileRef>
    <FileRef
       location = "group:WordPress/WordPress.xcodeproj">

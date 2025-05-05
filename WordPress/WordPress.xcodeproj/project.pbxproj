@@ -2705,7 +2705,6 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			packageReferences = (
-				0C8095952DC2A4B9008DFC2F /* XCLocalSwiftPackageReference "../Modules" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
@@ -7039,13 +7038,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		0C8095952DC2A4B9008DFC2F /* XCLocalSwiftPackageReference "../Modules" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../Modules;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		0C2155A52C39A24D00EFE2C0 /* XcodeTarget_UITests */ = {
