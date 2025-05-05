@@ -5,60 +5,71 @@ import WordPressKit
 final class SubscribersViewModel: ObservableObject {
     private let blog: Blog
 
-    @Published private(set) var list: SubscribersListViewModel?
+    @Published private(set) var response: SubscribersPaginatedResponse?
+    @Published private(set) var searchViewModel: SubscribersSearchViewModel?
     @Published private(set) var isLoading = false
     @Published private(set) var error: Error?
 
     @Published var searchText = "" {
         didSet {
             guard oldValue != searchText else { return }
-            didUpdateSearchText(searchText)
+            if searchText.isEmpty {
+                searchViewModel = nil
+            } else {
+                searchViewModel = searchViewModel ?? SubscribersSearchViewModel(blog: blog)
+                searchViewModel?.search(searchText)
+            }
         }
-    }
-
-    private var task: Task<Void, Never>? {
-        didSet { oldValue?.cancel() }
     }
 
     init(blog: Blog) {
         self.blog = blog
     }
 
-    // TODO: (kean) how do we handle refresh for searchResponse?
     func refresh() async {
+        error = nil
         isLoading = true
         defer { isLoading = false }
         do {
-            self.list = try await SubscribersListViewModel(blog: blog)
+            response = try await SubscribersPaginatedResponse(blog: blog)
         } catch {
             self.error = error
-            if list != nil {
+            if response != nil {
                 Notice(error: error).post()
             }
-            // TODO: (show) error correctly
         }
+    }
+}
 
-//        let response = SubscribersResponse(
-//            blog: blog,
-//            parameters: .init(search: searchText)
-//        )
-//        do {
-//            let items = try await response.next()
-//            self.response = response
-//            self.items = items.map(SubscriberRowViewModel.init)
-//        } catch {
-//            guard !(error is CancellationError) else { return }
-//            Notice(error: error).post()
-//        }
+@MainActor
+final class SubscribersSearchViewModel: ObservableObject {
+    private let blog: Blog
+
+    @Published private(set) var response: SubscribersPaginatedResponse?
+    @Published private(set) var isLoading = false
+    @Published private(set) var error: Error?
+
+    private var searchTask: Task<Void, Never>?
+
+    init(blog: Blog) {
+        self.blog = blog
     }
 
-    private func didUpdateSearchText(_ searchText: String) {
-        task = Task {
-            if !searchText.isEmpty {
-                try? await Task.sleep(for: .milliseconds(500))
-            }
+    func search(_ searchText: String) {
+        error = nil
+        isLoading = true
+        searchTask?.cancel()
+        searchTask = Task {
+            try? await Task.sleep(for: .milliseconds(500))
             guard !Task.isCancelled else { return }
-            await refresh()
+            do {
+                response = try await SubscribersPaginatedResponse(blog: blog, parameters: .init(search: searchText))
+                isLoading = false
+            } catch {
+                self.error = error
+                response = nil
+                isLoading = false
+            }
         }
     }
 }

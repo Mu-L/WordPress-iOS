@@ -16,69 +16,84 @@ final class SubscribersViewController: UIHostingController<AnyView> {
     }
 }
 
-@MainActor
 private struct SubscribersView: View {
     @ObservedObject var viewModel: SubscribersViewModel
 
     var body: some View {
-        contentView
-            .searchable(text: $viewModel.searchText)
-            .task {
-                await viewModel.refresh()
+        List {
+            if let searchViewModel = viewModel.searchViewModel {
+                SubscribersSearchResultsView(viewModel: searchViewModel)
+            } else if let response = viewModel.response {
+                SubscribersPaginatedForEach(response: response)
             }
-    }
-
-    @ViewBuilder
-    private var contentView: some View {
-        if let list = viewModel.list {
-            SubscribersListView(viewModel: list)
-                .refreshable {
-                    await viewModel.refresh()
-                }
-        } else {
-            stateView
         }
+        .listStyle(.plain)
+        .overlay {
+            if let searchViewModel = viewModel.searchViewModel {
+                SubscribersSearchStateView(viewModel: searchViewModel)
+            } else {
+                SubscribersStateView(viewModel: viewModel)
+            }
+        }
+        .searchable(text: $viewModel.searchText)
+        .task { await viewModel.refresh() }
+        .refreshable { await viewModel.refresh() }
     }
+}
 
-    @ViewBuilder
-    private var stateView: some View {
-        if viewModel.isLoading {
+private struct SubscribersStateView: View {
+    @ObservedObject var viewModel: SubscribersViewModel
+
+    var body: some View {
+        if let response = viewModel.response, response.isEmpty {
+            EmptyStateView(Strings.empty, systemImage: "envelope")
+        } else if viewModel.isLoading {
             ProgressView()
         } else if let error = viewModel.error {
             EmptyStateView.failure(error: error) {
-                Task {
-                    await viewModel.refresh()
-                }
+                Task { await viewModel.refresh() }
             }
-        } else {
-            EmptyStateView(Strings.empty, systemImage: "envelope")
         }
     }
 }
 
-private struct SubscribersListView: View {
-    @ObservedObject var viewModel: SubscribersListViewModel
+private struct SubscribersSearchResultsView: View {
+    @ObservedObject var viewModel: SubscribersSearchViewModel
 
     var body: some View {
-        List {
-            ForEach(viewModel.items) { item in
-                Text(item.title)
-                    .onAppear {
-                        viewModel.onRowAppear(item)
-                    }
-            }
-            footerView
+        if let response = viewModel.response {
+            SubscribersPaginatedForEach(response: response)
         }
-        .listStyle(.plain)
     }
+}
 
-    @ViewBuilder
-    private var footerView: some View {
-        if viewModel.isLoading {
+private struct SubscribersSearchStateView: View {
+    @ObservedObject var viewModel: SubscribersSearchViewModel
+
+    var body: some View {
+        if let response = viewModel.response, response.isEmpty {
+            EmptyStateView.search()
+        } else if viewModel.isLoading {
+            ProgressView()
+        } else if let error = viewModel.error {
+            EmptyStateView.failure(error: error)
+        }
+    }
+}
+
+private struct SubscribersPaginatedForEach: View {
+    @ObservedObject var response: SubscribersPaginatedResponse
+
+    var body: some View {
+        ForEach(response.items) { item in
+            Text(item.title)
+                .onAppear { response.onRowAppear(item) }
+        }
+        if response.isLoading {
             ListFooterView(.loading)
-        } else if viewModel.error != nil {
+        } else if response.error != nil {
             ListFooterView(.failure).onRetry {
-                viewModel.loadMore()
+                response.loadMore()
             }
         }
     }

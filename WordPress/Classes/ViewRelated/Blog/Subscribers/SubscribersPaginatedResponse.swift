@@ -4,11 +4,13 @@ import WordPressKit
 
 /// Loads paginated subscribers for the given parameters.
 @MainActor
-final class SubscribersListViewModel: ObservableObject {
+final class SubscribersPaginatedResponse: ObservableObject {
     @Published private(set) var items: [SubscriberRowViewModel] = []
     @Published private(set) var hasMore = true
     @Published private(set) var isLoading = false
     @Published private(set) var error: Error?
+
+    var isEmpty: Bool { items.isEmpty }
 
     private var currentPage = 1
     private let blog: Blog
@@ -39,20 +41,6 @@ final class SubscribersListViewModel: ObservableObject {
         }
     }
 
-    private func next() async throws -> PeopleServiceRemote.SubscribersResponse {
-        guard let api = blog.wordPressComRestApi,
-                let siteID = blog.dotComID?.intValue else {
-            throw URLError(.unknown)
-        }
-        let service = PeopleServiceRemote(wordPressComRestApi: api)
-        return try await service.getSubscribers(
-            siteID: siteID,
-            page: currentPage,
-            perPage: 1,
-            parameters: parameters
-        )
-    }
-
     private func didLoad(_ response: PeopleServiceRemote.SubscribersResponse) {
         currentPage += 1
         hasMore = response.page < response.pages
@@ -71,5 +59,19 @@ final class SubscribersListViewModel: ObservableObject {
         if error == nil {
             loadMore()
         }
+    }
+
+    private func next() async throws -> PeopleServiceRemote.SubscribersResponse {
+        guard let api = blog.wordPressComRestApi,
+                let siteID = blog.dotComID?.intValue else {
+            throw URLError(.unknown)
+        }
+        let service = PeopleServiceRemote(wordPressComRestApi: api)
+        return try await service.getSubscribers(
+            siteID: siteID,
+            page: currentPage,
+            perPage: 50,
+            parameters: parameters
+        )
     }
 }
