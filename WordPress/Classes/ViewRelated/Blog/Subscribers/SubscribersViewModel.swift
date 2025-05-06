@@ -5,24 +5,14 @@ import WordPressKit
 final class SubscribersViewModel: ObservableObject {
     private let blog: Blog
 
-    @Published private(set) var response: SubscribersPaginatedResponse?
-    @Published private(set) var searchViewModel: SubscribersSearchViewModel?
-    @Published private(set) var isLoading = false
-    @Published private(set) var error: Error?
-
     @Published var parameters = PeopleServiceRemote.SubscribersParameters()
+    @Published var searchText = ""
 
-    @Published var searchText = "" {
-        didSet {
-            guard oldValue != searchText else { return }
-            if searchText.isEmpty {
-                searchViewModel = nil
-            } else {
-                searchViewModel = searchViewModel ?? SubscribersSearchViewModel(blog: blog)
-                searchViewModel?.search(searchText)
-            }
-        }
-    }
+    @Published private(set) var isLoading = false
+    @Published private(set) var response: SubscribersPaginatedResponse?
+    @Published private(set) var error: Error?
+    @Published private(set) var searchResponse: SubscribersPaginatedResponse?
+    @Published private(set) var searchError: Error?
 
     init(blog: Blog) {
         self.blog = blog
@@ -32,7 +22,7 @@ final class SubscribersViewModel: ObservableObject {
         error = nil
         isLoading = true
         do {
-            let response = try await SubscribersPaginatedResponse(blog: blog, parameters: parameters, search: searchText)
+            let response = try await SubscribersPaginatedResponse(blog: blog, parameters: parameters)
             guard !Task.isCancelled else { return }
             self.isLoading = false
             self.response = response
@@ -45,6 +35,26 @@ final class SubscribersViewModel: ObservableObject {
             }
         }
     }
+
+    // TODO: (kean) fix cancellation here and fix how we narrow search somhow
+    func search() async {
+        guard !searchText.isEmpty else {
+            searchResponse = nil
+            searchError = nil
+            return
+        }
+        searchError = nil
+        do {
+            try await Task.sleep(for: .milliseconds(500))
+            let response = try await SubscribersPaginatedResponse(blog: blog, parameters: parameters, search: searchText)
+            guard !Task.isCancelled else { return }
+            searchResponse = response
+        } catch {
+            guard !Task.isCancelled else { return }
+            searchResponse = nil
+            searchError = error
+        }
+    }
 }
 
 // TODO: (kean) move this to framework
@@ -54,35 +64,6 @@ extension PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType {
         [
             .blocked, .email, .reader, .unconfirmed
         ]
-    }
-}
-
-@MainActor
-final class SubscribersSearchViewModel: ObservableObject {
-    private let blog: Blog
-
-    @Published private(set) var response: SubscribersPaginatedResponse?
-    @Published private(set) var error: Error?
-
-    private var searchTask: Task<Void, Never>?
-
-    init(blog: Blog) {
-        self.blog = blog
-    }
-
-    func search(_ searchText: String) {
-        error = nil
-        searchTask?.cancel()
-        searchTask = Task {
-            try? await Task.sleep(for: .milliseconds(500))
-            guard !Task.isCancelled else { return }
-            do {
-                response = try await SubscribersPaginatedResponse(blog: blog, search: searchText)
-            } catch {
-                self.error = error
-                response = nil
-            }
-        }
     }
 }
 

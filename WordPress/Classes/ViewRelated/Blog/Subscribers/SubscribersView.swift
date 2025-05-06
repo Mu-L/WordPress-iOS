@@ -25,8 +25,8 @@ private struct SubscribersView: View {
 
     var body: some View {
         Group {
-            if let searchViewModel = viewModel.searchViewModel {
-                SubscribersSearchView(viewModel: searchViewModel)
+            if !viewModel.searchText.isEmpty {
+                SubscribersSearchView(viewModel: viewModel)
             } else {
                 SubscribersListView(viewModel: viewModel)
             }
@@ -58,8 +58,12 @@ private struct SubscribersListView: View {
                 }
             }
         }
-        .task(id: viewModel.parameters) { await viewModel.refresh() }
-        .refreshable { await viewModel.refresh() }
+        .task(id: viewModel.parameters) {
+            await viewModel.refresh()
+        }
+        .refreshable {
+            await viewModel.refresh()
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 menu
@@ -87,21 +91,24 @@ private struct SubscribersListView: View {
 }
 
 private struct SubscribersSearchView: View {
-    @ObservedObject var viewModel: SubscribersSearchViewModel
+    @ObservedObject var viewModel: SubscribersViewModel
 
     var body: some View {
         List {
-            if let response = viewModel.response {
+            if let response = viewModel.searchResponse {
                 SubscribersPaginatedForEach(response: response)
             }
         }
         .listStyle(.plain)
         .overlay {
-            if let response = viewModel.response, response.isEmpty {
+            if let response = viewModel.searchResponse, response.isEmpty {
                 EmptyStateView.search()
-            } else if let error = viewModel.error {
+            } else if let error = viewModel.searchError {
                 EmptyStateView.failure(error: error)
             }
+        }
+        .task(id: viewModel.searchText) {
+            await viewModel.search()
         }
     }
 }

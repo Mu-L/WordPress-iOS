@@ -15,9 +15,9 @@ final class SubscribersPaginatedResponse: ObservableObject {
     private var currentPage = 1
     private let blog: Blog
     private let parameters: PeopleServiceRemote.SubscribersParameters
-    private let search: String
+    private let search: String?
 
-    init(blog: Blog, parameters: PeopleServiceRemote.SubscribersParameters = .init(), search: String) async throws {
+    init(blog: Blog, parameters: PeopleServiceRemote.SubscribersParameters = .init(), search: String? = nil) async throws {
         self.blog = blog
         self.parameters = parameters
         self.search = search
