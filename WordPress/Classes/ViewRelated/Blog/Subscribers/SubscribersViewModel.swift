@@ -46,7 +46,6 @@ final class SubscribersSearchViewModel: ObservableObject {
     private let blog: Blog
 
     @Published private(set) var response: SubscribersPaginatedResponse?
-    @Published private(set) var isLoading = false
     @Published private(set) var error: Error?
 
     private var searchTask: Task<Void, Never>?
@@ -57,18 +56,15 @@ final class SubscribersSearchViewModel: ObservableObject {
 
     func search(_ searchText: String) {
         error = nil
-        isLoading = true
         searchTask?.cancel()
         searchTask = Task {
             try? await Task.sleep(for: .milliseconds(500))
             guard !Task.isCancelled else { return }
             do {
                 response = try await SubscribersPaginatedResponse(blog: blog, parameters: .init(search: searchText))
-                isLoading = false
             } catch {
                 self.error = error
                 response = nil
-                isLoading = false
             }
         }
     }

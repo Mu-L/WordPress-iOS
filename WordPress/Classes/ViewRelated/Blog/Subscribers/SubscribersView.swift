@@ -45,8 +45,10 @@ private struct SubscribersStateView: View {
     @ObservedObject var viewModel: SubscribersViewModel
 
     var body: some View {
-        if let response = viewModel.response, response.isEmpty {
-            EmptyStateView(Strings.empty, systemImage: "envelope")
+        if let response = viewModel.response {
+            if response.isEmpty {
+                EmptyStateView(Strings.empty, systemImage: "envelope")
+            }
         } else if viewModel.isLoading {
             ProgressView()
         } else if let error = viewModel.error {
@@ -73,8 +75,6 @@ private struct SubscribersSearchStateView: View {
     var body: some View {
         if let response = viewModel.response, response.isEmpty {
             EmptyStateView.search()
-        } else if viewModel.isLoading {
-            ProgressView()
         } else if let error = viewModel.error {
             EmptyStateView.failure(error: error)
         }
