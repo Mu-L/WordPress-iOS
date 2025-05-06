@@ -16,8 +16,7 @@ struct SubscribersMenu: View {
     private var sorting: some View {
         Menu {
             Section {
-                Picker("", selection: $viewModel.parameters.sortField) {
-                    Text(Strings.defaultSort).tag(Optional<SortField>.none)
+                Picker("", selection: viewModel.makeSortFieldBinding()) {
                     ForEach([SortField.dateSubscribed, .email, .name], id: \.self) { item in
                         Text(item.localizedTitle).tag(item)
                     }
@@ -35,7 +34,7 @@ struct SubscribersMenu: View {
         } label: {
             Button(action: {}, label: {
                 Text(SharedStrings.Misc.sortBy)
-                Text(viewModel.parameters.sortField?.localizedTitle ?? Strings.defaultSort)
+                Text(viewModel.makeSortFieldBinding().wrappedValue.localizedTitle)
                 Image(systemName: "arrow.up.arrow.down")
             })
         }
@@ -51,7 +50,7 @@ struct SubscribersMenu: View {
             Button(action: {}, label: {
                 Text(Strings.filterByEmailSubscription)
                 Text(viewModel.parameters.subscriptionTypeFilter?.localizedTitle ?? Strings.showAll)
-                Image(systemName: "mail")
+                Image(systemName: "envelope")
             })
         }
         .pickerStyle(.menu)
@@ -79,9 +78,28 @@ private typealias SortOrder = PeopleServiceRemote.SubscribersParameters.SortOrde
 private typealias FilterSubscriptionType = PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType
 private typealias FilterPaymentType = PeopleServiceRemote.SubscribersParameters.FilterPaymentType
 
+private extension SubscribersViewModel {
+    // Converts it to a non-optional.
+    func makeSortFieldBinding() -> Binding<SortField> {
+        Binding {
+            self.parameters.sortField ?? .dateSubscribed
+        } set: { value, _ in
+            self.parameters.sortField = value
+        }
+    }
+
+    // Converts it to a non-optional.
+    func makeSortOrderBinding() -> Binding<SortOrder> {
+        Binding {
+            self.parameters.sortOrder ?? .descending
+        } set: { value, _ in
+            self.parameters.sortOrder = value
+        }
+    }
+}
+
 private enum Strings {
     static let filterByEmailSubscription = NSLocalizedString("subscribers.filter.emailSubscription", value: "Email Subscription", comment: "Empty state view title")
     static let filterByPaymentType = NSLocalizedString("subscribers.filter.paymentType", value: "Payment", comment: "Empty state view title")
     static let showAll = SharedStrings.Misc.default(value: SharedStrings.Misc.showAll)
-    static let defaultSort = SharedStrings.Misc.default(value: SortField.dateSubscribed.localizedTitle)
 }

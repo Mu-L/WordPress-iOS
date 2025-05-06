@@ -37,13 +37,4 @@ final class SubscribersViewModel: ObservableObject {
     func search() async throws -> SubscribersPaginatedResponse {
         try await SubscribersPaginatedResponse(blog: blog, parameters: parameters, search: searchText)
     }
-
-    // Converts it to a non-optional.
-    func makeSortOrderBinding() -> Binding<PeopleServiceRemote.SubscribersParameters.SortOrder> {
-        Binding {
-            self.parameters.sortOrder ?? .descending
-        } set: { value, _ in
-            self.parameters.sortOrder = value
-        }
-    }
 }
