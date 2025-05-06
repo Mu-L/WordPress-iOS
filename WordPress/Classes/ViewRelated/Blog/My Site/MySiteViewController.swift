@@ -172,13 +172,6 @@ final class MySiteViewController: UIViewController, UIScrollViewDelegate, NoSite
         if RemoteFeatureFlag.newGutenberg.enabled() {
             GutenbergKit.EditorViewController.warmup()
         }
-
-        #warning("TEMP")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-            let vc = SubscribersViewController(blog: self.blog!)
-            let nav = UINavigationController(rootViewController: vc)
-            self.present(nav, animated: true)
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
