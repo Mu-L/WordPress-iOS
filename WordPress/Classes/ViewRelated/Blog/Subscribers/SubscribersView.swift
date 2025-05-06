@@ -112,7 +112,7 @@ private struct SubscribersPaginatedForEach: View {
 
     var body: some View {
         ForEach(response.items) { item in
-            Text(item.title)
+            SubscriberRowView(viewModel: item)
                 .onAppear { response.onRowAppear(item) }
         }
         if response.isLoading {
