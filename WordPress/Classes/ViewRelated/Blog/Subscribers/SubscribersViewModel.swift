@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 import WordPressKit
 
 @MainActor
@@ -37,25 +37,13 @@ final class SubscribersViewModel: ObservableObject {
     func search() async throws -> SubscribersPaginatedResponse {
         try await SubscribersPaginatedResponse(blog: blog, parameters: parameters, search: searchText)
     }
-}
 
-// TODO: (kean) move this to framework
-
-extension PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType {
-    static var allCases: [PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType] {
-        [
-            .blocked, .email, .reader, .unconfirmed
-        ]
-    }
-}
-
-@MainActor
-final class SubscriberRowViewModel: Identifiable {
-    let subscriptionID: Int
-    let title: String
-
-    init(_ subscriber: RemoteSubscriber) {
-        self.subscriptionID = subscriber.subscriptionID
-        self.title = subscriber.emailAddress ?? "–"
+    // Converts it to a non-optional.
+    func makeSortOrderBinding() -> Binding<PeopleServiceRemote.SubscribersParameters.SortOrder> {
+        Binding {
+            self.parameters.sortOrder ?? .descending
+        } set: { value, _ in
+            self.parameters.sortOrder = value
+        }
     }
 }

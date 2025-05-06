@@ -21,6 +21,19 @@ enum SharedStrings {
         static let undo = NSLocalizedString("shared.button.undo", value: "Undo", comment: "A shared button title used in different contexts")
     }
 
+    enum Misc {
+        static let sortBy = NSLocalizedString("shared.misc.sortBy", value: "Sort By", comment: "A button title used in different contexts")
+        static let showAll = NSLocalizedString("shared.misc.showAll", value: "Show All", comment: "A default filter value")
+        static let `default` = NSLocalizedString("shared.misc.default", value: "Default", comment: "As in default value")
+        static let ascending = NSLocalizedString("shared.misc.sortAascending", value: "Ascending", comment: "Sort ordering")
+        static let descending = NSLocalizedString("shared.misc.sortDescending", value: "Descending", comment: "Sort ordering")
+
+        static func `default`(value: String) -> String {
+            let format = NSLocalizedString("shared.misc.defaultWithValue", value: "Default (%@)", comment: "Default value with a value. Example usage when ordering items: Default (Date Edited).")
+            return String(format: format, value)
+        }
+    }
+
     enum Error {
         static let generic = NSLocalizedString("shared.error.geneirc", value: "Something went wrong", comment: "A generic error message")
         static let refreshFailed = NSLocalizedString("shared.error.failiedToReloadData", value: "Failed to update data", comment: "A generic error title indicating that a screen failed to fetch the latest data")

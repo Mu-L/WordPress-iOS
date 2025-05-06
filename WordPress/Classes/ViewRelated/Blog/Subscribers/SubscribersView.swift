@@ -17,9 +17,6 @@ final class SubscribersViewController: UIHostingController<AnyView> {
     }
 }
 
-// TODO:
-// - disable `refreshable` for search
-// - switch between different List views for search
 private struct SubscribersView: View {
     @ObservedObject var viewModel: SubscribersViewModel
 
@@ -66,26 +63,8 @@ private struct SubscribersListView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                menu
+                SubscribersMenu(viewModel: viewModel)
             }
-        }
-    }
-
-    private typealias FilterSubscriptionType = PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType
-
-    // TODO: (kean) add l10n
-    private var menu: some View {
-        Menu {
-            Section("Subcription Type") {
-                Picker("Subcription Type", selection: $viewModel.parameters.subscriptionTypeFilter) {
-                    Text("All Subscriptions").tag(Optional<FilterSubscriptionType>.none)
-                    ForEach(FilterSubscriptionType.allCases, id: \.self) { item in
-                        Text(item.rawValue).tag(item)
-                    }
-                }
-            }
-        } label: {
-            Image(systemName: "ellipsis")
         }
     }
 }
