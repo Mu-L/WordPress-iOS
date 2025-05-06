@@ -40,7 +40,7 @@ final class SubscriberRowViewModel: Identifiable {
 
     init(_ subscriber: RemoteSubscriber) {
         self.subscriptionID = subscriber.subscriptionID
-        if subscriber.isEmailSubscriber {
+        if subscriber.userID == 0 {
             self.avatar = .email
             self.title = subscriber.emailAddress ?? "–"
             self.details = ""
