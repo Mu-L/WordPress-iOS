@@ -15,10 +15,12 @@ final class SubscribersPaginatedResponse: ObservableObject {
     private var currentPage = 1
     private let blog: Blog
     private let parameters: PeopleServiceRemote.SubscribersParameters
+    private let search: String
 
-    init(blog: Blog, parameters: PeopleServiceRemote.SubscribersParameters = .init()) async throws {
+    init(blog: Blog, parameters: PeopleServiceRemote.SubscribersParameters = .init(), search: String) async throws {
         self.blog = blog
         self.parameters = parameters
+        self.search = search
 
         let response = try await next()
         didLoad(response)
@@ -71,7 +73,8 @@ final class SubscribersPaginatedResponse: ObservableObject {
             siteID: siteID,
             page: currentPage,
             perPage: 50,
-            parameters: parameters
+            parameters: parameters,
+            search: search
         )
     }
 }

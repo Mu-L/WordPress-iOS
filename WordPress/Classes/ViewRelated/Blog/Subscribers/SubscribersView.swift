@@ -1,6 +1,7 @@
 import UIKit
 import SwiftUI
 import WordPressUI
+import WordPressKit
 
 final class SubscribersViewController: UIHostingController<AnyView> {
     private let viewModel: SubscribersViewModel
@@ -57,8 +58,31 @@ private struct SubscribersListView: View {
                 }
             }
         }
-        .task { await viewModel.refresh() }
+        .task(id: viewModel.parameters) { await viewModel.refresh() }
         .refreshable { await viewModel.refresh() }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                menu
+            }
+        }
+    }
+
+    private typealias FilterSubscriptionType = PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType
+
+    // TODO: (kean) add l10n
+    private var menu: some View {
+        Menu {
+            Section("Subcription Type") {
+                Picker("Subcription Type", selection: $viewModel.parameters.subscriptionTypeFilter) {
+                    Text("All Subscriptions").tag(Optional<FilterSubscriptionType>.none)
+                    ForEach(FilterSubscriptionType.allCases, id: \.self) { item in
+                        Text(item.rawValue).tag(item)
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "ellipsis")
+        }
     }
 }
 

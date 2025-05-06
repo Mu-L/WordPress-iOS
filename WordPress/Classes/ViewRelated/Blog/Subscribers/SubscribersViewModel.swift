@@ -10,6 +10,8 @@ final class SubscribersViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var error: Error?
 
+    @Published var parameters = PeopleServiceRemote.SubscribersParameters()
+
     @Published var searchText = "" {
         didSet {
             guard oldValue != searchText else { return }
@@ -29,15 +31,29 @@ final class SubscribersViewModel: ObservableObject {
     func refresh() async {
         error = nil
         isLoading = true
-        defer { isLoading = false }
         do {
-            response = try await SubscribersPaginatedResponse(blog: blog)
+            let response = try await SubscribersPaginatedResponse(blog: blog, parameters: parameters, search: searchText)
+            guard !Task.isCancelled else { return }
+            self.isLoading = false
+            self.response = response
         } catch {
+            guard !Task.isCancelled else { return }
+            self.isLoading = false
             self.error = error
             if response != nil {
                 Notice(error: error).post()
             }
         }
+    }
+}
+
+// TODO: (kean) move this to framework
+
+extension PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType {
+    static var allCases: [PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType] {
+        [
+            .blocked, .email, .reader, .unconfirmed
+        ]
     }
 }
 
@@ -61,7 +77,7 @@ final class SubscribersSearchViewModel: ObservableObject {
             try? await Task.sleep(for: .milliseconds(500))
             guard !Task.isCancelled else { return }
             do {
-                response = try await SubscribersPaginatedResponse(blog: blog, parameters: .init(search: searchText))
+                response = try await SubscribersPaginatedResponse(blog: blog, search: searchText)
             } catch {
                 self.error = error
                 response = nil
