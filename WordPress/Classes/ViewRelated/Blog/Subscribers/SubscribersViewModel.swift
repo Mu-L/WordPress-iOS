@@ -11,8 +11,6 @@ final class SubscribersViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var response: SubscribersPaginatedResponse?
     @Published private(set) var error: Error?
-    @Published private(set) var searchResponse: SubscribersPaginatedResponse?
-    @Published private(set) var searchError: Error?
 
     init(blog: Blog) {
         self.blog = blog
@@ -36,24 +34,8 @@ final class SubscribersViewModel: ObservableObject {
         }
     }
 
-    // TODO: (kean) fix cancellation here and fix how we narrow search somhow
-    func search() async {
-        guard !searchText.isEmpty else {
-            searchResponse = nil
-            searchError = nil
-            return
-        }
-        searchError = nil
-        do {
-            try await Task.sleep(for: .milliseconds(500))
-            let response = try await SubscribersPaginatedResponse(blog: blog, parameters: parameters, search: searchText)
-            guard !Task.isCancelled else { return }
-            searchResponse = response
-        } catch {
-            guard !Task.isCancelled else { return }
-            searchResponse = nil
-            searchError = error
-        }
+    func search() async throws -> SubscribersPaginatedResponse {
+        try await SubscribersPaginatedResponse(blog: blog, parameters: parameters, search: searchText)
     }
 }
 

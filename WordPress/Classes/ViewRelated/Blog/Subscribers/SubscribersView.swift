@@ -93,22 +93,37 @@ private struct SubscribersListView: View {
 private struct SubscribersSearchView: View {
     @ObservedObject var viewModel: SubscribersViewModel
 
+    @State private var response: SubscribersPaginatedResponse?
+    @State private var error: Error?
+
     var body: some View {
         List {
-            if let response = viewModel.searchResponse {
+            if let response {
                 SubscribersPaginatedForEach(response: response)
+            } else if error == nil {
+                ListFooterView(.loading)
             }
         }
         .listStyle(.plain)
         .overlay {
-            if let response = viewModel.searchResponse, response.isEmpty {
+            if let response, response.isEmpty {
                 EmptyStateView.search()
-            } else if let error = viewModel.searchError {
+            } else if let error {
                 EmptyStateView.failure(error: error)
             }
         }
         .task(id: viewModel.searchText) {
-            await viewModel.search()
+            error = nil
+            do {
+                try await Task.sleep(for: .milliseconds(500))
+                let response = try await viewModel.search()
+                guard !Task.isCancelled else { return }
+                self.response = response
+            } catch {
+                guard !Task.isCancelled else { return }
+                self.response = nil
+                self.error = error
+            }
         }
     }
 }
