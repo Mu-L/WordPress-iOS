@@ -16,67 +16,68 @@ final class SubscribersViewController: UIHostingController<AnyView> {
     }
 }
 
+// TODO:
+// - disable `refreshable` for search
+// - switch between different List views for search
 private struct SubscribersView: View {
     @ObservedObject var viewModel: SubscribersViewModel
 
     var body: some View {
-        List {
+        Group {
             if let searchViewModel = viewModel.searchViewModel {
-                SubscribersSearchResultsView(viewModel: searchViewModel)
-            } else if let response = viewModel.response {
+                SubscribersSearchView(viewModel: searchViewModel)
+            } else {
+                SubscribersListView(viewModel: viewModel)
+            }
+        }
+        .searchable(text: $viewModel.searchText)
+    }
+}
+
+private struct SubscribersListView: View {
+    @ObservedObject var viewModel: SubscribersViewModel
+
+    var body: some View {
+        List {
+            if let response = viewModel.response {
                 SubscribersPaginatedForEach(response: response)
             }
         }
         .listStyle(.plain)
         .overlay {
-            if let searchViewModel = viewModel.searchViewModel {
-                SubscribersSearchStateView(viewModel: searchViewModel)
-            } else {
-                SubscribersStateView(viewModel: viewModel)
+            if let response = viewModel.response {
+                if response.isEmpty {
+                    EmptyStateView(Strings.empty, systemImage: "envelope")
+                }
+            } else if viewModel.isLoading {
+                ProgressView()
+            } else if let error = viewModel.error {
+                EmptyStateView.failure(error: error) {
+                    Task { await viewModel.refresh() }
+                }
             }
         }
-        .searchable(text: $viewModel.searchText)
         .task { await viewModel.refresh() }
         .refreshable { await viewModel.refresh() }
     }
 }
 
-private struct SubscribersStateView: View {
-    @ObservedObject var viewModel: SubscribersViewModel
-
-    var body: some View {
-        if let response = viewModel.response {
-            if response.isEmpty {
-                EmptyStateView(Strings.empty, systemImage: "envelope")
-            }
-        } else if viewModel.isLoading {
-            ProgressView()
-        } else if let error = viewModel.error {
-            EmptyStateView.failure(error: error) {
-                Task { await viewModel.refresh() }
-            }
-        }
-    }
-}
-
-private struct SubscribersSearchResultsView: View {
+private struct SubscribersSearchView: View {
     @ObservedObject var viewModel: SubscribersSearchViewModel
 
     var body: some View {
-        if let response = viewModel.response {
-            SubscribersPaginatedForEach(response: response)
+        List {
+            if let response = viewModel.response {
+                SubscribersPaginatedForEach(response: response)
+            }
         }
-    }
-}
-
-private struct SubscribersSearchStateView: View {
-    @ObservedObject var viewModel: SubscribersSearchViewModel
-
-    var body: some View {
-        if let response = viewModel.response, response.isEmpty {
-            EmptyStateView.search()
-        } else if let error = viewModel.error {
-            EmptyStateView.failure(error: error)
+        .listStyle(.plain)
+        .overlay {
+            if let response = viewModel.response, response.isEmpty {
+                EmptyStateView.search()
+            } else if let error = viewModel.error {
+                EmptyStateView.failure(error: error)
+            }
         }
     }
 }
