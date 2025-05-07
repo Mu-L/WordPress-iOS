@@ -828,7 +828,7 @@ CGFloat const BlogDetailReminderSectionFooterHeight = 1.0;
 {
     __weak __typeof(self) weakSelf = self;
     BlogDetailsRow *row = [[BlogDetailsRow alloc] initWithTitle:NSLocalizedString(@"Users", @"Noun. Title. Links to the user management feature.")
-                                        accessibilityIdentifier:@"User Row"
+                                        accessibilityIdentifier:@"Users Row"
                                                           image:[UIImage imageNamed:@"site-menu-people"]
                                                        callback:^{
         [weakSelf showUsers];
