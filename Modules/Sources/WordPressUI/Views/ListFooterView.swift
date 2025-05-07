@@ -20,11 +20,9 @@ public struct ListFooterView: View {
     }
 
     public var body: some View {
-        Group {
-            contentView
-        }
-        .frame(maxWidth: .infinity)
-        .listRowSeparator(.hidden)
+        contentView
+            .frame(maxWidth: .infinity)
+            .listRowSeparator(.hidden)
     }
 
     @ViewBuilder

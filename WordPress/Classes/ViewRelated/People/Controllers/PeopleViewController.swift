@@ -210,6 +210,8 @@ class PeopleViewController: UITableViewController {
         setupView()
         observeNetworkStatus()
         resetManagedPeople()
+
+        tableView.accessibilityIdentifier = "users_table_view"
     }
 
     override func viewWillAppear(_ animated: Bool) {
