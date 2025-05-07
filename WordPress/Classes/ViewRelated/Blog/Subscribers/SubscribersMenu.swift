@@ -73,10 +73,10 @@ struct SubscribersMenu: View {
     }
 }
 
-private typealias SortField = PeopleServiceRemote.SubscribersParameters.SortField
-private typealias SortOrder = PeopleServiceRemote.SubscribersParameters.SortOrder
-private typealias FilterSubscriptionType = PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType
-private typealias FilterPaymentType = PeopleServiceRemote.SubscribersParameters.FilterPaymentType
+private typealias SortField = SubscribersServiceRemote.GetSubscribersParameters.SortField
+private typealias SortOrder = SubscribersServiceRemote.GetSubscribersParameters.SortOrder
+private typealias FilterSubscriptionType = SubscribersServiceRemote.GetSubscribersParameters.FilterSubscriptionType
+private typealias FilterPaymentType = SubscribersServiceRemote.GetSubscribersParameters.FilterPaymentType
 
 private extension SubscribersViewModel {
     // Converts it to a non-optional.

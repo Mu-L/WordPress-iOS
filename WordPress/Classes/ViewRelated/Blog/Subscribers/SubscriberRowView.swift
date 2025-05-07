@@ -27,7 +27,7 @@ struct SubscriberRowView: View {
 
 @MainActor
 final class SubscriberRowViewModel: Identifiable {
-    let subscriptionID: Int
+    let subscriberID: Int
 
     let title: String
     let avatar: Avatar
@@ -38,9 +38,9 @@ final class SubscriberRowViewModel: Identifiable {
         case email
     }
 
-    init(_ subscriber: RemoteSubscriber) {
-        self.subscriptionID = subscriber.subscriptionID
-        if subscriber.userID == 0 {
+    init(_ subscriber: SubscribersServiceRemote.GetSubscribersResponse.Subscriber) {
+        self.subscriberID = subscriber.subscriberID
+        if subscriber.dotComUserID == 0 {
             self.avatar = .email
             self.title = subscriber.emailAddress ?? "–"
             self.details = ""

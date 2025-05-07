@@ -14,10 +14,10 @@ final class SubscribersPaginatedResponse: ObservableObject {
 
     private var currentPage = 1
     private let blog: Blog
-    private let parameters: PeopleServiceRemote.SubscribersParameters
+    private let parameters: SubscribersServiceRemote.GetSubscribersParameters
     private let search: String?
 
-    init(blog: Blog, parameters: PeopleServiceRemote.SubscribersParameters = .init(), search: String? = nil) async throws {
+    init(blog: Blog, parameters: SubscribersServiceRemote.GetSubscribersParameters = .init(), search: String? = nil) async throws {
         self.blog = blog
         self.parameters = parameters
         self.search = search
@@ -43,13 +43,13 @@ final class SubscribersPaginatedResponse: ObservableObject {
         }
     }
 
-    private func didLoad(_ response: PeopleServiceRemote.SubscribersResponse) {
+    private func didLoad(_ response: SubscribersServiceRemote.GetSubscribersResponse) {
         currentPage += 1
         hasMore = response.page < response.pages
 
-        let existingIDs = Set(items.map(\.subscriptionID))
+        let existingIDs = Set(items.map(\.subscriberID))
         let newItems = response.subscribers.filter {
-            !existingIDs.contains($0.subscriptionID)
+            !existingIDs.contains($0.subscriberID)
         }
         items += newItems.map(SubscriberRowViewModel.init)
     }
@@ -63,12 +63,12 @@ final class SubscribersPaginatedResponse: ObservableObject {
         }
     }
 
-    private func next() async throws -> PeopleServiceRemote.SubscribersResponse {
+    private func next() async throws -> SubscribersServiceRemote.GetSubscribersResponse {
         guard let api = blog.wordPressComRestApi,
                 let siteID = blog.dotComID?.intValue else {
             throw URLError(.unknown)
         }
-        let service = PeopleServiceRemote(wordPressComRestApi: api)
+        let service = SubscribersServiceRemote(wordPressComRestApi: api)
         return try await service.getSubscribers(
             siteID: siteID,
             page: currentPage,

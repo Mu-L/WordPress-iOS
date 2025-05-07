@@ -5,7 +5,7 @@ import WordPressKit
 final class SubscribersViewModel: ObservableObject {
     private let blog: Blog
 
-    @Published var parameters = PeopleServiceRemote.SubscribersParameters()
+    @Published var parameters = SubscribersServiceRemote.GetSubscribersParameters()
     @Published var searchText = ""
 
     @Published private(set) var isLoading = false

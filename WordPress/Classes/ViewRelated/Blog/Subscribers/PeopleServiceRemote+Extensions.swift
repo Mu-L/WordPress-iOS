@@ -1,6 +1,6 @@
 import WordPressKit
 
-extension PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType {
+extension SubscribersServiceRemote.GetSubscribersParameters.FilterSubscriptionType {
     var localizedTitle: String {
         switch self {
         case .email:
@@ -15,7 +15,7 @@ extension PeopleServiceRemote.SubscribersParameters.FilterSubscriptionType {
     }
 }
 
-extension PeopleServiceRemote.SubscribersParameters.FilterPaymentType {
+extension SubscribersServiceRemote.GetSubscribersParameters.FilterPaymentType {
     var localizedTitle: String {
         switch self {
         case .free:
@@ -26,7 +26,7 @@ extension PeopleServiceRemote.SubscribersParameters.FilterPaymentType {
     }
 }
 
-extension PeopleServiceRemote.SubscribersParameters.SortField {
+extension SubscribersServiceRemote.GetSubscribersParameters.SortField {
     var localizedTitle: String {
         switch self {
         case .dateSubscribed:
@@ -43,7 +43,7 @@ extension PeopleServiceRemote.SubscribersParameters.SortField {
     }
 }
 
-extension PeopleServiceRemote.SubscribersParameters.SortOrder {
+extension SubscribersServiceRemote.GetSubscribersParameters.SortOrder {
     var localizedTitle: String {
         switch self {
         case .ascending: SharedStrings.Misc.ascending
