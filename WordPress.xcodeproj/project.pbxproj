@@ -2968,7 +2968,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh \"${SRCROOT}/../Scripts/BuildPhases/SwiftLint.sh\"\n";
+			shellScript = "sh \"${SRCROOT}/Scripts/BuildPhases/SwiftLint.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
