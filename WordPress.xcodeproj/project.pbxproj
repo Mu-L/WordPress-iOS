@@ -992,6 +992,27 @@
 		FFE69A2A1B1BFE200073C2EB /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3FA373132DCDCD9200B6CD77 /* Exceptions for "Sources" folder in "WordPressAuthenticator" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WordPressAuthenticator/Features/NUX/WPNUXMainButton.h,
+				WordPressAuthenticator/Features/NUX/WPWalkthroughTextField.h,
+				WordPressAuthenticator/Helpers/LoginFacade.h,
+				WordPressAuthenticator/Helpers/WordPressXMLRPCAPIFacade.h,
+				WordPressAuthenticator/WordPressAuthenticator.h,
+			);
+			publicHeaders = (
+				WordPressAuthenticator/Features/NUX/WPNUXMainButton.h,
+				WordPressAuthenticator/Features/NUX/WPWalkthroughTextField.h,
+				WordPressAuthenticator/Helpers/LoginFacade.h,
+				WordPressAuthenticator/Helpers/WordPressXMLRPCAPIFacade.h,
+				WordPressAuthenticator/WordPressAuthenticator.h,
+			);
+			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0C1CB0CD2D95C63C00494A8C /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -1032,6 +1053,9 @@
 		};
 		3F841F862DCDBA84001CD739 /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3FA373132DCDCD9200B6CD77 /* Exceptions for "Sources" folder in "WordPressAuthenticator" target */,
+			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
