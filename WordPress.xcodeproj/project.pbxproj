@@ -992,58 +992,15 @@
 		FFE69A2A1B1BFE200073C2EB /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3F8432C12DCDA127001CD739 /* Exceptions for "WordPress" folder in "WordPress" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0C1CB0CD2D95C63C00494A8C /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		0C238F782D9ADF0200981631 /* WordPressAuthenticator */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WordPressAuthenticator;
-			sourceTree = "<group>";
-		};
-		0C3C988F2DA04EEF009F3BFB /* Jetpack */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Jetpack;
-			sourceTree = "<group>";
-		};
-		0C3C98902DA04EF9009F3BFB /* WordPress */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				3F8432C12DCDA127001CD739 /* Exceptions for "WordPress" folder in "WordPress" target */,
-			);
-			path = WordPress;
-			sourceTree = "<group>";
-		};
-		0C3E79892DB164B3000C7072 /* JetpackStatsWidgets */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = JetpackStatsWidgets;
-			sourceTree = "<group>";
-		};
 		0C5A1A042D9B080900C25301 /* WordPressAuthenticatorTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = WordPressAuthenticatorTests;
-			sourceTree = "<group>";
-		};
-		0C5A3FAB2D9B1EF400C25301 /* Reader */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Reader;
-			sourceTree = "<group>";
-		};
-		0C5C46FE2D98397A00F2CD55 /* Keystone */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Keystone;
 			sourceTree = "<group>";
 		};
 		0C73A9BD2DAEDFDE00CC0F3A /* KeystoneTests */ = {
@@ -1068,14 +1025,14 @@
 			path = WordPress/Classes;
 			sourceTree = "<group>";
 		};
-		3F7AE0B62D9B30A100AB4892 /* WordPressData */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WordPressData;
-			sourceTree = "<group>";
-		};
 		3F7AE0C22D9B30A200AB4892 /* WordPressDataTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = WordPressDataTests;
+			sourceTree = "<group>";
+		};
+		3F841F862DCDBA84001CD739 /* Sources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -1363,20 +1320,6 @@
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
-		0C5C46FB2D98395300F2CD55 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				0C3C98902DA04EF9009F3BFB /* WordPress */,
-				0C3C988F2DA04EEF009F3BFB /* Jetpack */,
-				0C5A3FAB2D9B1EF400C25301 /* Reader */,
-				0C5C46FE2D98397A00F2CD55 /* Keystone */,
-				0C238F782D9ADF0200981631 /* WordPressAuthenticator */,
-				3F7AE0B62D9B30A100AB4892 /* WordPressData */,
-				0C3E79892DB164B3000C7072 /* JetpackStatsWidgets */,
-			);
-			path = Sources;
-			sourceTree = SOURCE_ROOT;
-		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1418,7 +1361,7 @@
 			isa = PBXGroup;
 			children = (
 				3FD4B20E2DCC468200781DFA /* Modules */,
-				0C5C46FB2D98395300F2CD55 /* Sources */,
+				3F841F862DCDBA84001CD739 /* Sources */,
 				0C5A19CB2D9B07E700C25301 /* Tests */,
 				F14B5F6F208E648200439554 /* config */,
 				E1B34C091CCDFFCE00889709 /* Credentials */,
@@ -1861,9 +1804,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				0C3E79892DB164B3000C7072 /* JetpackStatsWidgets */,
-			);
 			name = JetpackStatsWidgets;
 			packageProductDependencies = (
 				0C6AC6232C364A8000BF7600 /* XcodeTarget_StatsWidget */,
@@ -1911,7 +1851,6 @@
 				0C28C63C2DAD830F00F81F20 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0C5A3FAB2D9B1EF400C25301 /* Reader */,
 				0CED35262D959427003015CF /* Misc */,
 				0CFC380E2DA408BB00DB3386 /* Recoleta */,
 			);
@@ -1939,7 +1878,6 @@
 				0C128FED2D9ECE6200C69EBA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0C5C46FE2D98397A00F2CD55 /* Keystone */,
 				24CE57C42CD3375200C7B37D /* Classes */,
 			);
 			name = Keystone;
@@ -1975,7 +1913,6 @@
 				3F0FD9FF2D9B92F700CD05D6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0C3C98902DA04EF9009F3BFB /* WordPress */,
 				0CED35262D959427003015CF /* Misc */,
 				0CFC380E2DA408BB00DB3386 /* Recoleta */,
 				24CE57C42CD3375200C7B37D /* Classes */,
@@ -2000,9 +1937,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				3F7AE0B62D9B30A100AB4892 /* WordPressData */,
 			);
 			name = WordPressData;
 			packageProductDependencies = (
@@ -2048,9 +1982,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				0C238F782D9ADF0200981631 /* WordPressAuthenticator */,
 			);
 			name = WordPressAuthenticator;
 			packageProductDependencies = (
@@ -2315,7 +2246,6 @@
 				3F0FDA032D9B930100CD05D6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0C3C988F2DA04EEF009F3BFB /* Jetpack */,
 				0CED35262D959427003015CF /* Misc */,
 				0CFC380E2DA408BB00DB3386 /* Recoleta */,
 				24CE57C42CD3375200C7B37D /* Classes */,
