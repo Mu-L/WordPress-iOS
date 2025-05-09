@@ -1063,6 +1063,16 @@
 			);
 			target = 3F7AE0B42D9B30A100AB4892 /* WordPressData */;
 		};
+		3FA373302DCDD32800B6CD77 /* Exceptions for "Sources" folder in "Keystone" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Keystone/WordPress.h,
+			);
+			publicHeaders = (
+				Keystone/WordPress.h,
+			);
+			target = 0CED016F2D95B897003015CF /* Keystone */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -1107,6 +1117,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				3FA373132DCDCD9200B6CD77 /* Exceptions for "Sources" folder in "WordPressAuthenticator" target */,
+				3FA373302DCDD32800B6CD77 /* Exceptions for "Sources" folder in "Keystone" target */,
 				3FA373192DCDD18A00B6CD77 /* Exceptions for "Sources" folder in "WordPressData" target */,
 			);
 			path = Sources;
