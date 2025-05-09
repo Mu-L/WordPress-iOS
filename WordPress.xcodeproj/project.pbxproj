@@ -1011,6 +1011,58 @@
 			);
 			target = 4AD953B32C21451700D0EEFA /* WordPressAuthenticator */;
 		};
+		3FA373192DCDD18A00B6CD77 /* Exceptions for "Sources" folder in "WordPressData" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"WordPressData/Objective-C/include/AbstractPost.h",
+				"WordPressData/Objective-C/include/BasePost.h",
+				"WordPressData/Objective-C/include/Blog.h",
+				"WordPressData/Objective-C/include/CoreDataStack.h",
+				"WordPressData/Objective-C/include/LocalCoreDataService.h",
+				"WordPressData/Objective-C/include/Media.h",
+				"WordPressData/Objective-C/include/Menu.h",
+				"WordPressData/Objective-C/include/MenuItem.h",
+				"WordPressData/Objective-C/include/MenuLocation.h",
+				"WordPressData/Objective-C/include/PostCategory.h",
+				"WordPressData/Objective-C/include/PostContentProvider.h",
+				"WordPressData/Objective-C/include/PostHelper.h",
+				"WordPressData/Objective-C/include/PostService.h",
+				"WordPressData/Objective-C/include/PostServiceOptions.h",
+				"WordPressData/Objective-C/include/PostTag.h",
+				"WordPressData/Objective-C/include/PostType.h",
+				"WordPressData/Objective-C/include/ReaderGapMarker.h",
+				"WordPressData/Objective-C/include/ReaderPost.h",
+				"WordPressData/Objective-C/include/SourcePostAttribution.h",
+				"WordPressData/Objective-C/include/Theme.h",
+				"WordPressData/Objective-C/include/WPAccount.h",
+				WordPressData/WordPressData.h,
+			);
+			publicHeaders = (
+				"WordPressData/Objective-C/include/AbstractPost.h",
+				"WordPressData/Objective-C/include/BasePost.h",
+				"WordPressData/Objective-C/include/Blog.h",
+				"WordPressData/Objective-C/include/CoreDataStack.h",
+				"WordPressData/Objective-C/include/LocalCoreDataService.h",
+				"WordPressData/Objective-C/include/Media.h",
+				"WordPressData/Objective-C/include/Menu.h",
+				"WordPressData/Objective-C/include/MenuItem.h",
+				"WordPressData/Objective-C/include/MenuLocation.h",
+				"WordPressData/Objective-C/include/PostCategory.h",
+				"WordPressData/Objective-C/include/PostContentProvider.h",
+				"WordPressData/Objective-C/include/PostHelper.h",
+				"WordPressData/Objective-C/include/PostService.h",
+				"WordPressData/Objective-C/include/PostServiceOptions.h",
+				"WordPressData/Objective-C/include/PostTag.h",
+				"WordPressData/Objective-C/include/PostType.h",
+				"WordPressData/Objective-C/include/ReaderGapMarker.h",
+				"WordPressData/Objective-C/include/ReaderPost.h",
+				"WordPressData/Objective-C/include/SourcePostAttribution.h",
+				"WordPressData/Objective-C/include/Theme.h",
+				"WordPressData/Objective-C/include/WPAccount.h",
+				WordPressData/WordPressData.h,
+			);
+			target = 3F7AE0B42D9B30A100AB4892 /* WordPressData */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -1055,6 +1107,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				3FA373132DCDCD9200B6CD77 /* Exceptions for "Sources" folder in "WordPressAuthenticator" target */,
+				3FA373192DCDD18A00B6CD77 /* Exceptions for "Sources" folder in "WordPressData" target */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
