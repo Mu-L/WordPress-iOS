@@ -992,6 +992,16 @@
 		FFE69A2A1B1BFE200073C2EB /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3F8432C12DCDA127001CD739 /* Exceptions for "WordPress" folder in "WordPress" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 1D6058900D05DD3D006BFB54 /* WordPress */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0C1CB0CD2D95C63C00494A8C /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -1010,6 +1020,9 @@
 		};
 		0C3C98902DA04EF9009F3BFB /* WordPress */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3F8432C12DCDA127001CD739 /* Exceptions for "WordPress" folder in "WordPress" target */,
+			);
 			path = WordPress;
 			sourceTree = "<group>";
 		};
@@ -4105,7 +4118,6 @@
 					"$(inherited)",
 					/usr/include/libxml2,
 				);
-				INFOPLIST_FILE = ../Sources/WordPress/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4162,7 +4174,6 @@
 					"$(inherited)",
 					/usr/include/libxml2,
 				);
-				INFOPLIST_FILE = ../Sources/WordPress/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5637,7 +5648,6 @@
 					"$(inherited)",
 					/usr/include/libxml2,
 				);
-				INFOPLIST_FILE = ../Sources/WordPress/Info.plist;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
