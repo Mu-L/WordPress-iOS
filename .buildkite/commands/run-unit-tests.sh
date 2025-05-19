@@ -1,5 +1,9 @@
 #!/bin/bash -eu
 
+if "$(dirname "${BASH_SOURCE[0]}")/should-skip-job.sh" --job-type validation; then
+  exit 0
+fi
+
 # Run this at the start to fail early if value not available
 echo '--- :test-analytics: Configuring Test Analytics'
 export BUILDKITE_ANALYTICS_TOKEN=$BUILDKITE_ANALYTICS_TOKEN_UNIT_TESTS

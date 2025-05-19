@@ -1,5 +1,9 @@
 #!/bin/bash -eu
 
+if "$(dirname "${BASH_SOURCE[0]}")/should-skip-job.sh" --job-type validation; then
+  exit 0
+fi
+
 DEVICE=$1
 
 echo "Running UI tests on $DEVICE. The iOS version will be the latest available in the CI host."
