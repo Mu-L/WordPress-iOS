@@ -2,37 +2,67 @@ import SwiftUI
 import AsyncImageKit
 import WordPressData
 import WordPressUI
+import UIKit
 
-struct PostSettingsFeaturedImageCell: View {
-    @ObservedObject var post: AbstractPost
+struct PostSettingsFeaturedImageRow: View {
     @ObservedObject var viewModel: PostSettingsFeaturedImageViewModel
+    @State private var presentedMedia: Media?
 
-    var onViewTapped: () -> Void
+    @ScaledMetric(relativeTo: .body) var height = 120
 
     var body: some View {
-        if let image = post.featuredImage {
-            SiteMediaImage(media: image, size: .large)
-                .loadingStyle(.spinner)
-                .accessibilityIdentifier("featured_image_current_image")
-                .aspectRatio(1.0 / ReaderPostCell.coverAspectRatio, contentMode: .fit)
-                .overlay {
-                    menu
-                }
-                .contextMenu {
-                    actions
-                }
-        } else {
-            if viewModel.upload != nil {
-                // The upload state when no image is selected. For the "Replace"
-                // flow, the app shows the upload differently (see `menu`).
-                uploading
+        Group {
+            if let image = viewModel.selection {
+                makeMediaView(with: image)
             } else {
-                makeMediaPicker {
-                    Label(Strings.buttonSetFeaturedImage, systemImage: "photo.badge.plus")
-                        .frame(maxWidth: .infinity)
-                        .contentShape(Rectangle()) // Make the whole cell tappable
+                Group {
+                    if viewModel.upload != nil {
+                        // The upload state when no image is selected. For the "Replace"
+                        // flow, the app shows the upload differently (see `menu`).
+                        uploadingStateView
+                    } else {
+                        makeMediaPicker {
+                            setFeaturedImageView
+                        }
+                    }
                 }
+                .listRowBackground(Color.clear)
+                .frame(height: height)
             }
+        }
+        .listRowInsets(EdgeInsets.zero)
+    }
+
+    private func makeMediaView(with image: Media) -> some View {
+        SiteMediaImage(media: image, size: .large)
+            .loadingStyle(.spinner)
+            // warning: SiteMediaImage doesn't seem to reload otherwise; might want to change it later
+            .id(image)
+            .aspectRatio(1.0 / ReaderPostCell.coverAspectRatio, contentMode: .fit)
+            .overlay {
+                menu
+            }
+            .contextMenu {
+                actions
+            }
+            .sheet(item: $presentedMedia) { media in
+                LightboxView(media: media)
+                    .ignoresSafeArea()
+            }
+    }
+
+    private var setFeaturedImageView: some View {
+        makeWithProminentBackground {
+            VStack(spacing: 4) {
+                Image(systemName: "photo.on.rectangle.angled")
+                    .font(.title)
+                    .symbolRenderingMode(.hierarchical)
+
+                Text(Strings.buttonSetFeaturedImage)
+                    .font(.body)
+            }
+            .foregroundColor(.accentColor)
+            .fontWeight(.medium)
         }
     }
 
@@ -51,6 +81,7 @@ struct PostSettingsFeaturedImageCell: View {
                     Image(systemName: "ellipsis")
                         .foregroundStyle(Color(.label))
                         .font(.system(size: 18))
+                        .accessibilityIdentifier("featured_image_current_image_menu") // not ideal
                 }
             }
             .shadow(color: .black.opacity(0.5), radius: 10)
@@ -62,10 +93,12 @@ struct PostSettingsFeaturedImageCell: View {
     @ViewBuilder
     private var actions: some View {
         if viewModel.upload == nil {
-            Button(SharedStrings.Button.view, systemImage: "plus.magnifyingglass", action: onViewTapped)
-                .accessibilityIdentifier("featured_image_button_view")
+            Button(SharedStrings.Button.view, systemImage: "plus.magnifyingglass") {
+                presentedMedia = viewModel.selection
+            }
+            .accessibilityIdentifier("featured_image_button_view")
             makeMediaPicker {
-                Button(Strings.replaceImage, systemImage: "photo.badge.plus", action: onViewTapped)
+                Button(Strings.replaceImage, systemImage: "photo.badge.plus", action: {})
                     .accessibilityIdentifier("featured_image_button_replace")
             }
             Button(SharedStrings.Button.remove, systemImage: "trash", role: .destructive, action: viewModel.buttonRemoveTapped)
@@ -77,32 +110,53 @@ struct PostSettingsFeaturedImageCell: View {
         }
     }
 
-    private var uploading: some View {
-        HStack(alignment: .center, spacing: 0) {
-            ProgressView()
-                .padding(.trailing, 12)
-
-            Text(Strings.uploading)
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-
-            Spacer(minLength: 8)
-
-            Menu {
-                Button(role: .destructive, action: viewModel.buttonCancelTapped) {
-                    Label(Strings.cancelUpload, systemImage: "trash")
-                }
-            } label: {
-                Image(systemName: "ellipsis")
-                    .font(.subheadline)
-                    .tint(.secondary)
+    private var uploadingStateView: some View {
+        Menu {
+            Button(role: .destructive, action: viewModel.buttonCancelTapped) {
+                Label(Strings.cancelUpload, systemImage: "xmark.circle.fill")
             }
+        } label: {
+            makeWithProminentBackground {
+                HStack {
+                    ProgressView()
+
+                    Text(Strings.uploading)
+                        .font(.headline)
+                        .fontWeight(.medium)
+                }
+                .tint(.accentColor)
+                .foregroundColor(.accentColor)
+            }
+            .overlay(alignment: .topTrailing) {
+                Image(systemName: "ellipsis.circle")
+                    .foregroundStyle(Color.secondary)
+                    .padding(12)
+            }
+        }
+    }
+
+    /// A nice tinted background for the button and other states.
+    private func makeWithProminentBackground<Content: View>(@ViewBuilder content: @escaping () -> Content) -> some View {
+        ZStack {
+            // System background that adapts to dark mode
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(UIColor.secondarySystemGroupedBackground))
+
+            // Very subtle accent tint
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.accentColor.opacity(0.02))
+
+            content()
+
+            // Prominent border
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(Color.accentColor.opacity(0.3), lineWidth: 1)
         }
     }
 
     private func makeMediaPicker<Content: View>(@ViewBuilder content: @escaping () -> Content) -> some View {
         let configuration = MediaPickerConfiguration(
-            sources: [.photos, .camera, .playground, .siteMedia(blog: post.blog)],
+            sources: [.photos, .camera, .playground, .siteMedia(blog: viewModel.post.blog)],
             filter: .images
         )
         return MediaPicker(configuration: configuration, onSelection: viewModel.setFeaturedImage) {
@@ -111,19 +165,18 @@ struct PostSettingsFeaturedImageCell: View {
     }
 }
 
-public final class PostSettingsFeaturedImageViewModel: NSObject, ObservableObject {
+public final class PostSettingsFeaturedImageViewModel: ObservableObject {
     @Published private(set) var upload: Media?
+    @Published var selection: Media?
 
     let post: AbstractPost
 
     private var receipt: UUID?
     private let coordinator = MediaCoordinator.shared
 
-    @objc public weak var tableView: UITableView?
-    @objc public weak var delegate: FeaturedImageDelegate?
-
-    @objc public init(post: AbstractPost) {
+    public init(post: AbstractPost) {
         self.post = post
+        self.selection = post.featuredImage
     }
 
     func setFeaturedImage(selection: MediaPickerSelection) {
@@ -177,11 +230,9 @@ public final class PostSettingsFeaturedImageViewModel: NSObject, ObservableObjec
     }
 
     private func setFeaturedImage(_ media: Media?) {
-        upload = nil
-        post.featuredImage = media
-        delegate?.gutenbergDidRequestFeaturedImageId(media?.mediaID ?? GutenbergFeaturedImageHelper.mediaIdNoFeaturedImageSet as NSNumber)
-        UIView.performWithoutAnimation {
-            tableView?.reloadData()
+        withAnimation {
+            upload = nil
+            selection = media
         }
     }
 }
