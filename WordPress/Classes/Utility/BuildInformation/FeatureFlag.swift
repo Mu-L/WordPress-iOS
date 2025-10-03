@@ -25,7 +25,6 @@ public enum FeatureFlag: Int, CaseIterable {
     case readerGutenbergCommentComposer
     case pluginManagementOverhaul
     case newStats
-    case newPublishingSheet
     case mediaQuotaView
     case intelligence
 
@@ -82,8 +81,6 @@ public enum FeatureFlag: Int, CaseIterable {
             return false
         case .newStats:
             return false
-        case .newPublishingSheet:
-            return true
         case .mediaQuotaView:
             return false
         case .intelligence:
@@ -131,7 +128,6 @@ extension FeatureFlag {
         case .pluginManagementOverhaul: "Plugin Management Overhaul"
         case .readerGutenbergCommentComposer: "Gutenberg Comment Composer"
         case .newStats: "New Stats"
-        case .newPublishingSheet: "New Publishing Sheet"
         case .mediaQuotaView: "Media Quota"
         case .intelligence: "Intelligence"
         }
