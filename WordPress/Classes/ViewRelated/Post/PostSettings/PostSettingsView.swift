@@ -287,7 +287,7 @@ struct PostSettingsFormContentView: View {
             Section {
                 SettingsPicker(
                     title: Strings.accessHeader,
-                    selection: $viewModel.settings.accessLevel,
+                    selection: $viewModel.settings.metadata.accessLevel,
                     values: JetpackPostAccessLevel.allCases.map { level in
                         SettingsPickerValue(
                             title: level.localizedTitle,
@@ -344,6 +344,11 @@ struct PostSettingsFormContentView: View {
     @ViewBuilder
     private var moreOptionsSection: some View {
         Section {
+            if viewModel.shouldShow(.jetpackNewsletterEmailOptions) {
+                Toggle(isOn: $viewModel.emailToSubscribers) {
+                    Text(Strings.emailToSubscribers)
+                }
+            }
             if viewModel.shouldShowStickyOption {
                 stickyPostRow
             }
@@ -661,6 +666,12 @@ private enum Strings {
         "postSettings.socialSharing.header",
         value: "Social Sharing",
         comment: "Label for the preview button in Post Settings"
+    )
+
+    static let emailToSubscribers = NSLocalizedString(
+        "postSettings.emailToSubscribers.label",
+        value: "Email to Subscribers",
+        comment: "Label for the checkbox that lets you send a post to newsletter subscribers"
     )
 
     static let readyToPublish = NSLocalizedString(
