@@ -241,11 +241,11 @@ struct PostSettingsFormContentView: View {
     @ViewBuilder
     private var generalSection: some View {
         Section {
-            authorRow
-            if !viewModel.isDraftOrPending || viewModel.context == .publishing {
-                publishDateRow
-                visibilityRow
+            if viewModel.context == .settings && viewModel.isStandalone {
+                statusRow
             }
+            authorRow
+            publishDateRow
             slugRow
         } header: {
             SectionHeader(Strings.generalHeader)
@@ -262,6 +262,21 @@ struct PostSettingsFormContentView: View {
             }
         } label: {
             PostSettingsAuthorRow(author: viewModel.settings.author)
+        }
+    }
+
+    private var statusRow: some View {
+        NavigationLink {
+            PostStatusView(settings: $viewModel.settings, timeZone: viewModel.timeZone)
+        } label: {
+            SettingsRow(Strings.status) {
+                HStack(alignment: .center, spacing: 2) {
+                    ScaledImage(viewModel.settings.status.image, height: 23)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(viewModel.settings.status.title)
+                    }
+                }
+            }
         }
     }
 
@@ -436,29 +451,6 @@ private struct PostSettingsAuthorRow: View {
                     .foregroundColor(.secondary)
             }
         }
-    }
-}
-
-@MainActor
-private struct SettingsRow: View {
-    let title: String
-    let value: String
-
-    init(_ title: String, value: String) {
-        self.title = title
-        self.value = value
-    }
-
-    var body: some View {
-        HStack {
-            Text(title)
-                .layoutPriority(1)
-            Spacer()
-            Text(value)
-                .foregroundColor(.secondary)
-                .textSelection(.enabled)
-        }
-        .lineLimit(1)
     }
 }
 
@@ -678,5 +670,11 @@ private enum Strings {
         "prepublishing.publishingSectionTitle",
         value: "Ready to Publish?",
         comment: "The title of the top section that shows the site your are publishing to. Default is 'Ready to Publish?'"
+    )
+
+    static let status = NSLocalizedString(
+        "postSettings.status.label",
+        value: "Status",
+        comment: "Label for the status field in Post Settings"
     )
 }
