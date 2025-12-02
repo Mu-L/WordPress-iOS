@@ -61,9 +61,7 @@ extension EditorConfiguration {
                 }
 
                 editorAssetsEndpoint.appendPathComponent("editor-assets")
-                builder = builder.setEditorAssetsEndpoint(editorAssetsEndpoint.appending(queryItems: [
-                    URLQueryItem(name: "exclude", value: "core,gutenberg")
-                ]))
+                builder = builder.setEditorAssetsEndpoint(editorAssetsEndpoint)
             }
         }
 
