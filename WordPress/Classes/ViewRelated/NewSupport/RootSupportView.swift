@@ -96,7 +96,7 @@ struct RootSupportView: View {
         } label: {
             SupportAreaRow(
                 imageName: "bubble.left.and.text.bubble.right",
-                title: "Ask the bots",
+                title: "Ask the Bots",
                 detail: "Get quick answers to common questions."
             )
         }
@@ -179,9 +179,9 @@ struct SupportAreaRow: View {
     let detail: String
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
             Image(systemName: imageName)
-                .frame(width: 24, height: 24)
+                .frame(width: 24)
                 .foregroundColor(.accentColor)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
