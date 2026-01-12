@@ -1345,7 +1345,7 @@ extension NotificationsViewController: WPTableViewHandlerDelegate {
     }
 
     @objc func predicateForFetchRequest() -> NSPredicate {
-        let deletedIdsPredicate = NSPredicate(format: "(SELF IN %@)", Array(notificationIdsBeingDeleted))
+        let deletedIdsPredicate = NSPredicate(format: "NOT (SELF IN %@)", Array(notificationIdsBeingDeleted))
         let selectedFilterPredicate = predicateForSelectedFilters()
         return NSCompoundPredicate(andPredicateWithSubpredicates: [deletedIdsPredicate, selectedFilterPredicate])
     }
