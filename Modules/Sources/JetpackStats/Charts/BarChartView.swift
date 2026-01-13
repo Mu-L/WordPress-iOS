@@ -55,7 +55,7 @@ struct BarChartView: View {
             BarMark(
                 x: .value("Date", point.date, unit: data.granularity.component, calendar: context.calendar),
                 y: .value("Value", point.value),
-                width: .automatic
+                width: barWidth
             )
             .foregroundStyle(
                 LinearGradient(
@@ -70,6 +70,10 @@ struct BarChartView: View {
             .cornerRadius(6)
             .opacity(getOpacityForCurrentPeriodBar(for: point))
         }
+    }
+
+    private var barWidth: MarkDimension {
+        data.currentData.count <= 3 ? .fixed(32) : .automatic
     }
 
     private func lighten(_ color: Color) -> Color {
@@ -102,7 +106,7 @@ struct BarChartView: View {
             BarMark(
                 x: .value("Date", point.date, unit: data.granularity.component, calendar: context.calendar),
                 y: .value("Value", point.value),
-                width: .automatic,
+                width: barWidth,
                 stacking: .unstacked
             )
             .foregroundStyle(Color.secondary)
@@ -191,11 +195,21 @@ struct BarChartView: View {
     // MARK: - Axis Configuration
 
     private var xAxis: some AxisContent {
-        AxisMarks { value in
-            if let date = value.as(Date.self) {
-                AxisValueLabel {
-                    ChartAxisDateLabel(date: date, granularity: data.granularity)
-                        .offset(x: -2) // Align it better with bars
+        if data.currentData.count == 1 {
+            // A quick workaround to make this look more acceptible
+            AxisMarks(values: .stride(by: data.granularity.component, count: 1, calendar: context.calendar)) { value in
+                if let date = value.as(Date.self) {
+                    AxisValueLabel {
+                        ChartAxisDateLabel(date: date, granularity: data.granularity)
+                    }
+                }
+            }
+        } else {
+            AxisMarks(values: .automatic) { value in
+                if let date = value.as(Date.self) {
+                    AxisValueLabel {
+                        ChartAxisDateLabel(date: date, granularity: data.granularity)
+                    }
                 }
             }
         }
