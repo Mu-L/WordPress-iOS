@@ -10,6 +10,8 @@ import WordPressShared
 import WebKit
 import CocoaLumberjackSwift
 import Photos
+import Pulse
+import Support
 
 class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor {
 
@@ -349,6 +351,7 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
 }
 
 extension NewGutenbergViewController: GutenbergKit.EditorViewControllerDelegate {
+
     func editorDidLoad(_ viewContoller: GutenbergKit.EditorViewController) {
         if !editorSession.started {
             // Note that this method is also used to track startup performance
@@ -392,10 +395,6 @@ extension NewGutenbergViewController: GutenbergKit.EditorViewControllerDelegate 
         logException(error) {
             // Do nothing
         }
-    }
-
-    func editor(_ viewController: GutenbergKit.EditorViewController, didLogNetworkRequest request: GutenbergKit.RecordedNetworkRequest) {
-        // Do nothing
     }
 
     // MARK: - Media Picker Helpers
@@ -501,6 +500,33 @@ extension NewGutenbergViewController: GutenbergKit.EditorViewControllerDelegate 
         }
 
         return WPMediaType(rawValue: mediaType)
+    }
+}
+
+extension GutenbergKit.EditorViewControllerDelegate {
+    func editor(_ viewController: GutenbergKit.EditorViewController, didLogNetworkRequest request: GutenbergKit.RecordedNetworkRequest) {
+        guard ExtensiveLogging.enabled, let url = URL(string: request.url) else {
+            return
+        }
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.method
+        urlRequest.allHTTPHeaderFields = request.requestHeaders
+        urlRequest.httpBody = request.requestBody?.data(using: .utf8)
+
+        let httpResponse = HTTPURLResponse(
+            url: url,
+            statusCode: request.status,
+            httpVersion: nil,
+            headerFields: request.responseHeaders
+        )
+
+        LoggerStore.shared.storeRequest(
+            urlRequest,
+            response: httpResponse,
+            error: nil,
+            data: request.responseBody?.data(using: .utf8)
+        )
     }
 }
 

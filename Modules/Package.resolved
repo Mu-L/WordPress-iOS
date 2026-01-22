@@ -1,5 +1,5 @@
 {
-  "originHash" : "c945c87c6581f460fd2167abbc7502c7f918052e720d2529bff8fd4fa964c4ce",
+  "originHash" : "70be48d0eb082238f9389749632f80f30c4c499b77ac89d84c8acab08c45509a",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -233,6 +233,15 @@
       }
     },
     {
+      "identity" : "pulse",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kean/Pulse",
+      "state" : {
+        "revision" : "6125ce7fb51b114ba71b761d18cfd5557923bd4d",
+        "version" : "5.1.4"
+      }
+    },
+    {
       "identity" : "reachability",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/Reachability",
@@ -381,8 +390,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/wordpress-rs",
       "state" : {
-        "branch" : "alpha-20251101",
-        "revision" : "425d6f8ee9b27ce0c30bb451e173a82075773862"
+        "branch" : "alpha-20260114",
+        "revision" : "4895b1bf67136eeeca5eb792418749c23ec5726d"
       }
     },
     {

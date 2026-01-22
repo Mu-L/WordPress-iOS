@@ -45,6 +45,7 @@ final class CommentGutenbergEditorViewController: UIViewController {
         )
             .setShouldHideTitle(true)
             .setIsOfflineModeEnabled(true)
+            .setEnableNetworkLogging(true)
             .build()
 
         let editorVC = GutenbergKit.EditorViewController(configuration: configuration)
@@ -69,6 +70,7 @@ final class CommentGutenbergEditorViewController: UIViewController {
 }
 
 extension CommentGutenbergEditorViewController: GutenbergKit.EditorViewControllerDelegate {
+
     func editorDidLoad(_ viewContoller: GutenbergKit.EditorViewController) {
         // Do nothing
     }
@@ -97,10 +99,6 @@ extension CommentGutenbergEditorViewController: GutenbergKit.EditorViewControlle
         // Do nothing
     }
 
-    func editor(_ viewController: GutenbergKit.EditorViewController, didLogNetworkRequest request: GutenbergKit.RecordedNetworkRequest) {
-        // Do nothing
-    }
-
     func editor(_ viewController: GutenbergKit.EditorViewController, didRequestMediaFromSiteMediaLibrary config: GutenbergKit.OpenMediaLibraryAction) {
         // Do nothing
     }
@@ -116,4 +114,5 @@ extension CommentGutenbergEditorViewController: GutenbergKit.EditorViewControlle
     func editor(_ viewController: GutenbergKit.EditorViewController, didCloseModalDialog dialogType: String) {
         // Do nothing
     }
+
 }
