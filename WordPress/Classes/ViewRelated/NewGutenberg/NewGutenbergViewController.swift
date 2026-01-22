@@ -132,10 +132,13 @@ class NewGutenbergViewController: UIViewController, PostEditor, PublishingEditor
 
         // Create configuration with post content
         let postType = post is Page ? "page" : "post"
+        let postStatus = post.status?.rawValue ?? "draft"
         let editorConfiguration = EditorConfiguration(blog: post.blog, postType: postType)
             .toBuilder()
             .setTitle(post.postTitle ?? "")
             .setContent(post.content ?? "")
+            .setPostID(post.postID?.intValue)
+            .setPostStatus(postStatus)
             .setNativeInserterEnabled(FeatureFlag.nativeBlockInserter.enabled)
             .build()
 
@@ -466,6 +469,12 @@ extension NewGutenbergViewController: GutenbergKit.EditorViewControllerDelegate 
     func editor(_ viewController: GutenbergKit.EditorViewController, didCloseModalDialog dialogType: String) {
         isModalDialogOpen = false
         setNavigationItemsEnabled(true)
+    }
+
+    func editorDidRequestLatestContent(_ controller: GutenbergKit.EditorViewController) -> (title: String, content: String)? {
+        // Return the current post title and content from Core Data.
+        // This is the authoritative source, updated via autosave.
+        return (post.postTitle ?? "", post.content ?? "")
     }
 
     private func convertMediaInfoArrayToJSONString(_ mediaInfoArray: [MediaInfo]) -> String? {
