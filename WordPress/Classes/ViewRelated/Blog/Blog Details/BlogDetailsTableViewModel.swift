@@ -589,6 +589,10 @@ private extension BlogDetailsTableViewModel {
             rows.append(Row.pages(viewController: viewController))
         }
 
+        if FeatureFlag.customPostTypes.enabled && blog.supportsCoreRESTAPI {
+            rows.append(Row.customPostTypes(viewController: viewController))
+        }
+
         rows.append(Row.media(viewController: viewController))
         rows.append(Row.comments(viewController: viewController))
 
@@ -662,6 +666,10 @@ private extension BlogDetailsTableViewModel {
 
         if blog.supports(.pages) {
             rows.append(Row.pages(viewController: viewController))
+        }
+
+        if blog.isSelfHosted {
+            rows.append(Row.customPostTypes(viewController: viewController))
         }
 
         rows.append(Row.comments(viewController: viewController))
@@ -929,6 +937,7 @@ enum BlogDetailsRowKind {
     case themes
     case media
     case pages
+    case customPostTypes
     case activity
     case backup
     case scan
@@ -1031,6 +1040,17 @@ extension Row {
                 // When called from direct tap, use .row (default behavior)
                 let source: BlogDetailsNavigationSource = userInfo.isEmpty ? .row : .link
                 viewController?.showPageList(from: source)
+            }
+        )
+    }
+
+    static func customPostTypes(viewController: BlogDetailsViewController?) -> Row {
+        Row(
+            kind: .customPostTypes,
+            title: "Custom Post Types",
+            image: UIImage(systemName: "square.3.layers.3d"),
+            action: { [weak viewController] _ in
+                viewController?.showCustomPostTypes()
             }
         )
     }
