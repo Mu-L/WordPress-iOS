@@ -27,7 +27,7 @@ private struct Section {
 }
 
 @objc public final class BlogDetailsTableViewModel: NSObject {
-    private var blog: Blog
+    var blog: Blog
     private weak var tableView: UITableView?
     private weak var viewController: BlogDetailsViewController?
     private var sections: [Section] = []
@@ -54,6 +54,7 @@ private struct Section {
         }
     }
 
+    var hasCustomPostTypes = false
     var useSiteMenuStyle = false
 
     @objc public init(blog: Blog, viewController: BlogDetailsViewController) {
@@ -597,7 +598,9 @@ private extension BlogDetailsTableViewModel {
             for type in pinned {
                 rows.append(Row.pinnedPostType(type, viewController: viewController))
             }
-            rows.append(Row.customPostTypes(viewController: viewController))
+            if !pinned.isEmpty || hasCustomPostTypes {
+                rows.append(Row.customPostTypes(viewController: viewController))
+            }
         }
 
         let title = isSplitViewDisplayed ? nil : Strings.contentSectionTitle
@@ -674,7 +677,7 @@ private extension BlogDetailsTableViewModel {
 
         rows.append(Row.comments(viewController: viewController))
 
-        if FeatureFlag.customPostTypes.enabled && blog.supportsCoreRESTAPI {
+        if FeatureFlag.customPostTypes.enabled && blog.supportsCoreRESTAPI && hasCustomPostTypes {
             let pinned = SiteStorageAccess.pinnedPostTypes(for: TaggedManagedObjectID(blog))
             for type in pinned {
                 rows.append(Row.pinnedPostType(type, viewController: viewController))
