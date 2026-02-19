@@ -381,8 +381,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Automattic/wordpress-rs",
       "state" : {
-        "branch" : "alpha-20260210",
-        "revision" : "49ca0e1c75d0baab111cfbbc42ce935448243d3e"
+        "branch" : "alpha-20260216",
+        "revision" : "200e9a00552c29d6aa5e1ba8730730e2fe5418ca"
       }
     },
     {
