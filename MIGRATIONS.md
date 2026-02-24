@@ -3,6 +3,14 @@
 This file documents changes in the data model. Please explain any changes to the
 data model as well as any custom migrations.
 
+## WordPress 158
+
+@kean 2026-02-23
+
+- Remove unused fields from `lastPostsSync`, `lastPagesSync`, `quickStartTypeValue`, `pinnedDate`, `isActivated`, `hasOlderPosts`, `hasOlderPages` from `Blog`
+- Remove unused field `geolocationEnabled` from `BlogSettings`
+- Remove unused field `localThumbnailIdentifier` from `Media`
+
 ## WordPress 157
 
 @kean 2026-01-06
