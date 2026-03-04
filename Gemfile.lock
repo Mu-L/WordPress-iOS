@@ -181,7 +181,7 @@ GEM
       google-apis-firebaseappdistribution_v1alpha (~> 0.2.0)
     fastlane-plugin-sentry (2.1.0)
       os (~> 1.1, >= 1.1.4)
-    fastlane-plugin-wpmreleasetoolkit (14.0.0)
+    fastlane-plugin-wpmreleasetoolkit (14.1.0)
       activesupport (>= 6.1.7.1)
       buildkit (~> 1.5)
       chroma (= 0.2.0)
@@ -201,8 +201,9 @@ GEM
       xcodeproj (~> 1.22)
     fastlane-sirp (1.0.0)
       sysrandom (~> 1.0)
+    fiddle (1.1.8)
     forwardable (1.4.0)
-    gettext (3.5.1)
+    gettext (3.5.2)
       erubi
       locale (>= 2.0.5)
       prime
@@ -275,14 +276,16 @@ GEM
       kramdown (~> 2.0)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
-    locale (2.1.4)
+    locale (2.1.5)
+      fiddle
     logger (1.7.0)
     mcp (0.7.1)
       json-schema (>= 4.1)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.1)
+    minitest (6.0.2)
+      drb (~> 2.0)
       prism (~> 1.5)
     multi_json (1.19.1)
     multipart-post (2.4.1)
@@ -408,7 +411,7 @@ DEPENDENCIES
   fastlane (~> 2.232)
   fastlane-plugin-firebase_app_distribution (~> 0.10)
   fastlane-plugin-sentry
-  fastlane-plugin-wpmreleasetoolkit (~> 14.0)
+  fastlane-plugin-wpmreleasetoolkit (~> 14.1)
   openssl (~> 4.0)
   rake
   rmagick (~> 6.2.0)
