@@ -21,6 +21,18 @@ enum PostSettingsRow {
     case jetpackNewsletterEmailOptions
 }
 
+/// Options that can appear in the "More Options" section of the post settings form.
+enum PostSettingsMoreOption: Identifiable {
+    case emailToSubscribers
+    case stickyPost
+    case pendingReview
+    case discussion
+    case postFormat
+    case parentPage
+
+    var id: Self { self }
+}
+
 /// The state of the social sharing section.
 enum PostSettingsSocialSharingSectionState {
     /// The initial prompt to set up connections.
@@ -101,6 +113,33 @@ protocol PostSettingsViewModelProtocol: ObservableObject {
     func showSocialSharingOptions()
     func showCategoriesPicker()
     func parentPagePickerDestination() -> ParentPagePickerDestination?
+}
+
+// MARK: - Default Implementations
+
+extension PostSettingsViewModelProtocol {
+    var visibleMoreOptions: [PostSettingsMoreOption] {
+        var options: [PostSettingsMoreOption] = []
+        if shouldShow(.jetpackNewsletterEmailOptions) {
+            options.append(.emailToSubscribers)
+        }
+        if shouldShowStickyOption {
+            options.append(.stickyPost)
+        }
+        if isDraftOrPending {
+            options.append(.pendingReview)
+        }
+        if capabilities.supportsComments {
+            options.append(.discussion)
+        }
+        if capabilities.supportsPostFormats {
+            options.append(.postFormat)
+        }
+        if capabilities.supportsPageAttributes {
+            options.append(.parentPage)
+        }
+        return options
+    }
 }
 
 // MARK: - Date Formatting
