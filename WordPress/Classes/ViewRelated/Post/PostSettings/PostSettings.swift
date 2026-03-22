@@ -81,8 +81,16 @@ struct PostSettings: Hashable {
     init(from params: PostCreateParams, taxonomies: [SiteTaxonomy] = []) {
         excerpt = params.excerpt ?? ""
         slug = params.slug ?? ""
-        status = .draft
-        publishDate = nil
+        if let paramStatus = params.status {
+            status = BasePost.Status(paramStatus)
+        } else {
+            status = .draft
+        }
+        if status == .draft || status == .pending {
+            publishDate = nil
+        } else {
+            publishDate = params.dateGmt
+        }
         password = params.password
         metadata = PostMetadata(from: .init())
 
@@ -370,7 +378,9 @@ struct PostSettings: Hashable {
             params.excerpt = self.excerpt
         }
 
-        if post.featuredMedia.map({ Int($0) }) != self.featuredImageID {
+        // Normalize 0 as nil (no featured image) to match the init(from:) convention.
+        let originalFeaturedImageID = post.featuredMedia.flatMap { $0 > 0 ? Int($0) : nil }
+        if originalFeaturedImageID != self.featuredImageID {
             params.featuredMedia = self.featuredImageID.map { MediaId(Int64($0)) } ?? MediaId(0)
         }
 
