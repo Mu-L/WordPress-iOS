@@ -357,6 +357,41 @@ private struct ForEachContent: View {
                         .contextMenu {
                             PostActionMenuContent(post: fullPost, viewModel: viewModel, onDuplicate: onDuplicate)
                         }
+                        .swipeActions(edge: .leading) {
+                            if fullPost.status == .publish {
+                                Button {
+                                    viewModel.viewPost(fullPost)
+                                } label: {
+                                    Label(SharedStrings.Button.view, systemImage: "safari")
+                                }
+                                .tint(.blue)
+                            }
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            if fullPost.status != .trash {
+                                Button(role: .destructive) {
+                                    if fullPost.status == .publish {
+                                        viewModel.confirmTrash(fullPost)
+                                    } else {
+                                        Task { await viewModel.trashPost(fullPost) }
+                                    }
+                                } label: {
+                                    Label(Strings.swipeTrash, systemImage: "trash")
+                                }
+                            } else {
+                                Button(role: .destructive) {
+                                    viewModel.confirmDelete(fullPost)
+                                } label: {
+                                    Label(Strings.swipeDelete, systemImage: "trash.fill")
+                                }
+                            }
+
+                            if fullPost.status == .publish, let url = URL(string: fullPost.link) {
+                                ShareLink(item: url, subject: Text(fullPost.title?.raw ?? "")) {
+                                    Label(SharedStrings.Button.share, systemImage: "square.and.arrow.up")
+                                }
+                            }
+                        }
                         .overlay(alignment: .topTrailing) {
                             PostActionMenu(post: fullPost, viewModel: viewModel, onDuplicate: onDuplicate)
                                 .offset(y: -6)
@@ -663,6 +698,16 @@ private enum Strings {
         "customPostList.deleteConfirmation.message",
         value: "This action cannot be undone.",
         comment: "Message for the confirmation alert when permanently deleting a post"
+    )
+    static let swipeTrash = NSLocalizedString(
+        "customPostList.swipeAction.trash",
+        value: "Trash",
+        comment: "Short label for the swipe action to trash a post. Keep this translation short."
+    )
+    static let swipeDelete = NSLocalizedString(
+        "customPostList.swipeAction.delete",
+        value: "Delete",
+        comment: "Short label for the swipe action to permanently delete a trashed post. Keep this translation short."
     )
 }
 
