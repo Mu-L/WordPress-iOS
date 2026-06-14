@@ -1,8 +1,8 @@
 {
   "configurations" : [
     {
-      "id" : "4A78A2D0-FB06-481E-B333-C1BA9A78D4FE",
-      "name" : "Configuration 1",
+      "id" : "1CD15192-2579-4CD8-815F-86BF8B214099",
+      "name" : "Test Scheme Action",
       "options" : {
 
       }
@@ -14,8 +14,8 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:WordPress.xcodeproj",
-        "identifier" : "3F7AE0BB2D9B30A200AB4892",
+        "containerPath" : "container:../Modules",
+        "identifier" : "WordPressDataTests",
         "name" : "WordPressDataTests"
       }
     }
