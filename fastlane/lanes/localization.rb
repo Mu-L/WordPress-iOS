@@ -100,10 +100,9 @@ MANUALLY_MAINTAINED_STRINGS_FILES = {
   File.join('WordPress', 'JetpackIntents', 'en.lproj', 'Sites.strings') => 'ios-widget.' # Strings from the `.intentdefinition`, used for configuring the iOS Widget
 }.freeze
 
-# The names of the remote Swift Packages that we want to add to our localizations, as they'll be checked out during resolvePackageDependencies in the Derived Data folder
-REMOTE_SWIFT_PACKAGES_TO_LOCALIZE = %w[
-  WordPressKit-iOS
-].freeze
+# Remote Swift Packages whose localizable strings we want to extract (they're checked out under Derived Data
+# during resolvePackageDependencies). Currently none. Leaving here for future-proofing.
+REMOTE_SWIFT_PACKAGES_TO_LOCALIZE = [].freeze
 
 def upload_to_app_store_common_params
   {
