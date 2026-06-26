@@ -317,21 +317,11 @@ platform :ios do
   # Builds a single app and uploads it to TestFlight for *internal* testers,
   # stamping the build code with the Buildkite build number.
   #
-  # This is the per-commit "continuous delivery" build from the "Faster Releases
-  # for WordPress and Jetpack" RFC. It is intentionally additive: the existing
-  # release lanes are untouched and remain the source of truth until this flow
-  # is proven.
-  #
   # The marketing version (`VERSION_SHORT`) is read from `Version.public.xcconfig`
   # as-is. The build code is `<marketing version>.0.<buildkite build number>`
   # (e.g. `27.0.0.4567`). Buildkite build numbers increase monotonically, so each
   # build for a given marketing version gets a unique, higher build code — which
   # is all App Store Connect requires.
-  #
-  # "Internal-only" means no external groups and no external-tester notifications
-  # (matching the existing Reader upload). Distributing to the a8c staff beta
-  # group, and separately to the public beta group, is wired up in later phases
-  # of the RFC.
   #
   # @param [String] app One of `wordpress`, `jetpack`, or `reader`.
   #
@@ -339,6 +329,10 @@ platform :ios do
   #
   desc 'Builds one app and uploads it to TestFlight for internal testers'
   lane :build_and_upload_app_for_testflight do |app:|
+    # Fail before any cert/profile work if the build code can't be computed.
+    build_number = ENV.fetch('BUILDKITE_BUILD_NUMBER', nil)
+    UI.user_error!('BUILDKITE_BUILD_NUMBER is not set — this lane is meant to run on CI') if build_number.nil?
+
     app = app.to_s.downcase
 
     case app
@@ -366,9 +360,6 @@ platform :ios do
     else
       UI.user_error!("Unknown app '#{app}'. Expected one of: wordpress, jetpack, reader")
     end
-
-    build_number = ENV.fetch('BUILDKITE_BUILD_NUMBER', nil)
-    UI.user_error!('BUILDKITE_BUILD_NUMBER is not set — this lane is meant to run on CI') if build_number.nil?
 
     build_code = "#{release_version_current}.0.#{build_number}"
     UI.important("Building #{scheme} #{release_version_current} (#{build_code}) for internal TestFlight distribution")
@@ -419,7 +410,9 @@ platform :ios do
   #
   desc 'Builds and uploads WordPress and Jetpack to TestFlight (internal)'
   lane :build_all_apps_for_testflight do
-    %w[wordpress jetpack].each do |app|
+    apps = %w[wordpress jetpack]
+    UI.important("Building #{apps.join(' and ')} for TestFlight. Reader is omitted because its App Store archive is currently broken.")
+    apps.each do |app|
       build_and_upload_app_for_testflight(app: app)
     end
   end
@@ -542,24 +535,22 @@ platform :ios do
   # @param [String] beta_app_description_path Path to the beta app description file.
   #
   def upload_app_to_testflight_internal(ipa_path:, beta_app_description_path:)
-    # TBD (RFC D4): the "what's new" text for per-commit internal builds is not
+    # TODO: the "what's new" text for per-commit internal builds is not
     # finalized yet. For now, generate a minimal placeholder from the commit
     # metadata so the upload has something to show. Public-beta builds will get
     # richer notes generated from the PRs merged since the previous public build.
-    changelog = "Automated build from `#{ENV.fetch('BUILDKITE_BRANCH', 'unknown')}` (#{ENV.fetch('BUILDKITE_COMMIT', 'unknown')[0...7]})."
-    whats_new_path = File.join(Dir.tmpdir, 'testflight_whats_new.txt')
+    changelog = "Automated build from `#{ENV.fetch('BUILDKITE_BRANCH', 'unknown branch')}` (#{ENV.fetch('BUILDKITE_COMMIT', 'unknown commit')[0...7]})."
 
-    begin
+    Dir.mktmpdir do |dir|
+      whats_new_path = File.join(dir, 'testflight_whats_new.txt')
       File.write(whats_new_path, changelog)
 
       upload_build_to_testflight(
         ipa_path: ipa_path,
         whats_new_path: whats_new_path,
-        distribution_groups: [], # Internal-only for now (RFC D2): no external groups.
+        distribution_groups: [],
         beta_app_description_path: beta_app_description_path
       )
-    ensure
-      FileUtils.rm_rf(whats_new_path)
     end
   end
 
